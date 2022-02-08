@@ -1,10 +1,12 @@
 <script lang="ts">
 	import Router from "svelte-spa-router";
+	import Chat from "./routes/Chat.svelte";
 	import Home from "./routes/Home.svelte";
 	import NotFound from "./routes/NotFound.svelte";
 
 	const routes = {
 		"/": Home,
+		"/chat": Chat,
 		"*": NotFound
 	}
 	

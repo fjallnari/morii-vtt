@@ -3,8 +3,8 @@
     import Register from '../components/Register.svelte';
     import SegmentedButton, { Segment, Label } from '@smui/segmented-button';
     const views = [
-        {name: 'login', component: Login},
-        {name: 'register', component: Register}
+        {name: 'sign in', component: Login},
+        {name: 'sign up', component: Register}
     ];
 
     let selected = views[0];
@@ -20,7 +20,12 @@
           <Label>{segment.name}</Label>
         </Segment>
     </SegmentedButton>
+    <div style="padding-top: 1em">
+        <form><button formaction="/?#/chat">chat</button></form>
+    </div>
+    
 </div>
+
 
 <style>
     #login-page {

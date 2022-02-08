@@ -12,7 +12,7 @@
     "prepare-theme": "smui-theme compile public/static/smui-dark.css -i src/theme"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@smui/segmented-button": "^6.0.0-beta.13",
@@ -37,6 +37,7 @@
     "@smui/circular-progress": "^6.0.0-beta.13",
     "@smui/select": "^6.0.0-beta.13",
     "sirv-cli": "^2.0.0",
+    "socket.io-client": "^4.4.1",
     "svelte-material-ui": "^6.0.0-beta.13",
     "svelte-spa-router": "^3.2.0"
   }

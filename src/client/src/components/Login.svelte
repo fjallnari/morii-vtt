@@ -3,11 +3,27 @@
     import Button, { Label } from "@smui/button";
     import Icon from '@smui/textfield/icon';
     import PasswordField from './PasswordField.svelte';
+    import axios from 'axios';
     let username = "";
     let password = "";
 
-    const sayHello = () => {
+    const loginUser = () => {
+        if (! password || ! username){
+            return;
+        }
+
         console.log(username, password);
+
+        axios.post('/api/auth/signin', {
+            username: username,
+            password: password
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            // console.log(error);
+        });
     }
 
 </script>
@@ -21,7 +37,7 @@
 
     <PasswordField bind:password={password} label="Password"></PasswordField>
 
-    <Button on:click={sayHello} variant="raised">
+    <Button on:click={loginUser} variant="raised">
         <Label>Sign In</Label>
     </Button>
 </div>

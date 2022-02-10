@@ -21,7 +21,7 @@
 
         console.log(username, password);
 
-        axios.post('/register', {
+        axios.post('/api/auth/signup', {
             username: username,
             password: password
         })
@@ -29,7 +29,7 @@
             console.log(response);
         })
         .catch(function (error) {
-            console.log(error);
+            // console.log(error);
         });
     }
 

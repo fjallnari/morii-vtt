@@ -6,43 +6,58 @@
 	import Home from "./routes/Home.svelte";
 	import NotFound from "./routes/NotFound.svelte";
 	import Dashboard from "./routes/Dashboard.svelte";
+	import { onMount } from 'svelte';
 
+	export let accessToken: string = "";
+
+	const loadSecurePage = async (path: string) => {
+		try {
+			const response = await axios.get(path, {
+				headers: {
+					'Authorization': `Bearer ${accessToken}`
+				}
+			});
+
+			return response.status === 200;
+		}
+		catch {
+			return false;
+		}
+	}
 
 	const routes = {
-		"/": Home,
+		"/auth": Home,
 		"/chat": Chat,
-		"/dashboard": wrap({
+		"/": wrap({
 			component: Dashboard,
 			conditions: [
 				async () => {
-					try {
-						const response = await axios.get('/api/welcome', {
-							headers: {
-								'X-Auth-Token': "super-secret-token"
-							}
-						});
-						// console.log(response);
-						return response.status === 200;
-					}
-					catch {
-						return false;
-					}
-
+					return await loadSecurePage('/api/welcome');
 				}
 			]
 		}),
 		"*": NotFound
 	}
 
-	function conditionsFailed(event) {
-		console.error('conditionsFailed event', event.detail);
-		replace('/');
+	const refreshAccessToken = async () => {
+		try {
+			const response = await axios.post('/api/auth/refresh-token');
+			console.log(response);
+			accessToken = response.data.accessToken;
+		}
+		catch (err) {
+			console.log(err);
+		}
 	}
-	
+
+	onMount(async () => {
+		await refreshAccessToken();
+	});
+
 </script>
 
 <main>
-	<Router {routes} on:conditionsFailed={conditionsFailed}/>
+	<Router {routes} />
 </main>
 
 <style>

@@ -7,22 +7,14 @@
     let username = "";
     let password = "";
 
-    const loginUser = () => {
+    const loginUser = async () => {
         if (! password || ! username){
             return;
         }
-
-        console.log(username, password);
-
-        axios.post('/api/auth/signin', {
+        
+        await axios.post('/api/auth/signin', {
             username: username,
             password: password
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            // console.log(error);
         });
     }
 

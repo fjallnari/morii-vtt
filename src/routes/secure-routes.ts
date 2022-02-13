@@ -5,7 +5,6 @@ const router = express.Router();
 
 
 router.get("/api/welcome", auth, (req, res) => {
-    console.log("Im doing something.");
     res.status(200).send("Welcome 🙌 ");
 });
 

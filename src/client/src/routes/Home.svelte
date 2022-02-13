@@ -20,9 +20,6 @@
           <Label>{segment.name}</Label>
         </Segment>
     </SegmentedButton>
-    <div style="padding-top: 1em">
-        <form><button formaction="/?#/chat">chat</button></form>
-    </div>
     
 </div>
 

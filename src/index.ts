@@ -6,6 +6,7 @@ import express from "express";
 import { getCollection, setUpDB } from './db/Mongo';
 import routes from './routes/routes';
 import secureRoutes from './routes/secure-routes';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 setUpDB();
@@ -33,6 +34,7 @@ const main = () => {
   app.use(express.static('src/client/public'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(cookieParser());
 
   app.use('/', routes);
   app.use('/', secureRoutes);

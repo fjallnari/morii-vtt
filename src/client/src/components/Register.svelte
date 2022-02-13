@@ -9,28 +9,19 @@
     let password = "";
     let passwordCheck = "";
 
-    const sayHello = () => {
-        console.log(password, passwordCheck, password === passwordCheck);
-    }
 
-    const registerNewUser = () => {
+    const registerNewUser = async () => {
         if (! password || password !== passwordCheck){
+            // TODO: Pop up with non matching passwords
             console.log("passwords don't match");
             return;
         }
-
-        console.log(username, password);
-
-        axios.post('/api/auth/signup', {
+        await axios.post('/api/auth/signup', {
             username: username,
             password: password
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            // console.log(error);
         });
+        // TODO: Pop up with succesful registration
+        // location.reload();
     }
 
 </script>

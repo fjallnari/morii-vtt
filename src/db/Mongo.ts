@@ -1,4 +1,4 @@
-import { Collection, Db, FindCursor, FindOptions, IndexSpecification, MongoClient } from "mongodb";
+import { Collection, Db, FindCursor, FindOptions, IndexDescription, IndexInformationOptions, IndexSpecification, MongoClient } from "mongodb";
 
 let _client: MongoClient;
 
@@ -33,12 +33,18 @@ export async function collectionExists(collectionName: string, db: Db): Promise<
     return collections != null;
 }
 
-export async function createCollectionIfNotExists(collectionName: string, database: Db, indexSpec: IndexSpecification | null = null): Promise<void> {
-    const exists: boolean = await collectionExists(collectionName, database);
-    if (!exists) {
-        await database.createCollection(collectionName);
-        if (indexSpec) await database.collection(collectionName).createIndex(indexSpec);
-    }
+export async function createCollectionIfNotExists(
+    collectionName: string, 
+    database: Db, 
+    indexSpec: IndexSpecification | null = null, 
+    indexOptions: IndexDescription | {} = {}
+    ): Promise<void> {
+        const exists: boolean = await collectionExists(collectionName, database);
+        
+        if (!exists) {
+            await database.createCollection(collectionName);
+            if (indexSpec) await database.collection(collectionName).createIndex(indexSpec, indexOptions);
+        }
 }
 
 export async function dropCollectionIfExists(collectionName: string, database: Db): Promise<void> {
@@ -100,5 +106,5 @@ export const getCollection = async(collectionName: string) => {
 export async function setUpDB() {
     await initConnection(<string>process.env.MONGO_URL);
     const db = await getDb(process.env.MONGO_INITDB_DATABASE);
-    await createCollectionIfNotExists("users", db);
+    await createCollectionIfNotExists("users", db, { "username": 1 }, {unique: true});
 }

@@ -2,22 +2,28 @@
 	import axios from "axios";
 	import Router, { replace } from "svelte-spa-router";
 	import { wrap } from 'svelte-spa-router/wrap';
+	import { onMount } from 'svelte';
 	import Chat from "./routes/Chat.svelte";
-	import Home from "./routes/Home.svelte";
 	import NotFound from "./routes/NotFound.svelte";
 	import Dashboard from "./routes/Dashboard.svelte";
-	import { onMount } from 'svelte';
+	import Auth from "./routes/Auth.svelte";
+	import { accessToken } from "./stores";
+	import { get } from 'svelte/store';
 
-	export let accessToken: string = "";
+	// export let accessToken: string = "";
+
+	$: refreshAccessToken();
 
 	const loadSecurePage = async (path: string) => {
+		await new Promise(res => setTimeout(res, 1000));
 		try {
 			const response = await axios.get(path, {
 				headers: {
-					'Authorization': `Bearer ${accessToken}`
+					'Authorization': `Bearer ${$accessToken}`
 				}
 			});
 
+			console.log(response);
 			return response.status === 200;
 		}
 		catch {
@@ -26,13 +32,16 @@
 	}
 
 	const routes = {
-		"/auth": Home,
+		"/auth": wrap({
+			component: Auth,
+
+		}),
 		"/chat": Chat,
 		"/": wrap({
 			component: Dashboard,
 			conditions: [
 				async () => {
-					return await loadSecurePage('/api/welcome');
+					return await loadSecurePage('/api/welcome');			
 				}
 			]
 		}),
@@ -43,21 +52,27 @@
 		try {
 			const response = await axios.post('/api/auth/refresh-token');
 			console.log(response);
-			accessToken = response.data.accessToken;
+			accessToken.set(response.data.accessToken);
+			console.log($accessToken);
 		}
 		catch (err) {
 			console.log(err);
 		}
 	}
 
-	onMount(async () => {
-		await refreshAccessToken();
-	});
+	function conditionsFailed(event) {
+		console.error('conditionsFailed event', event.detail);
+		replace('/auth');
+}
 
+	// onMount(async () => {
+	// 	await refreshAccessToken();
+	// });
+	
 </script>
 
 <main>
-	<Router {routes} />
+	<Router {routes} on:conditionsFailed={conditionsFailed}/>
 </main>
 
 <style>

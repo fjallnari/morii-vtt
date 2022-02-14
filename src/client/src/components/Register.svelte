@@ -16,10 +16,16 @@
             console.log("passwords don't match");
             return;
         }
-        await axios.post('/api/auth/signup', {
-            username: username,
-            password: password
-        });
+        try {
+            await axios.post('/api/auth/signup', {
+                username: username,
+                password: password
+            });
+        }
+        catch (err) {
+            console.log(err);
+        }
+
         // TODO: Pop up with succesful registration
         // location.reload();
     }

@@ -4,6 +4,7 @@
     import Icon from '@smui/textfield/icon';
     import PasswordField from './PasswordField.svelte';
     import axios from 'axios';
+    import { accessToken } from "../stores";
     let username = "";
     let password = "";
 
@@ -11,11 +12,23 @@
         if (! password || ! username){
             return;
         }
-        
-        await axios.post('/api/auth/signin', {
-            username: username,
-            password: password
-        });
+
+        try {
+            const response = await axios.post('/api/auth/signin', {
+                username: username,
+                password: password
+            });
+            console.log(response);
+
+            if (response.status === 200) {
+                accessToken.set(response.data.accessToken);
+                location.href = '/?#/';
+            }
+        }
+        catch (err) {
+            console.log(err);
+
+        }
     }
 
 </script>

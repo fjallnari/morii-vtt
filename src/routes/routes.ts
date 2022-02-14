@@ -80,7 +80,7 @@ router.post(
         try {
             const refreshToken = req.cookies._refresh_token;
             if (!refreshToken) {
-                return;
+                return res.status(401).send('Invalid token.');
             }
             
             const usersCollection = <Collection<Document>> await getCollection('users');

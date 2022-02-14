@@ -1,5 +1,4 @@
 import express from 'express';
-import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { Collection, Document } from 'mongodb';
 import { getCollection } from '../db/Mongo';

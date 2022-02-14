@@ -5,8 +5,10 @@
     import PasswordField from './PasswordField.svelte';
     import axios from 'axios';
     import { accessToken } from "../stores";
+import ProgressCircle from './ProgressCircle.svelte';
     let username = "";
     let password = "";
+    let inProgress = false;
 
     const loginUser = async () => {
         if (! password || ! username){
@@ -14,6 +16,7 @@
         }
 
         try {
+            inProgress = true;
             const response = await axios.post('/api/auth/signin', {
                 username: username,
                 password: password
@@ -27,7 +30,6 @@
         }
         catch (err) {
             console.log(err);
-
         }
     }
 
@@ -36,15 +38,20 @@
 
 <div class="input-block">
     <h2>Sign in</h2>
-    <Textfield variant="outlined" style="width: 15em" bind:value={username} label="Username">
-        <Icon class="material-icons" slot="leadingIcon">person</Icon>
-    </Textfield>
 
-    <PasswordField bind:password={password} label="Password"></PasswordField>
+    {#if !inProgress}
+        <Textfield variant="outlined" style="width: 15em" bind:value={username} label="Username">
+            <Icon class="material-icons" slot="leadingIcon">person</Icon>
+        </Textfield>
 
-    <Button on:click={loginUser} variant="raised">
-        <Label>Sign In</Label>
-    </Button>
+        <PasswordField bind:password={password} label="Password"></PasswordField>
+
+        <Button on:click={loginUser} variant="raised">
+            <Label>Sign In</Label>
+        </Button>
+    {:else}
+        <ProgressCircle></ProgressCircle>
+    {/if}
 </div>
 
 <style>

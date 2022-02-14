@@ -27,7 +27,6 @@
 <style>
     #login-page {
         padding-top: 14em;
-        padding-right: 7em;
         display: flex;
         justify-content: center;
         align-items: center;

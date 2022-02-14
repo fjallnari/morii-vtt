@@ -896,6 +896,15 @@
     "@smui/common" "^6.0.0-beta.13"
     svelte2tsx "^0.4.11"
 
+"@smui/circular-progress@^6.0.0-beta.14":
+  version "6.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@smui/circular-progress/-/circular-progress-6.0.0-beta.14.tgz#a6e60b9f87f1c9349a850c821aa53c175ede71b1"
+  integrity sha512-3vYM+vyBfEIl10MowQk63JXbDTUfJh9Uvr5TFlfLXr8C8fHvBzrzSSvxuZlPP57lur4ZP70374IX6QEYdyc7cQ==
+  dependencies:
+    "@material/circular-progress" "^13.0.0"
+    "@smui/common" "^6.0.0-beta.14"
+    svelte2tsx "^0.4.14"
+
 "@smui/common@^6.0.0-beta.13":
   version "6.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/@smui/common/-/common-6.0.0-beta.13.tgz#1ecb3d2c7209c4bb32fda208794f2af4a2fd7070"
@@ -904,6 +913,15 @@
     "@material/dom" "^13.0.0"
     "@tsconfig/svelte" "^2.0.1"
     svelte2tsx "^0.4.11"
+
+"@smui/common@^6.0.0-beta.14":
+  version "6.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@smui/common/-/common-6.0.0-beta.14.tgz#612f54493651fdefeab9950893fba23335ee11fa"
+  integrity sha512-vKnOS8cT5TGS+kuVKIv/8IyA78+njhk/H8lL0HAqEK0dPLzQpqRjorRTR28i380d2ip7u6SlUPkEyUJJnQZavw==
+  dependencies:
+    "@material/dom" "^13.0.0"
+    "@tsconfig/svelte" "^3.0.0"
+    svelte2tsx "^0.4.14"
 
 "@smui/data-table@^6.0.0-beta.13":
   version "6.0.0-beta.13"
@@ -1262,6 +1280,11 @@
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-2.0.1.tgz#0e8d7caa693e9b2afce5e622c0475bb0fd89c12c"
   integrity sha512-aqkICXbM1oX5FfgZd2qSSAGdyo/NRxjWCamxoyi3T8iVQnzGge19HhDYzZ6NrVOW7bhcWNSq9XexWFtMzbB24A==
+
+"@tsconfig/svelte@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-3.0.0.tgz#b06e059209f04c414de0069f2f0e2796d979fc6f"
+  integrity sha512-pYrtLtOwku/7r1i9AMONsJMVYAtk3hzOfiGNekhtq5tYBGA7unMve8RvUclKLMT3PrihvJqUmzsRGh0RP84hKg==
 
 "@types/estree@*":
   version "0.0.51"
@@ -2806,6 +2829,14 @@ svelte2tsx@^0.4.11:
   version "0.4.12"
   resolved "https://registry.yarnpkg.com/svelte2tsx/-/svelte2tsx-0.4.12.tgz#20bc67121c17e9ce5652b816631964b948c273e6"
   integrity sha512-aTKg+W95w16RqOPFi01icd4jlwnMzgvTlewvqrJJTLAs0kjpQ/DMhhd+iDDhDBkhKT4nDkVzEfe/LZTz1Xf6AQ==
+  dependencies:
+    dedent-js "^1.0.1"
+    pascal-case "^3.1.1"
+
+svelte2tsx@^0.4.14:
+  version "0.4.14"
+  resolved "https://registry.yarnpkg.com/svelte2tsx/-/svelte2tsx-0.4.14.tgz#6c3d65eee8d00d6de2c061e836c6bb4f0c6c43b8"
+  integrity sha512-udF0Z/DA98OfjPFBU1GBJRpYHEvsxA8ozwYVN08AOWMnQyxoSyWWlYspiq2m9xAjLo/pWnhec9z1d6jc9umqjA==
   dependencies:
     dedent-js "^1.0.1"
     pascal-case "^3.1.1"

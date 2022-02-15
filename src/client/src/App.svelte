@@ -9,8 +9,7 @@
 	import Auth from "./routes/Auth.svelte";
 	import { accessToken } from "./stores";
 	import { get } from 'svelte/store';
-
-	// export let accessToken: string = "";
+	import ProgressCircle from "./components/ProgressCircle.svelte";
 
 	$: refreshAccessToken();
 
@@ -51,9 +50,7 @@
 	const refreshAccessToken = async () => {
 		try {
 			const response = await axios.post('/api/auth/refresh-token');
-			console.log(response);
 			accessToken.set(response.data.accessToken);
-			console.log($accessToken);
 		}
 		catch (err) {
 			console.log(err);
@@ -63,7 +60,7 @@
 	function conditionsFailed(event) {
 		console.error('conditionsFailed event', event.detail);
 		replace('/auth');
-}
+	}
 
 	// onMount(async () => {
 	// 	await refreshAccessToken();

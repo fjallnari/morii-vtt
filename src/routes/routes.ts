@@ -18,7 +18,8 @@ router.post(
             var user = await usersCollection.insertOne({
                 username: username,
                 password: hashedPassword,
-                refresh_token: ""
+                refresh_token: "",
+                campaigns: []
             });
         }
         catch (err) {
@@ -78,14 +79,7 @@ router.post(
 
         try {
             const refreshToken = req.cookies._refresh_token;
-            if (!refreshToken) {
-                return res.status(401).send('Invalid token.');
-            }
-            
-            const usersCollection = <Collection<Document>> await getCollection('users');
-            const user = await usersCollection.findOne({refresh_token: refreshToken});
-
-            if (! user || ! process.env.JWT_SECRET || ! process.env.JWT_REFRESH_SECRET) {
+            if (!refreshToken || ! process.env.JWT_SECRET || ! process.env.JWT_REFRESH_SECRET) {
                 return res.status(401).send('Invalid token.');
             }
 
@@ -94,6 +88,13 @@ router.post(
                 req.user = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
               } catch (err) {
                 return res.status(401).send("Invalid Token");
+            }
+
+            const usersCollection = <Collection<Document>> await getCollection('users');
+            const user = await usersCollection.findOne({refresh_token: refreshToken});
+
+            if (! user ) {
+                return res.status(401).send('Invalid token.');
             }
 
             // jwt, create new access token and new refreshToken to rotate into the db

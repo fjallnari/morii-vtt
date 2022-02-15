@@ -1093,6 +1093,19 @@
     "@smui/common" "^6.0.0-beta.13"
     svelte2tsx "^0.4.11"
 
+"@smui/paper@^6.0.0-beta.14":
+  version "6.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@smui/paper/-/paper-6.0.0-beta.14.tgz#6083e391c5f61a26d8af55f1b37824b0580328d6"
+  integrity sha512-aEfyiu+X3NEDmkxTR7do66YgVXyfDOvr0EgcjcGxVhcASBqplFhXbAesJ5BKWBh/6teiKkmEJDjnslGIEDHx5Q==
+  dependencies:
+    "@material/elevation" "^13.0.0"
+    "@material/feature-targeting" "^13.0.0"
+    "@material/shape" "^13.0.0"
+    "@material/theme" "^13.0.0"
+    "@material/typography" "^13.0.0"
+    "@smui/common" "^6.0.0-beta.14"
+    svelte2tsx "^0.4.14"
+
 "@smui/radio@^6.0.0-beta.13":
   version "6.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/@smui/radio/-/radio-6.0.0-beta.13.tgz#a8deac1ef357fbba8794db2971910b2aff057896"

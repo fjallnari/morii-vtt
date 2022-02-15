@@ -8,15 +8,15 @@
 </script>
 
 <div id="progress">
-    <div id="progress-circle"><CircularProgress style="height: 48px; width: 48px;" indeterminate /></div>
-    <div id="progress-text" style="padding: 10px">{randomizeLoadingMessage()}</div>
+    <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+    <div id="progress-text" style="padding-top: 4em">{randomizeLoadingMessage()}</div>
 </div>
 
 
 <style>
     #progress-circle {
-		display: flex; 
-		justify-content: center;
-        font-family: "Palanquir", sans-serif;
-	}
+      display: flex; 
+      justify-content: center;
+      font-family: "Quicksand", sans-serif;
+    }
 </style>

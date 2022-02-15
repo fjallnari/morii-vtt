@@ -13,14 +13,8 @@
 
 
 <div id="login-page">
-    <!-- Button to switch between login and register-->
-    <svelte:component this={selected.component}/>
-    <SegmentedButton segments={views} let:segment singleSelect bind:selected>
-        <Segment {segment}>
-          <Label>{segment.name}</Label>
-        </Segment>
-    </SegmentedButton>
-    
+    <Login></Login>
+    <Register></Register>
 </div>
 
 
@@ -30,7 +24,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 5em;
     }
 
 </style>

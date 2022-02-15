@@ -5,7 +5,9 @@
     import PasswordField from './PasswordField.svelte';
     import axios from 'axios';
     import { accessToken } from "../stores";
-import ProgressCircle from './ProgressCircle.svelte';
+    import ProgressCircle from './ProgressCircle.svelte';
+    import Paper from '@smui/paper';
+
     let username = "";
     let password = "";
     let inProgress = false;
@@ -35,24 +37,32 @@ import ProgressCircle from './ProgressCircle.svelte';
 
 </script>
 
+<div class="background-box">
+    <Paper>
+        <div class="input-block">
+            <h2>Sign in</h2>
+    
+            {#if !inProgress}
+                <Textfield variant="outlined" style="width: 15em" bind:value={username} label="Username">
+                    <Icon class="material-icons" slot="leadingIcon">person</Icon>
+                </Textfield>
+    
+                <PasswordField bind:password={password} label="Password"></PasswordField>
 
-<div class="input-block">
-    <h2>Sign in</h2>
+                <div style="padding-top: 2em; ">
+                    <Button on:click={loginUser} variant="raised">
+                        <Label>Sign In</Label>
+                    </Button>
+                </div>    
 
-    {#if !inProgress}
-        <Textfield variant="outlined" style="width: 15em" bind:value={username} label="Username">
-            <Icon class="material-icons" slot="leadingIcon">person</Icon>
-        </Textfield>
-
-        <PasswordField bind:password={password} label="Password"></PasswordField>
-
-        <Button on:click={loginUser} variant="raised">
-            <Label>Sign In</Label>
-        </Button>
-    {:else}
-        <ProgressCircle></ProgressCircle>
-    {/if}
+            {:else}
+                <ProgressCircle></ProgressCircle>
+            {/if}
+        </div>
+    </Paper>
 </div>
+
+
 
 <style>
     h2 {
@@ -62,10 +72,17 @@ import ProgressCircle from './ProgressCircle.svelte';
 
     .input-block {
 		display: flex;
-		padding-bottom: 40px;
+        padding-bottom: 2em;
 		justify-content: center;
 		align-items: center;
         flex-direction: column;
         gap: 2em;
 	}
+
+    .background-box {
+        width: 20em;
+        height: 30em;
+    }
+
+
 </style>

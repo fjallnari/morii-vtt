@@ -4,7 +4,7 @@
     import Icon from '@smui/textfield/icon';
     import PasswordField from './PasswordField.svelte';
     import axios from 'axios';
-    import { accessToken } from "../stores";
+    import { accessToken, user } from "../stores";
     import ProgressCircle from './ProgressCircle.svelte';
     import Paper from '@smui/paper';
 

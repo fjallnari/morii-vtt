@@ -23,3 +23,11 @@ export const groupBy = <T>(arr: T[], keys: (keyof T)[]): { [key: string]: T[] } 
     return storage;
   }, {} as { [key: string]: T[] });
 }
+
+export const randint = (max: number) => {
+  return Math.floor(Math.random() * max);
+}
+
+export const randomColor = () => {
+  return randint(16777215).toString(16);
+}

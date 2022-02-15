@@ -7,7 +7,7 @@
 	import NotFound from "./routes/NotFound.svelte";
 	import Dashboard from "./routes/Dashboard.svelte";
 	import Auth from "./routes/Auth.svelte";
-	import { accessToken } from "./stores";
+	import { accessToken, user } from "./stores";
 	import { get } from 'svelte/store';
 	import ProgressCircle from "./components/ProgressCircle.svelte";
 
@@ -22,11 +22,10 @@
 				}
 			});
 
-			console.log(response);
-			return response.status === 200;
+			return response;
 		}
 		catch {
-			return false;
+			return null;
 		}
 	}
 
@@ -40,7 +39,16 @@
 			component: Dashboard,
 			conditions: [
 				async () => {
-					return await loadSecurePage('/api/welcome');			
+					const response = await loadSecurePage('/api/dashboard');
+					if( ! response ) {
+						return false
+					}
+
+					console.log(response.data.userInfo);
+
+					user.set(response.data.userInfo);
+
+					return response.status === 200;
 				}
 			]
 		}),

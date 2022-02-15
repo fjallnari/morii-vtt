@@ -5,10 +5,15 @@ interface CampaignSimple {
     isGM: boolean;
 }
 
+interface UserSettings {
+    pfpAnimal: number;
+    pfpColor: string;
+}
 
-export default interface UserInfo {
+export default interface UserDB {
     username: string;
     password: string;
     refresh_token: string;
+    settings: UserSettings;
     campaigns: CampaignSimple[];
 }

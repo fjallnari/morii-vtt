@@ -1,8 +1,10 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import { Collection, Document } from 'mongodb';
+import { Collection, Document, WithId } from 'mongodb';
 import { getCollection } from '../db/Mongo';
 import jwt from 'jsonwebtoken';
+import { randint, randomColor } from '../util/util';
+import UserDB from '../interfaces/UserDB';
 
 const router = express.Router();
 
@@ -19,6 +21,10 @@ router.post(
                 username: username,
                 password: hashedPassword,
                 refresh_token: "",
+                settings: {
+                    pfpAnimal: randint(13),
+                    pfpColor: randomColor()
+                },
                 campaigns: []
             });
         }
@@ -40,9 +46,9 @@ router.post(
 
         try {
             const usersCollection = <Collection<Document>> await getCollection('users');
-            const user = await usersCollection.findOne({username: username});
+            const user = <WithId<UserDB>> await usersCollection.findOne({username: username});
 
-            if (!user) {
+            if (! user) {
                 return res.status(403).send('Login failed.');
             }
             
@@ -61,7 +67,6 @@ router.post(
             
             // add new refresh token to the db
             await usersCollection.updateOne({_id: user._id}, {$set: {refresh_token: refreshToken}});
-            
 
             return res.status(200).json({ accessToken });
 

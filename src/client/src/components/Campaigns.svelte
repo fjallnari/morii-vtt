@@ -43,18 +43,20 @@
             bind:selectedIndex={selectionIndex}
         >
             {#each options as item}
-            <Item
-                style="margin-bottom: 1em; border-radius: 1%;"
-                on:SMUI:action={() => (selection = item.name)}
-                disabled={item.disabled}
-                selected={selection === item.name}
-            >
-                <Text>
-                    <PrimaryText>{item.name}</PrimaryText>
-                    <SecondaryText>{item.description}</SecondaryText>
-                </Text>
-                <Meta><img id="crown" src="../static/crown.svg" alt="crown"></Meta>
-            </Item>
+                <div  class="campaign-item">
+                    <Item
+                        style="margin-bottom: 1em; border-radius: 1%;"
+                        on:SMUI:action={() => (selection = item.name)}
+                        disabled={item.disabled}
+                        selected={selection === item.name}
+                    >
+                        <Text>
+                            <PrimaryText>{item.name}</PrimaryText>
+                            <SecondaryText>{item.description}</SecondaryText>
+                        </Text>
+                        <Meta><img id="crown" src="../static/crown.svg" alt="crown"></Meta>
+                    </Item>
+                </div>
             {/each}
         </List>
     </div>
@@ -89,6 +91,10 @@
     #create-campaign-button {
         margin-top: auto;
         padding-bottom: 1.5em;
+    }
+
+    .campaign-item:hover {
+        transform: scale(1.05);
     }
 
 </style>

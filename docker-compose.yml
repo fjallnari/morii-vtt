@@ -12,7 +12,7 @@ x-node-env: &node-env
     environment:
         TZ: "Europe/Prague"
     networks:
-        - spotter-app-network
+        - moonsparrow-network
 
 services:
     node-env:
@@ -28,7 +28,7 @@ services:
             "
 
 networks:
-    spotter-app-network:
+    moonsparrow-network:
         driver: bridge
 
 volumes:

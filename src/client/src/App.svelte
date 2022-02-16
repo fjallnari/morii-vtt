@@ -43,7 +43,7 @@
 					if( ! response ) {
 						return false
 					}
-					
+
 					user.set(response.data.userInfo);
 					return response.status === 200;
 				}

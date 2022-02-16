@@ -12,9 +12,11 @@
     "prepare-theme": "smui-theme compile public/static/smui-dark.css -i src/theme"
   },
   "devDependencies": {
+    "@material/elevation": "^13.0.0",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
+    "@smui/fab": "^6.0.0-beta.14",
     "@smui/icon-button": "^6.0.0-beta.14",
     "@smui/menu": "^6.0.0-beta.14",
     "@smui/paper": "^6.0.0-beta.14",
@@ -38,6 +40,7 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
+    "@mdi/font": "^6.5.95",
     "@smui/circular-progress": "^6.0.0-beta.14",
     "@smui/select": "^6.0.0-beta.13",
     "sirv-cli": "^2.0.0",

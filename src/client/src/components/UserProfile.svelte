@@ -41,7 +41,7 @@
     }
 
     #pfp {
-        border-radius: 25%;
+        border-radius: 15%;
         width: 3em;
         height: 3em;
     }

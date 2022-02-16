@@ -1,8 +1,10 @@
 <script lang="ts">
+    import { fade } from 'svelte/transition';
     import Campaigns from "../components/Campaigns.svelte";
     import Characters from "../components/Characters.svelte";
     import UserProfile from "../components/UserProfile.svelte";
-    import { fade } from 'svelte/transition';
+    import DashboardBox from "../components/DashboardBox.svelte";
+    import CampaignDetail from "../components/CampaignDetail.svelte";
 
     export let campaignDetailActive = false;
     
@@ -13,9 +15,13 @@
     <UserProfile></UserProfile>
     <h1>Dashboard</h1>
     <div class="dashboard-container">
-        <div class:active = {campaignDetailActive} class="campaigns-list"><Campaigns></Campaigns></div>
+        <div class:active = {campaignDetailActive} class="campaigns-list">
+            <DashboardBox title="Your Campaigns" component={Campaigns}></DashboardBox>
+        </div>
         {#if campaignDetailActive}
-            <div class="campaign-detail" transition:fade="{{duration: 100 }}"><Characters></Characters></div>
+            <div class="campaign-detail" transition:fade="{{duration: 100 }}">
+                <DashboardBox title="Bunions & Flagons" component={CampaignDetail}></DashboardBox>
+            </div>
         {/if}   
     </div>
     <button on:click={() => campaignDetailActive = ! campaignDetailActive}>Flip</button>

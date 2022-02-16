@@ -43,11 +43,8 @@
 					if( ! response ) {
 						return false
 					}
-
-					console.log(response.data.userInfo);
-
+					
 					user.set(response.data.userInfo);
-
 					return response.status === 200;
 				}
 			]

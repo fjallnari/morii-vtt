@@ -120,4 +120,29 @@ router.post(
     }
 )
 
+
+router.post(
+    '/api/auth/signout',
+    async (req, res, next) => {
+        try {
+            const refreshToken = req.cookies._refresh_token;
+            const decodedToken = <jwt.JwtPayload> jwt.decode(refreshToken);
+            const username = decodedToken.user.username;
+
+            const usersCollection = <Collection<Document>> await getCollection('users');
+            await usersCollection.updateOne({username: username}, {$set: {refresh_token: ""}});
+            
+            res.clearCookie('_refresh_token');
+            return res.status(200).end();
+        }
+
+        catch (error) {
+            return res.status(500).send('Signout failed');
+        }
+    }
+)
+
+
+
+
 export default router;

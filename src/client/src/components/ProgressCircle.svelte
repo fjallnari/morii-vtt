@@ -17,6 +17,11 @@
     #progress-circle {
       display: flex; 
       justify-content: center;
-      font-family: "Quicksand", sans-serif;
     }
+
+    #progress-text {
+      font-family: "Quicksand", sans-serif;
+      font-weight: 200;
+    }
+
 </style>

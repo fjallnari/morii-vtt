@@ -17,6 +17,9 @@ export enum PALETTE {
 
     MARIGOLD = "#F0A202",
     LIGHT_CORAL = "#F08080",
-    OLD_ROSE = "#C87E80"
+    OLD_ROSE = "#C87E80",
 
+    SUNRISE = "#F5B75A",
+    ETON_BLUE = "#9CC5A1",
+    PEWTER = "#93B7BE"
 }

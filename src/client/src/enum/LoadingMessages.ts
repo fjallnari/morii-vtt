@@ -242,7 +242,9 @@ const LOADING_MESSAGES = [
     "Our premium plan is faster",
     "Feeding unicorns...",
     "Not enough minerals.",
-    "Summoning more Ziggurats..."
+    "Summoning more Ziggurats...",
+    "What is love?",
+    "| || || |_"
   ];
 
 export default LOADING_MESSAGES;

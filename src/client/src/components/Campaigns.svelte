@@ -43,7 +43,7 @@
         bind:selectedIndex={selectionIndex}
     >
         {#each options as item}
-            <div  class="campaign-item">
+            <div class="campaign-item">
                 <Item
                     style="margin-bottom: 1em; border-radius: 1%;"
                     on:SMUI:action={() => sayHello(item.name)}
@@ -78,6 +78,10 @@
 
     .campaign-item:hover {
         transform: scale(1.05);
+    }
+
+    .campaign-item {
+        font-family: Montserrat;
     }
 
 </style>

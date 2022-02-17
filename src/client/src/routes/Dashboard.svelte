@@ -5,6 +5,8 @@
     import UserProfile from "../components/UserProfile.svelte";
     import DashboardBox from "../components/DashboardBox.svelte";
     import CampaignDetail from "../components/CampaignDetail.svelte";
+    import CampaignNew from '../components/CampaignNew.svelte';
+    import { campaignNewActive } from "../stores";
 
     export let campaignDetailActive = false;
     
@@ -16,7 +18,11 @@
     <h1>Dashboard</h1>
     <div class="dashboard-container">
         <div class:active = {campaignDetailActive} class="campaigns-list">
-            <DashboardBox title="Your Campaigns" component={Campaigns}></DashboardBox>
+            {#if $campaignNewActive}
+                <DashboardBox title="Create Campaign" component={CampaignNew}></DashboardBox>
+            {:else}
+                <DashboardBox title="Your Campaigns" component={Campaigns}></DashboardBox>
+            {/if}
         </div>
         {#if campaignDetailActive}
             <div class="campaign-detail" transition:fade="{{duration: 100 }}">

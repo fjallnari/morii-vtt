@@ -23,6 +23,7 @@
     "@smui/ripple": "^6.0.0-beta.14",
     "@smui/segmented-button": "^6.0.0-beta.13",
     "@smui/textfield": "^6.0.0-beta.13",
+    "@smui/tooltip": "^6.0.0-beta.14",
     "@tsconfig/svelte": "^2.0.0",
     "postcss": "^8.4.5",
     "rollup": "^2.3.4",

@@ -13,6 +13,10 @@ export enum PALETTE {
     SNOW = "#FCF7F8",
     ORANGE = "#F96E46",
     MAIZE = "#E2C044",
-    AMBER = "#FFBF00"
+    AMBER = "#FFBF00",
+
+    MARIGOLD = "#F0A202",
+    LIGHT_CORAL = "#F08080",
+    OLD_ROSE = "#C87E80"
 
 }

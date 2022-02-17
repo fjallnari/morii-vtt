@@ -9,6 +9,8 @@
     } from '@smui/list';
     import Fab, { Icon } from '@smui/fab';
     import IconButton from '@smui/icon-button/src/IconButton.svelte';
+    import Tooltip, { Wrapper } from '@smui/tooltip';
+    import { campaignNewActive } from '../stores';
  
     let options = [
         {
@@ -25,8 +27,9 @@
   let selection = '';
   let selectionIndex: number | undefined = undefined;
 
-  const sayHello = () => {
-      console.log('Hello');
+  const sayHello = (itemName: string) => {
+    selection = itemName;
+    console.log(itemName);
   }
 
 </script>
@@ -43,7 +46,7 @@
             <div  class="campaign-item">
                 <Item
                     style="margin-bottom: 1em; border-radius: 1%;"
-                    on:SMUI:action={() => (selection = item.name)}
+                    on:SMUI:action={() => sayHello(item.name)}
                     disabled={item.disabled}
                     selected={selection === item.name}
                 >
@@ -52,7 +55,10 @@
                         <SecondaryText>{item.description}</SecondaryText>
                     </Text>
                     <Meta>
-                        <img id="crown" src="../static/crown.svg" alt="crown">
+                        <Wrapper>
+                            <img id="crown" src="../static/crown.svg" alt="crown">
+                            <Tooltip>GM</Tooltip>
+                        </Wrapper>      
                     </Meta>
                 </Item>
             </div>
@@ -61,7 +67,7 @@
 </div>
 
 <div id="create-campaign-button">
-    <IconButton class="material-icons" on:click={sayHello}>add</IconButton>
+    <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>add</IconButton>
 </div>
 
 <style>

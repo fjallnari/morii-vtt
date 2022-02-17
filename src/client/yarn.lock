@@ -1331,6 +1331,15 @@
     "@smui/common" "^6.0.0-beta.13"
     svelte2tsx "^0.4.11"
 
+"@smui/tooltip@^6.0.0-beta.14":
+  version "6.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@smui/tooltip/-/tooltip-6.0.0-beta.14.tgz#017ce1dd1218e7a531388159fcdd337220ebac7a"
+  integrity sha512-54T2P5uHqAXYdNmhlEmZTjuGRfcCYlZmplexvQBI1we2sfC6G3BkvPlfv6zDep7CAPTe7m9pG2IVLceChePfZQ==
+  dependencies:
+    "@material/tooltip" "^13.0.0"
+    "@smui/common" "^6.0.0-beta.14"
+    svelte2tsx "^0.4.14"
+
 "@smui/top-app-bar@^6.0.0-beta.13":
   version "6.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/@smui/top-app-bar/-/top-app-bar-6.0.0-beta.13.tgz#bffb1af4171004f89900b1b16c14dea41271dfdb"

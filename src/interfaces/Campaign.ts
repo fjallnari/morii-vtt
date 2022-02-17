@@ -1,7 +1,9 @@
 import { ObjectId } from "mongodb";
 
 export default interface Campaign {
-    owner: ObjectId,
-    players: ObjectId,
+    _id: ObjectId,
+    name: string,
     system: string,
+    owner: ObjectId,
+    players: ObjectId[],
 }

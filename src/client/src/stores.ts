@@ -4,3 +4,4 @@ import type User from './interfaces/User';
 
 export const accessToken = writable("");
 export const user: Writable<User> = writable();
+export const campaignNewActive: Writable<boolean> = writable(false);

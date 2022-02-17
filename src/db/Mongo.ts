@@ -107,4 +107,5 @@ export async function setUpDB() {
     await initConnection(<string>process.env.MONGO_URL);
     const db = await getDb(process.env.MONGO_INITDB_DATABASE);
     await createCollectionIfNotExists("users", db, { "username": 1 }, {unique: true});
+    await createCollectionIfNotExists("campaigns", db);
 }

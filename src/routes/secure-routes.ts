@@ -53,7 +53,7 @@ router.get("/api/dashboard", auth, async (req, res) => {
         const user = await getUserFromToken(accessToken);
         const {campaigns, players } = await getCampaignsAndPlayers(user.campaigns);
 
-        return res.status(200).send({userInfo: { username: user.username, settings: user.settings, campaigns: campaigns , players: players}});
+        return res.status(200).send({userInfo: { _id: user._id.toString(), username: user.username, settings: user.settings, campaigns: campaigns , players: players}});
     }
     catch (err) {
         return res.status(401).end();

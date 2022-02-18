@@ -6,9 +6,10 @@
     import DashboardBox from "../components/DashboardBox.svelte";
     import CampaignDetail from "../components/CampaignDetail.svelte";
     import CampaignNew from '../components/CampaignNew.svelte';
-    import { campaignNewActive } from "../stores";
+    import { campaignNewActive, campaignDetailActive, selectedCampaign } from "../stores";
 
-    export let campaignDetailActive = false;
+    campaignDetailActive.set(false);
+    campaignNewActive.set(false);
     
 </script>
 
@@ -17,20 +18,19 @@
     <UserProfile></UserProfile>
     <h1>Dashboard</h1>
     <div class="dashboard-container">
-        <div class:active = {campaignDetailActive} class="campaigns-list">
+        <div class:active = {$campaignDetailActive} class="campaigns-list">
             {#if $campaignNewActive}
                 <DashboardBox title="Create Campaign" component={CampaignNew}></DashboardBox>
             {:else}
                 <DashboardBox title="Your Campaigns" component={Campaigns}></DashboardBox>
             {/if}
         </div>
-        {#if campaignDetailActive}
+        {#if $campaignDetailActive}
             <div class="campaign-detail" transition:fade="{{duration: 100 }}">
-                <DashboardBox title="Bunions & Flagons" component={CampaignDetail}></DashboardBox>
+                <DashboardBox title={$selectedCampaign.name} component={CampaignDetail}></DashboardBox>
             </div>
         {/if}   
     </div>
-    <button on:click={() => campaignDetailActive = ! campaignDetailActive}>Flip</button>
 </div>
 
 

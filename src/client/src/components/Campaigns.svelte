@@ -10,7 +10,7 @@
     import Fab, { Icon } from '@smui/fab';
     import IconButton from '@smui/icon-button/src/IconButton.svelte';
     import Tooltip, { Wrapper } from '@smui/tooltip';
-    import { campaignNewActive, user } from '../stores';
+    import { campaignDetailActive, campaignNewActive, selectedCampaign, user } from '../stores';
  
     let options = [
         {
@@ -24,14 +24,18 @@
             disabled: false,
         },
     ];
-    const campaigns = ($user).campaigns;
 
     let selection = '';
-    let selectionIndex: number | undefined = undefined;
 
-    const sayHello = (itemName: string) => {
-        selection = itemName;
-        console.log($user);
+    const showCampaignDetails = (campaignId: string) => {
+        selection = campaignId;
+        selectedCampaign.set($user.campaigns.find(campaign => campaign._id === campaignId));
+        campaignDetailActive.set(true);
+    }
+
+    const switchToCampaignCreation = () => {
+        campaignDetailActive.set(false);
+        campaignNewActive.set(! $campaignNewActive);
     }
 
 </script>
@@ -42,14 +46,13 @@
         style="width: 34em; text-align: left; gap: 1em;"
         twoLine
         singleSelection
-        bind:selectedIndex={selectionIndex}
     >
-        {#each campaigns as campaign}
+        {#each ($user).campaigns as campaign}
             <div class="campaign-item">
                 <Item
                     style="margin-bottom: 1em; border-radius: 1%;"
-                    on:SMUI:action={() => sayHello(campaign.name)}
-                    selected={selection === campaign.name}
+                    on:SMUI:action={() => showCampaignDetails(campaign._id)}
+                    selected={selection === campaign._id}
                 >
                     <Text>
                         <PrimaryText>{campaign.name}</PrimaryText>
@@ -57,9 +60,14 @@
                     </Text>
                     <Meta>
                         <Wrapper>
-                            <img id="crown" src="../static/crown.svg" alt="crown">
-                            <Tooltip>GM</Tooltip>
-                        </Wrapper>      
+                            {#if campaign.owner === $user._id}
+                                <img id="crown" src="../static/crown.svg" alt="crown">
+                                <Tooltip>GM</Tooltip>
+                            {:else}
+                                <img id="dice" src="../static/dice.svg" alt="dice">
+                                <Tooltip>Player</Tooltip>
+                            {/if}
+                        </Wrapper>
                     </Meta>
                 </Item>
             </div>
@@ -68,7 +76,7 @@
 </div>
 
 <div id="create-campaign-button">
-    <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>add</IconButton>
+    <IconButton class="material-icons" on:click={ () => switchToCampaignCreation() }>add</IconButton>
 </div>
 
 <style>

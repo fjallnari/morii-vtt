@@ -7,6 +7,7 @@ interface UserSettings {
 }
 
 export default interface User {
+    _id: string;
     username: string;
     settings: UserSettings;
     campaigns: Campaign[];

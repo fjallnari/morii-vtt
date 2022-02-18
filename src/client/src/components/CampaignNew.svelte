@@ -4,13 +4,39 @@
     import Textfield from '@smui/textfield';
     import Select, { Option } from '@smui/select';
 
-    import { campaignNewActive } from '../stores';
-import ProgressCircle from './ProgressCircle.svelte';
+    import { campaignNewActive, user, accessToken } from '../stores';
+    import ProgressCircle from './ProgressCircle.svelte';
+    import axios from 'axios';
 
     const gameSystems = ["D&D 5E"];
     let campaignName: string = "";
     let gameSystem: string = gameSystems[0];
     let inProgress: boolean = false;
+
+    const createCampaign = async () => {
+        if (! campaignName) {
+            return;
+        }
+        try {
+            inProgress = true;
+            await new Promise(res => setTimeout(res, 1000));
+
+            await axios.post('/api/create-campaign', {
+                campaignName: campaignName,
+                gameSystem: gameSystem
+            },
+            {
+                headers: {
+					'Authorization': `Bearer ${$accessToken}`
+				}
+            });
+            campaignNewActive.set(! $campaignNewActive);
+        }
+        catch (err) {
+            console.log(err);
+        }
+        
+    }
 
 
 </script>
@@ -26,7 +52,7 @@ import ProgressCircle from './ProgressCircle.svelte';
             </Select>
         </div>
         <div style="padding-top: 3em;">
-            <Button variant="raised" color="primary" on:click={() => inProgress = true}>
+            <Button variant="raised" color="primary" on:click={createCampaign}>
                 <Label>Create!</Label>
             </Button>
         </div>
@@ -37,7 +63,7 @@ import ProgressCircle from './ProgressCircle.svelte';
     </div>
 {/if}
 
-<div id="create-campaign-button">
+<div id="cancel-button">
     <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>close</IconButton>
 </div>
 
@@ -55,7 +81,7 @@ import ProgressCircle from './ProgressCircle.svelte';
         gap: 2em;        
     }
 
-    #create-campaign-button {
+    #cancel-button {
         margin-top: auto;
         padding-bottom: 1.5em;
     }

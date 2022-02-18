@@ -41,7 +41,7 @@
 				async () => {
 					const response = await loadSecurePage('/api/dashboard');
 					if( ! response ) {
-						return false
+						return false;
 					}
 
 					user.set(response.data.userInfo);

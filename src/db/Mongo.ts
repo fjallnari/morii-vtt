@@ -1,4 +1,4 @@
-import { Collection, Db, FindCursor, FindOptions, IndexDescription, IndexInformationOptions, IndexSpecification, MongoClient } from "mongodb";
+import { Collection, Db, FindCursor, FindOptions, IndexDescription, IndexInformationOptions, IndexSpecification, MongoClient, ObjectId } from "mongodb";
 
 let _client: MongoClient;
 
@@ -82,7 +82,7 @@ function printDatabase(database: Db) {
  * @param options - e.g. projection
  * @returns 
 */
-export const getIdsFromCollection = async (ids: number[], collectionName: string, options: FindOptions | undefined = undefined) => {
+export const getIdsFromCollection = async (ids: ObjectId[], collectionName: string, options: FindOptions | undefined = undefined) => {
     const db = await getDb(process.env.MONGO_INITDB_DATABASE);
     
     if (await collectionExists(collectionName, db)){

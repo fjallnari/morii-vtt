@@ -10,7 +10,7 @@
     import Fab, { Icon } from '@smui/fab';
     import IconButton from '@smui/icon-button/src/IconButton.svelte';
     import Tooltip, { Wrapper } from '@smui/tooltip';
-    import { campaignNewActive } from '../stores';
+    import { campaignNewActive, user } from '../stores';
  
     let options = [
         {
@@ -24,13 +24,15 @@
             disabled: false,
         },
     ];
-  let selection = '';
-  let selectionIndex: number | undefined = undefined;
+    const campaigns = ($user).campaigns;
 
-  const sayHello = (itemName: string) => {
-    selection = itemName;
-    console.log(itemName);
-  }
+    let selection = '';
+    let selectionIndex: number | undefined = undefined;
+
+    const sayHello = (itemName: string) => {
+        selection = itemName;
+        console.log($user);
+    }
 
 </script>
 
@@ -42,17 +44,16 @@
         singleSelection
         bind:selectedIndex={selectionIndex}
     >
-        {#each options as item}
+        {#each campaigns as campaign}
             <div class="campaign-item">
                 <Item
                     style="margin-bottom: 1em; border-radius: 1%;"
-                    on:SMUI:action={() => sayHello(item.name)}
-                    disabled={item.disabled}
-                    selected={selection === item.name}
+                    on:SMUI:action={() => sayHello(campaign.name)}
+                    selected={selection === campaign.name}
                 >
                     <Text>
-                        <PrimaryText>{item.name}</PrimaryText>
-                        <SecondaryText>{item.description}</SecondaryText>
+                        <PrimaryText>{campaign.name}</PrimaryText>
+                        <SecondaryText>{campaign.system}</SecondaryText>
                     </Text>
                     <Meta>
                         <Wrapper>

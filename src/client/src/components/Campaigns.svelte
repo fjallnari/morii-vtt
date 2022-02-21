@@ -60,7 +60,7 @@
                     </Text>
                     <Meta>
                         <Wrapper>
-                            {#if campaign.owner === $user._id}
+                            {#if campaign.owner._id === $user._id}
                                 <img id="crown" src="../static/crown.svg" alt="crown">
                                 <Tooltip>GM</Tooltip>
                             {:else}

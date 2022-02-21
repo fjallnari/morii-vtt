@@ -31,13 +31,14 @@
 				}
             });
             campaignNewActive.set(! $campaignNewActive);
+            // there should be a compoment only reload on the campaigns list
+            location.reload();
         }
         catch (err) {
             console.log(err);
         }
         
     }
-
 
 </script>
 

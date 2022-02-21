@@ -1,6 +1,6 @@
 export default interface UserSimple {
     _id: string;
     username: string;
-    pfpAnimal: number;
+    pfpID: number;
     pfpColor: string;
 }

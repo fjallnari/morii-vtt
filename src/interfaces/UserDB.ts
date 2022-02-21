@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 interface UserSettings {
-    pfpAnimal: number;
+    pfpID: number;
     pfpColor: string;
 }
 

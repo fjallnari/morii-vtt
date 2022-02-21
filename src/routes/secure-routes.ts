@@ -18,32 +18,39 @@ const getUserFromToken = async (accessToken: string) => {
     return <WithId<UserDB>> await usersCollection.findOne({ _id: userID});
 }
 
+const simplifyPlayerInfo = (player: UserDB) => {
+    return {
+        _id: player._id.toString(),
+        username: player.username,
+        pfpID: player.settings.pfpID, 
+        pfpColor: player.settings.pfpColor
+    };
+}
+
 /**
  * Fills all the needed data for each campaign - (players & and other specific campaign info)
  * @param campaigns 
  * @returns 
  */
-const getCampaignsAndPlayers = async (campaigns: ObjectId[]) => {
+const getFullCampaignsInfo = async (campaigns: ObjectId[]) => {
     const campaignsInfo = <Campaign[]> await getIdsFromCollection(campaigns, "campaigns");
-    const allPlayers = campaignsInfo?.flatMap(campaign => campaign.players);
+    const users = await getCollection('users');
 
-    // fill in all the player info
-    const allPlayerInfo = <UserDB[]> await getIdsFromCollection(allPlayers, "users");
-    const simplePlayerInfo = allPlayerInfo?.map(player => {
-        return { _id: player._id.toString(), username: player.username, pfpAnimal: player.settings.pfpAnimal, pfpColor: player.settings.pfpColor}
-    });
+    // gets additional info for all players in campaign, then merges it with the original "campaign" object
+    return await Promise.all(campaignsInfo.map( async campaign => {
+        const allPlayerInfo = <UserDB[]> await users?.find({_id: {$in : campaign.players}}).toArray();
+        const ownerInfo = <UserDB> await users?.findOne({ _id: campaign.owner });
 
-    const simpleCampaignInfo = campaignsInfo.map( campaign => {
-        return {
-            _id: campaign._id.toString(), 
-            name: campaign.name, 
-            system: campaign.system, 
-            owner: campaign.owner.toString(), 
-            players: campaign.players.map(player => player.toString())}
-    });
+        const simplePlayerInfo = allPlayerInfo?.map(player => {
+            return simplifyPlayerInfo(player);
+        });
 
-
-    return {campaigns: simpleCampaignInfo, players: simplePlayerInfo}
+        return Object.assign( campaign, 
+            { _id: campaign._id.toString() }, 
+            { owner: simplifyPlayerInfo(ownerInfo) },
+            { players: simplePlayerInfo }
+        );
+    }));
 }
 
 
@@ -51,11 +58,12 @@ router.get("/api/dashboard", auth, async (req, res) => {
     try {
         const accessToken = <string> req.headers.authorization?.split(' ')[1];
         const user = await getUserFromToken(accessToken);
-        const {campaigns, players } = await getCampaignsAndPlayers(user.campaigns);
+        const campaignsInfo = await getFullCampaignsInfo(user.campaigns);
 
-        return res.status(200).send({userInfo: { _id: user._id.toString(), username: user.username, settings: user.settings, campaigns: campaigns , players: players}});
+        return res.status(200).send({userInfo: { _id: user._id.toString(), username: user.username, settings: user.settings, campaigns: campaignsInfo }});
     }
     catch (err) {
+        console.log(err);
         return res.status(401).end();
     }
 
@@ -77,7 +85,9 @@ router.post('/api/create-campaign', auth, async (req, res, next) => {
             name: campaignName,
             system: gameSystem,
             owner: userID,
-            players: []            
+            players: [
+
+            ]            
         });
         
         // add campaign to user's campaigns

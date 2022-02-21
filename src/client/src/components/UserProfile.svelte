@@ -11,7 +11,7 @@
 <div id="menu-top">
     <Paper style="cursor: pointer;" on:click={() => {openSettings = true}}>
         <div id="menu-profile">
-            <img id="pfp" style="background-color: #{$user.settings.pfpColor};" src="../static/pfp/{ANIMALS[$user.settings.pfpAnimal]}.svg" alt="pfp">
+            <img id="pfp" style="background-color: #{$user.settings.pfpColor};" src="../static/pfp/{ANIMALS[$user.settings.pfpID]}.svg" alt="pfp">
             <h3>{$user.username}</h3>
         </div>
     </Paper>

@@ -6,6 +6,7 @@
 
     import { campaignNewActive, user, accessToken } from '../stores';
     import ProgressCircle from './ProgressCircle.svelte';
+    import type Campaign from '../interfaces/Campaign';
     import axios from 'axios';
 
     const gameSystems = ["D&D 5E"];
@@ -21,7 +22,7 @@
             inProgress = true;
             await new Promise(res => setTimeout(res, 1000));
 
-            await axios.post('/api/create-campaign', {
+            const response = await axios.post('/api/create-campaign', {
                 campaignName: campaignName,
                 gameSystem: gameSystem
             },
@@ -30,9 +31,22 @@
 					'Authorization': `Bearer ${$accessToken}`
 				}
             });
+            const userInfo = $user;
+            const newCampaign: Campaign = response.data.campaign;
+            const newCampaignWithOwner = Object.assign( newCampaign, {
+                owner: {
+                    _id: userInfo._id, 
+                    username: userInfo.username, 
+                    pfpID: userInfo.settings.pfpID, 
+                    pfpColor: userInfo.settings.pfpID
+                }
+            });
+
+            user.update( userInfo => {
+                return Object.assign( userInfo, { campaigns: userInfo.campaigns.concat([newCampaignWithOwner]) });
+            });
+            
             campaignNewActive.set(! $campaignNewActive);
-            // there should be a compoment only reload on the campaigns list
-            location.reload();
         }
         catch (err) {
             console.log(err);

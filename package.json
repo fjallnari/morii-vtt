@@ -8,6 +8,7 @@
     "build-client": "cd src/client && yarn build-prod && cd ../..",
     "start-server-dev": "ts-node-dev src/index.ts",
     "run-dev": "yarn build-client && yarn start-server-dev",
+    "dev-client": "cd src/client && yarn dev",
     "build-prod": "yarn install --frozen-lockfile && yarn build-client && yarn build-server",
     "start-prod": "node dist/"
   },

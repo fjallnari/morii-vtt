@@ -81,19 +81,21 @@ router.post('/api/create-campaign', auth, async (req, res, next) => {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
         const usersCollection = <Collection<Document>> await getCollection('users');
 
-        const campaign = await campaignsCollection.insertOne({
+        const newCampaign = {
             name: campaignName,
             system: gameSystem,
             owner: userID,
             players: [
-
+                
             ]            
-        });
+        };
+
+        const insertResult = await campaignsCollection.insertOne(newCampaign);
         
         // add campaign to user's campaigns
-        await usersCollection.updateOne({_id: userID}, {$push: {campaigns: campaign.insertedId }});
+        await usersCollection.updateOne({_id: userID}, {$push: {campaigns: insertResult.insertedId }});
 
-        return res.status(200).end();
+        return res.status(200).send({campaign: Object.assign(newCampaign, {_id: insertResult.insertedId})});
     }
     catch (error) {
         return res.status(500).send('Creation failed');

@@ -244,7 +244,8 @@ const LOADING_MESSAGES = [
     "Not enough minerals.",
     "Summoning more Ziggurats...",
     "What is love?",
-    "| || || |_"
+    "| || || |_",
+    "(╯°□°)╯︵ ┻━┻",
   ];
 
 export default LOADING_MESSAGES;

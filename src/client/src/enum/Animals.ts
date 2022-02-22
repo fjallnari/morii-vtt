@@ -12,7 +12,10 @@ const ANIMALS = [
     "octopus",
     "rabbit",
     "sheep",
-    "turtle"
+    "turtle",
+    "pangolin",
+    "finch",
+    "parrot"
 ]
 
 

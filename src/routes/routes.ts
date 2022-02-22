@@ -22,7 +22,7 @@ router.post(
                 password: hashedPassword,
                 refresh_token: "",
                 settings: {
-                    pfpID: randint(13),
+                    pfpID: randint(16),
                     pfpColor: randomColor()
                 },
                 campaigns: []

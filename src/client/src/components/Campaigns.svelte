@@ -40,10 +40,10 @@
 
 </script>
 
-<div>
+<div class="campaigns-content">
     <List
         class="demo-list"
-        style="width: 34em; text-align: left; gap: 1em;"
+        style="width: 36em; text-align: left; gap: 1em;"
         twoLine
         singleSelection
     >
@@ -59,15 +59,17 @@
                         <SecondaryText>{campaign.system}</SecondaryText>
                     </Text>
                     <Meta>
-                        <Wrapper>
-                            {#if campaign.owner._id === $user._id}
-                                <img id="crown" src="../static/crown.svg" alt="crown">
-                                <Tooltip>GM</Tooltip>
-                            {:else}
-                                <img id="dice" src="../static/dice.svg" alt="dice">
-                                <Tooltip>Player</Tooltip>
-                            {/if}
-                        </Wrapper>
+                        <div class="role-image">
+                            <Wrapper>
+                                {#if campaign.owner._id === $user._id}
+                                    <img id="crown" src="../static/crown.svg" alt="crown">
+                                    <Tooltip>GM</Tooltip>
+                                {:else}
+                                    <img id="dice" src="../static/dice.svg" alt="dice">
+                                    <Tooltip>Player</Tooltip>
+                                {/if}
+                            </Wrapper>
+                        </div>
                     </Meta>
                 </Item>
             </div>
@@ -85,8 +87,18 @@
         padding-bottom: 1.5em;
     }
 
+    .campaigns-content {
+        height: 25em;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .role-image {
+        margin-right: 2em;
+    }
+
     .campaign-item:hover {
-        transform: scale(1.05);
+        transform: scale(1.02);
     }
 
     .campaign-item {

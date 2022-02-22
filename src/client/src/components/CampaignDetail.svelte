@@ -1,5 +1,5 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button/src/IconButton.svelte';
+    import IconButton from '@smui/icon-button';
     import List, {
         Item,
         Graphic,
@@ -7,8 +7,9 @@
         Meta,
         Text,
     } from '@smui/list';
-import App from '../App.svelte';
+    import App from '../App.svelte';
     import { campaignDetailActive, selectedCampaign, user } from '../stores';
+    import InvitePlayers from './InvitePlayers.svelte';
 
     let options = [ 'Cyril', 'Tom Bombadill', 'Queen Elisabeth The Thirteenth of Her Name, Leader of The Island Folk'];
 
@@ -17,7 +18,7 @@ import App from '../App.svelte';
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
         <IconButton class="material-icons" style="color: #b7ce63" ripple={false} on:click={() => {}}>play_arrow</IconButton>
-        <IconButton class="material-icons" style="color: #38b9d6" ripple={false} on:click={() => {}}>add</IconButton>
+        <InvitePlayers></InvitePlayers>
         <IconButton class="material-icons" style="color: #9A9196" ripple={false} on:click={() => {}}>delete</IconButton>
         <IconButton class="material-icons" style="color: #ff6a60" ripple={false} on:click={() => {}}>logout</IconButton>  
     </div>

@@ -31,6 +31,7 @@
 					'Authorization': `Bearer ${$accessToken}`
 				}
             });
+            // live-reloading to see the newly added campaign instantly without the need to reload
             const userInfo = $user;
             const newCampaign: Campaign = response.data.campaign;
             const newCampaignWithOwner = Object.assign( newCampaign, {

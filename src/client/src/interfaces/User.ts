@@ -11,4 +11,5 @@ export default interface User {
     username: string;
     settings: UserSettings;
     campaigns: Campaign[];
+    invited_to: Campaign[];
 }

@@ -25,7 +25,8 @@ router.post(
                     pfpID: randint(16),
                     pfpColor: randomColor()
                 },
-                campaigns: []
+                campaigns: [],
+                invited_to: [],
             });
         }
         catch (err) {

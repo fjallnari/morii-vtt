@@ -6,6 +6,7 @@ import express from "express";
 import { getCollection, setUpDB } from './db/Mongo';
 import routes from './routes/routes';
 import secureRoutes from './routes/secure-routes';
+import ownerRoutes from './routes/owner-routes';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -38,6 +39,7 @@ const main = () => {
 
   app.use('/', routes);
   app.use('/', secureRoutes);
+  app.use('/', ownerRoutes);
 
   app.use('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client/public', 'index.html'));

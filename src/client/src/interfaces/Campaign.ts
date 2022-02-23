@@ -6,4 +6,5 @@ export default interface Campaign {
     system: string,
     owner: UserSimple,
     players: UserSimple[],
+    invited: UserSimple[]
 }

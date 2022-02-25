@@ -26,7 +26,6 @@ router.post(
                     pfpColor: randomColor()
                 },
                 campaigns: [],
-                invited_to: [],
             });
         }
         catch (err) {

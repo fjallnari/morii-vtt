@@ -40,7 +40,6 @@ router.post('/api/create-campaign', auth, async (req, res, next) => {
             system: gameSystem,
             owner: userID,
             players: [],
-            invited: []      
         };
 
         const insertResult = await campaignsCollection.insertOne(newCampaign);

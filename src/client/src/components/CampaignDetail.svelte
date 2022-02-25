@@ -9,7 +9,7 @@
     } from '@smui/list';
     import App from '../App.svelte';
     import { campaignDetailActive, selectedCampaign, user } from '../stores';
-    import InvitePlayers from './InvitePlayers.svelte';
+    import CreateInviteCode from './CreateInviteCode.svelte';
 
     let options = [ 'Cyril', 'Tom Bombadill', 'Queen Elisabeth The Thirteenth of Her Name, Leader of The Island Folk'];
 
@@ -17,10 +17,10 @@
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
-        <IconButton class="material-icons" style="color: #b7ce63" ripple={false} on:click={() => {}}>play_arrow</IconButton>
-        <InvitePlayers></InvitePlayers>
-        <IconButton class="material-icons" style="color: #9A9196" ripple={false} on:click={() => {}}>delete</IconButton>
-        <IconButton class="material-icons" style="color: #ff6a60" ripple={false} on:click={() => {}}>logout</IconButton>  
+        <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {}}>play_arrow</IconButton>
+        <CreateInviteCode></CreateInviteCode>
+        <IconButton class="material-icons" style="color: #FCC8B2" ripple={false} on:click={() => {}}>delete</IconButton>
+        <IconButton class="material-icons" style="color: #EFA48B" ripple={false} on:click={() => {}}>logout</IconButton>  
     </div>
     <div id="players-list">
         <List

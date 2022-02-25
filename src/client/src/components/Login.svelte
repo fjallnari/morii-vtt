@@ -52,8 +52,7 @@
                     <Button on:click={loginUser} variant="raised">
                         <Label>Sign In</Label>
                     </Button>
-                </div>    
-
+                </div>
             {:else}
                 <ProgressCircle></ProgressCircle>
             {/if}

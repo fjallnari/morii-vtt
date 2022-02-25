@@ -6,5 +6,5 @@ export default interface Campaign {
     system: string,
     owner: ObjectId,
     players: ObjectId[],
-    invited: ObjectId[],
+    invite?: ObjectId,
 }

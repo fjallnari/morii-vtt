@@ -1,3 +1,4 @@
+import type Invite from "./Invite";
 import type UserSimple from "./UserSimple";
 
 export default interface Campaign {
@@ -6,5 +7,5 @@ export default interface Campaign {
     system: string,
     owner: UserSimple,
     players: UserSimple[],
-    invited: UserSimple[]
+    invite: Invite,
 }

@@ -1326,6 +1326,20 @@
     "@smui/ripple" "^6.0.0-beta.13"
     svelte2tsx "^0.4.11"
 
+"@smui/snackbar@^6.0.0-beta.14":
+  version "6.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@smui/snackbar/-/snackbar-6.0.0-beta.14.tgz#c7d9c1484e652672a270efca239e3f7dc3ca4333"
+  integrity sha512-dFihalGJWiYBpFrsfcujgQpQ2aMgjdgl2UFt6TT1R/9wMEZrv1R+8W6x2zW5vwPiKJiXR+h2vaA280G0LiLD7w==
+  dependencies:
+    "@material/dom" "^13.0.0"
+    "@material/feature-targeting" "^13.0.0"
+    "@material/snackbar" "^13.0.0"
+    "@smui/button" "^6.0.0-beta.14"
+    "@smui/common" "^6.0.0-beta.14"
+    "@smui/icon-button" "^6.0.0-beta.14"
+    "@smui/ripple" "^6.0.0-beta.14"
+    svelte2tsx "^0.4.14"
+
 "@smui/switch@^6.0.0-beta.13":
   version "6.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/@smui/switch/-/switch-6.0.0-beta.13.tgz#963e4d928b2c940500024a3e38587c951ca85a5b"
@@ -2942,6 +2956,11 @@ svelte-check@^2.0.0:
     source-map "^0.7.3"
     svelte-preprocess "^4.0.0"
     typescript "*"
+
+svelte-copy-to-clipboard@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/svelte-copy-to-clipboard/-/svelte-copy-to-clipboard-0.2.5.tgz#4fd5c89a6415b7f6a4e153a9896b50b2dee12611"
+  integrity sha512-EAULxib4pRa59nyz25dDKITgSAVkrNVojRZVCSO8MIFd5GJljghJaCTIe/7R+O3GxKYIwJ3XHDNoY1hfjJeyEg==
 
 svelte-material-ui@^6.0.0-beta.13:
   version "6.0.0-beta.13"

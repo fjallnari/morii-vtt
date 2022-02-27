@@ -7,8 +7,10 @@
     import CircularProgress from '@smui/circular-progress';
     import PasswordField from './PasswordField.svelte';
     import Ripple from '@smui/ripple';
+    import CopyToClipboard from 'svelte-copy-to-clipboard';
 
     let open = false;
+    let codeWasCopied = false;
     let password: string = "";
     let inProgress = false; 
 
@@ -45,7 +47,7 @@
 
 
 <div>
-    <IconButton ripple={false} on:click={() => {open = true}}>
+    <IconButton ripple={false} on:click={() => {codeWasCopied = false; open = true}}>
         <img id="invite" src="../static/account-plus.svg" alt="invite">
     </IconButton>
     <Dialog
@@ -66,12 +68,14 @@
                     <Label>Generate invite code</Label>
                 </Button>
             {:else}
-                <div class="invite-card" >
-                    <div class="invite-code" use:Ripple={{ surface: true }} on:click={() => {}}>
-                        <Icon class="material-icons">content_copy</Icon>
-                        <p>{$selectedCampaign.invite.invite_code}</p>
-                        <Icon class="material-icons">{$selectedCampaign.invite.has_password ? "password" : "no_encryption"}</Icon>
-                    </div>
+                <div class="invite-card">
+                    <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
+                        <div class="invite-code" use:Ripple={{ surface: true }} on:click={copy}>
+                            <Icon class="material-icons">{codeWasCopied ? "check" : "content_copy"}</Icon>
+                            <p>{$selectedCampaign.invite.invite_code}</p>
+                            <Icon class="material-icons">{$selectedCampaign.invite.has_password ? "password" : "no_encryption"}</Icon>
+                        </div>
+                    </CopyToClipboard>
                     <IconButton class="material-icons" style="color: #ff6a60;" ripple={false} on:click={() => {inProgress = true}}>delete</IconButton>
                 </div>
             {/if}

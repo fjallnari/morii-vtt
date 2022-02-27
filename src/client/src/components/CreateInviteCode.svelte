@@ -15,7 +15,6 @@
     let inProgress = false; 
 
     const createInviteCode = async () => {
-
         try {
             inProgress = true;
             const response = await axios.post('/api/create-invite-code', {
@@ -27,8 +26,6 @@
 					'Authorization': `Bearer ${$accessToken}`
 				}
             });
-
-            console.log(response);
             
             // "Live-reloads" campaign invites
             if (response.status === 200) {
@@ -41,6 +38,33 @@
         catch (err) {
             console.log(err);
         }
+    }
+
+    const removeInviteCode = async () => {
+        try {
+            inProgress = true;
+            const response = await axios.post('/api/remove-invite-code', {
+                campaignID: $selectedCampaign._id
+            },
+            {
+                headers: {
+					'Authorization': `Bearer ${$accessToken}`
+				}
+            });
+            
+            // "Live-reloads" campaign invites
+            if (response.status === 200) {
+                selectedCampaign.set(Object.assign($selectedCampaign, {
+                    invite: ""
+                }));
+            }
+            inProgress = false;
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+
     }
 
 </script>
@@ -62,11 +86,14 @@
             {#if inProgress}
                 <CircularProgress style="height: 2em; width: 2em;" indeterminate></CircularProgress>
             {:else if ! $selectedCampaign.invite}
-                <PasswordField bind:password={password} label="Password"></PasswordField>
-                
-                <Button variant="raised" on:click={() => createInviteCode()}>
-                    <Label>Generate invite code</Label>
-                </Button>
+                <div id="generate-code-div">
+                    <PasswordField bind:password={password} label="Password"></PasswordField>
+
+                    <IconButton ripple={false} on:click={() => createInviteCode()}>
+                        <img id="invite" src="../static/account-plus.svg" alt="invite">
+                    </IconButton>
+                </div>
+                <p id="invite-tooltip">Generates new invite code. Password is optional.</p>
             {:else}
                 <div class="invite-card">
                     <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
@@ -76,7 +103,7 @@
                             <Icon class="material-icons">{$selectedCampaign.invite.has_password ? "password" : "no_encryption"}</Icon>
                         </div>
                     </CopyToClipboard>
-                    <IconButton class="material-icons" style="color: #ff6a60;" ripple={false} on:click={() => {inProgress = true}}>delete</IconButton>
+                    <IconButton class="material-icons" style="color: #ff6a60;" ripple={false} on:click={() => removeInviteCode()}>delete</IconButton>
                 </div>
             {/if}
         </div>
@@ -90,7 +117,7 @@
     .dialog-content {
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         gap: 1em;
         margin: 1em;
@@ -126,6 +153,20 @@
         font-size: 1.5em;
         font-family: Montserrat;
         font-weight: 400;
+    }
+
+    #generate-code-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+    }
+
+    #invite-tooltip {
+        color: #FCF7F8;
+        font-size: 1em;
+        font-family: Montserrat;
     }
     
     #close-button {

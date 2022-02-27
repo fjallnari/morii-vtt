@@ -45,12 +45,14 @@
 
 
 <div>
-    <IconButton class="material-icons" style="color: #DBD8B3" ripple={false} on:click={ () => {open = true}}>add</IconButton>
+    <IconButton ripple={false} on:click={() => {open = true}}>
+        <img id="invite" src="../static/account-plus.svg" alt="invite">
+    </IconButton>
     <Dialog
         bind:open
         aria-labelledby="simple-title"
         aria-describedby="simple-content"
-        surface$style="width: 28em; max-width: calc(100vw - 32px);"
+        surface$style="width: 30em; max-width: calc(100vw - 32px);"
     >
         <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
         <h3 id="simple-title">Invite Players to {$selectedCampaign.name}</h3>
@@ -64,9 +66,13 @@
                     <Label>Generate invite code</Label>
                 </Button>
             {:else}
-                <div class="invite-card" use:Ripple={{ surface: true }} on:click={() => {}}>
-                    <Icon class="material-icons">content_copy</Icon>
-                    <p class="invite-code">{$selectedCampaign.invite.invite_code}</p>
+                <div class="invite-card" >
+                    <div class="invite-code" use:Ripple={{ surface: true }} on:click={() => {}}>
+                        <Icon class="material-icons">content_copy</Icon>
+                        <p>{$selectedCampaign.invite.invite_code}</p>
+                        <Icon class="material-icons">{$selectedCampaign.invite.has_password ? "password" : "no_encryption"}</Icon>
+                    </div>
+                    <IconButton class="material-icons" style="color: #ff6a60;" ripple={false} on:click={() => {inProgress = true}}>delete</IconButton>
                 </div>
             {/if}
         </div>
@@ -89,17 +95,23 @@
     .invite-card {
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+        padding-right: 1em;
+        cursor: pointer;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 3px;
+    }
+
+    .invite-code {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         align-items: center;
         gap: 1em;
         padding-left: 1em;
         padding-right: 1em;
-        cursor: pointer;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 5px;
-    }
-
-    .invite-code {
         color: #FCF7F8;
         font-size: 1em;
         font-family: Montserrat;

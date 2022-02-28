@@ -1,6 +1,4 @@
 <script lang="ts">
-import App from "../App.svelte";
-
     export let title = "";
     export let component;
 </script>

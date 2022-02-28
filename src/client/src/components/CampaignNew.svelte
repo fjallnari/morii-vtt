@@ -1,5 +1,5 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button/src/IconButton.svelte';
+    import IconButton from '@smui/icon-button';
     import Button, { Label } from '@smui/button';
     import Textfield from '@smui/textfield';
     import Select, { Option } from '@smui/select';
@@ -31,7 +31,8 @@
 					'Authorization': `Bearer ${$accessToken}`
 				}
             });
-            // live-reloading to see the newly added campaign instantly without the need to reload
+
+            // "live-reloading" to see the newly added campaign instantly without the need to hard reload
             const userInfo = $user;
             const newCampaign: Campaign = response.data.campaign;
             const newCampaignWithOwner = Object.assign( newCampaign, {
@@ -46,7 +47,7 @@
             user.update( userInfo => {
                 return Object.assign( userInfo, { campaigns: userInfo.campaigns.concat([newCampaignWithOwner]) });
             });
-            
+                        
             campaignNewActive.set(! $campaignNewActive);
         }
         catch (err) {

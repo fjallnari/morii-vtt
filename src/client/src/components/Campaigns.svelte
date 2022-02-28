@@ -1,29 +1,14 @@
 <script lang="ts">
     import List, {
         Item,
-        Graphic,
         Meta,
         Text,
         PrimaryText,
         SecondaryText,
     } from '@smui/list';
-    import Fab, { Icon } from '@smui/fab';
     import IconButton from '@smui/icon-button/src/IconButton.svelte';
     import Tooltip, { Wrapper } from '@smui/tooltip';
     import { campaignDetailActive, campaignNewActive, selectedCampaign, user } from '../stores';
- 
-    let options = [
-        {
-            name: 'Bunions & Flagons',
-            description: 'D&D 5E',
-            disabled: false,
-        },
-        {
-            name: 'The Forlorn Mysterium',
-            description: 'Call of Cthulhu',
-            disabled: false,
-        },
-    ];
 
     let selection = '';
 
@@ -47,7 +32,7 @@
         twoLine
         singleSelection
     >
-        {#each ($user).campaigns as campaign}
+        {#each $user.campaigns as campaign}
             <div class="campaign-item">
                 <Item
                     style="margin-bottom: 1em; border-radius: 1%;"

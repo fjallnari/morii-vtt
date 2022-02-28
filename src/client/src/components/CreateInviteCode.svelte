@@ -72,7 +72,7 @@
 
 <div>
     <IconButton ripple={false} on:click={() => {codeWasCopied = false; open = true}}>
-        <img id="invite" src="../static/account-plus.svg" alt="invite">
+        <img id="invite" src="../static/invite.svg" alt="invite">
     </IconButton>
     <Dialog
         bind:open
@@ -90,7 +90,7 @@
                     <PasswordField bind:password={password} label="Password"></PasswordField>
 
                     <IconButton ripple={false} on:click={() => createInviteCode()}>
-                        <img id="invite" src="../static/account-plus.svg" alt="invite">
+                        <img id="invite" src="../static/invite.svg" alt="invite">
                     </IconButton>
                 </div>
                 <p id="invite-tooltip">Generates new invite code. Password is optional.</p>

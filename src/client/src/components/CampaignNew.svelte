@@ -20,7 +20,7 @@
         }
         try {
             inProgress = true;
-            await new Promise(res => setTimeout(res, 1000));
+            // await new Promise(res => setTimeout(res, 1000));
 
             const response = await axios.post('/api/create-campaign', {
                 campaignName: campaignName,

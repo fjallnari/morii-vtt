@@ -20,7 +20,7 @@
         }
         try {
             inProgress = true;
-            await new Promise(res => setTimeout(res, 1000));
+            // await new Promise(res => setTimeout(res, 1000));
 
             const response = await axios.post('/api/join-campaign', {
                 inviteCode: inviteCode,
@@ -31,8 +31,6 @@
 					'Authorization': `Bearer ${$accessToken}`
 				}
             });
-
-            console.log(response);
 
             // "live-reloading" to see the newly added campaign instantly without the need to hard reload
             if (response.status === 200 && response.data.campaigns) {

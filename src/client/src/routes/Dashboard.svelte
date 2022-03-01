@@ -7,7 +7,7 @@
     import CampaignDetail from "../components/CampaignDetail.svelte";
     import CampaignNew from '../components/CampaignNew.svelte';
     import { campaignNewActive, campaignDetailActive, selectedCampaign } from "../stores";
-import CampaignChoice from '../components/CampaignChoice.svelte';
+    import CampaignChoice from '../components/CampaignChoice.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);

@@ -1,9 +1,13 @@
 import express from 'express';
 import auth from "../middleware/auth";
 import jwt from "jsonwebtoken";
+import bcrypt from 'bcrypt'
+import { v4 as uuidv4 } from 'uuid';
 import { getCollection, getIdsFromCollection } from '../db/Mongo';
 import { Collection, Document, ObjectId, WithId } from 'mongodb';
 import { getFullCampaignsInfo, getUserFromToken } from '../util/helpers';
+import Campaign from '../interfaces/Campaign';
+import Invite from '../interfaces/Invite';
 
 const router = express.Router();
 
@@ -69,20 +73,22 @@ router.post('/api/join-campaign', auth, async (req, res, next) => {
         const invitesCollection = <Collection<Document>> await getCollection('invites');
         const usersCollection = <Collection<Document>> await getCollection('users');
 
-        const inviteObj = await invitesCollection.findOne({invite_code: inviteCode});
+        const inviteObj = <Invite> await invitesCollection.findOne({invite_code: inviteCode});
         if (! inviteObj) {
             return res.status(404).send('Invite code does not exist');
         }
 
-        // TODO: check if inviteCode matches the one stored in DB, also check the password
+        // check if password matches if there's any
+        if (password !== "" && ! await bcrypt.compare(password, inviteObj.password)) {
+            return res.status(401).send('Incorrect password');
+        }
 
         await campaignsCollection.updateOne({_id: inviteObj.campaign_id}, {$addToSet: {players: userID}})
         
         // add campaign to user's campaigns
         await usersCollection.updateOne({_id: userID}, {$push: { campaigns: inviteObj.campaign_id }});
 
-        // TODO: send the actual campaign object instead of the id to allow "live-reload"
-
+        // sends the actual campaign object instead of the id to allow "live-reload"
         return res.status(200).send({campaigns: await getFullCampaignsInfo([inviteObj.campaign_id])});
     }
     catch (error) {

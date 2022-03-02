@@ -1,6 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
-	import Router, { replace } from "svelte-spa-router";
+	import Router, { push, replace } from "svelte-spa-router";
 	import { wrap } from 'svelte-spa-router/wrap';
 	import { onMount } from 'svelte';
 	import Chat from "./routes/Chat.svelte";
@@ -56,14 +56,17 @@
 		try {
 			const response = await axios.post('/api/auth/refresh-token');
 			accessToken.set(response.data.accessToken);
+			if (response.status === 200) {
+				replace('/');
+			}
 		}
 		catch (err) {
-			console.log(err);
+			// console.log(err);
 		}
 	}
 
 	function conditionsFailed(event) {
-		console.error('conditionsFailed event', event.detail);
+		// console.error('conditionsFailed event', event.detail);
 		replace('/auth');
 	}
 

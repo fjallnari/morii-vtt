@@ -37,49 +37,45 @@
 </script>
 
 <div class="background-box">
-    <Paper>
-        <div class="input-block">
-            <h2>Sign in</h2>
-    
-            {#if !inProgress}
-                <Textfield variant="outlined" style="width: 15em" bind:value={username} label="Username">
-                    <Icon class="material-icons" slot="leadingIcon">person</Icon>
-                </Textfield>
-    
-                <PasswordField bind:password={password} label="Password"></PasswordField>
+    <h2>Sign in</h2>
 
-                <div style="padding-top: 2em; ">
-                    <Button on:click={loginUser} variant="raised">
-                        <Label>Sign In</Label>
-                    </Button>
-                </div>
-            {:else}
-                <ProgressCircle></ProgressCircle>
-            {/if}
+    {#if !inProgress}
+        <Textfield variant="outlined" style="width: 15em" bind:value={username} label="Username">
+            <Icon class="material-icons" slot="leadingIcon">person</Icon>
+        </Textfield>
+
+        <PasswordField bind:password={password} label="Password"></PasswordField>
+
+        <div style="padding-top: 2em; ">
+            <Button on:click={loginUser} variant="raised">
+                <Label>Sign In</Label>
+            </Button>
         </div>
-    </Paper>
+    {:else}
+        <ProgressCircle></ProgressCircle>
+    {/if}
 </div>
 
 
 
 <style>
     h2 {
-        padding-top: 0px;
+        padding-top: 0.5em;
         text-transform: none;
     }
 
-    .input-block {
-		display: flex;
-        padding-bottom: 2em;
-		justify-content: center;
+    .background-box {
+        width: 25em;
+        height: 40em;
+        background-color:#212125;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 1%;
+
+        display: flex;
+		justify-content: flex-start;
 		align-items: center;
         flex-direction: column;
         gap: 2em;
-	}
-
-    .background-box {
-        width: 20em;
-        height: 30em;
     }
 
 

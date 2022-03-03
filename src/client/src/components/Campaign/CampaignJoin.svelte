@@ -4,11 +4,10 @@
     import Textfield from '@smui/textfield';
     import Select, { Option } from '@smui/select';
 
-    import { campaignNewActive, user, accessToken } from '../stores';
-    import ProgressCircle from './ProgressCircle.svelte';
-    import PasswordField from './PasswordField.svelte';
-    import type Campaign from '../interfaces/Campaign';
+    import { campaignNewActive, user, accessToken } from '../../stores';
     import axios from 'axios';
+    import PasswordField from '../PasswordField.svelte';
+    import ProgressCircle from '../ProgressCircle.svelte';
 
     let inviteCode: string = "";
     let password: string = "";

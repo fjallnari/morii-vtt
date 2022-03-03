@@ -8,9 +8,8 @@
         Text,
     } from '@smui/list';
     import axios from 'axios';
-    import App from '../App.svelte';
-import type UserSimple from '../interfaces/UserSimple';
-    import { accessToken, campaignDetailActive, selectedCampaign, user } from '../stores';
+    import type UserSimple from '../../interfaces/UserSimple';
+    import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
     import CreateInviteCode from './CreateInviteCode.svelte';
 
     let options = [ 'Cyril', 'Tom Bombadill', 'Queen Elisabeth The Thirteenth of Her Name, Leader of The Island Folk'];

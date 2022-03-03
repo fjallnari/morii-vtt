@@ -2,14 +2,11 @@
 	import axios from "axios";
 	import Router, { push, replace } from "svelte-spa-router";
 	import { wrap } from 'svelte-spa-router/wrap';
-	import { onMount } from 'svelte';
 	import Chat from "./routes/Chat.svelte";
 	import NotFound from "./routes/NotFound.svelte";
 	import Dashboard from "./routes/Dashboard.svelte";
 	import Auth from "./routes/Auth.svelte";
 	import { accessToken, user } from "./stores";
-	import { get } from 'svelte/store';
-	import ProgressCircle from "./components/ProgressCircle.svelte";
 
 	$: refreshAccessToken();
 

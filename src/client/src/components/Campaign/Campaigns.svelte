@@ -8,7 +8,7 @@
     } from '@smui/list';
     import IconButton from '@smui/icon-button/src/IconButton.svelte';
     import Tooltip, { Wrapper } from '@smui/tooltip';
-    import { campaignDetailActive, campaignNewActive, selectedCampaign, user } from '../stores';
+    import { campaignDetailActive, campaignNewActive, selectedCampaign, user } from '../../stores';
 
     let selection = '';
 

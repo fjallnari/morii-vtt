@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Login from '../components/Login.svelte';
-    import Register from '../components/Register.svelte';
+    import Login from '../components/Auth/Login.svelte';
+    import Register from '../components/Auth/Register.svelte';
 </script>
 
 

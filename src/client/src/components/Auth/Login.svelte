@@ -2,10 +2,10 @@
     import Textfield, {Input, InputComponentDev} from '@smui/textfield';
     import Button, { Label } from "@smui/button";
     import Icon from '@smui/textfield/icon';
-    import PasswordField from './PasswordField.svelte';
+    import PasswordField from '../PasswordField.svelte';
     import axios from 'axios';
-    import { accessToken, user } from "../stores";
-    import ProgressCircle from './ProgressCircle.svelte';
+    import { accessToken, user } from "../../stores";
+    import ProgressCircle from '../ProgressCircle.svelte';
     import Paper from '@smui/paper';
 
     let username = "";

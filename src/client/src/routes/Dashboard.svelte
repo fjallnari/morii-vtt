@@ -1,13 +1,12 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
-    import Campaigns from "../components/Campaigns.svelte";
-    import Characters from "../components/Characters.svelte";
+    import Campaigns from "../components/Campaign/Campaigns.svelte";
     import UserProfile from "../components/UserProfile.svelte";
     import DashboardBox from "../components/DashboardBox.svelte";
-    import CampaignDetail from "../components/CampaignDetail.svelte";
-    import CampaignNew from '../components/CampaignNew.svelte';
-    import { campaignNewActive, campaignDetailActive, selectedCampaign } from "../stores";
-    import CampaignChoice from '../components/CampaignChoice.svelte';
+    import { campaignNewActive, campaignDetailActive, selectedCampaign, user } from "../stores";
+    import CampaignChoice from '../components/Campaign/CampaignChoice.svelte';
+    import CampaignDetailOwner from "../components/Campaign/CampaignDetailOwner.svelte";
+    import CampaignDetailPlayer from '../components/Campaign/CampaignDetailPlayer.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
@@ -28,7 +27,7 @@
         </div>
         {#if $campaignDetailActive}
             <div class="campaign-detail" transition:fade="{{duration: 100 }}">
-                <DashboardBox title={$selectedCampaign.name} component={CampaignDetail}></DashboardBox>
+                <DashboardBox title={$selectedCampaign.name} component={$user._id === $selectedCampaign.owner._id ? CampaignDetailOwner : CampaignDetailPlayer}></DashboardBox>
             </div>
         {/if}   
     </div>

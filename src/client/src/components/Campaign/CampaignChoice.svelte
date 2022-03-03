@@ -1,10 +1,10 @@
 <script lang="ts">
     import Button, { Label } from '@smui/button';
-    import CampaignNew from "./CampaignNew.svelte";
-    import DashboardBox from "./DashboardBox.svelte";
     import IconButton from '@smui/icon-button';
-    import { campaignNewActive } from '../stores';
+    import { campaignNewActive } from '../../stores';
     import CampaignJoin from './CampaignJoin.svelte';
+    import CampaignNew from './CampaignNew.svelte';
+
 
     let decided: boolean = false;
     let wantsToJoin: boolean = false;

@@ -1,13 +1,13 @@
 <script lang="ts">
+    import axios from 'axios';
     import IconButton from '@smui/icon-button';
     import Button, { Label } from '@smui/button';
     import Textfield from '@smui/textfield';
     import Select, { Option } from '@smui/select';
 
-    import { campaignNewActive, user, accessToken } from '../stores';
-    import ProgressCircle from './ProgressCircle.svelte';
-    import type Campaign from '../interfaces/Campaign';
-    import axios from 'axios';
+    import { campaignNewActive, user, accessToken } from '../../stores';
+    import type Campaign from '../../interfaces/Campaign';
+    import ProgressCircle from '../ProgressCircle.svelte';
 
     const gameSystems = ["D&D 5E"];
     let campaignName: string = "";

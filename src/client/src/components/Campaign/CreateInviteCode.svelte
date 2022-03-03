@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { accessToken, selectedCampaign } from '../stores';
+    import { accessToken, selectedCampaign } from '../../stores';
     import IconButton, { Icon } from '@smui/icon-button';
     import Dialog, { Title, Content, Actions } from '@smui/dialog';
-    import Button, { Label } from '@smui/button';
     import axios from 'axios';
     import CircularProgress from '@smui/circular-progress';
-    import PasswordField from './PasswordField.svelte';
+    import PasswordField from '../PasswordField.svelte';
     import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
 

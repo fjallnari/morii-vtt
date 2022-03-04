@@ -3,13 +3,14 @@
   import Button, { Label } from '@smui/button';
   import { accessToken, user } from '../stores';
   import axios from 'axios';
+  import { replace } from 'svelte-spa-router';
  
   export let open: boolean;
 
   const logoutUser = async () => {
     try {
       await axios.post('/api/auth/signout');
-      location.href = '/?#/auth';
+      replace('/auth');
     }
     catch (err) {
       console.log(err);

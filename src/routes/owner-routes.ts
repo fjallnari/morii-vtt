@@ -6,6 +6,7 @@ import verifyToken from "../middleware/auth";
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid';
 import { getUserFromToken, simplifyPlayerInfo } from '../util/helpers';
+import Campaign from '../interfaces/Campaign';
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.post("/api/kick-player", verifyToken, async (req, res) => {
         // remove the campaign from user's campaigns
         await usersCollection.updateOne({ _id: new ObjectId(playerID) }, {$pull: { campaigns: new ObjectId(campaignID) }});
         
-        // remvove player from campaign's document
+        // remove player from campaign's document
         await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$pull: {players: new ObjectId(playerID) }});
 
         return res.status(200).send();
@@ -78,6 +79,44 @@ router.post("/api/remove-invite-code", verifyToken, async (req, res) => {
         await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$set: {invite: ""}});
 
         return res.status(200).end();
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(401).end();
+    }
+});
+
+
+router.post("/api/delete-campaign", verifyToken, async (req, res) => {
+    try {
+        // TODO: verify if the owner of campaign is the one actually making the request
+        const { campaignID } = req.body;
+
+        const usersCollection = <Collection<Document>> await getCollection('users');
+        const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
+        const invitesCollection = <Collection<Document>> await getCollection('invites');
+
+        const campaignInfo = <Campaign> await campaignsCollection.findOne({_id: new ObjectId(campaignID)});
+        if (! campaignInfo) {
+            return res.status(404).end();
+        }
+
+        // remove campaign's invite (if there is any) from the "invites collection"
+        if (campaignInfo.invite) {
+            await invitesCollection.deleteOne({_id: campaignInfo.invite});
+        }
+
+        const allUsersInCampaign = campaignInfo.players.concat([campaignInfo.owner]);
+
+        // remove the campaign from all players documents; not the best design in terms of efficiency rn!
+        for (const userID of allUsersInCampaign) {
+            usersCollection.updateOne({_id: userID}, { $pull: { campaigns: campaignInfo._id } });
+        }
+
+        // remove campaign from the campaigns coll
+        await campaignsCollection.deleteOne({_id: campaignInfo._id });
+
+        return res.status(200).send();
     }
     catch (err) {
         console.log(err);

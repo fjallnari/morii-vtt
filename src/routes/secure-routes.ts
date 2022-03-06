@@ -1,5 +1,5 @@
 import express from 'express';
-import auth from "../middleware/auth";
+import verifyToken from "../middleware/auth";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid';
@@ -12,7 +12,7 @@ import Invite from '../interfaces/Invite';
 const router = express.Router();
 
 
-router.get("/api/dashboard", auth, async (req, res) => {
+router.get("/api/dashboard", verifyToken, async (req, res) => {
     try {
         const accessToken = <string> req.headers.authorization?.split(' ')[1];
         const user = await getUserFromToken(accessToken);
@@ -27,7 +27,7 @@ router.get("/api/dashboard", auth, async (req, res) => {
 
 });
 
-router.post('/api/create-campaign', auth, async (req, res, next) => {
+router.post('/api/create-campaign', verifyToken, async (req, res, next) => {
     const accessToken = <string> req.headers.authorization?.split(' ')[1];
     const { campaignName, gameSystem } = req.body;
 
@@ -58,7 +58,7 @@ router.post('/api/create-campaign', auth, async (req, res, next) => {
     }
 });
 
-router.post('/api/join-campaign', auth, async (req, res, next) => {
+router.post('/api/join-campaign', verifyToken, async (req, res, next) => {
     const accessToken = <string> req.headers.authorization?.split(' ')[1];
     const { inviteCode, password } = req.body;
 
@@ -93,6 +93,31 @@ router.post('/api/join-campaign', auth, async (req, res, next) => {
     }
     catch (error) {
         return res.status(500).send('Creation failed');
+    }
+});
+
+router.post("/api/leave-campaign", verifyToken, async (req, res) => {
+    const { campaignID } = req.body;
+
+    const accessToken = <string> req.headers.authorization?.split(' ')[1];
+    const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
+    const userID = new ObjectId(decodedToken.user._id);
+
+    try {
+        const usersCollection = <Collection<Document>> await getCollection('users');
+        const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
+        
+        // remove user from campaign's list 
+        await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$pull: {players: userID}})
+        
+        // remove campaign from user's campaigns
+        await usersCollection.updateOne({_id: userID}, {$pull: { campaigns: campaignID }});
+
+        return res.status(200).end();
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(401).end();
     }
 });
 

@@ -9,13 +9,14 @@
     } from '@smui/list';
 
     import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
+    import CampaignLeave from './CampaignLeave.svelte';
 
 </script>
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
         <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {}}>play_arrow</IconButton>
-        <IconButton class="material-icons" style="color: #EFA48B" ripple={false} on:click={() => {}}>logout</IconButton>  
+        <CampaignLeave></CampaignLeave>
     </div>
     <div id="players-list">
         <List

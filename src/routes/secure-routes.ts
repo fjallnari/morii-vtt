@@ -2,11 +2,9 @@ import express from 'express';
 import verifyToken from "../middleware/auth";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'
-import { v4 as uuidv4 } from 'uuid';
-import { getCollection, getIdsFromCollection } from '../db/Mongo';
-import { Collection, Document, ObjectId, WithId } from 'mongodb';
+import { getCollection } from '../db/Mongo';
+import { Collection, Document, ObjectId } from 'mongodb';
 import { getFullCampaignsInfo, getUserFromToken } from '../util/helpers';
-import Campaign from '../interfaces/Campaign';
 import Invite from '../interfaces/Invite';
 
 const router = express.Router();

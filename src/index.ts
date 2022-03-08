@@ -18,17 +18,26 @@ const port = process.env.PORT || 4000;
 const main = () => {
   const app = express();
   const httpServer = createServer(app);
-  
+
   const io = new Server(httpServer, {
     cors: {
       origin: "http://localhost:4000"
     }
   });
-  
+
+  // TODO: create separate file for sockets stuff
+
   io.on("connection", (socket) => {
-    socket.on('chat message', msg => {
-      console.log(msg);
-      io.emit('chat message', msg);
+    // console.log(socket.id);
+
+    socket.on('join-room', room => {
+      console.log(`Joined room: ${room}`);
+      socket.join(room);
+    });
+
+    socket.on('chat message', data => {
+      console.log(data.msg);
+      io.to(`${data.cid}`).emit('chat message', `${data.username}: ${data.msg}`);
     });
   });
 
@@ -56,6 +65,6 @@ const main = () => {
   app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}/?#`);
   });
-}
+  }
 
 main();

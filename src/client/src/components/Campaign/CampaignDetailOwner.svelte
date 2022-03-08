@@ -8,9 +8,10 @@
         Text,
     } from '@smui/list';
     import axios from 'axios';
+    import { push, replace } from 'svelte-spa-router';
     import type UserSimple from '../../interfaces/UserSimple';
     import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
-import CampaignDelete from './CampaignDelete.svelte';
+    import CampaignDelete from './CampaignDelete.svelte';
     import CreateInviteCode from './CreateInviteCode.svelte';
 
     let options = [ 'Cyril', 'Tom Bombadill', 'Queen Elisabeth The Thirteenth of Her Name, Leader of The Island Folk'];
@@ -44,7 +45,7 @@ import CampaignDelete from './CampaignDelete.svelte';
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
-        <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {}}>play_arrow</IconButton>
+        <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {push('/chat')}}>play_arrow</IconButton>
         <CreateInviteCode></CreateInviteCode>
         <CampaignDelete></CampaignDelete>       
     </div>

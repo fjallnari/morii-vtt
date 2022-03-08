@@ -1,11 +1,9 @@
 import express from 'express';
 import { Collection, Document, ObjectId } from 'mongodb';
 import { getCollection } from '../db/Mongo';
-import UserDB from '../interfaces/UserDB';
 import verifyToken from "../middleware/auth";
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid';
-import { getUserFromToken, simplifyPlayerInfo } from '../util/helpers';
 import Campaign from '../interfaces/Campaign';
 
 const router = express.Router();

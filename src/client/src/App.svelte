@@ -1,6 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
-	import Router, { push, replace } from "svelte-spa-router";
+	import Router, { location, push, replace } from "svelte-spa-router";
 	import { wrap } from 'svelte-spa-router/wrap';
 	import Chat from "./routes/Chat.svelte";
 	import NotFound from "./routes/NotFound.svelte";
@@ -10,8 +10,10 @@
 
 	$: refreshAccessToken();
 
-	const loadSecurePage = async (path: string) => {
-		await new Promise(res => setTimeout(res, 1000));
+	const loadDashboard = async (path: string) => {
+		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
+		// TODO: refactor the "refresh token/load secure route" flow
+		await new Promise(res => setTimeout(res, 500));
 		try {
 			const response = await axios.get(path, {
 				headers: {
@@ -19,10 +21,11 @@
 				}
 			});
 
-			return response;
+			user.set(response.data.userInfo);
+			return response.status === 200;
 		}
 		catch {
-			return null;
+			return false;
 		}
 	}
 
@@ -31,18 +34,20 @@
 			component: Auth,
 
 		}),
-		"/chat": Chat,
+		"/chat": wrap({
+			component: Chat,
+			conditions: [
+				async () => {
+					console.log('loading game');
+					return true;
+				}
+			]
+		}),
 		"/": wrap({
 			component: Dashboard,
 			conditions: [
 				async () => {
-					const response = await loadSecurePage('/api/dashboard');
-					if( ! response ) {
-						return false;
-					}
-
-					user.set(response.data.userInfo);
-					return response.status === 200;
+					return await loadDashboard('/api/dashboard');
 				}
 			]
 		}),
@@ -53,23 +58,19 @@
 		try {
 			const response = await axios.post('/api/auth/refresh-token');
 			accessToken.set(response.data.accessToken);
-			if (response.status === 200) {
+			if (response.status === 200 && $location === '/auth') {
 				replace('/');
 			}
+			return response.status === 200;
 		}
 		catch (err) {
-			// console.log(err);
+			return false;
 		}
 	}
 
-	function conditionsFailed(event) {
-		// console.error('conditionsFailed event', event.detail);
+	const conditionsFailed = () => {
 		replace('/auth');
 	}
-
-	// onMount(async () => {
-	// 	await refreshAccessToken();
-	// });
 	
 </script>
 

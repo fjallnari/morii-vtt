@@ -1,21 +1,21 @@
 <script lang="ts">
 	import axios from "axios";
-	import Router, { location, push, replace } from "svelte-spa-router";
+	import Router, { location, params, push, replace } from "svelte-spa-router";
 	import { wrap } from 'svelte-spa-router/wrap';
-	import Chat from "./routes/Chat.svelte";
 	import NotFound from "./routes/NotFound.svelte";
 	import Dashboard from "./routes/Dashboard.svelte";
 	import Auth from "./routes/Auth.svelte";
 	import { accessToken, user } from "./stores";
+	import Game from "./routes/Game.svelte";
 
 	$: refreshAccessToken();
 
-	const loadDashboard = async (path: string) => {
+	const loadDashboard = async () => {
 		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
 		// TODO: refactor the "refresh token/load secure route" flow
 		await new Promise(res => setTimeout(res, 500));
 		try {
-			const response = await axios.get(path, {
+			const response = await axios.get('/api/dashboard', {
 				headers: {
 					'Authorization': `Bearer ${$accessToken}`
 				}
@@ -34,20 +34,12 @@
 			component: Auth,
 
 		}),
-		"/chat": wrap({
-			component: Chat,
-			conditions: [
-				async () => {
-					console.log('loading game');
-					return true;
-				}
-			]
-		}),
+		"/game/:id": Game,
 		"/": wrap({
 			component: Dashboard,
 			conditions: [
 				async () => {
-					return await loadDashboard('/api/dashboard');
+					return await loadDashboard();
 				}
 			]
 		}),

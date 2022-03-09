@@ -22,7 +22,28 @@ router.get("/api/dashboard", verifyToken, async (req, res) => {
         console.log(err);
         return res.status(401).end();
     }
+});
 
+router.get("/api/game/:id", verifyToken, async (req, res) => {
+    try {
+        const accessToken = <string> req.headers.authorization?.split(' ')[1];
+        const user = await getUserFromToken(accessToken);
+        
+        if (! user.campaigns.find( campaign => campaign.toString() === req.params.id)) {
+            console.log('unga');
+            return res.status(404).end();
+        }
+
+        // we only really need one campaign's info for any given started game
+        const campaignID = new ObjectId(req.params.id);
+        const campaignInfo = await getFullCampaignsInfo([campaignID]);
+
+        return res.status(200).send({userInfo: {_id: user._id.toString(), username: user.username, settings: user.settings , campaigns: campaignInfo}});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(401).end();
+    }
 });
 
 router.post('/api/create-campaign', verifyToken, async (req, res, next) => {

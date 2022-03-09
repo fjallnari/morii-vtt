@@ -45,7 +45,7 @@
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
-        <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {push('/chat')}}>play_arrow</IconButton>
+        <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {push(`/game/${$selectedCampaign._id}`)}}>play_arrow</IconButton>
         <CreateInviteCode></CreateInviteCode>
         <CampaignDelete></CampaignDelete>       
     </div>

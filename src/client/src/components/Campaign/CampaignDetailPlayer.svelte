@@ -7,7 +7,7 @@
         Meta,
         Text,
     } from '@smui/list';
-import { push } from 'svelte-spa-router';
+    import { push, replace } from 'svelte-spa-router';
 
     import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
     import CampaignLeave from './CampaignLeave.svelte';
@@ -16,7 +16,7 @@ import { push } from 'svelte-spa-router';
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
-        <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {push('/chat')}}>play_arrow</IconButton>
+        <IconButton class="material-icons" style="color: #A7C284" ripple={false} on:click={() => {push(`/game/${$selectedCampaign._id}`)}}>play_arrow</IconButton>
         <CampaignLeave></CampaignLeave>
     </div>
     <div id="players-list">

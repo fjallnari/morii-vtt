@@ -8,6 +8,7 @@ import routes from './routes/routes';
 import secureRoutes from './routes/secure-routes';
 import ownerRoutes from './routes/owner-routes';
 import cookieParser from 'cookie-parser';
+import { DateTime } from 'luxon';
 
 dotenv.config();
 setUpDB();
@@ -36,8 +37,8 @@ const main = () => {
     });
 
     socket.on('chat message', data => {
-      console.log(data.msg);
-      io.to(`${data.cid}`).emit('chat message', `${data.username}: ${data.msg}`);
+      const timestamp = DateTime.now().toLocaleString({ month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
+      io.to(`${data.gameID}`).emit('chat message', Object.assign(data, {timestamp: timestamp}));
     });
   });
 

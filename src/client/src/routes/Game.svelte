@@ -3,13 +3,12 @@
     import { accessToken } from "../stores";
     import io from 'socket.io-client';
     import { selectedCampaign, user } from '../stores';
-    import { location, params, replace } from "svelte-spa-router";
+    import { params, replace } from "svelte-spa-router";
+    import Chat from "../components/Game/Chat.svelte";
 
     $: loadGame();
 
     const socket = io("http://localhost:3000");
-    let messages = [];
-    let message = '';
 
     const loadGame = async () => {
 		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
@@ -21,7 +20,7 @@
 					'Authorization': `Bearer ${$accessToken}`
 				}
 			});
-            
+                        
 			user.set(response.data.userInfo);
             socket.emit('join-room', $params.id);
 			return response.status === 200;
@@ -32,28 +31,22 @@
 		}
 	}
 
-
-    
-    socket.on('chat message', (data) => {
-      messages = [...messages, data];
-    })
-
-    function sendMessage() {
-        // console.log({username: $user.username, msg: message, cid: $params.id});
-        socket.emit('chat message', {username: $user.username, msg: message, cid: $params.id});
-        message = '';
-    }
 </script>
 
-<main>
-    <div>
-        {#each messages as message}
-            <div>{message}</div>
-        {/each}
-    </div>
-    <div>
-        <input bind:value={message} placeholder="Message..." type="text">
-        <button on:click={sendMessage}>Send</button>
-    </div>
-    <form><button formaction="/?#">back to dashboard</button></form>
-</main>
+<div class="game-content"> 
+    <form style="width:5em;"><button formaction="/?#">back to dashboard</button></form>
+    <div style="width:80em; height:57em; background-color:black;">Character sheet</div>
+    <Chat socket={socket}></Chat>
+</div>
+
+<style>
+    .game-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding-top: 1em;
+    }
+
+
+</style>

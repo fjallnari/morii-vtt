@@ -1,8 +1,6 @@
 <script lang="ts">
     import ANIMALS from "../../enum/Animals";
-
     import type MessageData from "../../interfaces/MessageData";
-    import type UserSimple from "../../interfaces/UserSimple";
 
     export let message: MessageData;
 
@@ -26,6 +24,8 @@
     .message-content {
         display: flex;
         flex-direction: row;
+        justify-content: center;
+        align-items: center;
         width: 26em;
         gap: 1em;
     }
@@ -67,8 +67,8 @@
 
     #pfp {
         border-radius: 15%;
-        width: 2em;
-        height: 2em;
+        width: 2.5em;
+        height: 2.5em;
     }
 
 

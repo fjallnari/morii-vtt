@@ -32,13 +32,13 @@ const main = () => {
     // console.log(socket.id);
 
     socket.on('join-room', room => {
-      console.log(`Joined room: ${room}`);
       socket.join(room);
     });
 
     socket.on('chat message', data => {
       const timestamp = DateTime.now().toLocaleString({ month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
-      io.to(`${data.gameID}`).emit('chat message', Object.assign(data, {timestamp: timestamp}));
+      // sends message to either the whole room or only back to the sender
+      io.to(data.isMessagePublic ? data.gameID : socket.id).emit('chat message', Object.assign(data, {timestamp: timestamp}));
     });
   });
 

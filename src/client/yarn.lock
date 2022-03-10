@@ -954,6 +954,15 @@
     "@tsconfig/svelte" "^3.0.0"
     svelte2tsx "^0.4.14"
 
+"@smui/common@^6.0.0-beta.15":
+  version "6.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@smui/common/-/common-6.0.0-beta.15.tgz#b484d833c1c63a7a8edf0d34eb0219ad772cbc7a"
+  integrity sha512-FzSKNFxC6IPhyu8YVh1GKHUddPchuvW3spYV59cEZfJHiQwG9NMEjfcCN546QMNXC9qdkrkL8XjOnW7uYZVdnQ==
+  dependencies:
+    "@material/dom" "^13.0.0"
+    "@tsconfig/svelte" "^3.0.0"
+    svelte2tsx "^0.4.14"
+
 "@smui/data-table@^6.0.0-beta.13":
   version "6.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/@smui/data-table/-/data-table-6.0.0-beta.13.tgz#48a6a97cfcd72bb1b0f7854d9faef268d4c726eb"
@@ -1251,6 +1260,16 @@
     "@smui/common" "^6.0.0-beta.14"
     svelte2tsx "^0.4.14"
 
+"@smui/ripple@^6.0.0-beta.15":
+  version "6.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@smui/ripple/-/ripple-6.0.0-beta.15.tgz#ecc75b982a7b444d69985da7640b974f0361d591"
+  integrity sha512-f8SUeI8M7vrSGP9wLWq5KP6HsPBElqWoI5jDm6hcIQr0Q9xFRkPn64J4Cfph3EcSNbLGFGO5BLBbaw2lr89plw==
+  dependencies:
+    "@material/dom" "^13.0.0"
+    "@material/ripple" "^13.0.0"
+    "@smui/common" "^6.0.0-beta.15"
+    svelte2tsx "^0.4.14"
+
 "@smui/segmented-button@^6.0.0-beta.13":
   version "6.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/@smui/segmented-button/-/segmented-button-6.0.0-beta.13.tgz#e95a831e47c69e480af7a63e599aa923ee0259ea"
@@ -1351,6 +1370,18 @@
     "@smui/common" "^6.0.0-beta.13"
     "@smui/ripple" "^6.0.0-beta.13"
     svelte2tsx "^0.4.11"
+
+"@smui/switch@^6.0.0-beta.15":
+  version "6.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@smui/switch/-/switch-6.0.0-beta.15.tgz#735863ebc26f0411556177f745f2f5eb6dc70e57"
+  integrity sha512-Vwr1ZY3YXFVrBLSxgr8ryjxDG/FVqTMWRYzKheYjQRfUW+WHS+WSHMRFBgfrNM+vqANWp3ZocJjabVv4w4of9Q==
+  dependencies:
+    "@material/feature-targeting" "^13.0.0"
+    "@material/switch" "^13.0.0"
+    "@material/theme" "^13.0.0"
+    "@smui/common" "^6.0.0-beta.15"
+    "@smui/ripple" "^6.0.0-beta.15"
+    svelte2tsx "^0.4.14"
 
 "@smui/tab-bar@^6.0.0-beta.13":
   version "6.0.0-beta.13"

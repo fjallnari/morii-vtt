@@ -1,6 +1,7 @@
 <script lang="ts">
     import ANIMALS from "../../enum/Animals";
     import type MessageData from "../../interfaces/MessageData";
+    import IconButton, { Icon } from '@smui/icon-button';
 
     export let message: MessageData;
 
@@ -8,12 +9,19 @@
 
 
 <div class="message-content">
-    <div class="sender-info">
-        <img id="pfp" style="background-color: #{message.senderInfo.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.pfpID]}.svg" alt="pfp">
-        {message.senderInfo.username}
-    </div>
-    <div class="message-text">
+    {#if message.isPublic}
+        <div class="sender-info">
+            <img id="pfp" style="background-color: #{message.senderInfo.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.pfpID]}.svg" alt="pfp">
+            {message.senderInfo.username}
+        </div>
+    {:else}
+        <div class="sender-info">
+            <Icon class="material-icons">visibility_off</Icon>
+        </div>
+    {/if}
+    <div class="message-text" style="background: {message.isPublic ? '#252529' : '#3b3b42'}">
         {message.messageText}
+        <!-- <img class="dice-roll" src="../static/d20.svg" alt="d20"> -->
         <div class="message-timestamp">
             {message.timestamp}
         </div>

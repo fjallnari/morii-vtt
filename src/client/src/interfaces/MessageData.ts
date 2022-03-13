@@ -6,4 +6,5 @@ export default interface MessageData {
     messageText: string;
     gameID: string;
     timestamp?: string;
+    isPublic: boolean;
 }

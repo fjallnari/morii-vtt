@@ -31,7 +31,7 @@
             }, 
             messageText: messageText, 
             gameID: $params.id,
-            isMessagePublic: isMessagePublic
+            isPublic: isMessagePublic
         });
         messageText = '';
     }
@@ -74,7 +74,7 @@
     .messages-box {
         display: flex;
         flex-direction: column-reverse;
-        gap: 1em;
+        gap: 1.2em;
         margin-top: 2em;
         overflow-y: auto;
         overflow-x: hidden;

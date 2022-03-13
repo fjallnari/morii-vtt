@@ -38,7 +38,7 @@ const main = () => {
     socket.on('chat message', data => {
       const timestamp = DateTime.now().toLocaleString({ month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
       // sends message to either the whole room or only back to the sender
-      io.to(data.isMessagePublic ? data.gameID : socket.id).emit('chat message', Object.assign(data, {timestamp: timestamp}));
+      io.to(data.isPublic ? data.gameID : socket.id).emit('chat message', Object.assign(data, {timestamp: timestamp}));
     });
   });
 

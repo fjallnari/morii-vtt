@@ -34,8 +34,10 @@
 </script>
 
 <div class="game-content"> 
-    <form style="width:5em;"><button formaction="/?#">back to dashboard</button></form>
-    <div style="width:80em; height:57em; background-color:black;">Character sheet</div>
+    <div style="width:80em; height:57em; background-color:#212125; display: flex; flex-direction: column; align-items: center;">
+        <h1>Character sheet</h1>
+        <form style="width:5em;"><button formaction="/?#">back to dashboard</button></form>
+    </div>
     <Chat socket={socket}></Chat>
 </div>
 

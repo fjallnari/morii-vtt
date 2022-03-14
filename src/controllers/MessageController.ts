@@ -20,13 +20,16 @@ export default class MessageController {
         return diceHandler.rollDice(diceInput);
     }
 
-
+    /**
+     * Checks if message starts with roll command; if it does, rolls the dice; adds timestamp to the message and sends it
+     */
     public async handleMessage() {
         // handle rolling with regex - might want to refactor into some kind of command handler if more commands are needed
         if (/^\/roll\040|^\/r\040/.test(this.data.messageText)) {
             Object.assign(this.data, { rollResult: await this.rollDice(this.data.messageText)});
         }
         
+        // format looks like e.g. 'Mar 14, 18:41'
         const timestamp = DateTime.now().toLocaleString({
             month: 'short', 
             day: '2-digit', 

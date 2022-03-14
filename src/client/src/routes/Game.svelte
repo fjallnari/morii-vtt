@@ -8,7 +8,7 @@
 
     $: loadGame();
 
-    const socket = io("http://localhost:3000");
+    const socket = io();
 
     const loadGame = async () => {
 		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)

@@ -18,12 +18,12 @@ export default class DiceHandler {
         const diceCount = matchedNotation?.groups?.diceCount;
         const diceSides = matchedNotation?.groups?.diceSides;
 
-        if (! diceCount || ! diceSides || diceSides === '0') {
+        if (! diceSides || diceSides === '0') {
             return {};
         }
 
-        // creates empty array, then fills it with random dice throws
-        const naturalThrows = [...Array(~~diceCount)].map(_ => this.random.natural( { min: 1, max: diceSides }));
+        // creates empty array with the size equal to diceCount (or 1 if e.g. '/r d20' is called), then fills it with random dice throws
+        const naturalThrows = [...Array(diceCount ? ~~diceCount : 1)].map(_ => this.random.natural( { min: 1, max: diceSides }));
 
         return { diceInput: diceInput, naturalThrows: naturalThrows, finalSum: naturalThrows.reduce((a, b) => a + b, 0)};
     }

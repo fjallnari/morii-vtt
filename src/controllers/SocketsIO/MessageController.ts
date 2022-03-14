@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
-import MessageData from "../interfaces/MessageData";
-import SocketIO from "../interfaces/SocketIO";
-import DiceHandler from "../services/DiceHandler";
+import MessageData from "../../interfaces/MessageData";
+import SocketIO from "../../interfaces/SocketIO";
+import DiceHandler from "../../services/DiceHandler";
 
 
 export default class MessageController {

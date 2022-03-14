@@ -3,11 +3,11 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import express from "express";
 import { getCollection, setUpDB } from './db/Mongo';
-import routes from './routes/routes';
-import secureRoutes from './routes/secure-routes';
-import ownerRoutes from './routes/owner-routes';
+import routes from './routes/Routes';
+import userRoutes from './routes/UserRoutes';
+import ownerRoutes from './routes/OwnerRoutes';
 import cookieParser from 'cookie-parser';
-import MessageController from './controllers/MessageController';
+import MessageController from './controllers/SocketsIO/MessageController';
 
 dotenv.config();
 setUpDB();
@@ -38,7 +38,7 @@ const main = async () => {
     app.use(cookieParser());
 
     app.use('/', routes);
-    app.use('/', secureRoutes);
+    app.use('/', userRoutes);
     app.use('/', ownerRoutes);
 
     app.use((err: any, req: any, res:any, next:any) => {

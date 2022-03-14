@@ -9,6 +9,7 @@ import secureRoutes from './routes/secure-routes';
 import ownerRoutes from './routes/owner-routes';
 import cookieParser from 'cookie-parser';
 import { DateTime } from 'luxon';
+import MessageController from './controllers/MessageController';
 
 dotenv.config();
 setUpDB();
@@ -16,7 +17,7 @@ setUpDB();
 const port = process.env.PORT || 4000;
 
 
-const main = () => {
+const main = async () => {
   const app = express();
   const httpServer = createServer(app);
 
@@ -35,10 +36,8 @@ const main = () => {
       socket.join(room);
     });
 
-    socket.on('chat message', data => {
-      const timestamp = DateTime.now().toLocaleString({ month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
-      // sends message to either the whole room or only back to the sender
-      io.to(data.isPublic ? data.gameID : socket.id).emit('chat message', Object.assign(data, {timestamp: timestamp}));
+    socket.on('chat message', data => {    
+      new MessageController(io, socket.id, data).handleMessage();
     });
   });
 

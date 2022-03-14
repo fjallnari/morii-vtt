@@ -20,7 +20,7 @@
         </div>
     {/if}
     <div class="message-text" style="background: {message.isPublic ? '#252529' : '#3b3b42'}">
-        {message.messageText}
+        {message.rollResult ? `${message.rollResult.diceInput} => ${message.rollResult.naturalThrows} = ${message.rollResult.finalSum}` : message.messageText}
         <!-- <img class="dice-roll" src="../static/d20.svg" alt="d20"> -->
         <div class="message-timestamp">
             {message.timestamp}

@@ -6,7 +6,13 @@
     import axios from 'axios';
     import { accessToken, user } from "../../stores";
     import ProgressCircle from '../ProgressCircle.svelte';
-    import Paper from '@smui/paper';
+    import Snackbar, {
+        Actions,
+        SnackbarComponentDev,
+    } from '@smui/snackbar';
+    import IconButton from '@smui/icon-button';
+
+    let loginFailedSnackbar: SnackbarComponentDev;
 
     let username = "";
     let password = "";
@@ -30,7 +36,10 @@
             }
         }
         catch (err) {
-            console.log(err);
+            // if login fails -> popup with 'login failed' appears
+
+            loginFailedSnackbar.open();
+            inProgress = false;
         }
     }
 
@@ -54,6 +63,13 @@
     {:else}
         <ProgressCircle></ProgressCircle>
     {/if}
+
+    <Snackbar bind:this={loginFailedSnackbar}>
+        <Label>Login failed. Please try again or sign up.</Label>
+        <Actions>
+          <IconButton class="material-icons" title="Dismiss">close</IconButton>
+        </Actions>
+    </Snackbar>
 </div>
 
 

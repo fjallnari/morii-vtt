@@ -3,8 +3,9 @@
     import { accessToken } from "../stores";
     import io from 'socket.io-client';
     import { selectedCampaign, user } from '../stores';
-    import { params, replace } from "svelte-spa-router";
+    import { params, push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat.svelte";
+    import Button, { Label } from '@smui/button';
 
     $: loadGame();
 
@@ -34,9 +35,12 @@
 </script>
 
 <div class="game-content"> 
-    <div style="width:80em; height:57em; background-color:#212125; display: flex; flex-direction: column; align-items: center;">
+    <div class="character-sheet-box">
         <h1>Character sheet</h1>
-        <form style="width:5em;"><button formaction="/?#">back to dashboard</button></form>
+
+        <Button variant="outlined" color="primary" on:click={() => {push('/')}}>
+            <Label>Back to Dashboard!</Label>
+        </Button>
     </div>
     <Chat socket={socket}></Chat>
 </div>
@@ -48,6 +52,16 @@
         justify-content: space-around;
         align-items: center;
         padding-top: 1em;
+    }
+
+    .character-sheet-box {
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
+        
+        width:80em; 
+        height:57em; 
+        background-color:#212125;
     }
 
 

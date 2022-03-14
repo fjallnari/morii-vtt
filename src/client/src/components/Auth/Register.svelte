@@ -30,14 +30,11 @@
     const registerNewUser = async () => {
         inProgress = true;
         if (! password || password !== passwordCheck){
-            // TODO: Pop up with non matching passwords
             snackbarStatus = 1;
             successSnackbar.open();
-            console.log("passwords don't match");
-            return;
         }
         try {
-            const response = await axios.post('/api/auth/signup', {
+            await axios.post('/api/auth/signup', {
                 username: username,
                 password: password
             });
@@ -51,6 +48,7 @@
             successSnackbar.open();
         }
 
+        username = password = passwordCheck = '';
         inProgress = false;
     }
 
@@ -83,7 +81,7 @@
         <Actions>
           <IconButton class="material-icons" title="Dismiss">close</IconButton>
         </Actions>
-      </Snackbar>
+    </Snackbar>
 </div>
 
 

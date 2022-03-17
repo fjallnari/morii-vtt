@@ -20,13 +20,13 @@ export default class DiceHandler {
         const matchedGroups = matchedNotation?.groups;
 
         if (! matchedGroups) {
-            return {};
+            return undefined;
         }
         
         const { diceCount, diceSides, operator, modifier } = matchedGroups;
 
         if (! diceSides || diceSides === '0') {
-            return {};
+            return undefined;
         }
 
         // creates empty array with the size equal to diceCount (or 1 if e.g. '/r d20' is called), then fills it with random dice throws

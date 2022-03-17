@@ -53,6 +53,10 @@
 			if (response.status === 200 && $location === '/auth') {
 				replace('/');
 			}
+
+			setTimeout(() => {
+				refreshAccessToken();				
+			}, 600000 - 500);
 			return response.status === 200;
 		}
 		catch (err) {

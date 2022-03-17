@@ -2,6 +2,7 @@
     import ANIMALS from "../../enum/Animals";
     import type MessageData from "../../interfaces/MessageData";
     import IconButton, { Icon } from '@smui/icon-button';
+    import PrettyRollResult from "./PrettyRollResult.svelte";
 
     export let message: MessageData;
 
@@ -19,8 +20,12 @@
             <Icon class="material-icons">visibility_off</Icon>
         </div>
     {/if}
-    <div class="message-text" style="background: {message.isPublic ? '#252529' : '#3b3b42'}">
-        {message.rollResult ? `${message.rollResult.diceInput} => ${message.rollResult.naturalThrows} = ${message.rollResult.finalSum}` : message.messageText}
+    <div class="message-text" style="background: { message.isPublic ? '#252529' : '#3b3b42' }">
+        {#if message.rollResult}
+            <PrettyRollResult rollResult={message.rollResult}></PrettyRollResult>
+        {:else}
+            {message.messageText}
+        {/if}
         <!-- <img class="dice-roll" src="../static/d20.svg" alt="d20"> -->
         <div class="message-timestamp">
             {message.timestamp}
@@ -47,7 +52,7 @@
         height: 5em;
         gap: 0.5em;
         font-family: Montserrat;
-        font-size: small;
+        font-size: medium;
     }
 
     .message-text {
@@ -61,7 +66,7 @@
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 1%;
         font-family: Quicksand;
-        font-size: medium;
+        font-size: large;
         overflow-wrap: anywhere;
         gap: 0.5em;
     }
@@ -75,8 +80,8 @@
 
     #pfp {
         border-radius: 15%;
-        width: 2.5em;
-        height: 2.5em;
+        width: 2em;
+        height: 2em;
     }
 
 

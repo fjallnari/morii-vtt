@@ -45,7 +45,7 @@
         {/each}
     </div>
     <div class="send-message-box">
-        <Textfield style="width: 18em; height: 5em;" bind:value={messageText} variant="outlined"></Textfield>
+        <Textfield textarea style="width: 18em; height: 5em;" bind:value={messageText} variant="outlined"></Textfield>
         <div class="send-options-box">
             <IconButton toggle bind:pressed={isMessagePublic}>
                 <Icon class="material-icons" on>visibility</Icon>
@@ -64,10 +64,10 @@
         justify-content: flex-end;
         align-items: center;
         width: 30em;
-        height: 57em;
+        height: 51em;
         background-color:#212125;
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 1%;
+        border-radius: 4px;
         gap: 1em;
     }
 

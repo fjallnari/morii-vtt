@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Paper from "@smui/paper/src/Paper.svelte";
     import { user } from "../stores";
     import ANIMALS from "../enum/Animals";
     import Logout from "./Logout.svelte";
@@ -8,13 +7,11 @@
 
 </script>
 
-<div id="menu-top">
-    <Paper style="cursor: pointer;" on:click={() => {openSettings = true}}>
-        <div id="menu-profile">
-            <img id="pfp" style="background-color: #{$user.settings.pfpColor};" src="../static/pfp/{ANIMALS[$user.settings.pfpID]}.svg" alt="pfp">
-            <h3>{$user.username}</h3>
-        </div>
-    </Paper>
+<div class="menu-top">
+    <div id="menu-profile" on:click={() => {openSettings = true}}>
+        <img id="pfp" style="background-color: #{$user.settings.pfpColor};" src="../static/pfp/{ANIMALS[$user.settings.pfpID]}.svg" alt="pfp">
+        <h3>{$user.username}</h3>
+    </div>
 </div>
 <Logout bind:open={openSettings}></Logout>
 
@@ -27,9 +24,11 @@
         font-weight: 400;
     }
 
-    #menu-top {
+    .menu-top {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
+        height: 4em;
     }
 
     #menu-profile {
@@ -37,7 +36,14 @@
         justify-content: center; 
         align-items: center; 
         gap: 1.5em;
-        height: 1.5em;
+        height: 4.5em;
+
+        cursor: pointer;
+        padding: 0.1em 1em;
+        margin-top: 1em;
+        background-color:#212125;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
     }
 
     #pfp {

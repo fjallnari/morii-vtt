@@ -26,7 +26,7 @@
             {/if}
         </div>
         {#if $campaignDetailActive}
-            <div class="campaign-detail" transition:fade="{{duration: 100 }}">
+            <div class="campaign-detail" transition:fade="{{ duration: 100 }}">
                 <DashboardBox title={$selectedCampaign.name} component={$user._id === $selectedCampaign.owner._id ? CampaignDetailOwner : CampaignDetailPlayer}></DashboardBox>
             </div>
         {/if}   

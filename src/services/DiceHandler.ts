@@ -10,7 +10,7 @@ export default class DiceHandler {
         this.random = new Chance();
         // non-capturing group for prefix; two capturing groups for dice count and no. of sides; then the modifier part
         // not ideal, might want to replace if more advanced dice rolling commands are needed
-        this.validationRegexp = /(?:^\/roll|^\/r)\040(?<diceCount>[0-9]*)d(?<diceSides>[0-9]+)(?:\040(?<operator>\+|-)\040(?<modifier>[0-9]+))?/;
+        this.validationRegexp = /(?:^\/roll|^\/r)\040(?<diceCount>[0-9]*)d(?<diceSides>[0-9]+)(?:\040*(?<operator>\+|-)\040*(?<modifier>[0-9]+))?/;
     }
 
     // validates the notation first, if it succeeds it rolls

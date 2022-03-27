@@ -12,12 +12,12 @@
 
 <style>
     #login-page {
-        padding-top: 14em;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: row;
         gap: 5em;
+        height: 95vh;
     }
 
 </style>

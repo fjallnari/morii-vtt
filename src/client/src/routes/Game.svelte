@@ -6,6 +6,7 @@
     import { params, push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
+    import CircularProgress from '@smui/circular-progress';
 
     const socket = io();
 
@@ -32,7 +33,9 @@
 
 </script>
 
-{#await loadGame() then currentCampaign}
+{#await loadGame()}
+    <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+{:then currentCampaign}
     <div class="game-content">
         <div class="character-sheet-box">
             <h1>Character sheet</h1>
@@ -74,6 +77,13 @@
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
         flex-grow: 5;
+    }
+
+    #progress-circle {
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      height: 95vh;
     }
 
 

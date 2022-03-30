@@ -17,7 +17,7 @@
         </div>
     {:else}
         <div class="sender-info">
-            <Icon class="material-icons">visibility_off</Icon>
+            <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
         </div>
     {/if}
     <div class="message-text" style="background: { message.isPublic ? '#252529' : '#3b3b42' }">

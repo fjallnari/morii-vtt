@@ -5,9 +5,7 @@
     import { user } from '../stores';
     import { params, push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat.svelte";
-    import Button, { Label } from '@smui/button';
-    import IconButton from '@smui/icon-button';
-    import Tooltip, { Wrapper } from '@smui/tooltip';
+    import GameInfo from "../components/Game/GameInfo.svelte";
 
     const socket = io();
 
@@ -41,16 +39,7 @@
         </div>
 
         <div class="right-panel">
-            <div class="game-info">
-                <h3>{currentCampaign.name}</h3>
-                <div class="icon-bar">
-                    <Wrapper>
-                        <IconButton class="material-icons" style="color: #EFA48B" ripple={false} on:click={() => push('/')}>logout</IconButton>
-                        <Tooltip>Return to dashboard</Tooltip>
-                    </Wrapper>
-                    
-                </div>
-            </div>
+            <GameInfo currentCampaign={currentCampaign}></GameInfo>
             <Chat socket={socket}></Chat>
         </div>
     </div>
@@ -74,35 +63,6 @@
         align-items: center;
         height: inherit;
         gap: 1em;
-    }
-
-    .game-info {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 30em;
-        height: 5em;
-        background-color:#212125;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 4px;
-    }
-
-    .game-info h3 {
-        color: #FCF7F8;
-        text-transform: uppercase;
-        font-size: 2em;
-        font-weight: 100;
-        font-family: Montserrat;
-        width: 8em;
-        text-align: start;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        padding-left: 1em;
-    }
-
-    .game-info .icon-bar {
-        padding-right: 1em;
     }
 
     .character-sheet-box {

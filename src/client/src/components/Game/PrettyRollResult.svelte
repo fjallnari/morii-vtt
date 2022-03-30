@@ -12,7 +12,7 @@
             ( 
             {#each rollResult.naturalThrows as naturalThrow, index}
                 {#if naturalThrow === 1 || naturalThrow === rollResult.diceSides}
-                    <span class="natural-crit" style="color: {naturalThrow === 1 ? '#EFA48B' : '#C6D8AF'};">
+                    <span class="natural-crit" style="color: {naturalThrow === 1 ? '#EFA48B' : '#A7C284'};">
                         {naturalThrow}
                     </span>
                 {:else}

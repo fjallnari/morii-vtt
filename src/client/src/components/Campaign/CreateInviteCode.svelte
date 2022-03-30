@@ -71,7 +71,7 @@
 
 <div>
     <IconButton ripple={false} on:click={() => {codeWasCopied = false; open = true}}>
-        <img id="invite" src="../static/invite.svg" alt="invite">
+        <img id="invite-image" src="../static/invite.svg" alt="invite">
     </IconButton>
     <Dialog
         bind:open

@@ -11,6 +11,8 @@
     let messages: MessageData[] = [];
     let messageText: string = '';
     let isMessagePublic = true;
+    let isMsgBoxFocused = false;
+    let lastKeypress: string;
     
     socket.on('chat message', (incomingMessage: MessageData) => {
         messages = [incomingMessage, ...messages];
@@ -18,7 +20,7 @@
 
     const sendMessage = () => {
         // don't want to send empty message
-        if (messageText === ''){ 
+        if (!messageText || !messageText.trim()){ 
             return;
         }
         // not an ideal solution, sends bit too much data on each message
@@ -35,9 +37,22 @@
         });
         messageText = '';
     }
+
+    const handleKeydown = (event) => {
+
+        // handles sending the message on 'Enter' keypress; Shift + Enter works as regular Enter key
+        if (isMsgBoxFocused) {
+            if (lastKeypress !== 'Shift' && event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+            lastKeypress = event.key;
+        }
+    }
     
 </script>
 
+<svelte:window on:keydown={handleKeydown}/>
 <div class="chat-box">
     <div class="messages-box">
         {#each messages as message}
@@ -45,7 +60,15 @@
         {/each}
     </div>
     <div class="send-message-box">
-        <Textfield textarea style="width: 18em; height: 5em;" bind:value={messageText} variant="outlined"></Textfield>
+        <Textfield 
+            textarea 
+            style="width: 18em; height: 5em;" 
+            bind:value={messageText} 
+            on:focus={() => isMsgBoxFocused = true} 
+            on:blur={() => isMsgBoxFocused = false} 
+            variant="outlined">
+        </Textfield>
+
         <div class="send-options-box">
             <IconButton toggle bind:pressed={isMessagePublic}>
                 <Icon class="material-icons" on>visibility</Icon>
@@ -64,11 +87,12 @@
         justify-content: flex-end;
         align-items: center;
         width: 30em;
-        height: 51em;
+        height: 52em;
         background-color:#212125;
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
         gap: 1em;
+        max-height: calc(96% - 4em);
     }
 
     .messages-box {
@@ -78,7 +102,9 @@
         margin-top: 2em;
         overflow-y: auto;
         overflow-x: hidden;
+        height: inherit;
         padding-right: 1.5em;
+        padding-bottom: 4px;
     }
 
     .send-message-box {

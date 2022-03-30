@@ -65,15 +65,15 @@
         align-items: center;
         padding-top: 1em;
         height: 95vh;
+        gap: 1em;
     }
 
     .right-panel {
         display: flex;
         flex-direction: column; 
         align-items: center;
-        width: 30em;
         height: inherit;
-        gap: 2em;
+        gap: 1em;
     }
 
     .game-info {
@@ -81,7 +81,6 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-
         width: 30em;
         height: 5em;
         background-color:#212125;
@@ -109,13 +108,12 @@
     .character-sheet-box {
         display: flex; 
         flex-direction: column; 
-        align-items: center;
-        
-        width: 80em; 
+        align-items: center; 
         height: inherit;
         background-color: #212125;
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
+        flex-grow: 5;
     }
 
 

@@ -64,15 +64,15 @@
         justify-content: space-around;
         align-items: center;
         padding-top: 1em;
+        height: 95vh;
     }
 
     .right-panel {
-        display: flex; 
+        display: flex;
         flex-direction: column; 
         align-items: center;
-
         width: 30em;
-        height: 57em;
+        height: inherit;
         gap: 2em;
     }
 
@@ -112,7 +112,7 @@
         align-items: center;
         
         width: 80em; 
-        height: 57em; 
+        height: inherit;
         background-color: #212125;
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;

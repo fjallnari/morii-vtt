@@ -22,6 +22,7 @@ export default class SignUpController extends RouteController {
                     pfpColor: randomColor()
                 },
                 campaigns: [],
+                characters: []
             });
         }
         catch (err) {

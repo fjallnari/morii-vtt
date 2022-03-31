@@ -34,7 +34,7 @@ export default class JoinCampaignController extends RouteController {
                 return this.res.status(401).send('Incorrect password');
             }
     
-            await campaignsCollection.updateOne({_id: inviteObj.campaign_id}, {$addToSet: {players: userID}})
+            await campaignsCollection.updateOne({_id: inviteObj.campaign_id}, {$addToSet: {players: { playerID: userID }}});
             
             // add campaign to user's campaigns
             await usersCollection.updateOne({_id: userID}, {$push: { campaigns: inviteObj.campaign_id }});

@@ -25,15 +25,15 @@ export default class DeleteCampaignController extends RouteController {
                 await invitesCollection.deleteOne({_id: campaignInfo.invite});
             }
     
-            const allUsersInCampaign = campaignInfo.players.concat([campaignInfo.owner]);
+            const allUsersInCampaign = campaignInfo.players.concat([{playerID: campaignInfo.owner}]);
     
             // remove the campaign from all players documents; not the best design in terms of efficiency rn!
             for (const userID of allUsersInCampaign) {
-                usersCollection.updateOne({_id: userID}, { $pull: { campaigns: campaignInfo._id } });
+                usersCollection.updateOne({_id: userID}, { $pull: { campaigns: campaignInfo._id }});
             }
     
             // remove campaign from the campaigns coll
-            await campaignsCollection.deleteOne({_id: campaignInfo._id });
+            await campaignsCollection.deleteOne({ _id: campaignInfo._id });
     
             return this.res.status(200).send();
         }

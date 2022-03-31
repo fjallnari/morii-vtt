@@ -20,8 +20,7 @@ export const simplifyPlayerInfo = (player: UserDB) => {
     return {
         _id: player._id.toString(),
         username: player.username,
-        pfpID: player.settings.pfpID, 
-        pfpColor: player.settings.pfpColor
+        settings: player.settings
     };
 }
 
@@ -47,7 +46,7 @@ export const getFullCampaignsInfo = async (campaigns: ObjectId[]) => {
 
     // gets additional info for all players in campaign, then merges it with the original "campaign" object
     return await Promise.all(campaignsInfo.map( async campaign => {
-        const allPlayerInfo = <UserDB[]> await users?.find({_id: {$in : campaign.players}}).toArray();
+        const allPlayerInfo = <UserDB[]> await users?.find({_id: {$in : campaign.players.map( playerObj => playerObj.playerID )}}).toArray();
         const ownerInfo = <UserDB> await users?.findOne({ _id: campaign.owner });
 
         const simplePlayerInfo = allPlayerInfo?.map(player => {

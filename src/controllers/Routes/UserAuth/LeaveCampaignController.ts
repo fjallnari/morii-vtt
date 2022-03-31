@@ -18,10 +18,10 @@ export default class LeaveCampaignController extends RouteController {
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
             
             // remove user from campaign's list 
-            await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$pull: {players: userID}})
+            await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$pull: {players: { playerID: userID }}})
             
             // remove campaign from user's campaigns
-            await usersCollection.updateOne({_id: userID}, {$pull: { campaigns: campaignID }});
+            await usersCollection.updateOne({_id: userID}, {$pull: { campaigns: new ObjectId(campaignID) }});
     
             return this.res.status(200).end();
         }

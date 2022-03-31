@@ -1,46 +1,16 @@
 <script lang="ts">
-    import type Campaign from "../../interfaces/Campaign";
     import IconButton from '@smui/icon-button';
-    import Tooltip, { Wrapper } from '@smui/tooltip';
-    import Menu from '@smui/menu';
-    import type { MenuComponentDev } from '@smui/menu';
-    import List, { Item, Separator, Text } from '@smui/list';
     import { push } from "svelte-spa-router";
-    import ANIMALS from "../../enum/Animals";
+    import type GameData from "../../interfaces/GameData";
 
-    export let currentCampaign: Campaign;
-
-    let playerListMenu: MenuComponentDev;
+    export let gameData: GameData;
 
 </script>
 
 <div class="game-info">
 
-    <h3>{currentCampaign.name}</h3>
+    <h3>{gameData.name}</h3>
     <div class="icon-bar">
-        <Menu bind:this={playerListMenu}>
-            <List style="text-align: left; gap: 1em;">
-                <Item style="font-family: Montserrat">
-                    <img class="pfp" src="../static/crown.svg" alt="crown">
-                    <Text style="padding-left: 1em;">
-                        {currentCampaign.owner.username}
-                    </Text>
-                </Item>
-                <Separator />
-
-                {#each currentCampaign.players.sort((a, b) => a.username.localeCompare(b.username)) as player}
-                    <div class="player-list-item">
-                        <Item>
-                            <img class="pfp" style="background-color: #{player.pfpColor};" src="../static/pfp/{ANIMALS[player.pfpID]}.svg" alt="pfp">
-                            <Text style="padding-left: 1em;">
-                                {player.username}
-                            </Text>
-                        </Item>
-                    </div>
-                {/each}
-            </List>
-        </Menu>
-        <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => playerListMenu.setOpen(true)}>person</IconButton>
         <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => push('/')}>logout</IconButton>
     </div>
 </div>
@@ -75,16 +45,6 @@
         display: flex;
         gap: 1em;
         padding-right: 1em;
-    }
-
-    .player-list-item {
-        font-family: Montserrat;
-    }
-
-    .pfp {
-        border-radius: 15%;
-        width: 2em;
-        height: 2em;
     }
 
 </style>

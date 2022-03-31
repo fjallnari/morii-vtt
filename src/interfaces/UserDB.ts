@@ -12,4 +12,5 @@ export default interface UserDB {
     refresh_token: string,
     settings: UserSettings,
     campaigns: ObjectId[],
+    characters: ObjectId[]
 }

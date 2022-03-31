@@ -27,9 +27,8 @@
         socket.emit('chat message', {
             senderInfo: {
                 _id: $user._id, 
-                username: $user.username, 
-                pfpColor: $user.settings.pfpColor,
-                pfpID: $user.settings.pfpID
+                username: $user.username,
+                settings: $user.settings,
             }, 
             messageText: messageText, 
             gameID: $params.id,

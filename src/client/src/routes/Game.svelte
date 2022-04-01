@@ -6,6 +6,8 @@
     import { params, push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
+    import CircularProgress from '@smui/circular-progress';
+    import CharacterSheet from "../components/Game/CharacterSheet.svelte";
 
     const socket = io();
 
@@ -23,7 +25,7 @@
                         
 			user.set(response.data.userInfo);
             socket.emit('join-room', $params.id);
-			return $user.campaigns[0];
+			return $user.gameData;
 		}
 		catch {
             replace('/');
@@ -32,14 +34,13 @@
 
 </script>
 
-{#await loadGame() then currentCampaign}
+{#await loadGame()}
+    <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+{:then gameData}
     <div class="game-content">
-        <div class="character-sheet-box">
-            <h1>Character sheet</h1>
-        </div>
-
+        <CharacterSheet gameData={gameData}></CharacterSheet>
         <div class="right-panel">
-            <GameInfo currentCampaign={currentCampaign}></GameInfo>
+            <GameInfo gameData={gameData}></GameInfo>
             <Chat socket={socket}></Chat>
         </div>
     </div>
@@ -65,15 +66,11 @@
         gap: 1em;
     }
 
-    .character-sheet-box {
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        height: inherit;
-        background-color: #212125;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 4px;
-        flex-grow: 5;
+    #progress-circle {
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      height: 95vh;
     }
 
 

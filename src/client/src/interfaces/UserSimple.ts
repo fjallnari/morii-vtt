@@ -1,6 +1,7 @@
+import type UserSettings from "./UserSettings";
+
 export default interface UserSimple {
     _id: string;
     username: string;
-    pfpID: number;
-    pfpColor: string;
+    settings: UserSettings;
 }

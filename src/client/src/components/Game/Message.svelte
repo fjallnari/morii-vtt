@@ -12,7 +12,7 @@
 <div class="message-content">
     {#if message.isPublic}
         <div class="sender-info">
-            <img id="pfp" style="background-color: #{message.senderInfo.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.pfpID]}.svg" alt="pfp">
+            <img id="pfp" style="background-color: #{message.senderInfo.settings.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.settings.pfpID]}.svg" alt="pfp">
             {message.senderInfo.username}
         </div>
     {:else}

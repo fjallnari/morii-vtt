@@ -17,7 +17,7 @@ export default class KickPlayerController extends RouteController {
             await usersCollection.updateOne({ _id: new ObjectId(playerID) }, {$pull: { campaigns: new ObjectId(campaignID) }});
             
             // remove player from campaign's document
-            await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$pull: {players: new ObjectId(playerID) }});
+            await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$pull: {players: {playerID: new ObjectId(playerID) }}});
     
             return this.res.status(200).send();
         }

@@ -57,6 +57,9 @@
         {#each messages as message}
             <Message message={message}></Message>
         {/each}
+        <div class="help-message">
+            Dice rolling e.g. /r 1d20 + 2 or /roll 1d8 - 3
+        </div>
     </div>
     <div class="send-message-box">
         <Textfield 
@@ -125,6 +128,11 @@
         gap: 1em;
         height: 4em;
         width: 8em;
+    }
+
+    .help-message {
+        font-family: Quicksand;
+        font-size: large;
     }
 
 

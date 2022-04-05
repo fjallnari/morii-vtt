@@ -73,10 +73,10 @@
 
         <div class="send-options-box">
             <IconButton toggle bind:pressed={isMessagePublic}>
-                <Icon class="material-icons" on>visibility</Icon>
-                <Icon class="material-icons">visibility_off</Icon>
+                <Icon class="material-icons" style="font-size: xx-large;" on>visibility</Icon>
+                <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
             </IconButton>
-            <IconButton class="material-icons" on:click={() => sendMessage()}>send</IconButton>
+            <IconButton class="material-icons" style="font-size: xx-large;" on:click={() => sendMessage()}>send</IconButton>
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@
     import Button, { Label } from '@smui/button';
     import Textfield from '@smui/textfield';
     import IconButton, { Icon } from '@smui/icon-button';
+    import MessageGrid from "./MessageGrid.svelte";
 
     export let socket;
     let messages: MessageData[] = [];
@@ -23,7 +24,7 @@
         if (!messageText || !messageText.trim()){ 
             return;
         }
-        // not an ideal solution, sends bit too much data on each message
+
         socket.emit('chat message', {
             senderInfo: {
                 _id: $user._id, 
@@ -55,7 +56,7 @@
 <div class="chat-box">
     <div class="messages-box">
         {#each messages as message}
-            <Message message={message}></Message>
+            <MessageGrid message={message}></MessageGrid>
         {/each}
         <div class="help-message">
             Dice rolling e.g. /r 1d20 + 2 or /roll 1d8 - 3
@@ -100,7 +101,7 @@
     .messages-box {
         display: flex;
         flex-direction: column-reverse;
-        gap: 1.2em;
+        gap: 1.5em;
         margin-top: 2em;
         overflow-y: auto;
         overflow-x: hidden;

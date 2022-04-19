@@ -15,7 +15,7 @@
     let isMsgBoxFocused = false;
     let lastKeypress: string;
     
-    socket.on('chat message', (incomingMessage: MessageData) => {
+    socket.on('chat-message', (incomingMessage: MessageData) => {
         messages = [incomingMessage, ...messages];
     })
 
@@ -25,7 +25,7 @@
             return;
         }
 
-        socket.emit('chat message', {
+        socket.emit('chat-message', {
             senderInfo: {
                 _id: $user._id, 
                 username: $user.username,

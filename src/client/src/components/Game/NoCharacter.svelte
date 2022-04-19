@@ -1,0 +1,87 @@
+<script lang="ts">
+    import Button, { Label, Icon } from '@smui/button';
+    import axios from 'axios';
+    import { use } from 'passport';
+    import { params, push, replace } from "svelte-spa-router";
+    import type GameData from '../../interfaces/GameData';
+    import { accessToken, user } from '../../stores';
+
+    export let gameData: GameData;
+
+    // returns user's updated game data
+    const createCharacter = async () => {
+		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
+		// TODO: refactor the "refresh token/load secure route" flow
+		await new Promise(res => setTimeout(res, 500));
+		try {
+            const response = await axios.post('/api/create-character', {
+                campaignID: $params.id,
+            },
+            {
+                headers: {
+					'Authorization': `Bearer ${$accessToken}`
+				}
+            });
+                        
+			user.set(Object.assign($user, {gameData: Object.assign( gameData, {character: response.data.characterInfo })}));
+            // socket.emit('join-room', $params.id);
+            gameData = $user.gameData;
+			return $user.gameData;
+		}
+		catch {
+            replace('/');
+		}
+	}
+
+</script>
+
+
+<div class="no-character-panel">
+    <h3>You don't have any character assigned to this campaign.</h3>
+    <div class="new-character-options">
+        <Button variant="raised" on:click={() => createCharacter()}>
+            <Icon class="material-icons">add</Icon>
+            <Label>Create New</Label>
+        </Button>
+        <Button variant="raised" color="secondary" on:click={() => {}}>
+            <Icon class="material-icons">person</Icon>
+            <Label>Use Existing</Label>
+        </Button>
+        <Button variant="raised" on:click={() => {}} disabled>
+            <Icon class="material-icons">upload_file</Icon>
+            <Label>Import from file</Label>
+        </Button>
+    </div>
+</div>
+
+
+<style>
+
+    h3 {
+        font-family: Montserrat;
+        font-size: xx-large;
+        font-weight: 100;
+    }
+
+    .no-character-panel {
+        display: flex;
+        height: inherit;
+        flex: 5;
+        background-color: #212125;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .new-character-options {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2em;
+    }
+
+</style>

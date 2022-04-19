@@ -17,6 +17,7 @@
     const submit = () => {
         if (value != original) {
             dispatch('submit', value);
+            original = value;
         }
             
         editing = false;
@@ -58,6 +59,8 @@
         box-shadow: none;
         width: inherit;
         max-width: inherit;
+        outline: solid 1.5px #EFA48B;
+        border-radius: 4px;
     }
 
 </style>

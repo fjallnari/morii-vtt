@@ -3,6 +3,7 @@
     import type MessageData from "../../interfaces/MessageData";
     import IconButton, { Icon } from '@smui/icon-button';
     import PrettyRollResult from "./PrettyRollResult.svelte";
+    import { user } from "../../stores";
 
     export let message: MessageData;
 
@@ -17,9 +18,13 @@
         {message.timestamp}
     </div>
 
-    {#if message.isPublic}
+    {#if message && message.isPublic}
         <div class="sender-pfp">
-            <img id="pfp" style="background-color: #{message.senderInfo.settings.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.settings.pfpID]}.svg" alt="pfp">
+            {#if $user.gameData && message.senderInfo._id === $user.gameData.owner}
+                <img src="../static/crown.svg" alt="crown">
+            {:else}
+                <img style="background-color: #{message.senderInfo.settings.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.settings.pfpID]}.svg" alt="pfp">
+            {/if}
         </div>
     {:else}
         <div class="sender-pfp">
@@ -74,12 +79,12 @@
         overflow-wrap: anywhere;
         padding: 0.5em;
     }
-
-    #pfp {
+    .sender-pfp img {
         border-radius: 25%;
         width: 2.5em;
         height: 2.5em;
+        background-color: #252529;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     }
-
 
 </style>

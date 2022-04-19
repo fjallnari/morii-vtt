@@ -1,6 +1,6 @@
 <script lang="ts">
     import IconButton from '@smui/icon-button';
-    import { push } from "svelte-spa-router";
+    import { push, replace } from "svelte-spa-router";
     import type GameData from "../../interfaces/GameData";
 
     export let gameData: GameData;
@@ -11,7 +11,7 @@
 
     <h3>{gameData.name}</h3>
     <div class="icon-bar">
-        <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => push('/')}>logout</IconButton>
+        <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => replace('/')}>logout</IconButton>
     </div>
 </div>
 

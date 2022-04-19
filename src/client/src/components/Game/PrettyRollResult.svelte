@@ -37,7 +37,7 @@
     }
 
     .roll-formula {
-        font-size: x-large;
+        font-size: large;
         gap: 0.5em;
     }
 

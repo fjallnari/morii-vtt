@@ -7,7 +7,7 @@ import routes from './routes/Routes';
 import userRoutes from './routes/UserRoutes';
 import ownerRoutes from './routes/OwnerRoutes';
 import cookieParser from 'cookie-parser';
-import MessageController from './controllers/SocketsIO/MessageController';
+import SocketsController from "./controllers/SocketsIO/SocketsController";
 
 dotenv.config();
 setUpDB();
@@ -20,15 +20,15 @@ const main = async () => {
     const httpServer = createServer(app);
 
     const io = new Server(httpServer);
-
-    // TODO: create separate file for sockets stuff
+    const socketsController = new SocketsController(io);
+    
     io.on("connection", (socket) => {
-        socket.on('join-room', room => {
-            socket.join(room);   
+        socket.on('join-room', data => {
+            socketsController.joinRoom(socket, data);
         });
 
-        socket.on('chat message', data => {
-            new MessageController(io, socket.id, data).handleMessage();
+        socket.on('chat-message', data => {
+            socketsController.handleMessage(socket, data);
         });
     });
 

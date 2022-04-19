@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export default interface Character {
-    _id: string,
+    _id: ObjectId,
     name: string,
     classLevel: string,
     experience: string,

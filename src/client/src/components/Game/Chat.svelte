@@ -6,6 +6,7 @@
     import Button, { Label } from '@smui/button';
     import Textfield from '@smui/textfield';
     import IconButton, { Icon } from '@smui/icon-button';
+    import MessageGrid from "./MessageGrid.svelte";
 
     export let socket;
     let messages: MessageData[] = [];
@@ -14,7 +15,7 @@
     let isMsgBoxFocused = false;
     let lastKeypress: string;
     
-    socket.on('chat message', (incomingMessage: MessageData) => {
+    socket.on('chat-message', (incomingMessage: MessageData) => {
         messages = [incomingMessage, ...messages];
     })
 
@@ -23,8 +24,8 @@
         if (!messageText || !messageText.trim()){ 
             return;
         }
-        // not an ideal solution, sends bit too much data on each message
-        socket.emit('chat message', {
+
+        socket.emit('chat-message', {
             senderInfo: {
                 _id: $user._id, 
                 username: $user.username,
@@ -55,7 +56,7 @@
 <div class="chat-box">
     <div class="messages-box">
         {#each messages as message}
-            <Message message={message}></Message>
+            <MessageGrid message={message}></MessageGrid>
         {/each}
         <div class="help-message">
             Dice rolling e.g. /r 1d20 + 2 or /roll 1d8 - 3
@@ -73,10 +74,10 @@
 
         <div class="send-options-box">
             <IconButton toggle bind:pressed={isMessagePublic}>
-                <Icon class="material-icons" on>visibility</Icon>
-                <Icon class="material-icons">visibility_off</Icon>
+                <Icon class="material-icons" style="font-size: xx-large;" on>visibility</Icon>
+                <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
             </IconButton>
-            <IconButton class="material-icons" on:click={() => sendMessage()}>send</IconButton>
+            <IconButton class="material-icons" style="font-size: xx-large;" on:click={() => sendMessage()}>send</IconButton>
         </div>
     </div>
 </div>
@@ -100,7 +101,7 @@
     .messages-box {
         display: flex;
         flex-direction: column-reverse;
-        gap: 1.2em;
+        gap: 1.5em;
         margin-top: 2em;
         overflow-y: auto;
         overflow-x: hidden;

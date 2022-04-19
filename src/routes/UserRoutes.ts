@@ -5,6 +5,8 @@ import GameController from '../controllers/Routes/UserAuth/GameController';
 import CreateCampaignController from '../controllers/Routes/UserAuth/CreateCampaignController';
 import JoinCampaignController from '../controllers/Routes/UserAuth/JoinCampaignController';
 import LeaveCampaignController from '../controllers/Routes/UserAuth/LeaveCampaignController';
+import CreateCharacterController from '../controllers/Routes/UserAuth/CreateCharacterController';
+import ModifyCharacterController from '../controllers/Routes/UserAuth/ModifyCharacterController';
 
 const router = express.Router();
 
@@ -27,6 +29,14 @@ router.post('/api/join-campaign', verifyToken, async (req, res, next) => {
 
 router.post("/api/leave-campaign", verifyToken, async (req, res) => {
     await new LeaveCampaignController(req, res).handleRequest();
+});
+
+router.post('/api/create-character', verifyToken, async (req, res, next) => {
+    await new CreateCharacterController(req, res).handleRequest();
+});
+
+router.post('/api/modify-character', verifyToken, async (req, res, next) => {
+    await new ModifyCharacterController(req, res).handleRequest();
 });
 
 export default router;

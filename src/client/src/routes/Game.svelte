@@ -7,7 +7,8 @@
     import Chat from "../components/Game/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
     import CircularProgress from '@smui/circular-progress';
-    import CharacterSheet from "../components/Game/CharacterSheet.svelte";
+    import CharacterHandler from "../components/Game/CharacterHandler.svelte";
+    import GameOverview from "../components/Game/GameOverview.svelte";
 
     const socket = io();
 
@@ -24,7 +25,7 @@
 			});
                         
 			user.set(response.data.userInfo);
-            socket.emit('join-room', $params.id);
+            socket.emit('join-room', { roomID: $params.id, userID: $user._id });
 			return $user.gameData;
 		}
 		catch {
@@ -38,7 +39,11 @@
     <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
 {:then gameData}
     <div class="game-content">
-        <CharacterSheet gameData={gameData}></CharacterSheet>
+        {#if $user.gameData && $user._id === $user.gameData.owner}
+            <GameOverview></GameOverview>
+        {:else}
+            <CharacterHandler gameData={gameData}></CharacterHandler>
+        {/if}
         <div class="right-panel">
             <GameInfo gameData={gameData}></GameInfo>
             <Chat socket={socket}></Chat>

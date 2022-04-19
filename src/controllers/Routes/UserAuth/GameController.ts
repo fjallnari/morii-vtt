@@ -2,6 +2,7 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection, getIdsFromCollection } from "../../../db/Mongo";
 import Campaign from "../../../interfaces/Campaign";
+import Character from "../../../interfaces/Character";
 import { getFullCampaignsInfo, getUserFromToken, simplifyPlayerInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
 
@@ -9,17 +10,18 @@ export default class GameController extends RouteController {
 
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
+        const charactersCollection = <Collection<Document>> await getCollection('characters');
         const campaignInfo = <Campaign> await campaignsCollection?.findOne({ _id: campaignID });
 
-        const playerObj = campaignInfo.players.find( playerObj => playerObj.playerID === userID);
-        const characterID = playerObj?.characterID;
+        const playerObj = campaignInfo.players.find( playerObj => playerObj.playerID.toString() === userID.toString());
+        const characterObj = <Character> await charactersCollection?.findOne({ _id: playerObj?.characterID });
 
         return {
             id: campaignInfo._id,
+            owner: campaignInfo.owner.toString(),
             name: campaignInfo.name,
             system: campaignInfo.system,
-            // TODO
-            characterInfo: characterID
+            character: characterObj ? Object.assign(characterObj, {_id: characterObj._id.toString()}) : undefined
         }
 
     }

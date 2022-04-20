@@ -7,8 +7,11 @@
 	import Auth from "./routes/Auth.svelte";
 	import { accessToken, user } from "./stores";
 	import Game from "./routes/Game.svelte";
+	import { onMount } from "svelte";
 
-	$: refreshAccessToken();
+	onMount(() => {
+		refreshAccessToken();
+	});
 
 	const loadDashboard = async () => {
 		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
@@ -69,6 +72,7 @@
 	}
 	
 </script>
+
 
 <main>
 	<Router {routes} on:conditionsFailed={conditionsFailed}/>

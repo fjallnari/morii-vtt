@@ -16,7 +16,7 @@
     const loadGame = async () => {
 		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
 		// TODO: refactor the "refresh token/load secure route" flow
-		await new Promise(res => setTimeout(res, 500));
+		await new Promise(res => setTimeout(res, 1000));
 		try {
 			const response = await axios.get(`/api/game/${$params.id}`, {
 				headers: {

@@ -9,7 +9,7 @@
 
 <div class="game-info">
 
-    <h3>{gameData.name}</h3>
+    <h3>{gameData.name ? gameData.name : '_'}</h3>
     <div class="icon-bar">
         <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => replace('/')}>logout</IconButton>
     </div>

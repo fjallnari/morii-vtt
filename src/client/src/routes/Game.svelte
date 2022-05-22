@@ -2,7 +2,7 @@
     import axios from "axios";
     import { accessToken } from "../stores";
     import io from 'socket.io-client';
-    import { user } from '../stores';
+    import { user, socket } from '../stores';
     import { params, push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
@@ -10,7 +10,9 @@
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import GameOverview from "../components/Game/GameOverview.svelte";
 
-    const socket = io();
+    // const socket = io();
+    // initialises socket
+    socket.set(io());
 
     // returns current campaign object or redirects to dashboard
     const loadGame = async () => {
@@ -25,7 +27,7 @@
 			});
                         
 			user.set(response.data.userInfo);
-            socket.emit('join-room', { roomID: $params.id, userID: $user._id });
+            $socket.emit('join-room', { roomID: $params.id, userID: $user._id });
 			return $user.gameData;
 		}
 		catch {
@@ -39,14 +41,14 @@
     <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
 {:then gameData}
     <div class="game-content">
-        {#if $user.gameData && $user._id === $user.gameData.owner}
+        {#if $user && $user._id === gameData.owner}
             <GameOverview></GameOverview>
         {:else}
             <CharacterHandler gameData={gameData}></CharacterHandler>
         {/if}
         <div class="right-panel">
             <GameInfo gameData={gameData}></GameInfo>
-            <Chat socket={socket}></Chat>
+            <Chat></Chat>
         </div>
     </div>
 {/await}

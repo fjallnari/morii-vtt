@@ -1,6 +1,6 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import { user } from '../../stores';
+    import { user, socket } from '../../stores';
     import type MessageData from "../../interfaces/MessageData";
     import Message from "./Message.svelte";
     import Button, { Label } from '@smui/button';
@@ -8,14 +8,14 @@
     import IconButton, { Icon } from '@smui/icon-button';
     import MessageGrid from "./MessageGrid.svelte";
 
-    export let socket;
+    // export let socket;
     let messages: MessageData[] = [];
     let messageText: string = '';
     let isMessagePublic = true;
     let isMsgBoxFocused = false;
     let lastKeypress: string;
     
-    socket.on('chat-message', (incomingMessage: MessageData) => {
+    $socket.on('chat-message', (incomingMessage: MessageData) => {
         messages = [incomingMessage, ...messages];
     })
 
@@ -25,7 +25,7 @@
             return;
         }
 
-        socket.emit('chat-message', {
+        $socket.emit('chat-message', {
             senderInfo: {
                 _id: $user._id, 
                 username: $user.username,

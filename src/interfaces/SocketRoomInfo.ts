@@ -1,10 +1,10 @@
-interface SocketUserSimple {
-    userID?: string;
+export interface SocketUserSimple {
+    userID: string;
     socketID?: string;
 }
 
 
-export default interface SocketRoomInfo {
+export interface SocketRoomInfo {
     owner?: SocketUserSimple,
-    players?: SocketUserSimple[]    
+    players?: Record<string, string> // userID is key, socketID is the property    
 }

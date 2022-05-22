@@ -7,10 +7,12 @@
 	import Auth from "./routes/Auth.svelte";
 	import { accessToken, user } from "./stores";
 	import Game from "./routes/Game.svelte";
-	import { onMount } from "svelte";
+	import { onMount } from "svelte";	
 
 	onMount(() => {
-		refreshAccessToken();
+		(async () => {
+			await refreshAccessToken();
+		})();
 	});
 
 	const loadDashboard = async () => {

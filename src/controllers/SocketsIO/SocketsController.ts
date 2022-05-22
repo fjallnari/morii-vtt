@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import SocketIO from "../../interfaces/SocketIO";
-import SocketRoomInfo from "../../interfaces/SocketRoomInfo";
+import { SocketRoomInfo } from "../../interfaces/SocketRoomInfo";
 import { getCollection } from "../../db/Mongo";
 import { Collection, Document, ObjectId, WithId } from "mongodb";
 import Campaign from "../../interfaces/Campaign";
@@ -35,15 +35,15 @@ export default class SocketsController {
         // if the first user joins, get & save owner's userID
         if (! this.rooms.has(data.roomID)) {
             const ownerID = await this.getOwnerID(data.roomID);
-            this.rooms.set(data.roomID, { owner: { userID: ownerID }, players: []});
+            this.rooms.set(data.roomID, { owner: { userID: ownerID }, players: {}});
         }
 
         const roomInfo = this.rooms.get(data.roomID);
 
-        // fill in owner's socketID or add newly joined regular player
+        // fill in owner's socketID or add newly joined regular player to the record of players
         this.rooms.set(data.roomID, Object.assign(roomInfo, 
             data.userID === roomInfo?.owner?.userID ? { owner: { userID: data.userID, socketID: socket.id }} : 
-            { players: roomInfo?.players?.concat([{ userID: data.userID, socketID: socket.id }])}
+            { players: Object.assign(roomInfo?.players, { [data.userID] : socket.id })}
         ));
 
         socket.join(data.roomID);

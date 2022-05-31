@@ -28,14 +28,15 @@ export default class CreateCharacterController extends RouteController {
                 alignment: ''
             };
     
-            const insertResult = await charactersCollection.insertOne(newCharacter);
+            const insertResult = await charactersCollection.insertOne(Object.assign(newCharacter, { playerID: userID }));
             const newCharacterID = insertResult.insertedId;
             
             // add campaign to user's campaigns
             await usersCollection.updateOne({_id: userID}, {$push: { characters: newCharacterID }});
             await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": userID}, {$set: { "players.$.characterID": newCharacterID }});
-    
-            return this.res.status(200).send({characterInfo: Object.assign(newCharacter, {_id: insertResult.insertedId.toString()})});
+            
+            // sends newly created blank character object
+            return this.res.status(200).send({characterInfo: Object.assign(newCharacter, {_id: insertResult.insertedId.toString(), playerID: userID.toString()})});
         }
         catch (error) {
             return this.res.status(500).send('Creation failed');

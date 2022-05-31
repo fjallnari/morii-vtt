@@ -8,7 +8,7 @@
     import GameInfo from "../components/Game/GameInfo.svelte";
     import CircularProgress from '@smui/circular-progress';
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
-    import GameOverview from "../components/Game/GameOverview.svelte";
+    import GameDashboard from "../components/Game/GameDashboard.svelte";
 
     // const socket = io();
     // initialises socket
@@ -42,7 +42,7 @@
 {:then gameData}
     <div class="game-content">
         {#if $user && $user._id === gameData.owner}
-            <GameOverview></GameOverview>
+            <GameDashboard gameData={gameData}></GameDashboard>
         {:else}
             <CharacterHandler gameData={gameData}></CharacterHandler>
         {/if}

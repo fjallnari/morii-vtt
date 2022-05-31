@@ -30,6 +30,11 @@ const main = async () => {
         socket.on('chat-message', data => {
             socketsController.handleMessage(socket, data);
         });
+
+        socket.on('change-character', data => {
+            socketsController.changeCharacter(socket, data);
+        })
+
     });
 
     app.use(express.static('src/client/public'));

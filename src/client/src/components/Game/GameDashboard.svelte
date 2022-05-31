@@ -1,0 +1,34 @@
+<script lang="ts">
+    import { selectedCharacter, user } from '../../stores';
+    import CharacterSheet from './CharacterSheet.svelte';
+    import type GameData from '../../interfaces/GameData';
+    import CharactersList from './CharactersList.svelte';
+
+    export let gameData: GameData;
+
+</script>
+
+
+{#if $selectedCharacter}
+    <CharacterSheet character={$selectedCharacter}></CharacterSheet>
+{:else}
+    <div class="dashboard-container">
+        <CharactersList gameData={gameData}></CharactersList>
+    </div>
+{/if}
+
+
+<style>
+    .dashboard-container {
+        height: inherit;
+        flex: 5;
+        background-color: #212125;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }    
+
+</style>

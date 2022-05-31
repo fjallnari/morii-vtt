@@ -3,7 +3,9 @@ import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection, getIdsFromCollection } from "../../../db/Mongo";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
+import UserDB from "../../../interfaces/UserDB";
 import { getFullCampaignsInfo, getUserFromToken, simplifyPlayerInfo } from "../../../util/helpers";
+import { zip } from "../../../util/util";
 import RouteController from "../RouteController";
 
 export default class GameController extends RouteController {
@@ -13,15 +15,24 @@ export default class GameController extends RouteController {
         const charactersCollection = <Collection<Document>> await getCollection('characters');
         const campaignInfo = <Campaign> await campaignsCollection?.findOne({ _id: campaignID });
 
-        const playerObj = campaignInfo.players.find( playerObj => playerObj.playerID.toString() === userID.toString());
-        const characterObj = <Character> await charactersCollection?.findOne({ _id: playerObj?.characterID });
+        // get all character ids, if they exist (filters out all undefineds)
+        const characterIds = campaignInfo.players.map( playerObj => playerObj.characterID).filter((character): character is ObjectId => !!character);
+        const charactersObjs = <Character[]> await getIdsFromCollection(characterIds, 'characters');
+
+        // stringifies objectIDs
+        const cleanCharacters = charactersObjs.map(character => Object.assign(character, {_id: character._id.toString(), playerID: character.playerID.toString()}));
+
+        // get all players' info; then simplify it to pairs of id and username
+        const usersObjs = <UserDB[]> await getIdsFromCollection(campaignInfo.players.map( playerObj => playerObj.playerID), 'users');
+        const simpleUsers = usersObjs.map(user => { return { _id: user._id.toString(), username: user.username }});
 
         return {
             id: campaignInfo._id,
             owner: campaignInfo.owner.toString(),
             name: campaignInfo.name,
             system: campaignInfo.system,
-            character: characterObj ? Object.assign(characterObj, {_id: characterObj._id.toString()}) : undefined
+            characters: cleanCharacters,
+            players: simpleUsers
         }
 
     }

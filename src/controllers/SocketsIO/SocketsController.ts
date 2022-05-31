@@ -8,6 +8,7 @@ import DiceHandler from "../../services/DiceHandler";
 import { DateTime } from "luxon";
 import MessageData from "../../interfaces/MessageData";
 import JoinRoomEmitData from "../../interfaces/JoinRoomEmitData";
+import ChangeCharacterEmitData from "../../interfaces/ChangeCharacterEmitData";
 
 
 export default class SocketsController {
@@ -26,6 +27,15 @@ export default class SocketsController {
         const campaignInfo = <Campaign> await campaignsCollection.findOne({ _id: new ObjectId(gameID) });
         
         return campaignInfo.owner.toString();
+    }
+
+    public async changeCharacter(socket: Socket, data: ChangeCharacterEmitData) {
+        const socketRoom = this.rooms.get(data.roomID);
+        const ownerSocketID = <string> socketRoom?.owner?.socketID;
+        const playerSocketID = <string> socketRoom?.players?.[<string> data.character.playerID];
+
+        // console.log(data, data.character.playerID, this.rooms, ownerSocketID, playerSocketID);
+        this.io.to([playerSocketID, ownerSocketID]).emit('change-character', data.character);
     }
 
     /**

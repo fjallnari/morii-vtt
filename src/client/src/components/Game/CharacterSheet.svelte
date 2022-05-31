@@ -1,11 +1,10 @@
 <script lang="ts">
-    import type Campaign from "../../interfaces/Campaign";
-    import type GameData from "../../interfaces/GameData";
     import IconButton from '@smui/icon-button';
     import InPlaceEdit from "../InPlaceEdit.svelte";
     import type Character from "../../interfaces/Character";
     import axios from "axios";
-    import { accessToken, user } from "../../stores";
+    import { accessToken, socket, user } from "../../stores";
+    import { params } from "svelte-spa-router";
 
     export let character: Character;
     //console.log(gameData.character);
@@ -17,10 +16,15 @@
     let charBackground = 'Outlander';
     let charAlignment = 'CHG';
 
+    $socket.on('change-character', (modifiedCharacter: Character) => {
+        console.log(modifiedCharacter);
+        character = modifiedCharacter;
+    });
+
     const modifyCharacter = async () => {
         // prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
         // TODO: refactor the "refresh token/load secure route" flow
-        await new Promise(res => setTimeout(res, 500));
+        // await new Promise(res => setTimeout(res, 500));
         try {
             const response = await axios.post('/api/modify-character', {
                 modifiedCharacter: character,
@@ -30,6 +34,7 @@
                     'Authorization': `Bearer ${$accessToken}`
                 }
             });
+            $socket.emit('change-character', { modifierID: $user._id, roomID: $params.id, character: character });
         }
         catch (err){
             console.log(err);

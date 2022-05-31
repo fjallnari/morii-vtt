@@ -2,15 +2,23 @@
     import IconButton from '@smui/icon-button';
     import { push, replace } from "svelte-spa-router";
     import type GameData from "../../interfaces/GameData";
+    import { selectedCharacter, user } from '../../stores';
 
     export let gameData: GameData;
+
+    const showGameOverview = () => {
+        selectedCharacter.set(undefined);
+    }
 
 </script>
 
 <div class="game-info">
 
-    <h3>{gameData.name ? gameData.name : '_'}</h3>
+    <h3>{gameData ? gameData.name : '_'}</h3>
     <div class="icon-bar">
+        {#if $user && $user._id === gameData.owner}
+            <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => showGameOverview()}>dashboard</IconButton>
+        {/if}
         <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => replace('/')}>logout</IconButton>
     </div>
 </div>

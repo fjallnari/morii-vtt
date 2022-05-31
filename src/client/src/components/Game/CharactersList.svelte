@@ -1,8 +1,13 @@
 <script lang="ts">
+    import type Character from "../../interfaces/Character";
     import type GameData from "../../interfaces/GameData";
     import { selectedCharacter } from "../../stores";
 
     export let gameData:GameData;
+
+    const getClassIcon = (character: Character) => {
+        return character.classLevel.split(' ')[0].toLowerCase();
+    }
 
 </script>
 
@@ -11,14 +16,9 @@
     <div class="character-list">
         {#each gameData.characters as character}
             <li class="character-item" on:click={() => selectedCharacter.set(character)}>
-                <div class="character-tile">
-                    <!-- TODO -->
-                </div>
+                <img id="tile" src="../static/class-icons/{getClassIcon(character)}.svg" alt="class-icon">
                 <div class="character-name">
                     {character.name}
-                </div>
-                <div class="username">
-                    {gameData.players.find(player => player._id === character.playerID).username}
                 </div>
             </li>
         {/each}
@@ -45,7 +45,7 @@
         gap: 0.75em;
         overflow-x: auto;
         overflow-y: hidden;
-        padding: 0em 1em 0em 1em;
+        padding: 4px 1em 4px 1em;
     }
 
     .character-item {
@@ -64,17 +64,15 @@
         border-radius: 4px;
     }
 
-    .character-tile {
-
+    #tile {
+        border-radius: 25%;
+        width: 5em;
+        height: 5em;
     }
     
     .character-name {
         font-family: Quicksand;
         font-size: 1.5em;
-    }
-
-    .username {
-        font-family: Montserrat;
     }
 
     .title { grid-area: title;

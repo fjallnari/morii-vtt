@@ -113,7 +113,6 @@ const LOADING_MESSAGES = [
     "A kiss is like a fight, with mouths.",
     "You don't pay taxes—they take taxes.",
     "Coffee, Chocolate, Men. The richer the better!",
-    "I am free of all prejudices. I hate everyone equally.",
     "git happens",
     "May the forks be with you",
     "A commit a day keeps the mobs away",

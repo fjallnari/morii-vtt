@@ -1,12 +1,13 @@
 <script lang="ts">
-    import type Character from "../../interfaces/Character";
+    import type { Character } from "../../interfaces/Character";
     import type GameData from "../../interfaces/GameData";
     import { selectedCharacter } from "../../stores";
 
     export let gameData:GameData;
 
     const getClassIcon = (character: Character) => {
-        return character.classLevel.split(' ')[0].toLowerCase();
+        const classes = character.classes.split(' ');
+        return classes.length <= 2 ? classes[0].toLowerCase() : 'multiclass-mockup';
     }
 
 </script>

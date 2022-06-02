@@ -1,31 +1,33 @@
 <script lang="ts">
     import type DiceRollResult from "../../interfaces/DiceRollResult";
+    import type MessageData from "../../interfaces/MessageData";
+    import type SkillCheckInfo from "../../interfaces/SkillCheckInfo";
 
-    export let rollResult: DiceRollResult;
+    export let message: MessageData;
 
 </script>
 
 <div class="main-roll-block">
-    <em>Rolling {rollResult.diceInput} =></em>
+    <em>{message.skillCheckInfo ? message.skillCheckInfo.skillName : `rolling ${message.rollResult.diceInput} =>`}</em>
     <div class="roll-formula">
         <span>
             ( 
-            {#each rollResult.naturalThrows as naturalThrow, index}
-                {#if naturalThrow === 1 || naturalThrow === rollResult.diceSides}
+            {#each message.rollResult.naturalThrows as naturalThrow, index}
+                {#if naturalThrow === 1 || naturalThrow === message.rollResult.diceSides}
                     <span class="natural-crit" style="color: {naturalThrow === 1 ? '#EFA48B' : '#A7C284'};">
                         {naturalThrow}
                     </span>
                 {:else}
                     {naturalThrow}
                 {/if}
-                {#if index !== rollResult.naturalThrows.length - 1}
+                {#if index !== message.rollResult.naturalThrows.length - 1}
                     {' + '}
                 {/if}
             {/each}
-            ) {rollResult.modifierString ? `${rollResult.modifierString} ` : ''}=
+            ) {message.rollResult.modifierString ? `${message.rollResult.modifierString} ` : ''}=
         </span>
         <span class="dice-roll-result">
-            <strong>{rollResult.finalSum}</strong>
+            <strong>{message.rollResult.finalSum}</strong>
         </span>
     </div>
 </div>

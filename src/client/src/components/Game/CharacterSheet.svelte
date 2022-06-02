@@ -33,6 +33,23 @@
         }
 	}
 
+    const sendSkillCheck = async (modifier: number, skillName: string) => {
+        $socket.emit('chat-message', {
+            senderInfo: {
+                _id: $user._id, 
+                username: $user.username,
+                settings: $user.settings,
+            }, 
+            messageText: `/r d20${formatModifier(modifier)}`,
+            skillCheckInfo: {
+                characterName: character.name,
+                skillName: skillName
+            },
+            gameID: $params.id,
+            isPublic: true // make isMessagePublic a store variable
+        });
+    }
+
     /**
      * Formats modifier to show plus signs if the modifier is positive
      */
@@ -56,6 +73,10 @@
 
     const getSkillModifier = (AS: string, skill: AbilitySkill) => {
         return getASModifier(AS) + (skill.proficiency * ~~character.prof_bonus);
+    }
+
+    const getSavingThrowModifier = (AS: string) => {
+        return getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
     }
 
 </script>
@@ -163,9 +184,9 @@
                                 on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; modifyCharacter() }}
                             >
                             <mod>
-                                {formatModifier(getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0))}
+                                {formatModifier(getSavingThrowModifier(AS))}
                             </mod>
-                            <sendable>{AS} saving throws<br></sendable>
+                            <sendable on:click={() => { sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`) }}>{AS} saving throws<br></sendable>
                         </div>
                         {#each character.ability_scores[AS].skills as skill}
                             <div class="skill-field">
@@ -175,7 +196,7 @@
                                     on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); modifyCharacter() }}
                                 >
                                 <mod>{formatModifier(getSkillModifier(AS, skill))}</mod>
-                                <sendable>{skill.name}<br></sendable>
+                                <sendable on:click={() => { sendSkillCheck(getSkillModifier(AS, skill), skill.name) }}>{skill.name}<br></sendable>
                             </div>
                         {/each}
                     </div>
@@ -183,7 +204,7 @@
                         <div class="passive-perception">
                             <box class="box-with-label">
                                 <div class="box-main-text" style="font-weight: bold;">
-                                    {10 + getSkillModifier('WIS', getSkill('WIS', 'perception'))}
+                                    {10 + getSkillModifier('WIS', character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception'))}
                                 </div>
                                 <div class="box-label">
                                     Passive Perception

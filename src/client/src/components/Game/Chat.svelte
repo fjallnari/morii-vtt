@@ -2,8 +2,6 @@
     import { params } from "svelte-spa-router";
     import { user, socket } from '../../stores';
     import type MessageData from "../../interfaces/MessageData";
-    import Message from "./Message.svelte";
-    import Button, { Label } from '@smui/button';
     import Textfield from '@smui/textfield';
     import IconButton, { Icon } from '@smui/icon-button';
     import MessageGrid from "./MessageGrid.svelte";

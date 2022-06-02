@@ -11,7 +11,7 @@
 
 <div class="message-content">
     <div class="sender-info">
-        {message.senderInfo.username}
+        {message.senderInfo.username}{message.skillCheckInfo ? ` (${message.skillCheckInfo.characterName})` : ''}
     </div>
 
     <div class="message-timestamp">
@@ -34,7 +34,7 @@
 
     <div class="message-text" style="background: { message.isPublic ? '#252529' : '#3b3b42' }">
         {#if message.rollResult}
-            <PrettyRollResult rollResult={message.rollResult}></PrettyRollResult>
+            <PrettyRollResult message={message}></PrettyRollResult>
         {:else}
             {message.messageText}
         {/if}

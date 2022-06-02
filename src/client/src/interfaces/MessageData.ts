@@ -1,4 +1,5 @@
 import type DiceRollResult from "./DiceRollResult";
+import type SkillCheckInfo from "./SkillCheckInfo";
 import type UserSimple from "./UserSimple";
 
 export default interface MessageData {
@@ -7,5 +8,6 @@ export default interface MessageData {
     gameID: string;
     isPublic: boolean;
     timestamp?: string;
+    skillCheckInfo?: SkillCheckInfo;
     rollResult?: DiceRollResult;
 }

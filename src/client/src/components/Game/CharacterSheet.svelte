@@ -33,6 +33,19 @@
         }
 	}
 
+    /**
+     * Formats modifier to show plus signs if the modifier is positive
+     */
+    const formatModifier = (modifier: number) => {
+        return new Intl.NumberFormat("en-US", {
+            signDisplay: "exceptZero"
+        }).format(modifier);
+    }
+
+    const getModFromValue = (value: string) => {
+        return (~~value - 10) / 2 >> 0;
+    }
+
 </script>
 
 
@@ -113,15 +126,10 @@
         </div>
         <div class="ability-scores">
             {#each Object.keys(character.ability_scores) as AS}
-                <div class="ability-score-container">
+                <div class="ability-score-container" style="{['WIS', 'INT'].includes(AS) ? 'padding-bottom: 2.2em;': ''}">
                     <div class="ability-score-info">
                         <box class="ability-score-modifier">
-                            <!-- Formats the modifiers to show plus signs if the modifier is positive -->
-                            {
-                                new Intl.NumberFormat("en-US", {
-                                    signDisplay: "exceptZero"
-                                }).format((~~character.ability_scores[AS].value - 10) / 2 >> 0)
-                            }
+                            {formatModifier(getModFromValue(character.ability_scores[AS].value))}
                         </box>
                         <div class="ability-score-value">
                             <box class="box-with-label" style="flex-grow: 2;">
@@ -136,7 +144,28 @@
                     </div>
 
                     <div class="skills">
-
+                        <div class="skill-field">
+                            <img class="skill-prof-icon" 
+                                src="../static/rhombus{character.ability_scores[AS].saving_throw ? '' : '-outline'}.svg" 
+                                alt="rhombus"
+                                on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; modifyCharacter() }}
+                            >
+                            <mod>
+                                {formatModifier(getModFromValue(character.ability_scores[AS].value) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0))}
+                            </mod>
+                            <sendable>saving throws<br></sendable>
+                        </div>
+                        {#each character.ability_scores[AS].skills as skill}
+                            <div class="skill-field">
+                                <img class="skill-prof-icon" 
+                                    src="../static/{['checkbox-blank-outline', 'checkbox-marked', 'flare'][skill.proficiency]}.svg" 
+                                    alt="checkbox"
+                                    on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); modifyCharacter() }}
+                                >
+                                <mod>{formatModifier(getModFromValue(character.ability_scores[AS].value) + (skill.proficiency * ~~character.prof_bonus))}</mod>
+                                <sendable>{skill.name}<br></sendable>
+                            </div>
+                        {/each}
                     </div>
                 </div>
             {/each}
@@ -284,11 +313,27 @@
         "ability-scores";
     }
 
+    .bonuses { grid-area: bonuses; 
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
     .ability-scores { grid-area: ability-scores; 
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        padding-top: 0.5em;
+    }
+
+    .ability-score-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
         gap: 0.5em;
     }
 
@@ -320,12 +365,43 @@
         height: 5em;
     }
 
-    .bonuses { grid-area: bonuses; 
+    .skills {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+        width: inherit;
+        height: 7em;
+        font-family: Quicksand;
+        font-size: medium;
+        text-transform: capitalize;
+    }
+
+    .skill-field {
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
         align-items: center;
+        justify-content: flex-start;
     }
+
+    .skill-prof-icon {
+        cursor: pointer; 
+        height: 1.4em; 
+        width: 1.4em;
+    }
+
+    mod {
+        font-weight: bold;
+        border-bottom: 1px #F2E8CF dotted;
+        min-width: 1.2em;
+        margin: 0em 0.3em;
+    }
+
+    sendable {
+        cursor: pointer;
+    }
+
 
     .other-prof-languages { grid-area: other-prof-languages;
         margin: 0em 0.75em 0em 0em;

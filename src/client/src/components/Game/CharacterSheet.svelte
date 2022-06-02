@@ -1,7 +1,7 @@
 <script lang="ts">
     import IconButton, { Icon } from '@smui/icon-button';
     import InPlaceEdit from "../InPlaceEdit.svelte";
-    import type { Character } from "../../interfaces/Character";
+    import type { AbilitySkill, Character } from "../../interfaces/Character";
     import axios from "axios";
     import { accessToken, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
@@ -42,8 +42,20 @@
         }).format(modifier);
     }
 
-    const getModFromValue = (value: string) => {
-        return (~~value - 10) / 2 >> 0;
+    /**
+     * 
+     * @param AS - ability score tag, e.g. 'WIS', 'DEX', 'STR' ...
+     */
+    const getASModifier = (AS: string) => {
+        return (~~character.ability_scores[AS].value - 10) / 2 >> 0;
+    }
+
+    const getSkill = (AS: string, skillName: string) => {
+        return character.ability_scores[AS].skills.find(skill => skill.name === skillName);
+    }
+
+    const getSkillModifier = (AS: string, skill: AbilitySkill) => {
+        return getASModifier(AS) + (skill.proficiency * ~~character.prof_bonus);
     }
 
 </script>
@@ -129,7 +141,7 @@
                 <div class="ability-score-container" style="{['WIS', 'INT'].includes(AS) ? 'padding-bottom: 2.2em;': ''}">
                     <div class="ability-score-info">
                         <box class="ability-score-modifier">
-                            {formatModifier(getModFromValue(character.ability_scores[AS].value))}
+                            {formatModifier(getASModifier(AS))}
                         </box>
                         <div class="ability-score-value">
                             <box class="box-with-label" style="flex-grow: 2;">
@@ -151,9 +163,9 @@
                                 on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; modifyCharacter() }}
                             >
                             <mod>
-                                {formatModifier(getModFromValue(character.ability_scores[AS].value) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0))}
+                                {formatModifier(getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0))}
                             </mod>
-                            <sendable>saving throws<br></sendable>
+                            <sendable>{AS} saving throws<br></sendable>
                         </div>
                         {#each character.ability_scores[AS].skills as skill}
                             <div class="skill-field">
@@ -162,11 +174,23 @@
                                     alt="checkbox"
                                     on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); modifyCharacter() }}
                                 >
-                                <mod>{formatModifier(getModFromValue(character.ability_scores[AS].value) + (skill.proficiency * ~~character.prof_bonus))}</mod>
+                                <mod>{formatModifier(getSkillModifier(AS, skill))}</mod>
                                 <sendable>{skill.name}<br></sendable>
                             </div>
                         {/each}
                     </div>
+                    {#if AS === 'WIS'}
+                        <div class="passive-perception">
+                            <box class="box-with-label">
+                                <div class="box-main-text" style="font-weight: bold;">
+                                    {10 + getSkillModifier('WIS', getSkill('WIS', 'perception'))}
+                                </div>
+                                <div class="box-label">
+                                    Passive Perception
+                                </div>
+                            </box>
+                        </div>
+                    {/if}
                 </div>
             {/each}
         </div>
@@ -203,7 +227,7 @@
         font-family: Quicksand;
 
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 1fr 2fr 2fr 1fr; 
+        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 1fr 2fr 2fr 1fr; 
         gap: 0.5em 0.5em;
         grid-template-areas: 
         "character-name character-basic-info character-basic-info"
@@ -325,7 +349,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        padding-top: 0.5em;
+        padding-top: 0.25em;
     }
 
     .ability-score-container {
@@ -370,7 +394,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        text-align: left;
+        text-align: center;
         width: inherit;
         height: 7em;
         font-family: Quicksand;
@@ -400,6 +424,10 @@
 
     sendable {
         cursor: pointer;
+    }
+
+    .passive-perception {
+        height: 5em;
     }
 
 

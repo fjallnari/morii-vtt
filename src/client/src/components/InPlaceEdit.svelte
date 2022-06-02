@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte'
 
-    export let value: string, required = true, editModeWidth: string = 'inherit';
+    export let value: string, required = true, editModeWidth: string = 'inherit', editModeHeight: string = 'inherit';
 
     const dispatch = createEventDispatcher();
     let editing = false, original: string;
@@ -38,7 +38,7 @@
 
 {#if editing}
     <form on:submit|preventDefault={submit} on:keydown={keydown}>
-        <input style="width: {editModeWidth};" bind:value on:blur={submit} {required} use:focus/>
+        <input style="width: {editModeWidth}; height: {editModeHeight};" bind:value on:blur={submit} {required} use:focus/>
     </form>
 {:else}
     <div on:click={() => edit()}>

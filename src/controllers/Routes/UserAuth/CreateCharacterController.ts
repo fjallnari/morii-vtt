@@ -3,6 +3,8 @@ import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
 import jwt from 'jsonwebtoken';
+import { CHARACTER_SKELETON } from "../../../enum/CHARACTER_SKELETON";
+
 
 export default class CreateCharacterController extends RouteController {
 
@@ -19,16 +21,7 @@ export default class CreateCharacterController extends RouteController {
             const usersCollection = <Collection<Document>> await getCollection('users');
             const charactersCollection = <Collection<Document>> await getCollection('characters');
 
-            const newCharacter = {
-                name: '',
-                classLevel: '',
-                experience: '',
-                race: '',
-                background: '',
-                alignment: ''
-            };
-    
-            const insertResult = await charactersCollection.insertOne(Object.assign(newCharacter, { playerID: userID }));
+            const insertResult = await charactersCollection.insertOne(Object.assign(CHARACTER_SKELETON, { playerID: userID }));
             const newCharacterID = insertResult.insertedId;
             
             // add campaign to user's campaigns
@@ -36,7 +29,7 @@ export default class CreateCharacterController extends RouteController {
             await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": userID}, {$set: { "players.$.characterID": newCharacterID }});
             
             // sends newly created blank character object
-            return this.res.status(200).send({characterInfo: Object.assign(newCharacter, {_id: insertResult.insertedId.toString(), playerID: userID.toString()})});
+            return this.res.status(200).send({characterInfo: Object.assign(CHARACTER_SKELETON, {_id: insertResult.insertedId.toString(), playerID: userID.toString()})});
         }
         catch (error) {
             return this.res.status(500).send('Creation failed');

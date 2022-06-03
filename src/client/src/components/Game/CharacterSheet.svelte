@@ -9,7 +9,6 @@
     export let character: Character;
 
     $socket.on('change-character', (modifiedCharacter: Character) => {
-        console.log(modifiedCharacter);
         character = modifiedCharacter;
     });
 
@@ -201,31 +200,105 @@
                         {/each}
                     </div>
                     {#if AS === 'WIS'}
-                        <div class="passive-perception">
-                            <box class="box-with-label">
+                        <box class="additional-skill-box">
+                            <div class="box-with-label">
                                 <div class="box-main-text" style="font-weight: bold;">
                                     {10 + getSkillModifier('WIS', character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception'))}
                                 </div>
                                 <div class="box-label">
                                     Passive Perception
                                 </div>
-                            </box>
-                        </div>
+                            </div>
+                        </box>
+                    {:else if AS === 'DEX'}
+                        <box class="additional-skill-box">
+                            <div class="box-with-label">
+                                <div class="box-main-text" style="font-weight: bold; font-size: 1.2em;">
+                                    {formatModifier(getASModifier('DEX') + ~~character.initiative_bonus)}
+                                </div>
+                                <sendable class="box-label" on:click={() => sendSkillCheck((getASModifier('DEX') + ~~character.initiative_bonus), `initiative`)}>
+                                    Initiative
+                                </sendable>
+                            </div>
+                        </box>
                     {/if}
                 </div>
             {/each}
         </div>
     </div>
 
-    <box class="other-prof-languages"></box>
-    <box class="equipment"></box>
-    <box class="ac-init-speed">
+    <div class="ac-init-speed">
+        <div class="ac">
+            <box id="armor-class" class="box-with-label">
+                <div class="box-main-text">
+                    <InPlaceEdit bind:value={character.armor_class} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
+                </div>
+                <div class="box-label">
+                    Armor Class
+                </div>
+            </box>
+        </div>
 
-    </box>
-    <box class="hp-death-saves"></box>
-    <box class="spellcasting-modifiers"></box>
-    <box class="attacks"></box>
-    <box class="features-traits"></box>
+        <div class="initiative"></div>
+
+        <div class="speed">
+            <box class="box-with-label">
+                <div class="box-main-text">
+                    <InPlaceEdit bind:value={character.speed} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
+                </div>
+                <div class="box-label">
+                    Speed
+                </div>
+            </box>
+        </div>
+
+    </div>
+
+    <div class="hp-death-saves">
+        <box class="box-with-label">
+            <div class="box-main-text"></div>
+            <div class="box-label">
+                HP & Death Saves
+            </div>
+        </box>
+    </div>
+
+    <div class="attacks">
+        <box class="box-with-label">
+            <div class="box-main-text"></div>
+            <div class="box-label">
+                Attacks
+            </div>
+        </box>
+    </div>
+
+    <div class="equipment">
+        <box class="box-with-label">
+            <div class="box-main-text"></div>
+            <div class="box-label">
+                Equipment
+            </div>
+        </box>
+    </div>
+
+    <div class="other-prof-languages">
+        <box class="box-with-label">
+            <div class="box-main-text"></div>
+            <div class="box-label">
+                Other prof & Languages
+            </div>
+        </box>
+    </div>
+
+    <div class="features-traits">
+        <box class="box-with-label">
+            <div class="box-main-text"></div>
+            <div class="box-label">
+                Features & Traits
+            </div>
+        </box>
+    </div>
+
     <div id="char-sheet-menu">
         <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => {}}>home</IconButton>
         <IconButton class="material-icons" style="color: #DBD8B3; font-size: xx-large;" ripple={false} on:click={() => {}}>article</IconButton>
@@ -236,6 +309,25 @@
 
 
 <style>
+    mod {
+        font-weight: bold;
+        border-bottom: 1px #F2E8CF dotted;
+        min-width: 1.2em;
+        margin: 0em 0.3em;
+    }
+
+    sendable {
+        cursor: pointer;
+        transition-duration: 200ms;
+        transition-property: color;
+    }
+
+    sendable:active {
+        color: #EFA48B;
+        transition-duration: 200ms;
+        transition-property: color;
+    }
+
     .character-sheet-container {  display: grid;
         height: inherit;
         flex: 5;
@@ -436,20 +528,41 @@
         width: 1.4em;
     }
 
-    mod {
-        font-weight: bold;
-        border-bottom: 1px #F2E8CF dotted;
-        min-width: 1.2em;
-        margin: 0em 0.3em;
+    .additional-skill-box {
+        padding: 0.4em 0.4em 0em 0.4em;
     }
 
-    sendable {
-        cursor: pointer;
+    .ac-init-speed { grid-area: ac-init-speed;
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1fr; 
+        gap: 0em 0.5em; 
+        grid-template-areas: 
+            "ac initiative speed speed"; 
     }
 
-    .passive-perception {
+    .ac { grid-area: ac; }
+    .initiative { grid-area: initiative; }
+    .speed { grid-area: speed; }
+
+    #armor-class {
+        width: 5em;
         height: 5em;
+        border: 0.5em solid transparent;
+        border-radius: 50% 50% 50% 50% / 12% 12% 70% 70%;
     }
+
+    #armor-class .box-main-text {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    #armor-class .box-label {
+        width: 5em;
+        margin-bottom: -0.25em;
+    }
+
+
 
 
     .other-prof-languages { grid-area: other-prof-languages;
@@ -458,10 +571,6 @@
 
     .equipment { grid-area: equipment; 
     
-    }
-
-    .ac-init-speed { grid-area: ac-init-speed;
-        
     }
 
     .hp-death-saves { grid-area: hp-death-saves; 

@@ -227,9 +227,9 @@
         </div>
     </div>
 
-    <div class="ac-init-speed">
-        <div class="ac">
-            <box id="armor-class" class="box-with-label">
+    <div class="character-stats">
+        <div class="armor-class">
+            <box class="box-with-label">
                 <div class="box-main-text">
                     <InPlaceEdit bind:value={character.armor_class} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
                 </div>
@@ -238,29 +238,47 @@
                 </div>
             </box>
         </div>
-
-        <div class="initiative"></div>
-
         <div class="speed">
             <box class="box-with-label">
-                <div class="box-main-text">
-                    <InPlaceEdit bind:value={character.speed} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
-                </div>
+                <div class="box-main-text"></div>
                 <div class="box-label">
                     Speed
                 </div>
             </box>
         </div>
-
-    </div>
-
-    <div class="hp-death-saves">
-        <box class="box-with-label">
-            <div class="box-main-text"></div>
-            <div class="box-label">
-                HP & Death Saves
-            </div>
-        </box>
+        <div class="exhaustion">
+            <box class="box-with-label">
+                <div class="box-main-text" style="">
+                </div>
+                <div class="box-label">
+                    Exhaustion
+                </div>
+            </box>
+        </div>
+        <div class="death-saves">
+            <box class="box-with-label">
+                <div class="box-main-text"></div>
+                <div class="box-label">
+                    Death Saves
+                </div>
+            </box>
+        </div>
+        <div class="hit-points">
+            <box class="box-with-label">
+                <div class="box-main-text"></div>
+                <div class="box-label">
+                    Hit Points
+                </div>
+            </box>
+        </div>
+        <div class="hit-dice">
+            <box class="box-with-label">
+                <div class="box-main-text"></div>
+                <div class="box-label">
+                    Hit Dice
+                </div>
+            </box>
+        </div>
     </div>
 
     <div class="attacks">
@@ -344,11 +362,11 @@
         gap: 0.5em 0.5em;
         grid-template-areas: 
         "character-name character-basic-info character-basic-info"
-        "ability-scores-bonuses ac-init-speed other-prof-languages"
-        "ability-scores-bonuses ac-init-speed other-prof-languages"
-        "ability-scores-bonuses hp-death-saves other-prof-languages"
-        "ability-scores-bonuses hp-death-saves features-traits"
-        "ability-scores-bonuses hp-death-saves features-traits"
+        "ability-scores-bonuses character-stats other-prof-languages"
+        "ability-scores-bonuses character-stats other-prof-languages"
+        "ability-scores-bonuses character-stats other-prof-languages"
+        "ability-scores-bonuses character-stats features-traits"
+        "ability-scores-bonuses character-stats features-traits"
         "ability-scores-bonuses attacks features-traits"
         "ability-scores-bonuses attacks features-traits"
         "ability-scores-bonuses equipment features-traits"
@@ -532,48 +550,51 @@
         padding: 0.4em 0.4em 0em 0.4em;
     }
 
-    .ac-init-speed { grid-area: ac-init-speed;
+    .character-stats { grid-area: character-stats;
         display: grid; 
-        grid-template-columns: 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1fr; 
-        gap: 0em 0.5em; 
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+        gap: 0.5em 0.5em; 
         grid-template-areas: 
-            "ac initiative speed speed"; 
+            "armor-class speed speed exhaustion exhaustion exhaustion"
+            "armor-class speed speed death-saves death-saves death-saves"
+            "hit-points hit-points hit-points death-saves death-saves death-saves"
+            "hit-points hit-points hit-points hit-dice hit-dice hit-dice"
+            "hit-points hit-points hit-points hit-dice hit-dice hit-dice";
     }
 
-    .ac { grid-area: ac; }
-    .initiative { grid-area: initiative; }
-    .speed { grid-area: speed; }
+    .armor-class { grid-area: armor-class;
+    
+    }
 
-    #armor-class {
+    .armor-class box {
         width: 5em;
         height: 5em;
         border: 0.5em solid transparent;
         border-radius: 50% 50% 50% 50% / 12% 12% 70% 70%;
     }
 
-    #armor-class .box-main-text {
+    .armor-class box .box-main-text {
         font-size: 1.5em;
         font-weight: bold;
     }
 
-    #armor-class .box-label {
+    .armor-class box .box-label {
         width: 5em;
         margin-bottom: -0.25em;
     }
 
-
-
+    .speed { grid-area: speed; }
+    .exhaustion { grid-area: exhaustion; }
+    .death-saves { grid-area: death-saves; }
+    .hit-points { grid-area: hit-points; }
+    .hit-dice { grid-area: hit-dice; }
 
     .other-prof-languages { grid-area: other-prof-languages;
         margin: 0em 0.75em 0em 0em;
     }
 
     .equipment { grid-area: equipment; 
-    
-    }
-
-    .hp-death-saves { grid-area: hp-death-saves; 
     
     }
 

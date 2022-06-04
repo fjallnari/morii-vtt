@@ -1,10 +1,18 @@
 <script lang="ts">
     import IconButton, { Icon } from '@smui/icon-button';
     import InPlaceEdit from "../InPlaceEdit.svelte";
+    import Tooltip, {
+        Wrapper,
+        Title,
+        Content,
+        Link,
+        RichActions,
+    } from '@smui/tooltip';
     import type { AbilitySkill, Character } from "../../interfaces/Character";
     import axios from "axios";
     import { accessToken, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
+import EXHAUSTION from '../../enum/ExhaustionInfo';
 
     export let character: Character;
 
@@ -87,6 +95,7 @@
             <div class="box-main-text">
                 <InPlaceEdit bind:value={character.name} on:submit={() => modifyCharacter()}/>
             </div>
+            <div class="box-justify-filler"></div>
             <div class="box-label">
                 Character Name
             </div>
@@ -98,6 +107,7 @@
             <div class="box-main-text">
                 <InPlaceEdit bind:value={character.classes} editModeWidth="10em" on:submit={() => modifyCharacter()}/>
             </div>
+            <div class="box-justify-filler"></div>
             <div class="box-label">
                 Class & Level
             </div>
@@ -106,6 +116,7 @@
             <div class="box-main-text">
                 <InPlaceEdit bind:value={character.xp} editModeWidth="5em" on:submit={() => modifyCharacter()}/>
             </div>
+            <div class="box-justify-filler"></div>
             <div class="box-label">
                 XP
             </div>
@@ -114,6 +125,7 @@
             <div class="box-main-text">
                 <InPlaceEdit bind:value={character.subclass} editModeWidth="6em" on:submit={() => modifyCharacter()}/>
             </div>
+            <div class="box-justify-filler"></div>
             <div class="box-label">
                 Subclass
             </div>
@@ -122,6 +134,7 @@
             <div class="box-main-text">
                 <InPlaceEdit bind:value={character.race} editModeWidth="6em" on:submit={() => modifyCharacter()}/>
             </div>
+            <div class="box-justify-filler"></div>
             <div class="box-label">
                 Race
             </div>
@@ -130,6 +143,7 @@
             <div class="box-main-text">
                 <InPlaceEdit bind:value={character.background} editModeWidth="6em" on:submit={() => modifyCharacter()}/>
             </div>
+            <div class="box-justify-filler"></div>
             <div class="box-label">
                 Background
             </div>
@@ -165,9 +179,10 @@
                         </box>
                         <div class="ability-score-value">
                             <box class="box-with-label" style="flex-grow: 2;">
-                                <div class="box-main-text">
+                                <div class="box-main-text" style="margin-bottom: -1.5em">
                                     <InPlaceEdit bind:value={character.ability_scores[AS].value} editModeWidth="2em" on:submit={() => modifyCharacter()}/>
                                 </div>
+                                <div class="box-justify-filler"></div>
                                 <div class="box-label">
                                     {character.ability_scores[AS].name}
                                 </div>
@@ -202,9 +217,10 @@
                     {#if AS === 'WIS'}
                         <box class="additional-skill-box">
                             <div class="box-with-label">
-                                <div class="box-main-text" style="font-weight: bold;">
+                                <div class="box-main-text">
                                     {10 + getSkillModifier('WIS', character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception'))}
                                 </div>
+                                <div class="box-justify-filler"></div>
                                 <div class="box-label">
                                     Passive Perception
                                 </div>
@@ -213,9 +229,10 @@
                     {:else if AS === 'DEX'}
                         <box class="additional-skill-box">
                             <div class="box-with-label">
-                                <div class="box-main-text" style="font-weight: bold; font-size: 1.2em;">
+                                <div class="box-main-text">
                                     {formatModifier(getASModifier('DEX') + ~~character.initiative_bonus)}
                                 </div>
+                                <div class="box-justify-filler"></div>
                                 <sendable class="box-label" on:click={() => sendSkillCheck((getASModifier('DEX') + ~~character.initiative_bonus), `initiative`)}>
                                     Initiative
                                 </sendable>
@@ -233,28 +250,48 @@
                 <div class="box-main-text">
                     <InPlaceEdit bind:value={character.armor_class} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
                 </div>
+                <div class="box-justify-filler"></div>
                 <div class="box-label">
                     Armor Class
                 </div>
             </box>
         </div>
+
         <div class="speed">
             <box class="box-with-label">
                 <div class="box-main-text"></div>
+                <div class="box-justify-filler"></div>
                 <div class="box-label">
                     Speed
                 </div>
             </box>
         </div>
+
         <div class="exhaustion">
             <box class="box-with-label">
-                <div class="box-main-text" style="">
+                <div class="box-main-text">
+                    {#each [1, 2, 3, 4, 5, 6] as exhaustion_level}
+                        <Wrapper rich>
+                            <img class="skill-prof-icon"
+                                src="../static/{exhaustion_level > character.exhaustion ? 'checkbox-blank-outline' : `numeric/numeric-${exhaustion_level}-box`}.svg" 
+                                alt="checkbox"
+                                on:click={() => { character.exhaustion = exhaustion_level === character.exhaustion ? 0 : exhaustion_level; modifyCharacter()}}
+                            >
+                            <Tooltip>
+                                <Content style="white-space: pre-line;">
+                                    {EXHAUSTION.slice(0, exhaustion_level).join('\n')}
+                                </Content>
+                            </Tooltip>
+                        </Wrapper>
+                    {/each}
                 </div>
+                <div class="box-justify-filler"></div>
                 <div class="box-label">
                     Exhaustion
                 </div>
             </box>
         </div>
+
         <div class="death-saves">
             <box class="box-with-label">
                 <div class="box-main-text"></div>
@@ -263,6 +300,7 @@
                 </div>
             </box>
         </div>
+
         <div class="hit-points">
             <box class="box-with-label">
                 <div class="box-main-text"></div>
@@ -271,6 +309,7 @@
                 </div>
             </box>
         </div>
+
         <div class="hit-dice">
             <box class="box-with-label">
                 <div class="box-main-text"></div>
@@ -397,13 +436,21 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
+    }
+
+    .box-main-text {
+        margin-top: auto;
+        margin-bottom: -0.6vw;
+    }
+
+    .box-justify-filler {
+        margin-top: auto; 
+        height: 0;
     }
     
     .box-label {
-        align-self: center;
-        margin: 0.7em 0em 0.5em 0em;
         color: #FCF7F8;
         font-size: 0.6vw;
         font-weight: 200;
@@ -439,10 +486,6 @@
         z-index: 1;
         padding-left: 15px;
         padding-right: 0.75em;
-    }
-
-    .box-main-text {
-        margin-top: auto;
     }
 
     .character-basic-info { grid-area: character-basic-info;
@@ -547,13 +590,19 @@
     }
 
     .additional-skill-box {
-        padding: 0.4em 0.4em 0em 0.4em;
+        padding: 0.4em;
+    }
+
+    .additional-skill-box .box-main-text {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding-bottom: 0.8em;
     }
 
     .character-stats { grid-area: character-stats;
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1.5fr 0.5fr 1.5fr 0.5fr 1fr;
         gap: 0.5em 0.5em; 
         grid-template-areas: 
             "armor-class speed speed exhaustion exhaustion exhaustion"
@@ -563,9 +612,7 @@
             "hit-points hit-points hit-points hit-dice hit-dice hit-dice";
     }
 
-    .armor-class { grid-area: armor-class;
-    
-    }
+    .armor-class { grid-area: armor-class; }
 
     .armor-class box {
         width: 5em;
@@ -585,7 +632,19 @@
     }
 
     .speed { grid-area: speed; }
+
     .exhaustion { grid-area: exhaustion; }
+    
+    .exhaustion .box-main-text {
+        display: flex;
+        gap: 0.2em;
+    }
+
+    .exhaustion .skill-prof-icon {
+        width: 1.8em; 
+        height: 1.8em;
+    }
+
     .death-saves { grid-area: death-saves; }
     .hit-points { grid-area: hit-points; }
     .hit-dice { grid-area: hit-dice; }

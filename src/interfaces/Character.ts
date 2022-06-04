@@ -26,9 +26,10 @@ export default interface Character {
     prof_bonus: string,
     inspiration: boolean,
     ability_scores: Record<string, AbilityScore>,
-    armor_class: string,
     initiative_bonus: string,
+    armor_class: string,
     speed: string,
+    exhaustion: number
 
     alignment: string
 }

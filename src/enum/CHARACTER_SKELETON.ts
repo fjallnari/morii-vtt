@@ -137,6 +137,7 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
     },
     initiative_bonus: '', // not initiative !, only for things like the Alert feat
     armor_class: '',
-    speed: '',
+    speed_max: '',
+    speed_bonus: 0,
     exhaustion: 0
 };

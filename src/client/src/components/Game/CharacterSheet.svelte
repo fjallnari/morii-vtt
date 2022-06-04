@@ -13,6 +13,7 @@
     import { accessToken, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
 import EXHAUSTION from '../../enum/ExhaustionInfo';
+import { Z_BEST_SPEED } from 'zlib';
 
     export let character: Character;
 
@@ -258,8 +259,19 @@ import EXHAUSTION from '../../enum/ExhaustionInfo';
         </div>
 
         <div class="speed">
-            <box class="box-with-label">
-                <div class="box-main-text"></div>
+            <box class="box-with-label max-speed-box">
+                <div class="box-main-text">
+                    <InPlaceEdit bind:value={character.speed_max} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>ft.
+                </div>
+                <div class="box-justify-filler"></div>
+                <div class="box-label">
+                    Max
+                </div>
+            </box>
+            <box class="box-with-label main-box">
+                <div class="box-main-text">
+                    {~~character.speed_max + ~~character.speed_bonus}ft.
+                </div>
                 <div class="box-justify-filler"></div>
                 <div class="box-label">
                     Speed
@@ -631,7 +643,40 @@ import EXHAUSTION from '../../enum/ExhaustionInfo';
         margin-bottom: -0.25em;
     }
 
-    .speed { grid-area: speed; }
+    .speed { grid-area: speed; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .speed .max-speed-box {
+        height: 4em;
+        width: 4em;
+    }
+
+    .speed .max-speed-box .box-main-text {
+        margin-left: -0.8em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .speed .max-speed-box .box-label {
+        margin-left: -1em;
+    }
+
+    .speed .main-box {
+        height: 5em;
+        width: 4em;
+        z-index: 2;
+        margin-left: -1em;
+    }
+
+    .speed .main-box .box-main-text {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
 
     .exhaustion { grid-area: exhaustion; }
     

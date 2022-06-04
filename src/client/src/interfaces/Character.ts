@@ -28,7 +28,8 @@ export interface Character {
     ability_scores: Record<string, AbilityScore>,
     initiative_bonus: string,
     armor_class: string,
-    speed: string,
+    speed_max: string,
+    speed_bonus: number,
     exhaustion: number
 
 

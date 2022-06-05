@@ -139,5 +139,8 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
     armor_class: '',
     speed_max: '',
     speed_bonus: 0,
-    exhaustion: 0
+    exhaustion: 0,
+    hp_max: '',
+    hp_current: '',
+    hp_temp: '',
 };

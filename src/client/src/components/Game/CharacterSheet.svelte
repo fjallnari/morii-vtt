@@ -87,6 +87,10 @@ import { Z_BEST_SPEED } from 'zlib';
         return getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
     }
 
+    const correctHP = () => {
+        character.hp_current = ~~character.hp_current > ~~character.hp_max ? character.hp_max : character.hp_current;
+    }
+
 </script>
 
 
@@ -259,7 +263,7 @@ import { Z_BEST_SPEED } from 'zlib';
         </div>
 
         <div class="speed">
-            <box class="box-with-label max-speed-box">
+            <box class="max-speed-box box-with-label">
                 <div class="box-main-text">
                     <InPlaceEdit bind:value={character.speed_max} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>ft.
                 </div>
@@ -268,7 +272,7 @@ import { Z_BEST_SPEED } from 'zlib';
                     Max
                 </div>
             </box>
-            <box class="box-with-label main-box">
+            <box class="current-speed-box box-with-label">
                 <div class="box-main-text">
                     {~~character.speed_max + ~~character.speed_bonus}ft.
                 </div>
@@ -307,6 +311,7 @@ import { Z_BEST_SPEED } from 'zlib';
         <div class="death-saves">
             <box class="box-with-label">
                 <div class="box-main-text"></div>
+                <div class="box-justify-filler"></div>
                 <div class="box-label">
                     Death Saves
                 </div>
@@ -314,9 +319,36 @@ import { Z_BEST_SPEED } from 'zlib';
         </div>
 
         <div class="hit-points">
-            <box class="box-with-label">
-                <div class="box-main-text"></div>
-                <div class="box-label">
+            <div class="hp-double-box">
+                <box class="box-with-label" style="margin-top: 0.5em;">
+                    <div class="box-main-text">
+                        <InPlaceEdit bind:value={character.hp_max} editModeWidth="2em" editModeHeight="2em" on:submit={() => { correctHP(); modifyCharacter()}}/>
+                    </div>
+                    <div class="box-justify-filler"></div>
+                    <div class="box-label">
+                        Max
+                    </div>
+                </box>
+                <box class="box-with-label" style="margin-bottom: 0.5em;">
+                    <div class="box-main-text">
+                        <InPlaceEdit bind:value={character.hp_temp} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
+                    </div>
+                    <div class="box-justify-filler"></div>
+                    <div class="box-label">
+                        Temp
+                    </div>
+                </box>
+            </div>
+            <box class="hp-main-box">
+                <div class="hp-bar">
+                    <div class="hp-bar-indicator">{`${(~~character.hp_current + ~~character.hp_temp)/~~character.hp_max * 100 >> 0}%`}</div>
+                    <div class="hp-bar-fill" style="width: {~~character.hp_current/~~character.hp_max * 100 >> 0}%;"></div>
+                    <div class="hp-bar-temp-fill" style="width: {~~character.hp_temp/~~character.hp_max * 100 >> 0}%;"></div>
+                </div>
+                <div class="current-hp-text">
+                    <InPlaceEdit bind:value={character.hp_current} editModeWidth="2em" editModeHeight="2em" on:submit={() => { correctHP(); modifyCharacter(); }}/>
+                </div>
+                <div class="box-label hp-footer">
                     Hit Points
                 </div>
             </box>
@@ -647,33 +679,29 @@ import { Z_BEST_SPEED } from 'zlib';
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
     }
 
     .speed .max-speed-box {
-        height: 4em;
-        width: 4em;
+        height: 65%;
+        width: 3em;
+        margin-right: 1em;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
 
     .speed .max-speed-box .box-main-text {
-        margin-left: -0.8em;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .speed .max-speed-box .box-label {
+    .speed .current-speed-box {
+        height: 85%;
+        width: 50%;
         margin-left: -1em;
     }
 
-    .speed .main-box {
-        height: 5em;
-        width: 4em;
-        z-index: 2;
-        margin-left: -1em;
-    }
-
-    .speed .main-box .box-main-text {
+    .speed .current-speed-box .box-main-text {
         font-weight: bold;
         font-size: 1.2em;
     }
@@ -691,7 +719,94 @@ import { Z_BEST_SPEED } from 'zlib';
     }
 
     .death-saves { grid-area: death-saves; }
-    .hit-points { grid-area: hit-points; }
+
+    .hit-points { grid-area: hit-points; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hit-points .hp-main-box {
+        display: grid; 
+        grid-template-columns: 1fr; 
+        grid-template-rows: 1fr 1fr; 
+        gap: 0.5em 0px; 
+        grid-template-areas: 
+            "hp-bar"
+            "current-hp-text"
+            "hp-footer";
+        
+        margin-left: -2em;
+        height: 100%;
+    }
+
+    .hit-points .hp-bar {
+        grid-area: hp-bar;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        width: 8em;
+        height: 2em;
+        border: #FCF7F8 0.15em solid;
+        border-radius: 4px;
+        background-color: none;
+
+        margin-top: auto;
+        margin-left: 1.25em;
+        margin-right: 1.25em;
+    }
+
+    .hit-points .hp-bar-indicator {
+        background-color: transparent;
+        position: absolute;
+        margin-left: 3em;
+        color: #FCF7F8;
+        text-align: center;
+        font-family: Montserrat;
+    }
+
+    .hit-points .hp-bar-fill {
+        height: 100%;
+        background-color: #EB8E6F;
+    }
+
+    .hit-points .hp-bar-temp-fill {
+        height: 100%;
+        background-color: #87BCDE;
+    }
+
+    .hit-points .hp-main-box .current-hp-text {
+        grid-area: current-hp-text;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .hp-footer { grid-area: hp-footer;
+    }
+
+    .hit-points .hp-double-box {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        align-items: center;
+        height: 100%;
+    }
+
+    .hit-points .hp-double-box box {
+        width: 4em;
+        height: 1em;
+        margin-right: 2em;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+
+
     .hit-dice { grid-area: hit-dice; }
 
     .other-prof-languages { grid-area: other-prof-languages;

@@ -21,5 +21,14 @@ export enum PALETTE {
 
     SUNRISE = "#F5B75A",
     ETON_BLUE = "#9CC5A1",
-    PEWTER = "#93B7BE"
+    PEWTER = "#93B7BE",
+    BLUE = "#5998C5",
+    MID_RED = "#EB8E6F",
+    
+    // the actual color palette
+    DARK_SALMON = "#EFA48B",
+    APRICOT = "#FCC8B2",
+    OLIVINE = "#A7C284",
+    SPRING_BUD = "#DBD8B3",
+    ELEM_BCKG = "#212125"
 }

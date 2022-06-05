@@ -30,7 +30,10 @@ export interface Character {
     armor_class: string,
     speed_max: string,
     speed_bonus: number,
-    exhaustion: number
+    exhaustion: number,
+    hp_max: string,
+    hp_current: string,
+    hp_temp: string,
 
 
     alignment: string

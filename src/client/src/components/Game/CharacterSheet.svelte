@@ -3,17 +3,16 @@
     import InPlaceEdit from "../InPlaceEdit.svelte";
     import Tooltip, {
         Wrapper,
-        Title,
         Content,
-        Link,
-        RichActions,
     } from '@smui/tooltip';
     import type { AbilitySkill, Character } from "../../interfaces/Character";
     import axios from "axios";
     import { accessToken, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
-import EXHAUSTION from '../../enum/ExhaustionInfo';
-import { Z_BEST_SPEED } from 'zlib';
+    import EXHAUSTION from '../../enum/ExhaustionInfo';
+    import HpBar from './CharacterSheet/HpBar.svelte';
+import InPlaceEditBox from './CharacterSheet/InPlaceEditBox.svelte';
+import ArmorClass from './CharacterSheet/ArmorClass.svelte';
 
     export let character: Character;
 
@@ -108,51 +107,44 @@ import { Z_BEST_SPEED } from 'zlib';
     </div>
 
     <div class="character-basic-info">
-        <box class="box-with-label" style="flex-grow: 4;">
-            <div class="box-main-text">
-                <InPlaceEdit bind:value={character.classes} editModeWidth="10em" on:submit={() => modifyCharacter()}/>
-            </div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Class & Level
-            </div>
-        </box>
-        <box class="box-with-label">
-            <div class="box-main-text">
-                <InPlaceEdit bind:value={character.xp} editModeWidth="5em" on:submit={() => modifyCharacter()}/>
-            </div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                XP
-            </div>
-        </box>
-        <box class="box-with-label" style="flex-grow: 2;">
-            <div class="box-main-text">
-                <InPlaceEdit bind:value={character.subclass} editModeWidth="6em" on:submit={() => modifyCharacter()}/>
-            </div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Subclass
-            </div>
-        </box>
-        <box class="box-with-label" style="flex-grow: 2;">
-            <div class="box-main-text">
-                <InPlaceEdit bind:value={character.race} editModeWidth="6em" on:submit={() => modifyCharacter()}/>
-            </div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Race
-            </div>
-        </box>
-        <box class="box-with-label" style="flex-grow: 2;">
-            <div class="box-main-text">
-                <InPlaceEdit bind:value={character.background} editModeWidth="6em" on:submit={() => modifyCharacter()}/>
-            </div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Background
-            </div>
-        </box>
+        <InPlaceEditBox 
+            bind:characterStat={character.classes}
+            boxLabel="Class & Level"
+            inlineStyle="flex-grow: 4;" 
+            editModeWidth="10em" 
+            modifyCharacter={modifyCharacter}>
+        </InPlaceEditBox>
+
+        <InPlaceEditBox 
+            bind:characterStat={character.xp}
+            boxLabel="XP"
+            editModeWidth="5em" 
+            modifyCharacter={modifyCharacter}>
+        </InPlaceEditBox>
+
+        <InPlaceEditBox 
+            bind:characterStat={character.subclass}
+            boxLabel="Subclass"
+            inlineStyle="flex-grow: 2;" 
+            editModeWidth="6em" 
+            modifyCharacter={modifyCharacter}>
+        </InPlaceEditBox>
+
+        <InPlaceEditBox 
+            bind:characterStat={character.race}
+            boxLabel="Race"
+            inlineStyle="flex-grow: 2;" 
+            editModeWidth="6em" 
+            modifyCharacter={modifyCharacter}>
+        </InPlaceEditBox>
+
+        <InPlaceEditBox 
+            bind:characterStat={character.background}
+            boxLabel="Background"
+            inlineStyle="flex-grow: 2;" 
+            editModeWidth="6em" 
+            modifyCharacter={modifyCharacter}>
+        </InPlaceEditBox>
     </div>
 
     <div class="ability-scores-bonuses">
@@ -182,16 +174,15 @@ import { Z_BEST_SPEED } from 'zlib';
                         <box class="ability-score-modifier">
                             {formatModifier(getASModifier(AS))}
                         </box>
+
                         <div class="ability-score-value">
-                            <box class="box-with-label" style="flex-grow: 2;">
-                                <div class="box-main-text" style="margin-bottom: -1.5em">
-                                    <InPlaceEdit bind:value={character.ability_scores[AS].value} editModeWidth="2em" on:submit={() => modifyCharacter()}/>
-                                </div>
-                                <div class="box-justify-filler"></div>
-                                <div class="box-label">
-                                    {character.ability_scores[AS].name}
-                                </div>
-                            </box>
+                            <InPlaceEditBox 
+                                bind:characterStat={character.ability_scores[AS].value}
+                                boxLabel={character.ability_scores[AS].name}
+                                inlineStyle="flex-grow: 2;" 
+                                editModeWidth="2em" 
+                                modifyCharacter={modifyCharacter}>
+                            </InPlaceEditBox>
                         </div>
                     </div>
 
@@ -209,6 +200,7 @@ import { Z_BEST_SPEED } from 'zlib';
                         </div>
                         {#each character.ability_scores[AS].skills as skill}
                             <div class="skill-field">
+                                <!-- cycles through proficiency values 0, 1 and 2 -->
                                 <img class="skill-prof-icon" 
                                     src="../static/{['checkbox-blank-outline', 'checkbox-marked', 'flare'][skill.proficiency]}.svg" 
                                     alt="checkbox"
@@ -251,15 +243,7 @@ import { Z_BEST_SPEED } from 'zlib';
 
     <div class="character-stats">
         <div class="armor-class">
-            <box class="box-with-label">
-                <div class="box-main-text">
-                    <InPlaceEdit bind:value={character.armor_class} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
-                </div>
-                <div class="box-justify-filler"></div>
-                <div class="box-label">
-                    Armor Class
-                </div>
-            </box>
+            <ArmorClass value={character.armor_class} modifyCharacter={modifyCharacter}></ArmorClass>
         </div>
 
         <div class="speed">
@@ -340,11 +324,7 @@ import { Z_BEST_SPEED } from 'zlib';
                 </box>
             </div>
             <box class="hp-main-box">
-                <div class="hp-bar">
-                    <div class="hp-bar-indicator">{`${(~~character.hp_current + ~~character.hp_temp)/~~character.hp_max * 100 >> 0}%`}</div>
-                    <div class="hp-bar-fill" style="width: {~~character.hp_current/~~character.hp_max * 100 >> 0}%;"></div>
-                    <div class="hp-bar-temp-fill" style="width: {~~character.hp_temp/~~character.hp_max * 100 >> 0}%;"></div>
-                </div>
+                <HpBar character={character}></HpBar>
                 <div class="current-hp-text">
                     <InPlaceEdit bind:value={character.hp_current} editModeWidth="2em" editModeHeight="2em" on:submit={() => { correctHP(); modifyCharacter(); }}/>
                 </div>
@@ -410,6 +390,12 @@ import { Z_BEST_SPEED } from 'zlib';
 
 
 <style>
+    :global(box) {
+        background-color:#252529;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+    }
+
     mod {
         font-weight: bold;
         border-bottom: 1px #F2E8CF dotted;
@@ -456,12 +442,6 @@ import { Z_BEST_SPEED } from 'zlib';
         "ability-scores-bonuses equipment features-traits"
         "ability-scores-bonuses equipment features-traits"
         "ability-scores-bonuses char-sheet-menu features-traits"; 
-    }
-
-    .character-sheet-container box {
-        background-color:#252529;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 4px;
     }
 
     .character-name { grid-area: character-name;
@@ -607,6 +587,10 @@ import { Z_BEST_SPEED } from 'zlib';
         height: 5em;
     }
 
+    .ability-score-value :global(.box-main-text) {
+        margin-bottom: -1.5em
+    }
+
     .skills {
         display: flex;
         flex-direction: column;
@@ -658,19 +642,19 @@ import { Z_BEST_SPEED } from 'zlib';
 
     .armor-class { grid-area: armor-class; }
 
-    .armor-class box {
+    .armor-class :global(box) {
         width: 5em;
         height: 5em;
         border: 0.5em solid transparent;
         border-radius: 50% 50% 50% 50% / 12% 12% 70% 70%;
     }
 
-    .armor-class box .box-main-text {
+    .armor-class :global(box .box-main-text) {
         font-size: 1.5em;
         font-weight: bold;
     }
 
-    .armor-class box .box-label {
+    .armor-class :global(box .box-label) {
         width: 5em;
         margin-bottom: -0.25em;
     }
@@ -738,43 +722,6 @@ import { Z_BEST_SPEED } from 'zlib';
         
         margin-left: -2em;
         height: 100%;
-    }
-
-    .hit-points .hp-bar {
-        grid-area: hp-bar;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-
-        width: 8em;
-        height: 2em;
-        border: #FCF7F8 0.15em solid;
-        border-radius: 4px;
-        background-color: none;
-
-        margin-top: auto;
-        margin-left: 1.25em;
-        margin-right: 1.25em;
-    }
-
-    .hit-points .hp-bar-indicator {
-        background-color: transparent;
-        position: absolute;
-        margin-left: 3em;
-        color: #FCF7F8;
-        text-align: center;
-        font-family: Montserrat;
-    }
-
-    .hit-points .hp-bar-fill {
-        height: 100%;
-        background-color: #EB8E6F;
-    }
-
-    .hit-points .hp-bar-temp-fill {
-        height: 100%;
-        background-color: #87BCDE;
     }
 
     .hit-points .hp-main-box .current-hp-text {

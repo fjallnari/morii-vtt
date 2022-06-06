@@ -143,4 +143,6 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
     hp_max: '',
     hp_current: '',
     hp_temp: '',
+    death_save_success: 0,
+    death_save_failure: 0,
 };

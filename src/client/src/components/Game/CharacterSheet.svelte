@@ -1,18 +1,16 @@
 <script lang="ts">
     import IconButton, { Icon } from '@smui/icon-button';
     import InPlaceEdit from "../InPlaceEdit.svelte";
-    import Tooltip, {
-        Wrapper,
-        Content,
-    } from '@smui/tooltip';
+
     import type { AbilitySkill, Character } from "../../interfaces/Character";
     import axios from "axios";
-    import { accessToken, socket, user } from "../../stores";
+    import { accessToken, modifyCharacter, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
-    import EXHAUSTION from '../../enum/ExhaustionInfo';
     import HpBar from './CharacterSheet/HpBar.svelte';
-import InPlaceEditBox from './CharacterSheet/InPlaceEditBox.svelte';
-import ArmorClass from './CharacterSheet/ArmorClass.svelte';
+    import InPlaceEditBox from './CharacterSheet/InPlaceEditBox.svelte';
+    import ArmorClass from './CharacterSheet/ArmorClass.svelte';
+    import Exhaustion from './CharacterSheet/Exhaustion.svelte';
+import DeathSaves from './CharacterSheet/DeathSaves.svelte';
 
     export let character: Character;
 
@@ -20,7 +18,8 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
         character = modifiedCharacter;
     });
 
-    const modifyCharacter = async () => {
+    // modifyCharacter is inside global store
+    modifyCharacter.set(async () => {
         // prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
         // TODO: refactor the "refresh token/load secure route" flow
         // await new Promise(res => setTimeout(res, 500));
@@ -38,7 +37,7 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
         catch (err){
             console.log(err);
         }
-	}
+	})
 
     const sendSkillCheck = async (modifier: number, skillName: string) => {
         $socket.emit('chat-message', {
@@ -95,63 +94,22 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
 
 <div class="character-sheet-container">
     <div class="character-name">
-        <box class="box-with-label">
-            <div class="box-main-text">
-                <InPlaceEdit bind:value={character.name} on:submit={() => modifyCharacter()}/>
-            </div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Character Name
-            </div>
-        </box>   
+        <InPlaceEditBox bind:value={character.name} boxLabel="Character Name"></InPlaceEditBox>  
     </div>
 
     <div class="character-basic-info">
-        <InPlaceEditBox 
-            bind:characterStat={character.classes}
-            boxLabel="Class & Level"
-            inlineStyle="flex-grow: 4;" 
-            editModeWidth="10em" 
-            modifyCharacter={modifyCharacter}>
-        </InPlaceEditBox>
-
-        <InPlaceEditBox 
-            bind:characterStat={character.xp}
-            boxLabel="XP"
-            editModeWidth="5em" 
-            modifyCharacter={modifyCharacter}>
-        </InPlaceEditBox>
-
-        <InPlaceEditBox 
-            bind:characterStat={character.subclass}
-            boxLabel="Subclass"
-            inlineStyle="flex-grow: 2;" 
-            editModeWidth="6em" 
-            modifyCharacter={modifyCharacter}>
-        </InPlaceEditBox>
-
-        <InPlaceEditBox 
-            bind:characterStat={character.race}
-            boxLabel="Race"
-            inlineStyle="flex-grow: 2;" 
-            editModeWidth="6em" 
-            modifyCharacter={modifyCharacter}>
-        </InPlaceEditBox>
-
-        <InPlaceEditBox 
-            bind:characterStat={character.background}
-            boxLabel="Background"
-            inlineStyle="flex-grow: 2;" 
-            editModeWidth="6em" 
-            modifyCharacter={modifyCharacter}>
-        </InPlaceEditBox>
+        <InPlaceEditBox bind:value={character.classes} boxLabel="Class & Level" inlineStyle="flex-grow: 4;" editWidth="10em"></InPlaceEditBox>
+        <InPlaceEditBox bind:value={character.xp} boxLabel="XP" editWidth="5em"></InPlaceEditBox>
+        <InPlaceEditBox bind:value={character.subclass} boxLabel="Subclass" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>
+        <InPlaceEditBox bind:value={character.race} boxLabel="Race" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>
+        <InPlaceEditBox bind:value={character.background} boxLabel="Background" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>
     </div>
 
     <div class="ability-scores-bonuses">
         <div class="bonuses">
             <div class="row-box-with-label">
                 <box class="row-box-value">
-                    <InPlaceEdit bind:value={character.prof_bonus} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
+                    <InPlaceEdit bind:value={character.prof_bonus} editWidth="2em" editHeight="2em" on:submit={() => $modifyCharacter()}/>
                 </box>
                 <box class="row-box-label">
                     Proficiency Bonus    
@@ -159,7 +117,7 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
             </div>
             <div class="row-box-with-label">
                 <!-- inverts inspiration value on click -->
-                <box class="row-box-value" style="cursor: pointer;" on:click={() => { character.inspiration = !character.inspiration; modifyCharacter() }}>
+                <box class="row-box-value" style="cursor: pointer;" on:click={() => { character.inspiration = !character.inspiration; $modifyCharacter() }}>
                     <Icon class="material-icons">{character.inspiration ? 'auto_awesome': ''}</Icon>
                 </box>
                 <box class="row-box-label">
@@ -177,11 +135,10 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
 
                         <div class="ability-score-value">
                             <InPlaceEditBox 
-                                bind:characterStat={character.ability_scores[AS].value}
+                                bind:value={character.ability_scores[AS].value}
                                 boxLabel={character.ability_scores[AS].name}
                                 inlineStyle="flex-grow: 2;" 
-                                editModeWidth="2em" 
-                                modifyCharacter={modifyCharacter}>
+                                editWidth="2em">
                             </InPlaceEditBox>
                         </div>
                     </div>
@@ -191,7 +148,7 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
                             <img class="skill-prof-icon" 
                                 src="../static/rhombus{character.ability_scores[AS].saving_throw ? '' : '-outline'}.svg" 
                                 alt="rhombus"
-                                on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; modifyCharacter() }}
+                                on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; $modifyCharacter() }}
                             >
                             <mod>
                                 {formatModifier(getSavingThrowModifier(AS))}
@@ -204,7 +161,7 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
                                 <img class="skill-prof-icon" 
                                     src="../static/{['checkbox-blank-outline', 'checkbox-marked', 'flare'][skill.proficiency]}.svg" 
                                     alt="checkbox"
-                                    on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); modifyCharacter() }}
+                                    on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}
                                 >
                                 <mod>{formatModifier(getSkillModifier(AS, skill))}</mod>
                                 <sendable on:click={() => { sendSkillCheck(getSkillModifier(AS, skill), skill.name) }}>{skill.name}<br></sendable>
@@ -243,13 +200,13 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
 
     <div class="character-stats">
         <div class="armor-class">
-            <ArmorClass value={character.armor_class} modifyCharacter={modifyCharacter}></ArmorClass>
+            <ArmorClass bind:value={character.armor_class}></ArmorClass>
         </div>
 
         <div class="speed">
             <box class="max-speed-box box-with-label">
                 <div class="box-main-text">
-                    <InPlaceEdit bind:value={character.speed_max} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>ft.
+                    <InPlaceEdit bind:value={character.speed_max} editWidth="2em" editHeight="2em" on:submit={() => $modifyCharacter()}/>ft.
                 </div>
                 <div class="box-justify-filler"></div>
                 <div class="box-label">
@@ -267,71 +224,34 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
             </box>
         </div>
 
-        <div class="exhaustion">
-            <box class="box-with-label">
-                <div class="box-main-text">
-                    {#each [1, 2, 3, 4, 5, 6] as exhaustion_level}
-                        <Wrapper rich>
-                            <img class="skill-prof-icon"
-                                src="../static/{exhaustion_level > character.exhaustion ? 'checkbox-blank-outline' : `numeric/numeric-${exhaustion_level}-box`}.svg" 
-                                alt="checkbox"
-                                on:click={() => { character.exhaustion = exhaustion_level === character.exhaustion ? 0 : exhaustion_level; modifyCharacter()}}
-                            >
-                            <Tooltip>
-                                <Content style="white-space: pre-line;">
-                                    {EXHAUSTION.slice(0, exhaustion_level).join('\n')}
-                                </Content>
-                            </Tooltip>
-                        </Wrapper>
-                    {/each}
-                </div>
-                <div class="box-justify-filler"></div>
-                <div class="box-label">
-                    Exhaustion
-                </div>
-            </box>
-        </div>
-
-        <div class="death-saves">
-            <box class="box-with-label">
-                <div class="box-main-text"></div>
-                <div class="box-justify-filler"></div>
-                <div class="box-label">
-                    Death Saves
-                </div>
-            </box>
-        </div>
-
         <div class="hit-points">
             <div class="hp-double-box">
-                <box class="box-with-label" style="margin-top: 0.5em;">
-                    <div class="box-main-text">
-                        <InPlaceEdit bind:value={character.hp_max} editModeWidth="2em" editModeHeight="2em" on:submit={() => { correctHP(); modifyCharacter()}}/>
-                    </div>
-                    <div class="box-justify-filler"></div>
-                    <div class="box-label">
-                        Max
-                    </div>
-                </box>
-                <box class="box-with-label" style="margin-bottom: 0.5em;">
-                    <div class="box-main-text">
-                        <InPlaceEdit bind:value={character.hp_temp} editModeWidth="2em" editModeHeight="2em" on:submit={() => modifyCharacter()}/>
-                    </div>
-                    <div class="box-justify-filler"></div>
-                    <div class="box-label">
-                        Temp
-                    </div>
-                </box>
+                <InPlaceEditBox bind:value={character.hp_max} 
+                    boxLabel="Max" 
+                    inlineStyle="margin-top: 0.5em;" 
+                    editWidth="2em" 
+                    editHeight="2em" 
+                    onSubmitFce={() => { correctHP(); $modifyCharacter()}}>
+                </InPlaceEditBox>
+                <InPlaceEditBox bind:value={character.hp_temp} boxLabel="Temp" inlineStyle="margin-bottom: 0.5em;" editWidth="2em" editHeight="2em"></InPlaceEditBox>
             </div>
             <box class="hp-main-box">
                 <HpBar character={character}></HpBar>
                 <div class="current-hp-text">
-                    <InPlaceEdit bind:value={character.hp_current} editModeWidth="2em" editModeHeight="2em" on:submit={() => { correctHP(); modifyCharacter(); }}/>
+                    <InPlaceEdit bind:value={character.hp_current} editWidth="2em" editHeight="2em" on:submit={() => { correctHP(); $modifyCharacter(); }}/>
                 </div>
                 <div class="box-label hp-footer">
                     Hit Points
                 </div>
             </box>
+        </div>
+
+        <div class="exhaustion">
+            <Exhaustion bind:charExhaustion={character.exhaustion}></Exhaustion>
+        </div>
+
+        <div class="death-saves">
+            <DeathSaves bind:character={character}></DeathSaves>
         </div>
 
         <div class="hit-dice">
@@ -455,7 +375,7 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
         width: inherit;
     }
 
-    .box-with-label {
+    :global(.box-with-label) {
         flex-grow: 1;
         height: 100%;
         display: flex;
@@ -464,17 +384,17 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
         align-items: center;
     }
 
-    .box-main-text {
+    :global(.box-main-text) {
         margin-top: auto;
         margin-bottom: -0.6vw;
     }
 
-    .box-justify-filler {
+    :global(.box-justify-filler) {
         margin-top: auto; 
         height: 0;
     }
     
-    .box-label {
+    :global(.box-label) {
         color: #FCF7F8;
         font-size: 0.6vw;
         font-weight: 200;
@@ -691,16 +611,6 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
     }
 
     .exhaustion { grid-area: exhaustion; }
-    
-    .exhaustion .box-main-text {
-        display: flex;
-        gap: 0.2em;
-    }
-
-    .exhaustion .skill-prof-icon {
-        width: 1.8em; 
-        height: 1.8em;
-    }
 
     .death-saves { grid-area: death-saves; }
 
@@ -744,7 +654,7 @@ import ArmorClass from './CharacterSheet/ArmorClass.svelte';
         height: 100%;
     }
 
-    .hit-points .hp-double-box box {
+    .hit-points .hp-double-box :global(box) {
         width: 4em;
         height: 1em;
         margin-right: 2em;

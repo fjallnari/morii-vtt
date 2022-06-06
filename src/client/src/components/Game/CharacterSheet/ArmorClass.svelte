@@ -2,17 +2,15 @@
     import InPlaceEditBox from "./InPlaceEditBox.svelte";
     
     export let value: string;
-    export let modifyCharacter: () => Promise<void>;
 
 </script>
 
 <div class="armor-class-wrapper">
     <InPlaceEditBox 
-        bind:characterStat={value}
+        bind:value={value}
         boxLabel="Armor Class"
-        editModeWidth="2em"
-        editModeHeight="2em"
-        modifyCharacter={modifyCharacter}>
+        editWidth="2em"
+        editHeight="2em">
     </InPlaceEditBox>
 </div>
 

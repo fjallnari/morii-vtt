@@ -34,6 +34,8 @@ export interface Character {
     hp_max: string,
     hp_current: string,
     hp_temp: string,
+    death_save_success: number,
+    death_save_failure: number,
 
 
     alignment: string

@@ -34,14 +34,15 @@
         background-color: transparent;
         position: absolute;
         margin-left: 3em;
-        color: #FCF7F8;
+        color: #fff;
         text-align: center;
         font-family: Montserrat;
+        font-weight: bold;
     }
 
     .hp-bar-fill {
         height: 100%;
-        background-color: #EB8E6F;
+        background-color: #A7C284;
     }
 
     .hp-bar-temp-fill {

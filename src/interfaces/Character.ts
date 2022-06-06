@@ -13,6 +13,11 @@ interface AbilityScore {
     skills: AbilitySkill[]
 }
 
+interface HitDiceCurrent {
+    count: number,
+    dice_type: string,
+}
+
 export default interface Character {
     _id: ObjectId | string,
     playerID: ObjectId | string,
@@ -36,6 +41,8 @@ export default interface Character {
     hp_temp: string,
     death_save_success: number,
     death_save_failure: number,
+    hd_total: string,
+    hd_current: Record<string, string>,
 
     alignment: string
 }

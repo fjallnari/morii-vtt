@@ -4,13 +4,14 @@
 
     import type { AbilitySkill, Character } from "../../interfaces/Character";
     import axios from "axios";
-    import { accessToken, modifyCharacter, socket, user } from "../../stores";
+    import { accessToken, getASModifier, modifyCharacter, sendSkillCheck, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
     import HpBar from './CharacterSheet/HpBar.svelte';
     import InPlaceEditBox from './CharacterSheet/InPlaceEditBox.svelte';
     import ArmorClass from './CharacterSheet/ArmorClass.svelte';
     import Exhaustion from './CharacterSheet/Exhaustion.svelte';
-import DeathSaves from './CharacterSheet/DeathSaves.svelte';
+    import DeathSaves from './CharacterSheet/DeathSaves.svelte';
+    import HitDice from './CharacterSheet/HitDice.svelte';
 
     export let character: Character;
 
@@ -39,14 +40,15 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
         }
 	})
 
-    const sendSkillCheck = async (modifier: number, skillName: string) => {
+    sendSkillCheck.set(async (modifier: number, skillName: string, dice_type = 'd20') => {
+        console.log(dice_type);
         $socket.emit('chat-message', {
             senderInfo: {
                 _id: $user._id, 
                 username: $user.username,
                 settings: $user.settings,
             }, 
-            messageText: `/r d20${formatModifier(modifier)}`,
+            messageText: `/r ${dice_type}${formatModifier(modifier)}`,
             skillCheckInfo: {
                 characterName: character.name,
                 skillName: skillName
@@ -54,7 +56,7 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
             gameID: $params.id,
             isPublic: true // make isMessagePublic a store variable
         });
-    }
+    });
 
     /**
      * Formats modifier to show plus signs if the modifier is positive
@@ -69,20 +71,20 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
      * 
      * @param AS - ability score tag, e.g. 'WIS', 'DEX', 'STR' ...
      */
-    const getASModifier = (AS: string) => {
+    getASModifier.set((AS: string) => {
         return (~~character.ability_scores[AS].value - 10) / 2 >> 0;
-    }
+    })
 
     const getSkill = (AS: string, skillName: string) => {
         return character.ability_scores[AS].skills.find(skill => skill.name === skillName);
     }
 
     const getSkillModifier = (AS: string, skill: AbilitySkill) => {
-        return getASModifier(AS) + (skill.proficiency * ~~character.prof_bonus);
+        return $getASModifier(AS) + (skill.proficiency * ~~character.prof_bonus);
     }
 
     const getSavingThrowModifier = (AS: string) => {
-        return getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
+        return $getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
     }
 
     const correctHP = () => {
@@ -130,7 +132,7 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
                 <div class="ability-score-container" style="{['WIS', 'INT'].includes(AS) ? 'padding-bottom: 2.2em;': ''}">
                     <div class="ability-score-info">
                         <box class="ability-score-modifier">
-                            {formatModifier(getASModifier(AS))}
+                            {formatModifier($getASModifier(AS))}
                         </box>
 
                         <div class="ability-score-value">
@@ -153,7 +155,7 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
                             <mod>
                                 {formatModifier(getSavingThrowModifier(AS))}
                             </mod>
-                            <sendable on:click={() => { sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`) }}>{AS} saving throws<br></sendable>
+                            <sendable on:click={() => { $sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`) }}>{AS} saving throws<br></sendable>
                         </div>
                         {#each character.ability_scores[AS].skills as skill}
                             <div class="skill-field">
@@ -164,7 +166,7 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
                                     on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}
                                 >
                                 <mod>{formatModifier(getSkillModifier(AS, skill))}</mod>
-                                <sendable on:click={() => { sendSkillCheck(getSkillModifier(AS, skill), skill.name) }}>{skill.name}<br></sendable>
+                                <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name) }}>{skill.name}<br></sendable>
                             </div>
                         {/each}
                     </div>
@@ -184,10 +186,10 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
                         <box class="additional-skill-box">
                             <div class="box-with-label">
                                 <div class="box-main-text">
-                                    {formatModifier(getASModifier('DEX') + ~~character.initiative_bonus)}
+                                    {formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
                                 </div>
                                 <div class="box-justify-filler"></div>
-                                <sendable class="box-label" on:click={() => sendSkillCheck((getASModifier('DEX') + ~~character.initiative_bonus), `initiative`)}>
+                                <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`)}>
                                     Initiative
                                 </sendable>
                             </div>
@@ -255,12 +257,7 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
         </div>
 
         <div class="hit-dice">
-            <box class="box-with-label">
-                <div class="box-main-text"></div>
-                <div class="box-label">
-                    Hit Dice
-                </div>
-            </box>
+            <HitDice bind:character={character}></HitDice>
         </div>
     </div>
 
@@ -323,13 +320,13 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
         margin: 0em 0.3em;
     }
 
-    sendable {
+    :global(sendable) {
         cursor: pointer;
         transition-duration: 200ms;
         transition-property: color;
     }
 
-    sendable:active {
+    :global(sendable:active) {
         color: #EFA48B;
         transition-duration: 200ms;
         transition-property: color;
@@ -662,9 +659,11 @@ import DeathSaves from './CharacterSheet/DeathSaves.svelte';
         border-bottom-right-radius: 0;
     }
 
-
-
-    .hit-dice { grid-area: hit-dice; }
+    .hit-dice { grid-area: hit-dice; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     .other-prof-languages { grid-area: other-prof-languages;
         margin: 0em 0.75em 0em 0em;

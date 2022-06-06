@@ -135,4 +135,22 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
             ]
         },
     },
+    initiative_bonus: '', // not initiative !, only for things like the Alert feat
+    armor_class: '',
+    speed_max: '',
+    speed_bonus: 0,
+    exhaustion: 0,
+    hp_max: '',
+    hp_current: '',
+    hp_temp: '',
+    death_save_success: 0,
+    death_save_failure: 0,
+    hd_total: '', // used by character sheet for edits
+    hd_current: {
+        'd4': '',
+        'd6': '',
+        'd8': '',
+        'd10': '',
+        'd12': ''
+    },
 };

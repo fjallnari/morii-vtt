@@ -10,6 +10,11 @@
         selectedCharacter.set(undefined);
     }
 
+    const leaveGame = () => {
+        selectedCharacter.set(undefined);
+        replace('/');
+    }
+
 </script>
 
 <div class="game-info">
@@ -19,7 +24,7 @@
         {#if $user && $user._id === gameData.owner}
             <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => showGameOverview()}>dashboard</IconButton>
         {/if}
-        <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => replace('/')}>logout</IconButton>
+        <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => leaveGame()}>logout</IconButton>
     </div>
 </div>
 

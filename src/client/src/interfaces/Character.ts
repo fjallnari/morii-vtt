@@ -11,6 +11,11 @@ export interface AbilityScore {
     skills: AbilitySkill[]
 }
 
+export interface HitDiceCurrent {
+    count: number,
+    dice_type: string,
+}
+
 
 
 export interface Character {
@@ -25,7 +30,20 @@ export interface Character {
     background: string,
     prof_bonus: string,
     inspiration: boolean,
-    ability_scores: Record<string, AbilityScore>
+    ability_scores: Record<string, AbilityScore>,
+    initiative_bonus: string,
+    armor_class: string,
+    speed_max: string,
+    speed_bonus: number,
+    exhaustion: number,
+    hp_max: string,
+    hp_current: string,
+    hp_temp: string,
+    death_save_success: number,
+    death_save_failure: number,
+    hd_total: string,
+    hd_current: Record<string, string>,
+
 
     alignment: string
 }

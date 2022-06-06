@@ -20,7 +20,7 @@
     <div class="dashboard-container">
         <div class:active = {$campaignDetailActive} class="campaigns-list">
             {#if $campaignNewActive}
-                <DashboardBox title="Create/Join Campaign" component={CampaignChoice}></DashboardBox>
+                <DashboardBox title="Add Campaign" component={CampaignChoice}></DashboardBox>
             {:else}
                 <DashboardBox title="Your Campaigns" component={Campaigns}></DashboardBox>
             {/if}

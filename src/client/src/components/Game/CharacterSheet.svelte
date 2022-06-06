@@ -41,14 +41,13 @@
 	})
 
     sendSkillCheck.set(async (modifier: number, skillName: string, dice_type = 'd20') => {
-        console.log(dice_type);
         $socket.emit('chat-message', {
             senderInfo: {
                 _id: $user._id, 
                 username: $user.username,
                 settings: $user.settings,
             }, 
-            messageText: `/r ${dice_type}${formatModifier(modifier)}`,
+            messageText: `/r ${dice_type}${formatModifier(modifier, "always")}`,
             skillCheckInfo: {
                 characterName: character.name,
                 skillName: skillName
@@ -61,9 +60,9 @@
     /**
      * Formats modifier to show plus signs if the modifier is positive
      */
-    const formatModifier = (modifier: number) => {
+    const formatModifier = (modifier: number, signDisplay: ("exceptZero" | "always" | "auto" | "never") = "exceptZero") => {
         return new Intl.NumberFormat("en-US", {
-            signDisplay: "exceptZero"
+            signDisplay: signDisplay
         }).format(modifier);
     }
 

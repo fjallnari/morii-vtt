@@ -1,4 +1,4 @@
-import type Character from "./Character";
+import type { Character } from "./Character";
 import type UserSimple from "./UserSimple";
 
 export default interface GameData {

@@ -4,7 +4,7 @@ x-node-env: &node-env
     image: node:16.8.0
     user: node
     ports:
-        - "4000:4000"
+        - "3000:3000"
     volumes:
         - .:/app
         - node-16:/home/node/.npm

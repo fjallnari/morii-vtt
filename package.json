@@ -10,7 +10,8 @@
     "run-dev": "yarn build-client && yarn start-server-dev",
     "dev-client": "cd src/client && yarn dev",
     "build-prod": "yarn install --frozen-lockfile && yarn build-client && yarn build-server",
-    "start-prod": "node dist/"
+    "start-prod": "node dist/",
+    "run-prod": "yarn build-prod && yarn start-prod"
   },
   "repository": {
     "type": "git",

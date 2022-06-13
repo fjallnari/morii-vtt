@@ -147,4 +147,5 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
     death_save_failure: 0,
     hd_total: '', // used by character sheet for edits
     hd_current: {},
+    attacks: []
 };

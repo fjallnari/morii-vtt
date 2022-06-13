@@ -16,3 +16,4 @@ export const socket: Writable<Socket<DefaultEventsMap, DefaultEventsMap>> = writ
 export const modifyCharacter: Writable<() => Promise<void>> = writable();
 export const sendSkillCheck: Writable<(modifier: number, skillName: string, dice_type?: string) => Promise<void>> = writable();
 export const getASModifier: Writable<(AS: string) => number> = writable();
+export const formatModifier: Writable<(modifier: number, signDisplay?: ("exceptZero" | "always" | "auto" | "never")) => string> = writable();

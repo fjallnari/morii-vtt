@@ -13,9 +13,20 @@ interface AbilityScore {
     skills: AbilitySkill[]
 }
 
-interface HitDiceCurrent {
-    count: number,
-    dice_type: string,
+export interface Attack {
+    id: string,
+    name: string,
+    atk_ability: string, // e.g. STR
+    atk_bonus: string,
+    atk_proficiency: boolean,
+    range: string,
+    dmg_die: string, // e.g. 1d6
+    dmg_ability: string, // e.g. STR
+    dmg_bonus: string,
+    dmg_type: string, // e.g. Slashing
+    versatile_die: string,
+    versatile_active: boolean,
+    properties: number[] // only property ids are saved, e.g. 0 ~ Ammunition
 }
 
 export default interface Character {
@@ -43,6 +54,7 @@ export default interface Character {
     death_save_failure: number,
     hd_total: string,
     hd_current: Record<string, string>,
+    attacks: Attack[]
 
     alignment: string
 }

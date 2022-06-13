@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte'
 
-    export let value: string, required = true, editWidth: string = 'inherit', editHeight: string = 'inherit';
+    export let value: string, required = true, editWidth: string = 'inherit', editHeight: string = 'inherit', defaultValue:string = '---';
 
     const dispatch = createEventDispatcher();
     let editing = false, original: string;
@@ -42,7 +42,7 @@
     </form>
 {:else}
     <div on:click={() => edit()}>
-        {value ? value : '---'}
+        {value ? value : defaultValue}
     </div>
 {/if}
 

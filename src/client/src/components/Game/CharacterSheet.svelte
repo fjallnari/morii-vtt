@@ -4,7 +4,7 @@
 
     import type { AbilitySkill, Character } from "../../interfaces/Character";
     import axios from "axios";
-    import { accessToken, getASModifier, modifyCharacter, sendSkillCheck, socket, user } from "../../stores";
+    import { accessToken, formatModifier, getASModifier, modifyCharacter, sendSkillCheck, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
     import HpBar from './CharacterSheet/HpBar.svelte';
     import InPlaceEditBox from './CharacterSheet/InPlaceEditBox.svelte';
@@ -12,6 +12,7 @@
     import Exhaustion from './CharacterSheet/Exhaustion.svelte';
     import DeathSaves from './CharacterSheet/DeathSaves.svelte';
     import HitDice from './CharacterSheet/HitDice.svelte';
+    import Attacks from './CharacterSheet/Attacks.svelte';
 
     export let character: Character;
 
@@ -47,7 +48,7 @@
                 username: $user.username,
                 settings: $user.settings,
             }, 
-            messageText: `/r ${dice_type}${formatModifier(modifier, "always")}`,
+            messageText: `/r ${dice_type}${$formatModifier(modifier, "always")}`,
             skillCheckInfo: {
                 characterName: character.name,
                 skillName: skillName
@@ -60,19 +61,19 @@
     /**
      * Formats modifier to show plus signs if the modifier is positive
      */
-    const formatModifier = (modifier: number, signDisplay: ("exceptZero" | "always" | "auto" | "never") = "exceptZero") => {
+    formatModifier.set((modifier: number, signDisplay: ("exceptZero" | "always" | "auto" | "never") = "exceptZero") => {
         return new Intl.NumberFormat("en-US", {
             signDisplay: signDisplay
         }).format(modifier);
-    }
+    });
 
     /**
      * 
      * @param AS - ability score tag, e.g. 'WIS', 'DEX', 'STR' ...
      */
     getASModifier.set((AS: string) => {
-        return (~~character.ability_scores[AS].value - 10) / 2 >> 0;
-    })
+        return (~~(character.ability_scores[AS] ? character.ability_scores[AS].value : 0) - 10) / 2 >> 0;
+    });
 
     const getSkill = (AS: string, skillName: string) => {
         return character.ability_scores[AS].skills.find(skill => skill.name === skillName);
@@ -131,7 +132,7 @@
                 <div class="ability-score-container" style="{['WIS', 'INT'].includes(AS) ? 'padding-bottom: 2.2em;': ''}">
                     <div class="ability-score-info">
                         <box class="ability-score-modifier">
-                            {formatModifier($getASModifier(AS))}
+                            {$formatModifier($getASModifier(AS))}
                         </box>
 
                         <div class="ability-score-value">
@@ -152,7 +153,7 @@
                                 on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; $modifyCharacter() }}
                             >
                             <mod>
-                                {formatModifier(getSavingThrowModifier(AS))}
+                                {$formatModifier(getSavingThrowModifier(AS))}
                             </mod>
                             <sendable on:click={() => { $sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`) }}>{AS} saving throws<br></sendable>
                         </div>
@@ -164,7 +165,7 @@
                                     alt="checkbox"
                                     on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}
                                 >
-                                <mod>{formatModifier(getSkillModifier(AS, skill))}</mod>
+                                <mod>{$formatModifier(getSkillModifier(AS, skill))}</mod>
                                 <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name) }}>{skill.name}<br></sendable>
                             </div>
                         {/each}
@@ -185,7 +186,7 @@
                         <box class="additional-skill-box">
                             <div class="box-with-label">
                                 <div class="box-main-text">
-                                    {formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
+                                    {$formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
                                 </div>
                                 <div class="box-justify-filler"></div>
                                 <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`)}>
@@ -261,12 +262,7 @@
     </div>
 
     <div class="attacks">
-        <box class="box-with-label">
-            <div class="box-main-text"></div>
-            <div class="box-label">
-                Attacks
-            </div>
-        </box>
+        <Attacks bind:character={character}></Attacks>
     </div>
 
     <div class="equipment">
@@ -673,7 +669,10 @@
     }
 
     .attacks { grid-area: attacks;
-
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
     }
 
     .features-traits { grid-area: features-traits;

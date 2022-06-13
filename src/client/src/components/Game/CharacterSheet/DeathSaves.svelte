@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Character } from "../../../interfaces/Character";
+    import { sendSkillCheck } from "../../../stores";
     import TripleCheckBox from "./TripleCheckBox.svelte";
 
     export let character: Character;
@@ -22,9 +23,9 @@
         </div>
     </div>
     <div class="box-justify-filler"></div>
-    <div class="box-label">
+    <sendable class="box-label" on:click={() => $sendSkillCheck(0, 'death save')}>
         Death Saves
-    </div>
+    </sendable>
 </box>
 
 <style>

@@ -4,16 +4,17 @@
     import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from '../../../stores';
     import InPlaceEdit from '../../InPlaceEdit.svelte';
     import { slide, fade } from 'svelte/transition';
-    import Select, { Option } from '@smui/select';
 
     export let attack: Attack;
     export let character: Character;
     let isOpen = false;
 
-    const abilityTags = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+    const abilityTags = ['---', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
 
     const getAttackFormula = () => {
-        return $formatModifier(~~$getASModifier(attack.atk_ability) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus);
+        return $formatModifier(
+            (attack.atk_ability !== '---' ? ~~$getASModifier(attack.atk_ability) : 0) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus
+        );
     }
 
     //! the duplicate versatile_active is here only for reactivity of the die shown
@@ -23,13 +24,23 @@
         return versatile_active && attack.versatile_die ? attack.versatile_die : (attack.dmg_die ? attack.dmg_die : 'NdX');
     }
 
-    const getDmgModifier = () => {
-        return ~~$getASModifier(attack.dmg_ability) + ~~attack.dmg_bonus;
+    const getUnbiasedModifier = (abilityTag: string) => {
+        return (abilityTag !== '---' ? ~~$getASModifier(abilityTag) : 0);
+    } 
+
+    const getDmgModifier = (abilityTag: string) => {
+        return getUnbiasedModifier(abilityTag) + ~~attack.dmg_bonus;
     }
 
-    const getDmgFormula = () => {
-        return `${$formatModifier(getDmgModifier()).split('').join(' ')}`;
-    }    
+    const getDmgFormula = (abilityTag: string = attack.dmg_ability) => {
+        return `${$formatModifier(getDmgModifier(abilityTag), 'always').split('').join(' ')}`;
+    }
+
+    const deleteAttack = () => {
+        isOpen = false;
+        character.attacks = character.attacks.filter(obj => obj.id !== attack.id);
+        $modifyCharacter();
+    }
 
 
 </script>
@@ -48,7 +59,7 @@
 
         <box class="attack-bonus">
             <sendable on:click={() => $sendSkillCheck(~~getAttackFormula(), `${attack.name.toLowerCase()} | to hit`)}>
-                {getAttackFormula()}
+                {$formatModifier(getUnbiasedModifier(attack.atk_ability) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus)}
             </sendable>
             {#if isOpen}
                 <div class="box-label" transition:slide>
@@ -60,7 +71,7 @@
             <line-div>
                 <sendable class="dmg-formula" 
                     on:click={() => $sendSkillCheck(
-                        getDmgModifier(), 
+                        getDmgModifier(attack.dmg_ability), 
                         `${attack.name.toLowerCase()} | damage${attack.versatile_die ? (attack.versatile_active ? ' | 2-handed': ' | 1-handed') : ''}`, 
                         getDmgDie()
                     )}
@@ -168,7 +179,12 @@
                 <div class="box-label">
                     Versatile
                 </div> 
-            </box>           
+            </box>
+            <box id="delete-attack">
+                <div class="box-label" on:click={() => deleteAttack()}>
+                    Delete
+                </div>
+            </box>
         </div>
     {/if}
 </box>
@@ -266,7 +282,6 @@
         padding-right: 0.2em;
         display: flex; 
         cursor: pointer;
-        height: 2em; 
         width: 2em;     
     } 
 
@@ -281,6 +296,10 @@
         align-items: center;
         justify-content: center;
         gap: 0.2em;
+    }
+
+    .atk-proficiency img {
+        cursor: pointer;
     }
 
     line-div select {
@@ -303,6 +322,17 @@
 
     .range, .versatile {
         flex-grow: 2;
+    }
+
+    #delete-attack {
+        background-color: #BC4B51;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    #delete-attack div {
+        font-size: 1em;
+        font-weight: bold;
     }
 
 </style>

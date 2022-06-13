@@ -32,7 +32,7 @@
         </div>
     {/if}
 
-    <div class="message-text" style="background: { message.isPublic ? '#252529' : '#3b3b42' }">
+    <div class="message-text" style="background: { message.isPublic ? '#252529' : '#303036' }">
         {#if message.rollResult}
             <PrettyRollResult message={message}></PrettyRollResult>
         {:else}

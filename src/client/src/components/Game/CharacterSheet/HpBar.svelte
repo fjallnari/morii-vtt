@@ -12,6 +12,11 @@
 </div>
 
 <style>
+    :root {
+        --main-hp-color: #BC4B51; /* #A7C284 */
+        --main-temp-hp-color: #5B8E7D; /* #87BCDE */
+    }
+
     .hp-bar {
         grid-area: hp-bar;
         display: flex;
@@ -42,12 +47,12 @@
 
     .hp-bar-fill {
         height: 100%;
-        background-color: #A7C284;
+        background-color: var(--main-hp-color)
     }
 
     .hp-bar-temp-fill {
         height: 100%;
-        background-color: #87BCDE;
+        background-color: var(--main-temp-hp-color);
     }
 
 </style>

@@ -48,7 +48,7 @@
 {:else}
     <div class="attacks-list">
         {#each character.attacks as attack}
-            <AttackDetail bind:attack={attack} character={character}></AttackDetail>
+            <AttackDetail bind:attack={attack} bind:character={character}></AttackDetail>
         {/each}
         <sendable style="cursor: auto;">
             <Icon style="cursor: pointer;" on:click={() => { addNewAttack(); $modifyCharacter() }} class="material-icons">{'add'}</Icon>

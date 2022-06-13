@@ -18,8 +18,11 @@
             atk_proficiency: false,
             range: '',
             dmg_die: '', // e.g. 1d6
+            dmg_ability: '', // e.g. STR
             dmg_bonus: '',
             dmg_type: '', // e.g. Slashing
+            versatile_die: '',
+            versatile_active: false,
             properties: [] // only property ids are saved, e.g. 0 ~ Ammunition
         }
 

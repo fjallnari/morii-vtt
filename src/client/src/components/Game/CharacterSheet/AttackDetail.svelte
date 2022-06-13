@@ -1,7 +1,7 @@
 <script lang="ts">
     import IconButton, { Icon } from '@smui/icon-button';
     import type { Attack, Character } from '../../../interfaces/Character';
-    import { formatModifier, getASModifier, modifyCharacter } from '../../../stores';
+    import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from '../../../stores';
     import InPlaceEdit from '../../InPlaceEdit.svelte';
     import { slide, fade } from 'svelte/transition';
     import Select, { Option } from '@smui/select';
@@ -11,7 +11,25 @@
     let isOpen = false;
 
     const abilityTags = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-    
+
+    const getAttackFormula = () => {
+        return $formatModifier(~~$getASModifier(attack.atk_ability) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus);
+    }
+
+    //! the duplicate versatile_active is here only for reactivity of the die shown
+    // pretty dirty workaround, should replace if something better shows up
+    const getDmgDie = (versatile_active = attack.versatile_active) => {
+        // considers versatile die
+        return versatile_active && attack.versatile_die ? attack.versatile_die : (attack.dmg_die ? attack.dmg_die : 'NdX');
+    }
+
+    const getDmgModifier = () => {
+        return ~~$getASModifier(attack.dmg_ability) + ~~attack.dmg_bonus;
+    }
+
+    const getDmgFormula = () => {
+        return `${$formatModifier(getDmgModifier()).split('').join(' ')}`;
+    }    
 
 
 </script>
@@ -29,7 +47,9 @@
         </box>
 
         <box class="attack-bonus">
-            {$formatModifier(~~$getASModifier(attack.atk_ability) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus)}
+            <sendable on:click={() => $sendSkillCheck(~~getAttackFormula(), `${attack.name.toLowerCase()} | to hit`)}>
+                {getAttackFormula()}
+            </sendable>
             {#if isOpen}
                 <div class="box-label" transition:slide>
                     ATK
@@ -37,7 +57,25 @@
             {/if}
         </box>
         <box class="attack-damage">
-            1d6 + 1
+            <line-div>
+                <sendable class="dmg-formula" 
+                    on:click={() => $sendSkillCheck(
+                        getDmgModifier(), 
+                        `${attack.name.toLowerCase()} | damage${attack.versatile_die ? (attack.versatile_active ? ' | 2-handed': ' | 1-handed') : ''}`, 
+                        getDmgDie()
+                    )}
+                >
+                    {`${getDmgDie(attack.versatile_active)} ${getDmgFormula()}`}
+                </sendable>
+                <justify-filler></justify-filler>
+                {#if attack.versatile_die}
+                    <img class="skill-prof-icon" 
+                        src="../static/{attack.versatile_active ? 'two': 'one'}-handed.svg" 
+                        alt="versatile"
+                        on:click={() => { attack.versatile_active = !attack.versatile_active; $modifyCharacter() }}
+                    >
+                {/if}
+            </line-div>
             {#if isOpen}
                 <div class="box-label" transition:slide>
                     Damage
@@ -52,16 +90,21 @@
         <div class="details" transition:slide>
             <box class="atk-bonus">
                 <line-div>
-                    <div class="consistent-in-place-edit">
-                        <InPlaceEdit bind:value={attack.atk_ability} editWidth='2em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
-                    </div>
+                    <select bind:value={attack.atk_ability} on:change={() => $modifyCharacter()}>
+                        <option value="" selected disabled hidden>---</option>
+                        {#each abilityTags as abilityTag}
+                            <option value={abilityTag}>
+                                {abilityTag}
+                            </option>
+                        {/each}
+                    </select>
                     +
                     <div class="consistent-in-place-edit">
                         <InPlaceEdit bind:value={attack.atk_bonus} editWidth='2em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
                     </div>
                     +
                     <div class="atk-proficiency">
-                        <img class="skill-prof-icon" 
+                        <img class="versatile-icon" 
                             src="../static/{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
                             alt="rhombus"
                             on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}
@@ -74,13 +117,70 @@
                 <div class="box-label">
                     Attack Bonus
                 </div>                
-            </box>            
+            </box>
+
+            <box class="range">
+                <div class="consistent-in-place-edit" style="width: 5em;">
+                    <InPlaceEdit bind:value={attack.range} editWidth='5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                </div>
+                <div class="box-label">
+                    Range
+                </div> 
+            </box>
+
+            <box class="atk-damage">
+                <line-div>
+                    <div class="consistent-in-place-edit">
+                        <InPlaceEdit bind:value={attack.dmg_die} defaultValue='NdX' editWidth='2em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                    </div>
+                    +
+                    <select bind:value={attack.dmg_ability} on:change={() => $modifyCharacter()}>
+                        <option value="" selected disabled hidden>---</option>
+                        {#each abilityTags as abilityTag}
+                            <option value={abilityTag}>
+                                {abilityTag}
+                            </option>
+                        {/each}
+                    </select>
+                    +
+                    <div class="consistent-in-place-edit">
+                        <InPlaceEdit bind:value={attack.dmg_bonus} editWidth='2em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                    </div>
+                </line-div>
+                <div class="box-label">
+                    Damage Bonus
+                </div>                
+            </box>
+
+            <box class="damage-type">
+                <div class="consistent-in-place-edit" style="width: 5em;">
+                    <InPlaceEdit bind:value={attack.dmg_type} editWidth='5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                </div>
+                <div class="box-label">
+                    Type
+                </div> 
+            </box>
+
+            <box class="versatile">
+                <div class="consistent-in-place-edit" style="width: 5em;">
+                    <InPlaceEdit bind:value={attack.versatile_die} editWidth='5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                </div>
+                <div class="box-label">
+                    Versatile
+                </div> 
+            </box>           
         </div>
     {/if}
 </box>
 
 
 <style>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+    
     .attack-summary {
         width: 100%;
         padding: 0.5em 0em;
@@ -118,10 +218,11 @@
     div.details {
 		padding: 0em 1em 0.5em 1em;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: flex-start;
         align-items: flex-start;
-        gap: 0.2em;
+        flex-wrap: wrap;
+        gap: 0.3em;
 	}
 
     div.details > box {
@@ -129,7 +230,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 0.2em;
+        gap: 0.1em;
         padding: 0.2em 0.5em;
         background-color: #303036;
     }
@@ -139,8 +240,35 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        gap: 1em;
+        gap: 0.5em;
     }
+
+    .attack-damage line-div {
+        flex-grow: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .attack-damage line-div .dmg-formula {
+        margin-left: auto;
+    }
+
+    justify-filler {
+        margin-left: auto;
+        width: 0;
+    }
+
+    .attack-damage line-div img {
+        margin-left: -1.7em;
+        padding-right: 0.2em;
+        display: flex; 
+        cursor: pointer;
+        height: 2em; 
+        width: 2em;     
+    } 
 
     .skill-prof-icon {
         cursor: pointer; 
@@ -153,7 +281,16 @@
         align-items: center;
         justify-content: center;
         gap: 0.2em;
+    }
 
+    line-div select {
+        background-color: #303036;
+        color: inherit;
+        border: none;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        border-radius: 4px;
     }
 
     .consistent-in-place-edit {
@@ -162,6 +299,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .range, .versatile {
+        flex-grow: 2;
     }
 
 </style>

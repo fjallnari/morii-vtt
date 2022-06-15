@@ -23,10 +23,11 @@
             dmg_type: '', // e.g. Slashing
             versatile_die: '',
             versatile_active: false,
-            properties: [] // only property ids are saved, e.g. 0 ~ Ammunition
+            //// properties: [] // only property ids are saved, e.g. 0 ~ Ammunition
         }
 
         character.attacks.push(attackObjSkeleton);
+        return attackObjSkeleton.id;
     }
 
 

@@ -46,7 +46,7 @@
 </script>
 
 
-<box class="attack-info">
+<box class="attack-info" transition:slide>
     <div class="attack-summary">
         <box class="attack-name">
             <InPlaceEdit bind:value={attack.name} editWidth='8em' editHeight='inherit' on:submit={() => $modifyCharacter()}/>
@@ -117,7 +117,7 @@
                     <div class="atk-proficiency">
                         <img class="versatile-icon" 
                             src="../static/{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                            alt="rhombus"
+                            alt="atk-prof"
                             on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}
                         >
                         <div class="box-label">
@@ -196,13 +196,18 @@
     *::after {
         box-sizing: border-box;
     }
+
+    :root {
+        --box-background-color: #303036;
+        --delete-button-background-color: #BC4B51;
+    }
     
     .attack-summary {
         width: 100%;
         padding: 0.5em 0em;
 
         display: grid; 
-        grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr; 
+        grid-template-columns: 2.8fr 1fr 1fr 1fr 0.5fr; 
         grid-template-rows: 1fr; 
         gap: 0.5em 0.5em; 
         grid-template-areas: 
@@ -228,7 +233,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0em;
-        background-color: #303036;
+        background-color: var(--box-background-color);
     }
 
     div.details {
@@ -248,7 +253,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0.5em;
-        background-color: #303036;
+        background-color: var(--box-background-color);
     }
 
     div.details > box line-div {
@@ -303,7 +308,7 @@
     }
 
     line-div select {
-        background-color: #303036;
+        background-color: var(--box-background-color);
         color: inherit;
         border: none;
         font-size: inherit;
@@ -325,7 +330,7 @@
     }
 
     #delete-attack {
-        background-color: #BC4B51;
+        background-color: var(--delete-button-background-color);
         width: 100%;
         cursor: pointer;
     }

@@ -85,16 +85,28 @@
     }
 
     .inventory-items {
-        overflow-y: auto;
-        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
+        gap: 0.25em;
+
+        margin-top: 0.5em;
+        overflow-y: auto;
+        height: 100%;
+        scrollbar-width: thin;
     }
 
-    .add-new-item {
-        margin-top: 0.5em;
+    ::-webkit-scrollbar {
+        width: 9px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(155, 155, 155, 0.5);
+        border-radius: 4px;
+        border: transparent;
     }
 
 </style>

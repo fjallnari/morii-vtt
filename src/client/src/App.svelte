@@ -89,6 +89,13 @@
 		margin: 0 auto;
 	}
 
+	:root {
+		--secondary-box-background-color: #303036;
+  		--delete-button-background-color: #BC4B51;
+		--primary-text-color: #FCF7F8;
+		--primary-accent-color: #EFA48B;
+	}
+
 	@media only screen and (min-width: 640px) {
 		main {
 			max-width: none;

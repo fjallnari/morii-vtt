@@ -73,7 +73,19 @@
         height: 90%;
         width: 100%;
         overflow-y: auto;
+        scrollbar-width: thin;
     }
 
+    ::-webkit-scrollbar {
+        width: 9px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(155, 155, 155, 0.5);
+        border-radius: 4px;
+        border: transparent;
+    }
 
 </style>

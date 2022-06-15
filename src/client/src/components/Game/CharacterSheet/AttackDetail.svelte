@@ -196,11 +196,6 @@
     *::after {
         box-sizing: border-box;
     }
-
-    :root {
-        --box-background-color: #303036;
-        --delete-button-background-color: #BC4B51;
-    }
     
     .attack-summary {
         width: 100%;
@@ -233,7 +228,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0em;
-        background-color: var(--box-background-color);
+        background-color: var(--secondary-box-background-color);
     }
 
     div.details {
@@ -253,7 +248,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0.5em;
-        background-color: var(--box-background-color);
+        background-color: var(--secondary-box-background-color);
     }
 
     div.details > box line-div {
@@ -308,7 +303,7 @@
     }
 
     line-div select {
-        background-color: var(--box-background-color);
+        background-color: var(--secondary-box-background-color);
         color: inherit;
         border: none;
         font-size: inherit;

@@ -13,6 +13,7 @@
     import DeathSaves from './CharacterSheet/DeathSaves.svelte';
     import HitDice from './CharacterSheet/HitDice.svelte';
     import Attacks from './CharacterSheet/Attacks.svelte';
+import Equipment from './CharacterSheet/Equipment.svelte';
 
     export let character: Character;
 
@@ -266,12 +267,7 @@
     </div>
 
     <div class="equipment">
-        <box class="box-with-label">
-            <div class="box-main-text"></div>
-            <div class="box-label">
-                Equipment
-            </div>
-        </box>
+        <Equipment bind:character={character}></Equipment>
     </div>
 
     <div class="other-prof-languages">
@@ -660,19 +656,21 @@
         align-items: center;
     }
 
-    .other-prof-languages { grid-area: other-prof-languages;
-        margin: 0em 0.75em 0em 0em;
-    }
-
-    .equipment { grid-area: equipment; 
-    
-    }
-
     .attacks { grid-area: attacks;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
+    }
+
+    .equipment { grid-area: equipment;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .other-prof-languages { grid-area: other-prof-languages;
+        margin: 0em 0.75em 0em 0em;
     }
 
     .features-traits { grid-area: features-traits;

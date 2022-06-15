@@ -106,6 +106,7 @@
         height: inherit;
         padding-right: 1.5em;
         padding-bottom: 4px;
+        scrollbar-width: thin;
     }
 
     .send-message-box {
@@ -134,5 +135,18 @@
         font-size: large;
     }
 
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1d1d22;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #757578;
+        border: transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #404044;
+    }
 
 </style>

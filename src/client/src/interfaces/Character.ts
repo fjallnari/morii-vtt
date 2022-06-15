@@ -24,7 +24,21 @@ export interface Attack {
     dmg_type: string, // e.g. Slashing
     versatile_die: string,
     versatile_active: boolean,
-    properties: number[] // only property ids are saved, e.g. 0 ~ Ammunition
+    item_id?: string,
+    //// properties: number[] // only property ids are saved, e.g. 0 ~ Ammunition
+}
+
+export interface Item {
+    id: string, // UUID V4
+    name: string,
+    is_equipped: boolean,
+    amount: string,
+    has_weight: boolean,
+    weight?: string,
+    has_attack: boolean,
+    attack_id?: string,
+    want_tooltip: boolean,
+    tooltip?: string
 }
 
 export interface Character {
@@ -53,7 +67,8 @@ export interface Character {
     hd_total: string,
     hd_current: Record<string, string>,
     attacks: Attack[],
-
+    coins: Record<string, string>,
+    inventory: Item[],    
 
     alignment: string
 }

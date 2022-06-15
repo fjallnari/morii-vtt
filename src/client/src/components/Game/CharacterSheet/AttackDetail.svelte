@@ -38,6 +38,10 @@
 
     const deleteAttack = () => {
         isOpen = false;
+        // changes the 'has_attack' icon near the item if the attack is associated with an item
+        if(attack.item_id !== '') {
+            Object.assign(character.inventory.find(item => item.id === attack.item_id), { attack_id: '', has_attack: false })
+        }
         character.attacks = character.attacks.filter(obj => obj.id !== attack.id);
         $modifyCharacter();
     }
@@ -46,7 +50,7 @@
 </script>
 
 
-<box class="attack-info">
+<box class="attack-info" transition:slide>
     <div class="attack-summary">
         <box class="attack-name">
             <InPlaceEdit bind:value={attack.name} editWidth='8em' editHeight='inherit' on:submit={() => $modifyCharacter()}/>
@@ -117,7 +121,7 @@
                     <div class="atk-proficiency">
                         <img class="versatile-icon" 
                             src="../static/{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                            alt="rhombus"
+                            alt="atk-prof"
                             on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}
                         >
                         <div class="box-label">
@@ -202,7 +206,7 @@
         padding: 0.5em 0em;
 
         display: grid; 
-        grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr; 
+        grid-template-columns: 2.8fr 1fr 1fr 1fr 0.5fr; 
         grid-template-rows: 1fr; 
         gap: 0.5em 0.5em; 
         grid-template-areas: 
@@ -228,7 +232,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0em;
-        background-color: #303036;
+        background-color: var(--secondary-box-background-color);
     }
 
     div.details {
@@ -248,7 +252,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0.5em;
-        background-color: #303036;
+        background-color: var(--secondary-box-background-color);
     }
 
     div.details > box line-div {
@@ -303,7 +307,7 @@
     }
 
     line-div select {
-        background-color: #303036;
+        background-color: var(--secondary-box-background-color);
         color: inherit;
         border: none;
         font-size: inherit;
@@ -325,7 +329,7 @@
     }
 
     #delete-attack {
-        background-color: #BC4B51;
+        background-color: var(--delete-button-background-color);
         width: 100%;
         cursor: pointer;
     }

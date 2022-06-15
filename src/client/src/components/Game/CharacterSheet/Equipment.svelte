@@ -98,15 +98,17 @@
     }
 
     ::-webkit-scrollbar {
-        width: 9px;
+        width: 8px;
     }
     ::-webkit-scrollbar-track {
-        background: transparent;
+        background: #1d1d22;
     }
     ::-webkit-scrollbar-thumb {
-        background-color: rgba(155, 155, 155, 0.5);
-        border-radius: 4px;
+        background-color: #757578;
         border: transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #404044;
     }
 
 </style>

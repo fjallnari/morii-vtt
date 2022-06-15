@@ -26,6 +26,7 @@ export interface Attack {
     dmg_type: string, // e.g. Slashing
     versatile_die: string,
     versatile_active: boolean,
+    item_id?: string
     //// properties: number[] // only property ids are saved, e.g. 0 ~ Ammunition
 }
 

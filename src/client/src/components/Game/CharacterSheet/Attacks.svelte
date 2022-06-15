@@ -2,17 +2,17 @@
     import type { Attack, Character } from "../../../interfaces/Character";
     import IconButton, { Icon } from '@smui/icon-button';
     import { v4 as uuidv4 } from 'uuid';
-    import { modifyCharacter } from '../../../stores';
+    import { createNewAttack, modifyCharacter } from '../../../stores';
     import AttackDetail from "./AttackDetail.svelte";
 
 
     export let character: Character;
     
 
-    const addNewAttack = () => {
+    createNewAttack.set((customName: string = '', itemID: string = '') => {
         const attackObjSkeleton: Attack = {
             id: uuidv4(),
-            name: '',
+            name: customName,
             atk_ability: '', // e.g. STR
             atk_bonus: '',
             atk_proficiency: false,
@@ -23,12 +23,13 @@
             dmg_type: '', // e.g. Slashing
             versatile_die: '',
             versatile_active: false,
+            item_id: itemID
             //// properties: [] // only property ids are saved, e.g. 0 ~ Ammunition
         }
 
         character.attacks.push(attackObjSkeleton);
         return attackObjSkeleton.id;
-    }
+    });
 
 
 </script>
@@ -37,7 +38,7 @@
 {#if character.attacks.length === 0}
     <box class="box-with-label">
         <div class="box-main-text">
-            <sendable on:click={() => { addNewAttack(); $modifyCharacter() }}>
+            <sendable on:click={() => { $createNewAttack(); $modifyCharacter() }}>
                 <Icon class="material-icons">{'add'}</Icon>
             </sendable>
         </div>
@@ -52,7 +53,7 @@
             <AttackDetail bind:attack={attack} bind:character={character}></AttackDetail>
         {/each}
         <sendable style="cursor: auto;">
-            <Icon style="cursor: pointer;" on:click={() => { addNewAttack(); $modifyCharacter() }} class="material-icons">{'add'}</Icon>
+            <Icon style="cursor: pointer;" on:click={() => { $createNewAttack(); $modifyCharacter() }} class="material-icons">{'add'}</Icon>
         </sendable>
     </div>
     <div class="box-label">
@@ -77,15 +78,17 @@
     }
 
     ::-webkit-scrollbar {
-        width: 9px;
+        width: 8px;
     }
     ::-webkit-scrollbar-track {
-        background: transparent;
+        background: #1d1d22;
     }
     ::-webkit-scrollbar-thumb {
-        background-color: rgba(155, 155, 155, 0.5);
-        border-radius: 4px;
+        background-color: #757578;
         border: transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #404044;
     }
 
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Character, Item } from "../../../interfaces/Character";
-    import { modifyCharacter } from "../../../stores";
+    import { createNewAttack, modifyCharacter } from "../../../stores";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import IconButton, { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
@@ -16,8 +16,26 @@
         $modifyCharacter();
     }
 
-    const deleteItem = () => {
+    const removeItem = () => {
         character.inventory = character.inventory.filter(obj => obj.id !== item.id);
+        $modifyCharacter();
+    }
+
+    const removeAttack = () => {
+        character.attacks = character.attacks.filter(obj => obj.id !== item.attack_id);
+        item.attack_id = '';
+    }
+
+    const addAttack = () => {
+        // createNewAttack is defined in 'Attacks.svelte'
+        const newAttackID = $createNewAttack(item.name, item.id);
+        item.attack_id = newAttackID;
+    }
+
+    const changeHasAttack = () => {
+        item.has_attack ? removeAttack() : addAttack();
+        item.has_attack = !item.has_attack;
+
         $modifyCharacter();
     }
 
@@ -49,17 +67,17 @@
     
         <div class="toggable-item-info">
             <img class="has-attack-icon" 
-                src="../static/shield-sword{item.has_attack? '': '-outline'}.svg" 
+                src="../static/{item.has_attack? 'shield-sword' : 'shield-sword-outline'}.svg" 
                 alt="has-attack"
-                on:click={() => { item.has_attack = !item.has_attack; $modifyCharacter(); }}
+                on:click={() => changeHasAttack()}
             >
             <img class="want-tooltip-icon" 
-                src="../static/tooltip-text{ item.want_tooltip ? '': '-outline'}.svg" 
+                src="../static/{ item.want_tooltip ? 'tooltip-text': 'tooltip-text-outline'}.svg" 
                 alt="want-tooltip"
                 on:click={() => { item.want_tooltip = !item.want_tooltip; $modifyCharacter(); }}
             >
             <img class="has-weight-icon" 
-                src="../static/weight{ item.has_weight ? '': '-crossed'}.svg" 
+                src="../static/{ item.has_weight ? 'weight': 'weight-crossed'}.svg" 
                 alt="has-weight"
                 on:click={() => { item.has_weight = !item.has_weight; $modifyCharacter(); }}
             >
@@ -77,7 +95,7 @@
         <div class="details" transition:slide>
             <textarea on:change={() => $modifyCharacter()} bind:value={item.tooltip}></textarea>
             <box id="delete-item">
-                <div class="box-label" on:click={() => deleteItem()}>
+                <div class="box-label" on:click={() => removeItem()}>
                     Delete
                 </div>
             </box>
@@ -208,15 +226,17 @@
     }
 
     ::-webkit-scrollbar {
-        width: 9px;
+        width: 8px;
     }
     ::-webkit-scrollbar-track {
-        background: transparent;
+        background: #1d1d22;
     }
     ::-webkit-scrollbar-thumb {
-        background-color: rgba(155, 155, 155, 0.5);
-        border-radius: 4px;
+        background-color: #757578;
         border: transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #404044;
     }
 
 

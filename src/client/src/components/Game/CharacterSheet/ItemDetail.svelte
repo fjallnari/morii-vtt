@@ -5,7 +5,6 @@
     import IconButton, { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import Tooltip, { Wrapper, Content } from '@smui/tooltip';
-    import Button, { Label } from '@smui/button';
 
     export let item: Item;
     export let character: Character;
@@ -16,12 +15,12 @@
         $modifyCharacter();
     }
 
-    const removeItem = () => {
+    const deleteItem = () => {
         character.inventory = character.inventory.filter(obj => obj.id !== item.id);
         $modifyCharacter();
     }
 
-    const removeAttack = () => {
+    const deleteAttack = () => {
         character.attacks = character.attacks.filter(obj => obj.id !== item.attack_id);
         item.attack_id = '';
     }
@@ -33,7 +32,7 @@
     }
 
     const changeHasAttack = () => {
-        item.has_attack ? removeAttack() : addAttack();
+        item.has_attack ? deleteAttack() : addAttack();
         item.has_attack = !item.has_attack;
 
         $modifyCharacter();
@@ -94,11 +93,7 @@
     {#if isOpen}
         <div class="details" transition:slide>
             <textarea on:change={() => $modifyCharacter()} bind:value={item.tooltip}></textarea>
-            <box id="delete-item">
-                <div class="box-label" on:click={() => removeItem()}>
-                    Delete
-                </div>
-            </box>
+            <delete-button on:click={() => deleteItem()}>Delete</delete-button>
         </div>
     {/if}
 </box>
@@ -183,35 +178,7 @@
 	}
 
     textarea {
-        width: 100%;
         height: 7em;
-        padding: 0.5em 0.5em;
-        box-sizing: border-box;
-        border: 1px solid var(--primary-text-color);
-        border-radius: 4px;
-        background-color: transparent;
-        font-size: 1em;
-        font-family: Athiti;
-        color: var(--primary-text-color);
-        resize: none;
-        scrollbar-width: thin;
-    }
-
-    textarea:focus {
-        outline: none !important;
-        border: 2px solid var(--primary-accent-color);
-        caret-color: var(--primary-accent-color);
-    }
-
-    #delete-item {
-        background-color: var(--delete-button-background-color);
-        width: 100%;
-        cursor: pointer;
-    }
-
-    #delete-item div {
-        font-size: 1em;
-        font-weight: bold;
     }
     
     :global(.mdc-tooltip__surface) {

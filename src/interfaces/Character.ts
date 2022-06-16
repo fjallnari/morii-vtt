@@ -43,6 +43,13 @@ export interface Item {
     tooltip?: string
 }
 
+export interface OtherProf {
+    id: string,
+    name: string,
+    type: number,
+    content: string
+}
+
 export default interface Character {
     _id: ObjectId | string,
     playerID: ObjectId | string,
@@ -70,7 +77,8 @@ export default interface Character {
     hd_current: Record<string, string>,
     attacks: Attack[],
     coins: Record<string, string>,
-    inventory: Item[], 
+    inventory: Item[],
+    other_profs: OtherProf[] 
 
     alignment: string
 }

@@ -154,5 +154,6 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
         gp: '',
         pp: ''
     },
-    inventory: []
+    inventory: [],
+    other_profs: []
 };

@@ -184,11 +184,7 @@
                     Versatile
                 </div> 
             </box>
-            <box id="delete-attack">
-                <div class="box-label" on:click={() => deleteAttack()}>
-                    Delete
-                </div>
-            </box>
+            <delete-button on:click={() => deleteAttack()}>Delete</delete-button>
         </div>
     {/if}
 </box>
@@ -306,16 +302,6 @@
         cursor: pointer;
     }
 
-    line-div select {
-        background-color: var(--secondary-box-background-color);
-        color: inherit;
-        border: none;
-        font-size: inherit;
-        font-family: inherit;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
     .consistent-in-place-edit {
         width: 2em;
         height: 1.5em;
@@ -326,17 +312,6 @@
 
     .range, .versatile {
         flex-grow: 2;
-    }
-
-    #delete-attack {
-        background-color: var(--delete-button-background-color);
-        width: 100%;
-        cursor: pointer;
-    }
-
-    #delete-attack div {
-        font-size: 1em;
-        font-weight: bold;
     }
 
 </style>

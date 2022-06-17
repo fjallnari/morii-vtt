@@ -13,7 +13,8 @@
     import DeathSaves from './CharacterSheet/DeathSaves.svelte';
     import HitDice from './CharacterSheet/HitDice.svelte';
     import Attacks from './CharacterSheet/Attacks.svelte';
-import Equipment from './CharacterSheet/Equipment.svelte';
+    import Equipment from './CharacterSheet/Equipment.svelte';
+    import ToolsOtherProf from './CharacterSheet/ToolsOtherProf.svelte';
 
     export let character: Character;
 
@@ -271,17 +272,13 @@ import Equipment from './CharacterSheet/Equipment.svelte';
     </div>
 
     <div class="other-prof-languages">
-        <box class="box-with-label">
-            <div class="box-main-text"></div>
-            <div class="box-label">
-                Other prof & Languages
-            </div>
-        </box>
+        <ToolsOtherProf bind:character={character}></ToolsOtherProf>
     </div>
 
     <div class="features-traits">
         <box class="box-with-label">
             <div class="box-main-text"></div>
+            <div class="box-justify-filler"></div>
             <div class="box-label">
                 Features & Traits
             </div>
@@ -323,6 +320,56 @@ import Equipment from './CharacterSheet/Equipment.svelte';
         transition-property: color;
     }
 
+    :global(delete-button) {
+        background-color: var(--delete-button-background-color);
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        width: 100%;
+        cursor: pointer;
+        transition-duration: 200ms;
+        transition-property: color;
+        font-size: 1em;
+        font-weight: bold;
+        font-family: Athiti;
+        text-transform: uppercase;
+    }
+
+    :global(delete-button:active) {
+        background-color: #A43D42;
+        transition-duration: 200ms;
+        transition-property: color;        
+    }
+
+    :global(textarea) {
+        width: 100%;
+        padding: 0.5em 0.5em;
+        box-sizing: border-box;
+        border: 1px dotted var(--primary-text-color);
+        border-radius: 4px;
+        background-color: transparent;
+        font-size: 1em;
+        font-family: Athiti;
+        color: var(--primary-text-color);
+        resize: none;
+        scrollbar-width: thin;
+    }
+
+    :global(textarea:focus) {
+        outline: none !important;
+        border: 2px solid var(--primary-accent-color);
+        caret-color: var(--primary-accent-color);
+    }
+
+    :global(select) {
+        background-color: var(--secondary-box-background-color);
+        color: inherit;
+        border: none;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
     .character-sheet-container {  display: grid;
         height: inherit;
         flex: 5;
@@ -342,7 +389,7 @@ import Equipment from './CharacterSheet/Equipment.svelte';
         "ability-scores-bonuses character-stats other-prof-languages"
         "ability-scores-bonuses character-stats other-prof-languages"
         "ability-scores-bonuses character-stats other-prof-languages"
-        "ability-scores-bonuses character-stats features-traits"
+        "ability-scores-bonuses character-stats other-prof-languages"
         "ability-scores-bonuses character-stats features-traits"
         "ability-scores-bonuses attacks features-traits"
         "ability-scores-bonuses attacks features-traits"

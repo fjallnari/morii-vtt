@@ -315,7 +315,7 @@
     }
 
     :global(sendable:active) {
-        color: #EFA48B;
+        color: var(--primary-accent-color);
         transition-duration: 200ms;
         transition-property: color;
     }
@@ -344,7 +344,7 @@
         width: 100%;
         padding: 0.5em 0.5em;
         box-sizing: border-box;
-        border: 1px dotted var(--primary-text-color);
+        border: 1px solid #ffffff8a;
         border-radius: 4px;
         background-color: transparent;
         font-size: 1em;

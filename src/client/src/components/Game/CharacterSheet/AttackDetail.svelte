@@ -4,12 +4,11 @@
     import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from '../../../stores';
     import InPlaceEdit from '../../InPlaceEdit.svelte';
     import { slide, fade } from 'svelte/transition';
+    import ABILITY_TAGS from '../../../enum/AbilityTags';
 
     export let attack: Attack;
     export let character: Character;
     let isOpen = false;
-
-    const abilityTags = ['---', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
 
     const getAttackFormula = () => {
         return $formatModifier(
@@ -50,7 +49,7 @@
 </script>
 
 
-<box class="attack-info" transition:slide>
+<box class="attack-info">
     <div class="attack-summary">
         <box class="attack-name">
             <InPlaceEdit bind:value={attack.name} editWidth='8em' editHeight='inherit' on:submit={() => $modifyCharacter()}/>
@@ -107,7 +106,7 @@
                 <line-div>
                     <select bind:value={attack.atk_ability} on:change={() => $modifyCharacter()}>
                         <option value="" selected disabled hidden>---</option>
-                        {#each abilityTags as abilityTag}
+                        {#each ABILITY_TAGS as abilityTag}
                             <option value={abilityTag}>
                                 {abilityTag}
                             </option>
@@ -151,7 +150,7 @@
                     +
                     <select bind:value={attack.dmg_ability} on:change={() => $modifyCharacter()}>
                         <option value="" selected disabled hidden>---</option>
-                        {#each abilityTags as abilityTag}
+                        {#each ABILITY_TAGS as abilityTag}
                             <option value={abilityTag}>
                                 {abilityTag}
                             </option>

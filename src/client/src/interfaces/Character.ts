@@ -48,6 +48,13 @@ export interface OtherProf {
     content: string
 }
 
+export interface Tool {
+    id: string,
+    name: string,
+    ability: string, // e.g. STR
+    proficiency: number // 0 ~ jack of all trades, 1 ~ proficient, 2 ~ expertise ( 2^n * 1/2 )
+}
+
 export interface Character {
     _id: string,
     playerID: string,
@@ -76,7 +83,8 @@ export interface Character {
     attacks: Attack[],
     coins: Record<string, string>,
     inventory: Item[],
-    other_profs: OtherProf[],    
+    other_profs: OtherProf[],
+    tools: Tool[],    
 
     alignment: string
 }

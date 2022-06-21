@@ -4,7 +4,7 @@
 
     import type { AbilitySkill, Character } from "../../interfaces/Character";
     import axios from "axios";
-    import { accessToken, formatModifier, getASModifier, modifyCharacter, sendSkillCheck, socket, user } from "../../stores";
+    import { accessToken, formatModifier, getASModifier, isMessagePublic, modifyCharacter, sendSkillCheck, socket, user } from "../../stores";
     import { params } from "svelte-spa-router";
     import HpBar from './CharacterSheet/HpBar.svelte';
     import InPlaceEditBox from './CharacterSheet/InPlaceEditBox.svelte';
@@ -57,7 +57,7 @@
                 skillName: skillName
             },
             gameID: $params.id,
-            isPublic: true // make isMessagePublic a store variable
+            isPublic: $isMessagePublic
         });
     });
 

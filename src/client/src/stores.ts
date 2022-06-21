@@ -13,6 +13,7 @@ export const campaignDetailActive: Writable<boolean> = writable(false);
 export const selectedCampaign: Writable<Campaign> = writable();
 export const selectedCharacter: Writable<Character> = writable();
 export const socket: Writable<Socket<DefaultEventsMap, DefaultEventsMap>> = writable();
+export const isMessagePublic: Writable<boolean> = writable(true);
 export const modifyCharacter: Writable<() => Promise<void>> = writable();
 export const sendSkillCheck: Writable<(modifier: number, skillName: string, dice_type?: string) => Promise<void>> = writable();
 export const getASModifier: Writable<(AS: string) => number> = writable();

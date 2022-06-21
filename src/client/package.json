@@ -50,6 +50,7 @@
     "sirv-cli": "^2.0.0",
     "socket.io-client": "^4.4.1",
     "svelte-copy-to-clipboard": "^0.2.5",
+    "svelte-markdown": "^0.2.2",
     "svelte-material-ui": "^6.0.0-beta.13",
     "svelte-spa-router": "^3.2.0"
   }

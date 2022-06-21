@@ -4,6 +4,7 @@
     import IconButton, { Icon } from '@smui/icon-button';
     import PrettyRollResult from "./PrettyRollResult.svelte";
     import { user } from "../../stores";
+    import SvelteMarkdown from 'svelte-markdown';
 
     export let message: MessageData;
 
@@ -36,21 +37,21 @@
         {#if message.rollResult}
             <PrettyRollResult message={message}></PrettyRollResult>
         {:else}
-            {message.messageText}
+            <SvelteMarkdown source={message.messageText} />
         {/if}
     </div>
 </div>
 
 <style>
     .message-content {  display: grid;
-    grid-template-columns: 0.5fr 3fr 1fr;
-    grid-template-rows: 0.2fr 0.8fr;
-    grid-auto-flow: row;
-    width: 26em;
-    gap: 0.5em 0.5em;
-    grid-template-areas:
-        "sender-pfp sender-info message-timestamp"
-        "sender-pfp message-text message-text";
+        grid-template-columns: 0.5fr 3fr 1fr;
+        grid-template-rows: 0.1fr 2fr;
+        grid-auto-flow: row;
+        width: 26em;
+        gap: 0.5em 0.5em;
+        grid-template-areas:
+            "sender-pfp sender-info message-timestamp"
+            "sender-pfp message-text message-text";
     }
 
     .sender-info { grid-area: sender-info;
@@ -85,6 +86,26 @@
         height: 2.5em;
         background-color: #252529;
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    /** MARKDOWN 'CORRECTIONS' */
+    
+    :global(p) {
+        margin: 0;
+        text-align: left;
+        margin: 0.5em;
+    }
+
+    :global(h1, h2, h3, h4, h5) {
+        margin: 0.8em 0em;
+    }
+
+    :global(ul) {
+        text-align: left;
+    }
+
+    :global(li:not(:last-child)) { 
+        margin-bottom: 0.3rem;
     }
 
 </style>

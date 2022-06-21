@@ -15,7 +15,7 @@
     import Attacks from './CharacterSheet/Attacks.svelte';
     import Equipment from './CharacterSheet/Equipment.svelte';
     import ToolsOtherProf from './CharacterSheet/ToolsOtherProf.svelte';
-import Features from './CharacterSheet/Features.svelte';
+    import Features from './CharacterSheet/Features.svelte';
 
     export let character: Character;
 

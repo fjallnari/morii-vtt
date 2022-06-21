@@ -1,9 +1,10 @@
 <script lang="ts">
     import type { Character, Feature } from "../../../interfaces/Character";
-    import { modifyCharacter } from "../../../stores";
+    import { modifyCharacter, socket, user } from "../../../stores";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
+    import { params } from "svelte-spa-router";
 
     export let feature: Feature;
     export let character: Character;
@@ -23,7 +24,20 @@
     }
 
     const sendFeature = () => {
-        // TODO
+        $socket.emit('chat-message', {
+            senderInfo: {
+                _id: $user._id, 
+                username: $user.username,
+                settings: $user.settings,
+            }, 
+            messageText: `#### ${feature.name}\n${feature.content}`,
+            skillCheckInfo: {
+                characterName: character.name,
+                skillName: ''
+            },
+            gameID: $params.id,
+            isPublic: true // make isMessagePublic a store variable
+        });
     }
 
 </script>

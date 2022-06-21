@@ -15,6 +15,7 @@
     import Attacks from './CharacterSheet/Attacks.svelte';
     import Equipment from './CharacterSheet/Equipment.svelte';
     import ToolsOtherProf from './CharacterSheet/ToolsOtherProf.svelte';
+import Features from './CharacterSheet/Features.svelte';
 
     export let character: Character;
 
@@ -276,13 +277,7 @@
     </div>
 
     <div class="features-traits">
-        <box class="box-with-label">
-            <div class="box-main-text"></div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Features & Traits
-            </div>
-        </box>
+        <Features bind:character={character}></Features>
     </div>
 
     <div id="char-sheet-menu">

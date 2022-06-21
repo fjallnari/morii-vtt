@@ -57,6 +57,14 @@ export interface Tool {
     proficiency: number // 0 ~ jack of all trades, 1 ~ proficient, 2 ~ expertise ( 2^n * 1/2 )
 }
 
+export interface Feature {
+    id: string,
+    name: string,
+    type: number, // e.g. 0 ~ racial, 1 ~ class, 2 ~ feat, 3 ~ other
+    source_name: string, // e.g. Kalashtar
+    content: string,
+}
+
 export default interface Character {
     _id: ObjectId | string,
     playerID: ObjectId | string,
@@ -87,6 +95,7 @@ export default interface Character {
     inventory: Item[],
     other_profs: OtherProf[],
     tools: Tool[],
+    features: Feature[],
 
     alignment: string
 }

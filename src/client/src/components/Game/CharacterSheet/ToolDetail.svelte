@@ -31,7 +31,7 @@
             {getToolFormula(tool.ability, tool.proficiency, character.prof_bonus)}
         </sendable>
         <div class="tool-name">
-            <InPlaceEdit bind:value={tool.name} editWidth='6em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+            <InPlaceEdit bind:value={tool.name} editWidth='7em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
         <sendable class="tool-menu" on:click={() => { isOpen = !isOpen }}>
             <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>

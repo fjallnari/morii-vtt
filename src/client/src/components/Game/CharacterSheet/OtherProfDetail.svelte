@@ -68,7 +68,6 @@
 
         width: 100%;
         padding: 0.1em 0em;
-        
     }
 
     .prof-summary > div, .prof-summary > sendable {

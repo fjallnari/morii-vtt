@@ -50,6 +50,21 @@ export interface OtherProf {
     content: string
 }
 
+export interface Tool {
+    id: string,
+    name: string,
+    ability: string, // e.g. STR
+    proficiency: number // 0 ~ jack of all trades, 1 ~ proficient, 2 ~ expertise ( 2^n * 1/2 )
+}
+
+export interface Feature {
+    id: string,
+    name: string,
+    type: number, // e.g. 0 ~ racial, 1 ~ class, 2 ~ feat, 3 ~ other
+    source_name: string, // e.g. Kalashtar
+    content: string,
+}
+
 export default interface Character {
     _id: ObjectId | string,
     playerID: ObjectId | string,
@@ -78,7 +93,9 @@ export default interface Character {
     attacks: Attack[],
     coins: Record<string, string>,
     inventory: Item[],
-    other_profs: OtherProf[] 
+    other_profs: OtherProf[],
+    tools: Tool[],
+    features: Feature[],
 
     alignment: string
 }

@@ -68,7 +68,6 @@
 
         width: 100%;
         padding: 0.1em 0em;
-        
     }
 
     .prof-summary > div, .prof-summary > sendable {
@@ -101,6 +100,20 @@
         cursor: pointer; 
         height: 1.25em;
         width: 1.25em;
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1d1d22;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #757578;
+        border: transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #404044;
     }
 
 </style>

@@ -12,6 +12,7 @@ export const campaignNewActive: Writable<boolean> = writable(false);
 export const campaignDetailActive: Writable<boolean> = writable(false);
 export const selectedCampaign: Writable<Campaign> = writable();
 export const selectedCharacter: Writable<Character> = writable();
+export const selectedCharacterTab: Writable<number> = writable(0);
 export const socket: Writable<Socket<DefaultEventsMap, DefaultEventsMap>> = writable();
 export const isMessagePublic: Writable<boolean> = writable(true);
 export const modifyCharacter: Writable<() => Promise<void>> = writable();

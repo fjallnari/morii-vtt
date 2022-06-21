@@ -16,6 +16,7 @@
     import Equipment from './CharacterSheet/Equipment.svelte';
     import ToolsOtherProf from './CharacterSheet/ToolsOtherProf.svelte';
     import Features from './CharacterSheet/Features.svelte';
+    import CharacterSheetMenu from './CharacterSheetMenu.svelte';
 
     export let character: Character;
 
@@ -97,7 +98,7 @@
 </script>
 
 
-<div class="character-sheet-container">
+<tab-container>
     <div class="character-name">
         <InPlaceEditBox bind:value={character.name} boxLabel="Character Name"></InPlaceEditBox>  
     </div>
@@ -280,13 +281,8 @@
         <Features bind:character={character}></Features>
     </div>
 
-    <div id="char-sheet-menu">
-        <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => {}}>home</IconButton>
-        <IconButton class="material-icons" style="color: #DBD8B3; font-size: xx-large;" ripple={false} on:click={() => {}}>article</IconButton>
-        <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => {}}>local_fire_department</IconButton>
-        <IconButton class="material-icons" style="color: #9DB5B2; font-size: xx-large;" ripple={false} on:click={() => {}}>settings</IconButton>
-    </div>
-</div>
+    <CharacterSheetMenu></CharacterSheetMenu>
+</tab-container>
 
 
 <style>
@@ -365,7 +361,7 @@
         border-radius: 4px;
     }
 
-    .character-sheet-container {  display: grid;
+    tab-container {  display: grid;
         height: inherit;
         flex: 5;
 
@@ -717,14 +713,6 @@
 
     .features-traits { grid-area: features-traits;
         margin: 0em 0.75em 0.5em 0em;
-    }
-
-    #char-sheet-menu { grid-area: char-sheet-menu;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1em;
-        margin-bottom: 0.5em;
     }
 
 </style>

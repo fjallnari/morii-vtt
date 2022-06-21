@@ -1,8 +1,8 @@
 <script lang="ts">
     import { selectedCharacter, user } from '../../stores';
-    import CharacterSheet from './CharacterSheet.svelte';
     import type GameData from '../../interfaces/GameData';
     import CharactersList from './CharactersList.svelte';
+    import CharacterSheetRouter from './CharacterSheetRouter.svelte';
 
     export let gameData: GameData;
 
@@ -10,7 +10,7 @@
 
 
 {#if $selectedCharacter}
-    <CharacterSheet character={$selectedCharacter}></CharacterSheet>
+    <CharacterSheetRouter character={$selectedCharacter}></CharacterSheetRouter>
 {:else}
     <div class="dashboard-container">
         <CharactersList gameData={gameData}></CharactersList>

@@ -48,6 +48,7 @@
                 <Icon class="material-icons">{'add'}</Icon>
             </sendable>
         </div>
+        <div class="box-justify-filler"></div>
         <div class="box-label">
             Tools
         </div>
@@ -72,6 +73,7 @@
                 <Icon class="material-icons">{'add'}</Icon>
             </sendable>
         </div>
+        <div class="box-justify-filler"></div>
         <div class="box-label">
             Other Proficiencies
         </div>

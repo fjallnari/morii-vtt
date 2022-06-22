@@ -69,6 +69,7 @@ export default interface Character {
     _id: ObjectId | string,
     playerID: ObjectId | string,
 
+    // core tab
     name: string,
     classes: string,
     xp: string,
@@ -97,5 +98,22 @@ export default interface Character {
     tools: Tool[],
     features: Feature[],
 
-    alignment: string
+    // bio tab
+    age: string,
+    height: string,
+    weight: string,
+    eyes: string,
+    skin: string,
+    hair: string,    
+    alignment: string,
+    appearance: string,
+    backstory: string,
+    person_traits: string,
+    ideals: string,
+    bonds: string,
+    flaws: string,
+    treasure: string,
+    allies: string,
+    enemies: string,
+    other_notes: string
 }

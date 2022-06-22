@@ -1,6 +1,6 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import { user, socket } from '../../stores';
+    import { user, socket, isMessagePublic } from '../../stores';
     import type MessageData from "../../interfaces/MessageData";
     import Textfield from '@smui/textfield';
     import IconButton, { Icon } from '@smui/icon-button';
@@ -9,7 +9,6 @@
     // export let socket;
     let messages: MessageData[] = [];
     let messageText: string = '';
-    let isMessagePublic = true;
     let isMsgBoxFocused = false;
     let lastKeypress: string;
     
@@ -31,7 +30,7 @@
             }, 
             messageText: messageText, 
             gameID: $params.id,
-            isPublic: isMessagePublic
+            isPublic: $isMessagePublic
         });
         messageText = '';
     }
@@ -71,7 +70,7 @@
         </Textfield>
 
         <div class="send-options-box">
-            <IconButton toggle bind:pressed={isMessagePublic}>
+            <IconButton toggle bind:pressed={$isMessagePublic}>
                 <Icon class="material-icons" style="font-size: xx-large;" on>visibility</Icon>
                 <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
             </IconButton>

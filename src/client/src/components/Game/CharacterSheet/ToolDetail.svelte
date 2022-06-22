@@ -79,9 +79,9 @@
 
     .tool-summary {
         display: grid; 
-        grid-template-columns: 1.5fr 5fr 1fr; 
+        grid-template-columns: 1fr 5fr 1fr; 
         grid-template-rows: 1fr; 
-        gap: 0px 0px; 
+        gap: 0.1em; 
         grid-template-areas: 
             "tool-modifier tool-name tool-menu";
         width: 100%;

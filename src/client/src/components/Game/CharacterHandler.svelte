@@ -4,7 +4,7 @@
     import axios from 'axios';
     import { params, push, replace } from "svelte-spa-router";
     import { accessToken, user } from '../../stores';
-    import CharacterSheet from "./CharacterSheet.svelte";
+    import CharacterSheetRouter from "./CharacterSheetRouter.svelte";
 
     export let gameData: GameData;
 
@@ -38,7 +38,7 @@
 
 
 {#if gameData && character}
-    <CharacterSheet bind:character={character}></CharacterSheet>
+    <CharacterSheetRouter bind:character={character}></CharacterSheetRouter>
 {:else}
     <div class="no-character-panel">
         <h3>You don't have any character assigned to this campaign.</h3>

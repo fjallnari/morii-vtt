@@ -14,7 +14,6 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
     subclass: '',
     race: '',
     background: '',
-    alignment: '',
     prof_bonus: '',
     inspiration: false,
     ability_scores: { 
@@ -157,5 +156,24 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
     inventory: [],
     other_profs: [],
     tools: [],
-    features: []
+    features: [],
+    
+    // bio tab
+    age: '',
+    height: '',
+    weight: '',
+    eyes: '',
+    skin: '',
+    hair: '',    
+    alignment: '',
+    appearance: '',
+    backstory: '',
+    person_traits: '',
+    ideals: '',
+    bonds: '',
+    flaws: '',
+    treasure: '',
+    allies: '',
+    enemies: '',
+    other_notes: ''
 };

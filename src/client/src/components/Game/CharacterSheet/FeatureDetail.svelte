@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Character, Feature } from "../../../interfaces/Character";
-    import { modifyCharacter, socket, user } from "../../../stores";
+    import { isMessagePublic, modifyCharacter, socket, user } from "../../../stores";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
@@ -36,7 +36,7 @@
                 skillName: ''
             },
             gameID: $params.id,
-            isPublic: true // make isMessagePublic a store variable
+            isPublic: $isMessagePublic
         });
     }
 

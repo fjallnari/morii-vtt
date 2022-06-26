@@ -73,7 +73,21 @@ export interface Spell {
     id: string,
     name: string,
     level: number,
-    is_prepared: boolean
+    is_prepared: boolean,
+    casting_time: string,
+    is_ritual: boolean,
+    range: string,
+    school: string,
+    components: {
+        verbal: boolean,
+        somatic: boolean,
+        material: boolean,
+        material_content: string
+    },
+    duration: string,
+    concentration: boolean,
+    description: string,
+    at_higher_levels: string
 }
 
 export interface Character {

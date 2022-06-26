@@ -5,7 +5,7 @@
     import CharacterSheetMenu from "./CharacterSheetMenu.svelte";
     import { v4 as uuidv4 } from 'uuid';
     import { modifyCharacter } from "../../stores";
-import InPlaceEditBox from "./CharacterSheet/InPlaceEditBox.svelte";
+    import InPlaceEditBox from "./CharacterSheet/InPlaceEditBox.svelte";
 
     export let character: Character;
 
@@ -14,7 +14,21 @@ import InPlaceEditBox from "./CharacterSheet/InPlaceEditBox.svelte";
             id: uuidv4(),
             name: '',
             level: spellLevel,
-            is_prepared: false
+            is_prepared: false,
+            casting_time: '',
+            is_ritual: false,
+            range: '',
+            school: '',
+            components: {
+                verbal: false,
+                somatic: false,
+                material: false,
+                material_content: ''
+            },
+            duration: '',
+            concentration: false,
+            description: '',
+            at_higher_levels: ''
         }
 
         character.spells_by_level[spellLevel].spells.push(spellSkeleton);
@@ -168,6 +182,20 @@ import InPlaceEditBox from "./CharacterSheet/InPlaceEditBox.svelte";
 
     :global(.level-9) { grid-area: level-9; 
         margin: 0em 0.5em 0.5em 0em;
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1d1d22;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #757578;
+        border: transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #404044;
     }
 
 

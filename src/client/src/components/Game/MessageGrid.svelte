@@ -45,7 +45,7 @@
 <style>
     .message-content {  display: grid;
         grid-template-columns: 0.5fr 3fr 1fr;
-        grid-template-rows: 0.1fr 2fr;
+        grid-template-rows: 0.01fr 2fr;
         grid-auto-flow: row;
         width: 26em;
         gap: 0.5em 0.5em;

@@ -3,14 +3,13 @@
     import Button, { Label } from "@smui/button";
     import Icon from '@smui/textfield/icon';
     import PasswordField from '../PasswordField.svelte';
-    import axios from "axios";
-    import Paper from "@smui/paper";
     import ProgressCircle from '../ProgressCircle.svelte';
     import Snackbar, {
         Actions,
         SnackbarComponentDev,
     } from '@smui/snackbar';
     import IconButton from '@smui/icon-button';
+    import { axiosPublic } from '../../axiosPublic';
     
     let successSnackbar: SnackbarComponentDev;
 
@@ -34,7 +33,7 @@
             successSnackbar.open();
         }
         try {
-            await axios.post('/api/auth/signup', {
+            await axiosPublic.post('/auth/signup', {
                 username: username,
                 password: password
             });

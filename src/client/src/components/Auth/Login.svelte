@@ -11,6 +11,7 @@
         SnackbarComponentDev,
     } from '@smui/snackbar';
     import IconButton from '@smui/icon-button';
+    import { axiosPublic } from '../../axiosPublic';
 
     let loginFailedSnackbar: SnackbarComponentDev;
 
@@ -25,7 +26,7 @@
 
         try {
             inProgress = true;
-            const response = await axios.post('/api/auth/signin', {
+            const response = await axiosPublic.post('/auth/signin', {
                 username: username,
                 password: password
             });

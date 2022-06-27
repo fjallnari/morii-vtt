@@ -1,14 +1,15 @@
 <script lang="ts">
     import axios from "axios";
-    import { accessToken } from "../stores";
     import io from 'socket.io-client';
     import { user, socket } from '../stores';
-    import { params, push, replace } from "svelte-spa-router";
+    import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
     import CircularProgress from '@smui/circular-progress';
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import GameDashboard from "../components/Game/GameDashboard.svelte";
+
+    export let params: { id?: string } = {};
 
     // const socket = io();
     // initialises socket
@@ -16,22 +17,16 @@
 
     // returns current campaign object or redirects to dashboard
     const loadGame = async () => {
-		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
-		// TODO: refactor the "refresh token/load secure route" flow
-		await new Promise(res => setTimeout(res, 1000));
 		try {
-			const response = await axios.get(`/api/game/${$params.id}`, {
-				headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
-			});
+			const response = await axios.get(`/api/game/${params.id}`);
                         
 			user.set(response.data.userInfo);
-            $socket.emit('join-room', { roomID: $params.id, userID: $user._id });
+            $socket.emit('join-room', { roomID: params.id, userID: $user._id });
 			return $user.gameData;
 		}
-		catch {
+		catch (err){
             replace('/');
+            console.log(err);
 		}
 	}
 

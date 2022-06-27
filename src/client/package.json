@@ -47,6 +47,7 @@
     "@smui/circular-progress": "^6.0.0-beta.14",
     "@smui/select": "^6.0.0-beta.14",
     "@smui/switch": "^6.0.0-beta.15",
+    "mem": "^9.0.2",
     "sirv-cli": "^2.0.0",
     "socket.io-client": "^4.4.1",
     "svelte-copy-to-clipboard": "^0.2.5",

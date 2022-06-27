@@ -7,25 +7,72 @@
 	import Auth from "./routes/Auth.svelte";
 	import { accessToken, user } from "./stores";
 	import Game from "./routes/Game.svelte";
-	import { onMount } from "svelte";	
+	import { axiosPublic } from "./axiosPublic";
+	import mem from "mem";
 
-	onMount(() => {
-		(async () => {
-			await refreshAccessToken();
-		})();
-	});
+	const maxAge = 10000; // for memoizing refresh token
+
+	$: memoizedRefreshToken();
+
+	axios.interceptors.request.use(
+		async (config) => {
+			if ($accessToken) {
+				config.headers = {
+					...config.headers,
+					authorization: `Bearer ${$accessToken}`,
+				};
+			}
+
+			return config;
+		},
+		(error) => Promise.reject(error)
+	);
+
+	axios.interceptors.response.use(
+		(response) => response,
+		async (error) => {
+			const config = error?.config;
+
+			if (error?.response?.status === 403 && !config?.sent) {
+				config.sent = true;
+
+				const isTokenRefreshed = await memoizedRefreshToken();
+
+				if (isTokenRefreshed) {
+					config.headers = {
+						...config.headers,
+						authorization: `Bearer ${$accessToken}`,
+					};
+				}
+
+				return axios(config);
+			}
+			return Promise.reject(error);
+		}
+	);
+
+	const refreshAccessToken = async () => {
+		try {
+			const response = await axiosPublic.post('/auth/refresh-token');
+			accessToken.set(response.data.accessToken);
+
+			setTimeout(() => {
+				memoizedRefreshToken();				
+			}, 600000 - 500);
+
+			if (response.status === 200 && $location === '/auth') {
+				replace('/');
+			}
+			return response.status === 200;
+		}
+		catch {
+			return false;
+		}
+	}
 
 	const loadDashboard = async () => {
-		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
-		// TODO: refactor the "refresh token/load secure route" flow
-		await new Promise(res => setTimeout(res, 500));
 		try {
-			const response = await axios.get('/api/dashboard', {
-				headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
-			});
-
+			const response = await axios.get('/api/dashboard');
 			user.set(response.data.userInfo);
 			return response.status === 200;
 		}
@@ -51,27 +98,11 @@
 		"*": NotFound
 	}
 
-	const refreshAccessToken = async () => {
-		try {
-			const response = await axios.post('/api/auth/refresh-token');
-			accessToken.set(response.data.accessToken);
-			if (response.status === 200 && $location === '/auth') {
-				replace('/');
-			}
-
-			setTimeout(() => {
-				refreshAccessToken();				
-			}, 600000 - 500);
-			return response.status === 200;
-		}
-		catch (err) {
-			return false;
-		}
-	}
-
 	const conditionsFailed = () => {
 		replace('/auth');
 	}
+
+	const memoizedRefreshToken = mem(refreshAccessToken, { maxAge });
 	
 </script>
 

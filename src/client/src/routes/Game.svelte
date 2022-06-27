@@ -11,7 +11,6 @@
 
     export let params: { id?: string } = {};
 
-    // const socket = io();
     // initialises socket
     socket.set(io());
 

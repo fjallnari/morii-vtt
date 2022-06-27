@@ -19,11 +19,6 @@
             const response = await axios.post('/api/create-invite-code', {
                 campaignID: $selectedCampaign._id,
                 password: password
-            }, 
-            {
-                headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
             });
             
             // "Live-reloads" campaign invites
@@ -44,11 +39,6 @@
             inProgress = true;
             const response = await axios.post('/api/remove-invite-code', {
                 campaignID: $selectedCampaign._id
-            },
-            {
-                headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
             });
             
             // "Live-reloads" campaign invites

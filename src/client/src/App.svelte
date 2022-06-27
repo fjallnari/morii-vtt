@@ -90,6 +90,7 @@
 	}
 
 	:root {
+		--primary-box-background-color: #252529;
 		--secondary-box-background-color: #303036;
   		--delete-button-background-color: #BC4B51;
 		--primary-text-color: #FCF7F8;

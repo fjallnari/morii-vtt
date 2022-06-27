@@ -6,6 +6,7 @@
     import { v4 as uuidv4 } from 'uuid';
     import { modifyCharacter } from "../../stores";
     import InPlaceEditBox from "./CharacterSheet/InPlaceEditBox.svelte";
+import Spellcasting from "./CharacterSheet/Spellcasting.svelte";
 
     export let character: Character;
 
@@ -39,13 +40,7 @@
 </script>
 
 <tab-container>
-    <box class="spellcasting box-with-label">
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Spellcasting
-        </div>
-    </box>
-
+    <Spellcasting character={character}></Spellcasting>
     {#each spellGridClasses as spellGridClass, spellLevel}
         <div class= "main-spell-box {spellGridClass}">
             {#if spellLevel !== 0}
@@ -86,11 +81,11 @@
 
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1.25fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         gap: 0.5em 0.5em; 
         grid-template-areas: 
             "cantrips cantrips cantrips spellcasting spellcasting spellcasting level-6 level-6 level-6"
-            "cantrips cantrips cantrips spellcasting spellcasting spellcasting level-6 level-6 level-6"
+            "cantrips cantrips cantrips level-3 level-3 level-3 level-6 level-6 level-6"
             "cantrips cantrips cantrips level-3 level-3 level-3 level-6 level-6 level-6"
             "cantrips cantrips cantrips level-3 level-3 level-3 level-7 level-7 level-7"
             "level-1 level-1 level-1 level-3 level-3 level-3 level-7 level-7 level-7"
@@ -146,20 +141,20 @@
         font-size: 1.2em;
     }
 
-    .spellcasting { grid-area: spellcasting; 
-        margin-top: 0.5em;
+    :global(.spellcasting-container) { grid-area: spellcasting; 
+        margin-top: var(--outer-edge-margin);
     }
 
     :global(.cantrips) { grid-area: cantrips; 
-        margin: 0.5em 0em 0em 0.5em;
+        margin: var(--outer-edge-margin) 0em 0em var(--outer-edge-margin);
     }
 
     :global(.level-1) { grid-area: level-1; 
-        margin-left: 0.5em;
+        margin-left: var(--outer-edge-margin);
     }
 
     :global(.level-2) { grid-area: level-2; 
-        margin: 0em 0em 0.5em 0.5em;
+        margin: 0em 0em 0.5em var(--outer-edge-margin);
     }
 
     :global(.level-3) { grid-area: level-3; }
@@ -169,19 +164,23 @@
     :global(.level-5) { grid-area: level-5; }
 
     :global(.level-6) { grid-area: level-6; 
-        margin: 0.5em 0.5em 0em 0em;
+        margin: var(--outer-edge-margin) var(--outer-edge-margin) 0em 0em;
     }
 
     :global(.level-7) { grid-area: level-7; 
-        margin-right: 0.5em;
+        margin-right: var(--outer-edge-margin);
     }
 
     :global(.level-8) { grid-area: level-8; 
-        margin-right: 0.5em;
+        margin-right: var(--outer-edge-margin);
     }
 
     :global(.level-9) { grid-area: level-9; 
-        margin: 0em 0.5em 0.5em 0em;
+        margin: 0em var(--outer-edge-margin) 0.5em 0em;
+    }
+
+    :global(.tab-switch-container) {
+        padding-top: 0.75em;
     }
 
     ::-webkit-scrollbar {

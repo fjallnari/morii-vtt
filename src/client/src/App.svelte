@@ -1,6 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
-	import Router, { location, params, push, replace } from "svelte-spa-router";
+	import Router, { location, replace } from "svelte-spa-router";
 	import { wrap } from 'svelte-spa-router/wrap';
 	import NotFound from "./routes/NotFound.svelte";
 	import Dashboard from "./routes/Dashboard.svelte";

@@ -92,6 +92,11 @@ export interface Spell {
     at_higher_levels: string
 }
 
+export interface CharacterSettings {
+    use_encumbrance: boolean,
+    use_spell_components: boolean
+}
+
 export default interface Character {
     _id: ObjectId | string,
     playerID: ObjectId | string,
@@ -146,5 +151,6 @@ export default interface Character {
 
     spell_ability: string,
     spell_save_dc_bonus: string,
-    spells_by_level: Record<number, SpellsByLevel>
+    spells_by_level: Record<number, SpellsByLevel>,
+    settings: CharacterSettings
 }

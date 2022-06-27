@@ -16,9 +16,6 @@
 
     // modifyCharacter is inside global store
     modifyCharacter.set(async () => {
-        // prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
-        // TODO: refactor the "refresh token/load secure route" flow
-        // await new Promise(res => setTimeout(res, 500));
         try {
             await axios.post('/api/modify-character', {
                 modifiedCharacter: character,
@@ -116,6 +113,11 @@
         background-color: #A43D42;
         transition-duration: 200ms;
         transition-property: color;        
+    }
+
+    :global(delete-button:disabled, delete-button[disabled]) {
+        cursor: not-allowed;
+        pointer-events: none;
     }
 
     :global(textarea) {

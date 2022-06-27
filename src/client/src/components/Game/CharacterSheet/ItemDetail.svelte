@@ -75,15 +75,17 @@
                 alt="want-tooltip"
                 on:click={() => { item.want_tooltip = !item.want_tooltip; $modifyCharacter(); }}
             >
-            <img class="has-weight-icon" 
-                src="../static/{ item.has_weight ? 'weight': 'weight-crossed'}.svg" 
-                alt="has-weight"
-                on:click={() => { item.has_weight = !item.has_weight; $modifyCharacter(); }}
-            >
-            {#if item.has_weight}
-                <div class="item-weight">
-                    <InPlaceEdit bind:value={item.weight} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
-                </div>
+            {#if character.settings.use_encumbrance}
+                <img class="has-weight-icon" 
+                    src="../static/{ item.has_weight ? 'weight': 'weight-crossed'}.svg" 
+                    alt="has-weight"
+                    on:click={() => { item.has_weight = !item.has_weight; $modifyCharacter(); }}
+                >
+                {#if item.has_weight}
+                    <div class="item-weight">
+                        <InPlaceEdit bind:value={item.weight} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                    </div>
+                {/if}
             {/if}
             <sendable class="show-details-icon" on:click={() => { isOpen = !isOpen }}>
                 <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
@@ -155,7 +157,7 @@
 
     .toggable-item-info { grid-area: toggable-item-info;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         gap: 0.4em;    
     }

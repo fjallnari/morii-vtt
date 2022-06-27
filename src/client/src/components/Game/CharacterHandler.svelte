@@ -12,17 +12,9 @@
 
     // returns user's updated game data
     const createCharacter = async () => {
-		// prevents race condition in case loading finishes before access token is refresh (e.g. on reload)
-		// TODO: refactor the "refresh token/load secure route" flow
-		await new Promise(res => setTimeout(res, 500));
 		try {
             const response = await axios.post('/api/create-character', {
                 campaignID: $params.id,
-            },
-            {
-                headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
             });
 
             character = response.data.characterInfo;
@@ -47,7 +39,7 @@
                 <Icon class="material-icons">add</Icon>
                 <Label>Create New</Label>
             </Button>
-            <Button variant="raised" color="secondary" on:click={() => {}}>
+            <Button variant="raised" color="secondary" on:click={() => {}} disabled>
                 <Icon class="material-icons">person</Icon>
                 <Label>Use Existing</Label>
             </Button>

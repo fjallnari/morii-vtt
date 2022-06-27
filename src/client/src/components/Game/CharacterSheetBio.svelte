@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Character } from "../../interfaces/Character";
 import { modifyCharacter } from "../../stores";
+import BioTextareaBox from "./CharacterSheet/BioTextareaBox.svelte";
     import InPlaceEditBox from "./CharacterSheet/InPlaceEditBox.svelte";
     import CharacterSheetMenu from "./CharacterSheetMenu.svelte";
 
@@ -19,76 +20,17 @@ import { modifyCharacter } from "../../stores";
         <InPlaceEditBox bind:value={character.hair} boxLabel="Hair" editWidth="5em"></InPlaceEditBox>
         <InPlaceEditBox bind:value={character.alignment} boxLabel="Alignment" editWidth="5em"></InPlaceEditBox>
     </div>
-    <box class="appearance box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.appearance}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Appearance
-        </div>
-    </box>
-    <box class="backstory box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.backstory}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Backstory
-        </div>
-    </box>
-    <box class="allies-orgs box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.allies}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Allies & Organisations
-        </div>
-    </box>
-    <box class="enemies box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.enemies}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Enemies
-        </div>
-    </box>
-    <box class="treasury box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.treasure}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Treasury
-        </div>
-    </box>
-    <box class="personality-traits box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.person_traits}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Personality Traits
-        </div>
-    </box>
-    <box class="ideals box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.ideals}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Ideals
-        </div>
-    </box>
-    <box class="bonds box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.bonds}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Bonds
-        </div>
-    </box>
-    <box class="flaws box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.flaws}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Flaws
-        </div> 
-    </box>
-    <box class="other-notes box-with-label">
-        <textarea on:change={() => $modifyCharacter()} bind:value={character.other_notes}></textarea>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Other Notes
-        </div>
-    </box>
+
+    <BioTextareaBox bind:charAttribute={character.appearance} styleClass='appearance'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.backstory} styleClass='backstory'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.allies} styleClass='allies-orgs' label='Allies & Organisations'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.enemies} styleClass='enemies'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.treasure} styleClass='treasury'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.person_traits} styleClass='personality-traits' label='Personality Traits'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.ideals} styleClass='ideals'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.bonds} styleClass='bonds'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.flaws} styleClass='flaws'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.other_notes} styleClass='other-notes' label='Other Notes'></BioTextareaBox>
     <CharacterSheetMenu></CharacterSheetMenu>
 </tab-container>
 
@@ -131,18 +73,6 @@ import { modifyCharacter } from "../../stores";
         font-family: Quicksand;
     }
 
-    textarea {
-        border: transparent;
-        height: 100%;
-        font-family: Quicksand;
-    }
-
-    textarea:focus {
-        outline: none !important;
-        border: 2px solid var(--primary-accent-color);
-        caret-color: var(--primary-accent-color);
-    }
-
     .character-additional-info { grid-area: character-additional-info; 
         margin: 0.5em 0.5em 0em 0.5em;
         display: flex;
@@ -152,37 +82,6 @@ import { modifyCharacter } from "../../stores";
         color: #FCF7F8;
         font-size: 1.5em;
         gap: 0.35em;
-    }
-
-    .box-with-label {
-        height: auto;
-    }
-
-    .appearance { grid-area: appearance;
-        margin-left: var(--outer-edge-margin);
-
-    }
-    .backstory { grid-area: backstory;
-        margin: 0em 0em 0.5em var(--outer-edge-margin);
-    
-    }
-    .allies-orgs { grid-area: allies-orgs; }
-    .enemies { grid-area: enemies; }
-    .treasury { grid-area: treasury; }
-    .personality-traits { grid-area: personality-traits; 
-        margin-right: var(--outer-edge-margin);
-    }
-    .ideals { grid-area: ideals; 
-        margin-right: var(--outer-edge-margin);
-    }
-    .bonds { grid-area: bonds; 
-        margin-right: var(--outer-edge-margin);
-    }
-    .flaws { grid-area: flaws; 
-        margin-right: var(--outer-edge-margin);
-    }
-    .other-notes { grid-area: other-notes; 
-        margin: 0em var(--outer-edge-margin) 0.5em 0em;
     }
 
 </style>

@@ -32,7 +32,8 @@
     }
 
     const getDmgFormula = (abilityTag: string = attack.dmg_ability) => {
-        return `${$formatModifier(getDmgModifier(abilityTag), 'always').split('').join(' ')}`;
+        const dmgModifier = getDmgModifier(abilityTag);
+        return dmgModifier === 0 ? '' : `${$formatModifier(dmgModifier, 'always').split('').join(' ')}`;
     }
 
     const deleteAttack = () => {

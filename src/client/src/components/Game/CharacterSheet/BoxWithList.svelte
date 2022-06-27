@@ -1,15 +1,14 @@
 <script lang="ts">
     import { modifyCharacter } from "../../../stores";
     import IconButton, { Icon } from '@smui/icon-button';
-    import type { Character } from "../../../interfaces/Character";
-    import ListItemDetail from "./ListItemDetail.svelte";
 
     export let label: string;
+    export let styleClass: string = '';
     export let addNewListItem: () => void;
 
 </script>
 
-<box class="inside-box-content">
+<box class="inside-box-content {styleClass}">
     <slot name="filter-menu"></slot>
     <div class="inside-box-list">
         <slot name="list"></slot>
@@ -17,6 +16,7 @@
             <Icon class="material-icons">{'add'}</Icon>
         </sendable>
     </div>
+    <div class="box-justify-filler"></div>
     <div class="box-label">
         {label}
     </div>
@@ -29,6 +29,8 @@
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
+        height: 100%;
+        width: 100%;
     }
     
 
@@ -40,6 +42,7 @@
         gap: 0.25em;
         scrollbar-width: thin;
         overflow-y: auto;
+        margin-top: 0.5em;
     }
 
     .add-new-item {

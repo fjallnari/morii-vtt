@@ -90,21 +90,21 @@
 
     /** MARKDOWN 'CORRECTIONS' */
     
-    :global(p) {
+    :global(.message-text p) {
         margin: 0;
         text-align: left;
         margin: 0.5em;
     }
 
-    :global(h1, h2, h3, h4, h5) {
+    :global(.message-text h1, .message-text h2, .message-text h3, .message-text h4, .message-text h5) {
         margin: 0.8em 0em;
     }
 
-    :global(ul) {
+    :global(.message-text ul) {
         text-align: left;
     }
 
-    :global(li:not(:last-child)) { 
+    :global(.message-text li:not(:last-child)) { 
         margin-bottom: 0.3rem;
     }
 

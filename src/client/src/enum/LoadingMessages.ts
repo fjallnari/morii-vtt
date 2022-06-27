@@ -43,7 +43,6 @@ const LOADING_MESSAGES = [
     "Reconfoobling energymotron...",
     "(Insert quarter)",
     "Are we there yet?",
-    "Have you lost weight?",
     "Just count to 10",
     "Why so serious?",
     "It's not you. It's me.",

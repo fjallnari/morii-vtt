@@ -24,11 +24,6 @@
             const response = await axios.post('/api/join-campaign', {
                 inviteCode: inviteCode,
                 password: password
-            },
-            {
-                headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
             });
 
             // "live-reloading" to see the newly added campaign instantly without the need to hard reload

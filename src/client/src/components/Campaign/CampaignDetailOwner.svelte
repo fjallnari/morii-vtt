@@ -22,11 +22,6 @@
             const response = await axios.post('/api/kick-player', {
                 playerID: kickedPlayer._id,
                 campaignID: $selectedCampaign._id
-            },
-            {
-                headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
             });
 
             if (response.status === 200) {

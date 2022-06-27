@@ -25,11 +25,6 @@
             const response = await axios.post('/api/create-campaign', {
                 campaignName: campaignName,
                 gameSystem: gameSystem
-            },
-            {
-                headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
             });
 
             // "live-reloading" to see the newly added campaign instantly without the need to hard reload

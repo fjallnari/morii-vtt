@@ -11,11 +11,6 @@
         try {            
             const response = await axios.post('/api/leave-campaign', {
                 campaignID: $selectedCampaign._id
-            },
-            {
-                headers: {
-					'Authorization': `Bearer ${$accessToken}`
-				}
             });
 
             if (response.status === 200) {

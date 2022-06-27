@@ -42,7 +42,7 @@
         </sendable>
     </div>
     {#if isOpen}
-        <div class="details" transition:slide>
+        <div class="details" transition:slide|local>
             <textarea on:change={() => $modifyCharacter()} bind:value={other_prof.content}></textarea>
             <delete-button on:click={() => deleteProf()}>Delete</delete-button>
         </div>

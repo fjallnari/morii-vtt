@@ -38,7 +38,7 @@
         </sendable>
     </div>
     {#if isOpen}
-        <div class="details" transition:slide>
+        <div class="details" transition:slide|local>
             <sendable class="simple-detail-line" on:click={() => { tool.proficiency += 1 + (tool.proficiency === 2 ? -3 : 0); $modifyCharacter(); }}>
                 <img class="prof-type-icon" 
                     src="../static/{['hammer-screwdriver','checkbox-marked','flare'][tool.proficiency]}.svg" 

@@ -4,9 +4,10 @@
     import ABILITY_TAGS from "../../../enum/AbilityTags";
 
     export let character: Character;
-
-    $: spellSaveDC = 8 + $getASModifier(character.spell_ability) + ~~character.prof_bonus + ~~character.spell_save_dc_bonus;
-    $: spellAttackBonus = $getASModifier(character.spell_ability) + ~~character.prof_bonus;
+    
+    // if the field is empty, show zero
+    $: spellSaveDC = ['', '---'].includes(character.spell_ability) ? 0 : 8 + $getASModifier(character.spell_ability) + ~~character.prof_bonus + ~~character.spell_save_dc_bonus;
+    $: spellAttackBonus = ['', '---'].includes(character.spell_ability) ? 0 : $getASModifier(character.spell_ability) + ~~character.prof_bonus;
 
 </script>
 

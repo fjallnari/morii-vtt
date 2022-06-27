@@ -91,7 +91,7 @@
         </div>
     </div>
     {#if isOpen}
-        <div class="details" transition:slide>
+        <div class="details" transition:slide|local>
             <textarea on:change={() => $modifyCharacter()} bind:value={item.tooltip}></textarea>
             <delete-button on:click={() => deleteItem()}>Delete</delete-button>
         </div>

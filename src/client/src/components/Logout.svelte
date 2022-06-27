@@ -2,14 +2,15 @@
   import Dialog, { Title, Content, Actions } from '@smui/dialog';
   import Button, { Label } from '@smui/button';
   import { accessToken, user } from '../stores';
-  import axios from 'axios';
   import { replace } from 'svelte-spa-router';
+  import { axiosPublic } from '../axiosPublic';
  
   export let open: boolean;
 
   const logoutUser = async () => {
     try {
-      await axios.post('/api/auth/signout');
+      await axiosPublic.post('/auth/signout');
+      accessToken.set(undefined);
       replace('/auth');
     }
     catch (err) {

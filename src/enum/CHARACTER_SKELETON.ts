@@ -230,5 +230,9 @@ export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
             slots_current: '',
             spells: []
         },
+    },
+    settings: {
+        use_encumbrance: true,
+        use_spell_components: true
     }
 };

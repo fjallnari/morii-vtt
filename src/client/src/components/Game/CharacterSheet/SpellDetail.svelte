@@ -120,42 +120,45 @@
                     {/each}
                 </select>
             </div>
-            <div class="single-detail-line">
-                <div class="box-label">
-                    Components:
-                </div>
-                <div class="spell-component">
-                    <img class="is-equipped-icon" 
-                        src="../static/{spell.components.verbal ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                        alt="atk-prof"
-                        on:click={() => { spell.components.verbal = !spell.components.verbal; $modifyCharacter(); }}
-                    >
-                    V
-                </div>
-                <div class="spell-component">
-                    <img class="is-equipped-icon" 
-                        src="../static/{spell.components.somatic ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                        alt="atk-prof"
-                        on:click={() => { spell.components.somatic = !spell.components.somatic; $modifyCharacter(); }}
-                    >
-                    S
-                </div>
-                <div class="spell-component">
-                    <img class="is-equipped-icon" 
-                        src="../static/{spell.components.material ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                        alt="atk-prof"
-                        on:click={() => { spell.components.material = !spell.components.material; $modifyCharacter(); }}
-                    >
-                    M
-                </div>
-            </div>
-            {#if spell.components.material}
+            <!-- can be switched on and off in settings -->
+            {#if character.settings.use_spell_components}
                 <div class="single-detail-line">
                     <div class="box-label">
-                        Material:
+                        Components:
                     </div>
-                    <InPlaceEdit bind:value={spell.components.material_content} editWidth='10rem' editHeight='1.3rem' on:submit={() => $modifyCharacter()}/> 
+                    <div class="spell-component">
+                        <img class="is-equipped-icon" 
+                            src="../static/{spell.components.verbal ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
+                            alt="atk-prof"
+                            on:click={() => { spell.components.verbal = !spell.components.verbal; $modifyCharacter(); }}
+                        >
+                        V
+                    </div>
+                    <div class="spell-component">
+                        <img class="is-equipped-icon" 
+                            src="../static/{spell.components.somatic ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
+                            alt="atk-prof"
+                            on:click={() => { spell.components.somatic = !spell.components.somatic; $modifyCharacter(); }}
+                        >
+                        S
+                    </div>
+                    <div class="spell-component">
+                        <img class="is-equipped-icon" 
+                            src="../static/{spell.components.material ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
+                            alt="atk-prof"
+                            on:click={() => { spell.components.material = !spell.components.material; $modifyCharacter(); }}
+                        >
+                        M
+                    </div>
                 </div>
+                {#if spell.components.material}
+                    <div class="single-detail-line">
+                        <div class="box-label">
+                            Material:
+                        </div>
+                        <InPlaceEdit bind:value={spell.components.material_content} editWidth='10rem' editHeight='1.3rem' on:submit={() => $modifyCharacter()}/> 
+                    </div>
+                {/if}
             {/if}
             <div class="single-detail-line">
                 <div class="box-label">

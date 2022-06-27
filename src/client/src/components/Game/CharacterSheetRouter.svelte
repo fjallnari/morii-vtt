@@ -20,13 +20,8 @@
         // TODO: refactor the "refresh token/load secure route" flow
         // await new Promise(res => setTimeout(res, 500));
         try {
-            const response = await axios.post('/api/modify-character', {
+            await axios.post('/api/modify-character', {
                 modifiedCharacter: character,
-            },
-            {
-                headers: {
-                    'Authorization': `Bearer ${$accessToken}`
-                }
             });
             $socket.emit('change-character', { modifierID: $user._id, roomID: $params.id, character: character });
         }

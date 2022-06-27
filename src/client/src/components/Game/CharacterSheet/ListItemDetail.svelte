@@ -8,7 +8,7 @@
 <box class="prof-main-container">
     <slot name="summary"></slot>
     {#if isOpen}
-        <div class="details" transition:slide>
+        <div class="details" transition:slide|local>
             <slot name="details"></slot>
         </div>
     {/if}

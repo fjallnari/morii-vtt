@@ -86,7 +86,7 @@
         </sendable>
     </div>
     {#if isOpen}
-        <div class="details" transition:slide>
+        <div class="details" transition:slide|local>
             <div class="single-detail-line">
                 <div class="box-label">
                     Casting Time:

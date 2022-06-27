@@ -55,7 +55,7 @@
         <box class="attack-name">
             <InPlaceEdit bind:value={attack.name} editWidth='8em' editHeight='inherit' on:submit={() => $modifyCharacter()}/>
             {#if isOpen}
-                <div class="box-label" transition:slide>
+                <div class="box-label" transition:slide|local>
                     Attack Name
                 </div>
             {/if}
@@ -66,7 +66,7 @@
                 {$formatModifier(getUnbiasedModifier(attack.atk_ability) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus)}
             </sendable>
             {#if isOpen}
-                <div class="box-label" transition:slide>
+                <div class="box-label" transition:slide|local>
                     ATK
                 </div>
             {/if}
@@ -92,7 +92,7 @@
                 {/if}
             </line-div>
             {#if isOpen}
-                <div class="box-label" transition:slide>
+                <div class="box-label" transition:slide|local>
                     Damage
                 </div>
             {/if}
@@ -102,7 +102,7 @@
         </sendable>
     </div>
     {#if isOpen}
-        <div class="details" transition:slide>
+        <div class="details" transition:slide|local>
             <box class="atk-bonus">
                 <line-div>
                     <select bind:value={attack.atk_ability} on:change={() => $modifyCharacter()}>

@@ -1,10 +1,16 @@
 <script lang="ts">
-    import { selectedCharacter, user } from '../../stores';
+    import { selectedCharacter, user, socket } from '../../stores';
     import type GameData from '../../interfaces/GameData';
     import CharactersList from './CharactersList.svelte';
     import CharacterSheetRouter from './CharacterSheetRouter.svelte';
+    import type { Character } from '../../interfaces/Character';
 
     export let gameData: GameData;
+
+    $socket.on('change-character', (modifiedCharacter: Character) => {
+        const index = gameData.characters.findIndex( char => char._id === modifiedCharacter._id);
+        gameData.characters[index] = modifiedCharacter;
+    });
 
 </script>
 

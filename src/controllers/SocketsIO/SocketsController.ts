@@ -51,9 +51,9 @@ export default class SocketsController {
         const roomInfo = this.rooms.get(data.roomID);
 
         // fill in owner's socketID or add newly joined regular player to the record of players
-        this.rooms.set(data.roomID, Object.assign(roomInfo, 
+        this.rooms.set(data.roomID, Object.assign(roomInfo ? roomInfo : {}, 
             data.userID === roomInfo?.owner?.userID ? { owner: { userID: data.userID, socketID: socket.id }} : 
-            { players: Object.assign(roomInfo?.players, { [data.userID] : socket.id })}
+            { players: Object.assign(roomInfo?.players ? roomInfo?.players : {}, { [data.userID] : socket.id })}
         ));
 
         socket.join(data.roomID);

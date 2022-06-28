@@ -16,6 +16,10 @@
         gameData.characters = gameData.characters.concat([newCharacter]);
     });
 
+    $socket.on('delete-character', (deletedCharacter: Character) => {
+        gameData.characters = gameData.characters.filter(character => character._id !== deletedCharacter._id);
+    });
+
 </script>
 
 

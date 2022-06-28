@@ -39,6 +39,10 @@ const main = async () => {
             socketsController.addCharacter(socket, data);
         });
 
+        socket.on('delete-character', data => {
+            socketsController.deleteCharacter(socket, data);
+        });
+
     });
 
     app.use(express.static('src/client/public'));

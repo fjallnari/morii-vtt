@@ -7,6 +7,7 @@ import JoinCampaignController from '../controllers/Routes/UserAuth/JoinCampaignC
 import LeaveCampaignController from '../controllers/Routes/UserAuth/LeaveCampaignController';
 import CreateCharacterController from '../controllers/Routes/UserAuth/CreateCharacterController';
 import ModifyCharacterController from '../controllers/Routes/UserAuth/ModifyCharacterController';
+import DeleteCharacterController from '../controllers/Routes/UserAuth/DeleteCharacterController';
 
 const router = express.Router();
 
@@ -37,6 +38,10 @@ router.post('/api/create-character', verifyToken, async (req, res, next) => {
 
 router.post('/api/modify-character', verifyToken, async (req, res, next) => {
     await new ModifyCharacterController(req, res).handleRequest();
+});
+
+router.post('/api/delete-character', verifyToken, async (req, res, next) => {
+    await new DeleteCharacterController(req, res).handleRequest();
 });
 
 export default router;

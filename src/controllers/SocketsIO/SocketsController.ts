@@ -38,6 +38,20 @@ export default class SocketsController {
         this.io.to([playerSocketID, ownerSocketID]).emit('change-character', data.character);
     }
 
+    public async addCharacter(socket: Socket, data: ChangeCharacterEmitData) {
+        const socketRoom = this.rooms.get(data.roomID);
+        const ownerSocketID = <string> socketRoom?.owner?.socketID;
+        this.io.to([ownerSocketID]).emit('add-character', data.character);
+    }
+
+    public async deleteCharacter(socket: Socket, data: ChangeCharacterEmitData) {
+        const socketRoom = this.rooms.get(data.roomID);
+        const ownerSocketID = <string> socketRoom?.owner?.socketID;
+        const playerSocketID = <string> socketRoom?.players?.[<string> data.character.playerID];
+
+        this.io.to([playerSocketID, ownerSocketID]).emit('delete-character', data.character);
+    }
+
     /**
      * Saves socketID + userID pair to memory; also adds the user to the socket room
      */
@@ -51,9 +65,9 @@ export default class SocketsController {
         const roomInfo = this.rooms.get(data.roomID);
 
         // fill in owner's socketID or add newly joined regular player to the record of players
-        this.rooms.set(data.roomID, Object.assign(roomInfo, 
+        this.rooms.set(data.roomID, Object.assign(roomInfo ? roomInfo : {}, 
             data.userID === roomInfo?.owner?.userID ? { owner: { userID: data.userID, socketID: socket.id }} : 
-            { players: Object.assign(roomInfo?.players, { [data.userID] : socket.id })}
+            { players: Object.assign(roomInfo?.players ? roomInfo?.players : {}, { [data.userID] : socket.id })}
         ));
 
         socket.join(data.roomID);

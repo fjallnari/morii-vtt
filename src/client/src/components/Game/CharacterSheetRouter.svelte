@@ -14,6 +14,10 @@
         character = modifiedCharacter;
     });
 
+    $socket.on('delete-character', (deletedCharacter: Character) => {
+        character = undefined;
+    });
+
     // modifyCharacter is inside global store
     modifyCharacter.set(async () => {
         try {

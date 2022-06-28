@@ -1,10 +1,24 @@
 <script lang="ts">
-    import { selectedCharacter, user } from '../../stores';
+    import { selectedCharacter, user, socket } from '../../stores';
     import type GameData from '../../interfaces/GameData';
     import CharactersList from './CharactersList.svelte';
     import CharacterSheetRouter from './CharacterSheetRouter.svelte';
+    import type { Character } from '../../interfaces/Character';
 
     export let gameData: GameData;
+
+    $socket.on('change-character', (modifiedCharacter: Character) => {
+        const index = gameData.characters.findIndex( char => char._id === modifiedCharacter._id);
+        gameData.characters[index] = modifiedCharacter;
+    });
+
+    $socket.on('add-character', (newCharacter: Character) => {
+        gameData.characters = gameData.characters.concat([newCharacter]);
+    });
+
+    $socket.on('delete-character', (deletedCharacter: Character) => {
+        gameData.characters = gameData.characters.filter(character => character._id !== deletedCharacter._id);
+    });
 
 </script>
 

@@ -3,7 +3,7 @@
     import Button, { Label, Icon } from '@smui/button';
     import axios from 'axios';
     import { params, push, replace } from "svelte-spa-router";
-    import { accessToken, user } from '../../stores';
+    import { accessToken, user, socket } from '../../stores';
     import CharacterSheetRouter from "./CharacterSheetRouter.svelte";
 
     export let gameData: GameData;
@@ -19,6 +19,7 @@
 
             character = response.data.characterInfo;
 			user.set(Object.assign($user, {gameData: Object.assign( gameData, { characters: gameData.characters.concat([response.data.characterInfo]) })}));
+            $socket.emit('add-character', { modifierID: $user._id, roomID: $params.id, character: character });
 		}
 		catch {
             replace('/');

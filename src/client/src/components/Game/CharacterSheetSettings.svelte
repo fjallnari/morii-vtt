@@ -1,16 +1,31 @@
 <script lang="ts">
     import type { Character } from "../../interfaces/Character";
     import CharacterSheetMenu from "./CharacterSheetMenu.svelte";
-    import { modifyCharacter } from "../../stores";
+    import { modifyCharacter, selectedCharacter } from "../../stores";
     import Button, { Label, Icon } from '@smui/button';
     import Dialog, { Title, Content, Actions } from '@smui/dialog';
+    import { params, push, replace } from "svelte-spa-router";
+    import { accessToken, user, socket } from '../../stores';
+    import axios from "axios";
 
     export let character: Character;
 
     let isDeleteCharDialogOpen: boolean = false;
 
     const deleteCharacter = async () => {
-        console.log('riiiiip');
+        try {
+            const response = await axios.post('/api/delete-character', {
+                campaignID: $params.id,
+                characterID: character._id,
+            });
+
+            $socket.emit('delete-character', { modifierID: $user._id, roomID: $params.id, character: character });
+            selectedCharacter.set(undefined);
+            character = undefined;
+		}
+		catch {
+            replace('/');
+		}
     }
 
 </script>

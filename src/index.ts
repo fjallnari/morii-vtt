@@ -33,7 +33,11 @@ const main = async () => {
 
         socket.on('change-character', data => {
             socketsController.changeCharacter(socket, data);
-        })
+        });
+
+        socket.on('add-character', data => {
+            socketsController.addCharacter(socket, data);
+        });
 
     });
 

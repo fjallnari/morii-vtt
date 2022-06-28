@@ -38,6 +38,12 @@ export default class SocketsController {
         this.io.to([playerSocketID, ownerSocketID]).emit('change-character', data.character);
     }
 
+    public async addCharacter(socket: Socket, data: ChangeCharacterEmitData) {
+        const socketRoom = this.rooms.get(data.roomID);
+        const ownerSocketID = <string> socketRoom?.owner?.socketID;
+        this.io.to([ownerSocketID]).emit('add-character', data.character);
+    }
+
     /**
      * Saves socketID + userID pair to memory; also adds the user to the socket room
      */

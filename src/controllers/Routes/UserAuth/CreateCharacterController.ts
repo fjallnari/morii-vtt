@@ -21,7 +21,7 @@ export default class CreateCharacterController extends RouteController {
             const usersCollection = <Collection<Document>> await getCollection('users');
             const charactersCollection = <Collection<Document>> await getCollection('characters');
 
-            const insertResult = await charactersCollection.insertOne(Object.assign(CHARACTER_SKELETON, { playerID: userID }));
+            const insertResult = await charactersCollection.insertOne(Object.assign(CHARACTER_SKELETON, { _id: new ObjectId(), playerID: userID }));
             const newCharacterID = insertResult.insertedId;
             
             // add campaign to user's campaigns

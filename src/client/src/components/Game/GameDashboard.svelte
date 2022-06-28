@@ -12,6 +12,10 @@
         gameData.characters[index] = modifiedCharacter;
     });
 
+    $socket.on('add-character', (newCharacter: Character) => {
+        gameData.characters = gameData.characters.concat([newCharacter]);
+    });
+
 </script>
 
 

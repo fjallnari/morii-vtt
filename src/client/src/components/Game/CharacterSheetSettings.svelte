@@ -27,6 +27,20 @@
             replace('/');
 		}
     }
+    
+    // from https://stackoverflow.com/a/50772599/13222140
+    const downloadTextFile = (text: string, name: string) => {
+        const a = document.createElement('a');
+        const type = name.split(".").pop();
+        a.href = URL.createObjectURL( new Blob([text], { type:`text/${type === "txt" ? "plain" : type}` }) );
+        a.download = name;
+        a.click();
+    }
+
+    const exportToJSON = () => {
+        const characterNoIDs = (({ _id, playerID, ...other }) => other)(character);
+        downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? character.name : 'untitled'}-msvtt.json`);
+    }
 
 </script>
 
@@ -53,7 +67,7 @@
         </div>
         <div class="settings-tab">
             <h4>CRUD Settings</h4>
-            <delete-button id="export-button" on:click={() => {}} disabled>
+            <delete-button id="export-button" on:click={() => exportToJSON()}>
                 <Icon class="material-icons">data_object</Icon>
                 Export sheet to JSON
             </delete-button>

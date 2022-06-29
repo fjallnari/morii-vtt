@@ -6,6 +6,7 @@
     import { slide, fade } from 'svelte/transition';
     import ABILITY_TAGS from "../../../enum/AbilityTags";
     import Tooltip, { Wrapper, Content } from '@smui/tooltip';
+import SimpleButton from "../../SimpleButton.svelte";
 
     export let tool:Tool;
     export let character: Character;
@@ -62,7 +63,7 @@
                 </div>
             </div>
 
-            <delete-button on:click={() => deleteTool()}>Delete</delete-button>
+            <SimpleButton value='Delete' type="delete" onClickFn={deleteTool}></SimpleButton>
         </div>
     {/if}
 </box>

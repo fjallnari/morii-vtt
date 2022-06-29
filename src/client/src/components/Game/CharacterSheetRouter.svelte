@@ -99,31 +99,6 @@
         transition-property: color;
     }
 
-    :global(delete-button) {
-        background-color: var(--delete-button-background-color);
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 4px;
-        width: 100%;
-        cursor: pointer;
-        transition-duration: 200ms;
-        transition-property: color;
-        font-size: 1em;
-        font-weight: bold;
-        font-family: Athiti;
-        text-transform: uppercase;
-    }
-
-    :global(delete-button:active) {
-        background-color: #A43D42;
-        transition-duration: 200ms;
-        transition-property: color;        
-    }
-
-    :global(delete-button:disabled, delete-button[disabled]) {
-        cursor: not-allowed;
-        pointer-events: none;
-    }
-
     :global(textarea) {
         width: 100%;
         padding: 0.5em 0.5em;

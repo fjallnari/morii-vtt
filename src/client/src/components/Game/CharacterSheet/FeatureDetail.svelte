@@ -5,6 +5,7 @@
     import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import { params } from "svelte-spa-router";
+import SimpleButton from "../../SimpleButton.svelte";
 
     export let feature: Feature;
     export let character: Character;
@@ -86,7 +87,7 @@
                 <InPlaceEdit bind:value={feature.source_name} editWidth='10rem' editHeight='1.5rem' on:submit={() => $modifyCharacter()}/>
             </div>
             <textarea on:change={() => $modifyCharacter()} bind:value={feature.content}></textarea>
-            <delete-button on:click={() => deleteFeature()}>Delete</delete-button>
+            <SimpleButton value='Delete' type="delete" onClickFn={deleteFeature}></SimpleButton>
         </div>
     {/if}
 </box>

@@ -5,6 +5,7 @@
     import { slide, fade } from 'svelte/transition';
     import { isMessagePublic, modifyCharacter, socket, user } from "../../../stores";
     import { params } from "svelte-spa-router";
+import SimpleButton from "../../SimpleButton.svelte";
 
     export let spell: Spell;
     export let character: Character;
@@ -182,7 +183,7 @@
                 </div>
             </div>
             <textarea style="height: 5em;" on:change={() => $modifyCharacter()} bind:value={spell.at_higher_levels}></textarea>
-            <delete-button on:click={() => deleteSpell()}>Delete</delete-button>
+            <SimpleButton value='Delete' type="delete" onClickFn={deleteSpell}></SimpleButton>
         </div>
     {/if}
 </box>

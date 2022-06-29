@@ -7,6 +7,7 @@
     import { params, push, replace } from "svelte-spa-router";
     import { accessToken, user, socket } from '../../stores';
     import axios from "axios";
+import SimpleButton from "../SimpleButton.svelte";
 
     export let character: Character;
 
@@ -67,14 +68,8 @@
         </div>
         <div class="settings-tab">
             <h4>CRUD Settings</h4>
-            <delete-button id="export-button" on:click={() => exportToJSON()}>
-                <Icon class="material-icons">data_object</Icon>
-                Export sheet to JSON
-            </delete-button>
-            <delete-button on:click={() => isDeleteCharDialogOpen = true}>
-                <Icon class="material-icons">delete_sweep</Icon>
-                Delete Character
-            </delete-button>
+            <SimpleButton value='Export sheet to JSON' icon="data_object" onClickFn={exportToJSON}></SimpleButton>
+            <SimpleButton value='Delete Character' icon="delete_sweep" type="delete" onClickFn={() => isDeleteCharDialogOpen = true}></SimpleButton>
         </div>
     </div>
     <CharacterSheetMenu></CharacterSheetMenu>
@@ -166,17 +161,9 @@
         font-family: Montserrat;
     }
 
-    delete-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5em;
+    :global(.settings-tab simple-button) {
         font-size: 1.25em;
         padding: 0.5em 0em;
-    }
-
-    #export-button {
-        background-color: var(--secondary-box-background-color);
     }
 
 </style>

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Button, { Label } from '@smui/button';
     import IconButton from '@smui/icon-button';
     import { campaignNewActive } from '../../stores';
+    import SimpleButton from '../SimpleButton.svelte';
     import CampaignJoin from './CampaignJoin.svelte';
     import CampaignNew from './CampaignNew.svelte';
 
@@ -18,13 +18,8 @@
     {:else if decided}
         <CampaignNew></CampaignNew>
     {:else}
-        <Button variant="raised" color="secondary" on:click={() => { decided = true; wantsToJoin = false; }}>
-            <Label>Create!</Label>
-        </Button>
-
-        <Button variant="raised" color="primary" on:click={() => { decided = true; wantsToJoin = true; }}>
-            <Label>Join!</Label>
-        </Button>
+        <SimpleButton value="Create" type="green" onClickFn={() => { decided = true; wantsToJoin = false; } }></SimpleButton>
+        <SimpleButton value="Join" type="primary" onClickFn={() => { decided = true; wantsToJoin = true; } }></SimpleButton>
         
         <div id="cancel-button">
             <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>close</IconButton>
@@ -42,6 +37,11 @@
         gap: 2em;
         height: 30em;
         width: 17em;
+    }
+
+    :global(.choice-content > simple-button) {
+        padding: 0.5rem 0em;
+        font-size: 1.2em;
     }
 
     #cancel-button {

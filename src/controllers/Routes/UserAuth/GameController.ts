@@ -24,7 +24,7 @@ export default class GameController extends RouteController {
 
         // get all players' info; then simplify it to pairs of id and username
         const usersObjs = <UserDB[]> await getIdsFromCollection(campaignInfo.players.map( playerObj => playerObj.playerID), 'users');
-        const simpleUsers = usersObjs.map(user => { return { _id: user._id.toString(), username: user.username }});
+        const simpleUsers = usersObjs.map(user => { return { _id: user._id.toString(), username: user.username, settings: user.settings }});
 
         return {
             id: campaignInfo._id,

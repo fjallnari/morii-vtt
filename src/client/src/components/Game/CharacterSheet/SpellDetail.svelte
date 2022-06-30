@@ -5,7 +5,7 @@
     import { slide, fade } from 'svelte/transition';
     import { isMessagePublic, modifyCharacter, socket, user } from "../../../stores";
     import { params } from "svelte-spa-router";
-import SimpleButton from "../../SimpleButton.svelte";
+    import SimpleButton from "../../SimpleButton.svelte";
 
     export let spell: Spell;
     export let character: Character;

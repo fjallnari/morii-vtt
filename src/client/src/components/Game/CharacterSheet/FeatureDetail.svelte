@@ -5,7 +5,7 @@
     import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import { params } from "svelte-spa-router";
-import SimpleButton from "../../SimpleButton.svelte";
+    import SimpleButton from "../../SimpleButton.svelte";
 
     export let feature: Feature;
     export let character: Character;

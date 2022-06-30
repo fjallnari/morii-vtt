@@ -8,6 +8,7 @@
     import { campaignNewActive, user, accessToken } from '../../stores';
     import type Campaign from '../../interfaces/Campaign';
     import ProgressCircle from '../ProgressCircle.svelte';
+import SimpleButton from '../SimpleButton.svelte';
 
     const gameSystems = ["D&D 5E"];
     let campaignName: string = "";
@@ -63,11 +64,7 @@
             {/each}
             </Select>
         </div>
-        <div style="padding-top: 3em;">
-            <Button variant="raised" color="primary" on:click={createCampaign}>
-                <Label>Create!</Label>
-            </Button>
-        </div>
+        <SimpleButton value="Create!" type="green" onClickFn={createCampaign}></SimpleButton>
     </div>
 {:else}
     <div id="progress-circle">
@@ -91,6 +88,12 @@
         align-items: center;
         flex-direction: column;
         gap: 2em;        
+    }
+
+    :global(.create-campaign-content simple-button) {
+        margin-top: 3rem;
+        padding: 0.5rem 0em;
+        font-size: 1.2em;
     }
 
     #cancel-button {

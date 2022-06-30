@@ -4,13 +4,21 @@
     export let value: string;
     export let icon: string = '';
     export let disabled: boolean = false;
-    export let type: 'default' | 'delete' = 'default';
+    export let type: 'default' | 'primary' | 'green' | 'delete' = 'default';
     export let onClickFn: () => void;    
 
     const BUTTON_TYPES = {
         'default': {
             bg_color: '#303036',
             active_bg_color: '#27272B'
+        },
+        'primary': {
+            bg_color: '#E9805D',
+            active_bg_color: '#E7724B'
+        },
+        'green': {
+            bg_color: '#80A451',
+            active_bg_color: '#75964A'
         },
         'delete': {
             bg_color: '#BC4B51',
@@ -49,6 +57,7 @@
         font-weight: bold;
         font-family: Athiti;
         text-transform: uppercase;
+        padding: 0.2em 0em;
     }
 
     simple-button:active {
@@ -57,9 +66,14 @@
         transition-property: color;        
     }
 
+    simple-button:hover {
+        filter: opacity(0.9);
+    }
+
     simple-button[disabled=true] {
         cursor: not-allowed;
         pointer-events: none;
+        opacity: 0.4;
     }
 
 </style>

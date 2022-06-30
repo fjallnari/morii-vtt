@@ -7,7 +7,9 @@
     import { params, push, replace } from "svelte-spa-router";
     import { accessToken, user, socket } from '../../stores';
     import axios from "axios";
-import SimpleButton from "../SimpleButton.svelte";
+    import SimpleButton from "../SimpleButton.svelte";
+import type UserSimple from "../../interfaces/UserSimple";
+import ANIMALS from "../../enum/Animals";
 
     export let character: Character;
 
@@ -43,12 +45,23 @@ import SimpleButton from "../SimpleButton.svelte";
         downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? character.name : 'untitled'}-msvtt.json`);
     }
 
+    let playerObj: UserSimple = $user.gameData.players.find( player => player._id === character.playerID);
+    console.log(playerObj);
+
 </script>
 
 <tab-container>
     <div class="settings">
         <div class="settings-tab">
             <h4>General</h4>
+            <line-div>
+                <div>Created by: </div>
+                <div class="player-tag">
+                    <img id="pfp" style="background-color: #{playerObj.settings.pfpColor};" src="../static/pfp/{ANIMALS[playerObj.settings.pfpID]}.svg" alt="pfp">
+                    <div>{playerObj.username}</div>
+                </div>
+            </line-div>
+
             <line-div>
                 <div>Show Encumbrance</div>
                 <img class="use-encumbrance-icon" 
@@ -141,13 +154,13 @@ import SimpleButton from "../SimpleButton.svelte";
         gap: 0.5em;
     }
 
-    line-div div {
+    line-div > div {
         font-family: Athiti;
         text-transform: uppercase;
         font-size: 1.2em;
     }
 
-    img {
+    line-div > img {
         cursor: pointer; 
         height: 1.5rem;
         width: 1.5rem;
@@ -164,6 +177,27 @@ import SimpleButton from "../SimpleButton.svelte";
     :global(.settings-tab simple-button) {
         font-size: 1.25em;
         padding: 0.5em 0em;
+    }
+
+    .player-tag {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.3em;
+        background-color: #252529;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        padding: 0.4em;
+        font-family: Montserrat;
+        color: #FCF7F8;
+        text-transform: uppercase;
+        font-size: 1.2em;
+    }
+
+    .player-tag img {
+        border-radius: 4px;
+        width: 2em;
+        height: 2em;
     }
 
 </style>

@@ -5,6 +5,7 @@
     import InPlaceEdit from '../../InPlaceEdit.svelte';
     import { slide, fade } from 'svelte/transition';
     import ABILITY_TAGS from '../../../enum/AbilityTags';
+    import SimpleButton from '../../SimpleButton.svelte';
 
     export let attack: Attack;
     export let character: Character;
@@ -184,7 +185,7 @@
                     Versatile
                 </div> 
             </box>
-            <delete-button on:click={() => deleteAttack()}>Delete</delete-button>
+            <SimpleButton value='Delete' type="delete" onClickFn={deleteAttack}></SimpleButton>
         </div>
     {/if}
 </box>

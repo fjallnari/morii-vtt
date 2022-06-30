@@ -4,6 +4,7 @@
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
+    import SimpleButton from "../../SimpleButton.svelte";
 
     export let other_prof: OtherProf;
     export let character: Character;
@@ -44,7 +45,7 @@
     {#if isOpen}
         <div class="details" transition:slide|local>
             <textarea on:change={() => $modifyCharacter()} bind:value={other_prof.content}></textarea>
-            <delete-button on:click={() => deleteProf()}>Delete</delete-button>
+            <SimpleButton value='Delete' type="delete" onClickFn={deleteProf}></SimpleButton>
         </div>
     {/if}
 </box>

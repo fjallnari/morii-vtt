@@ -7,6 +7,9 @@
     import { params, push, replace } from "svelte-spa-router";
     import { accessToken, user, socket } from '../../stores';
     import axios from "axios";
+    import SimpleButton from "../SimpleButton.svelte";
+import type UserSimple from "../../interfaces/UserSimple";
+import ANIMALS from "../../enum/Animals";
 
     export let character: Character;
 
@@ -27,6 +30,23 @@
             replace('/');
 		}
     }
+    
+    // from https://stackoverflow.com/a/50772599/13222140
+    const downloadTextFile = (text: string, name: string) => {
+        const a = document.createElement('a');
+        const type = name.split(".").pop();
+        a.href = URL.createObjectURL( new Blob([text], { type:`text/${type === "txt" ? "plain" : type}` }) );
+        a.download = name;
+        a.click();
+    }
+
+    const exportToJSON = () => {
+        const characterNoIDs = (({ _id, playerID, ...other }) => other)(character);
+        downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? character.name : 'untitled'}-msvtt.json`);
+    }
+
+    let playerObj: UserSimple = $user.gameData.players.find( player => player._id === character.playerID);
+    console.log(playerObj);
 
 </script>
 
@@ -34,6 +54,14 @@
     <div class="settings">
         <div class="settings-tab">
             <h4>General</h4>
+            <line-div>
+                <div>Created by: </div>
+                <div class="player-tag">
+                    <img id="pfp" style="background-color: #{playerObj.settings.pfpColor};" src="../static/pfp/{ANIMALS[playerObj.settings.pfpID]}.svg" alt="pfp">
+                    <div>{playerObj.username}</div>
+                </div>
+            </line-div>
+
             <line-div>
                 <div>Show Encumbrance</div>
                 <img class="use-encumbrance-icon" 
@@ -53,14 +81,8 @@
         </div>
         <div class="settings-tab">
             <h4>CRUD Settings</h4>
-            <delete-button id="export-button" on:click={() => {}} disabled>
-                <Icon class="material-icons">data_object</Icon>
-                Export sheet to JSON
-            </delete-button>
-            <delete-button on:click={() => isDeleteCharDialogOpen = true}>
-                <Icon class="material-icons">delete_sweep</Icon>
-                Delete Character
-            </delete-button>
+            <SimpleButton value='Export sheet to JSON' icon="data_object" onClickFn={exportToJSON}></SimpleButton>
+            <SimpleButton value='Delete Character' icon="delete_sweep" type="delete" onClickFn={() => isDeleteCharDialogOpen = true}></SimpleButton>
         </div>
     </div>
     <CharacterSheetMenu></CharacterSheetMenu>
@@ -132,13 +154,13 @@
         gap: 0.5em;
     }
 
-    line-div div {
+    line-div > div {
         font-family: Athiti;
         text-transform: uppercase;
         font-size: 1.2em;
     }
 
-    img {
+    line-div > img {
         cursor: pointer; 
         height: 1.5rem;
         width: 1.5rem;
@@ -152,17 +174,30 @@
         font-family: Montserrat;
     }
 
-    delete-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5em;
+    :global(.settings-tab simple-button) {
         font-size: 1.25em;
         padding: 0.5em 0em;
     }
 
-    #export-button {
-        background-color: var(--secondary-box-background-color);
+    .player-tag {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.3em;
+        background-color: #252529;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        padding: 0.4em;
+        font-family: Montserrat;
+        color: #FCF7F8;
+        text-transform: uppercase;
+        font-size: 1.2em;
+    }
+
+    .player-tag img {
+        border-radius: 4px;
+        width: 2em;
+        height: 2em;
     }
 
 </style>

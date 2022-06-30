@@ -5,9 +5,14 @@
 
     export let gameData:GameData;
 
+    const CLASSES = ['artificer', 'barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard'];
+
     const getClassIcon = (character: Character) => {
         const classes = character.classes.split(' ');
-        return classes.length <= 2 ? classes[0].toLowerCase() : 'multiclass-mockup';
+        const className = classes[0].toLowerCase();
+        const validatedClassName = CLASSES.includes(className) ? className : 'no-class';
+
+        return classes.length <= 2 ? validatedClassName : 'multiclass-mockup';
     }
 
 </script>
@@ -15,14 +20,18 @@
 <div class="characters-container">
     <h3 class="title">Characters</h3>
     <div class="character-list">
-        {#each gameData.characters as character}
-            <li class="character-item" on:click={() => selectedCharacter.set(character)}>
-                <img id="tile" src="../static/class-icons/{getClassIcon(character)}.svg" alt="class-icon">
-                <div class="character-name">
-                    {character.name}
-                </div>
-            </li>
-        {/each}
+        {#if gameData.characters.length === 0}
+            <h3>No characters found</h3>
+        {:else}
+            {#each gameData.characters as character}
+                <li class="character-item" on:click={() => selectedCharacter.set(character)}>
+                    <img id="tile" src="../static/class-icons/{getClassIcon(character)}.svg" alt="class-icon">
+                    <div class="character-name">
+                        {character.name}
+                    </div>
+                </li>
+            {/each}
+        {/if}
     </div>
 </div>
 
@@ -73,14 +82,17 @@
     
     .character-name {
         font-family: Quicksand;
-        font-size: 1.5em;
+        font-size: 1.2em;
+    }
+
+    h3 {
+        font-family: Quicksand;
+        font-weight: 100;
+        text-transform: uppercase;
     }
 
     .title { grid-area: title;
-        font-family: Quicksand;
         font-size: 1.5em;
-        font-weight: 100;
-        text-transform: uppercase;
     }
 
 </style>

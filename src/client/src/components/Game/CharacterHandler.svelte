@@ -5,6 +5,7 @@
     import { params, push, replace } from "svelte-spa-router";
     import { accessToken, user, socket } from '../../stores';
     import CharacterSheetRouter from "./CharacterSheetRouter.svelte";
+    import SimpleButton from "../SimpleButton.svelte";
 
     export let gameData: GameData;
 
@@ -26,6 +27,10 @@
 		}
 	}
 
+    const importFromJSON = () => {
+        // TODO
+    }
+
 </script>
 
 
@@ -36,18 +41,11 @@
     <div class="no-character-panel">
         <h3>You don't have any character assigned to this campaign.</h3>
         <div class="new-character-options">
-            <Button variant="raised" on:click={() => createCharacter()}>
-                <Icon class="material-icons">add</Icon>
-                <Label>Create New</Label>
-            </Button>
-            <Button variant="raised" color="secondary" on:click={() => {}} disabled>
-                <Icon class="material-icons">person</Icon>
-                <Label>Use Existing</Label>
-            </Button>
-            <Button variant="raised" on:click={() => {}} disabled>
-                <Icon class="material-icons">upload_file</Icon>
-                <Label>Import from file</Label>
-            </Button>
+            <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createCharacter}></SimpleButton>
+            <SimpleButton value='Create With Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
+            <SimpleButton value='Copy Existing Sheet' icon="file_copy" onClickFn={() => {}} disabled></SimpleButton>
+            <SimpleButton value='Import from MSVTT JSON' icon="upload_file" onClickFn={() => {}} disabled></SimpleButton>
+            <SimpleButton value='Import from roll20 JSON' icon="upload_file" onClickFn={() => {}} disabled></SimpleButton>
         </div>
     </div>
 {/if}
@@ -79,6 +77,11 @@
         align-items: center;
         justify-content: center;
         gap: 2em;
+    }
+
+    :global(.new-character-options simple-button) {
+        font-size: 1.5em;
+        padding: 0.5em 0.5em;
     }
 
 </style>

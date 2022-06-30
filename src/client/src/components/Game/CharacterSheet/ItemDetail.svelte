@@ -5,6 +5,7 @@
     import IconButton, { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import Tooltip, { Wrapper, Content } from '@smui/tooltip';
+    import SimpleButton from "../../SimpleButton.svelte";
 
     export let item: Item;
     export let character: Character;
@@ -95,7 +96,7 @@
     {#if isOpen}
         <div class="details" transition:slide|local>
             <textarea on:change={() => $modifyCharacter()} bind:value={item.tooltip}></textarea>
-            <delete-button on:click={() => deleteItem()}>Delete</delete-button>
+            <SimpleButton value='Delete' type="delete" onClickFn={deleteItem}></SimpleButton>
         </div>
     {/if}
 </box>

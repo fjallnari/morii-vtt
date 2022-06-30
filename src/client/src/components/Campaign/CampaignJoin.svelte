@@ -1,13 +1,12 @@
 <script lang="ts">
     import IconButton from '@smui/icon-button';
-    import Button, { Label } from '@smui/button';
     import Textfield from '@smui/textfield';
-    import Select, { Option } from '@smui/select';
 
     import { campaignNewActive, user, accessToken } from '../../stores';
     import axios from 'axios';
     import PasswordField from '../PasswordField.svelte';
     import ProgressCircle from '../ProgressCircle.svelte';
+    import SimpleButton from '../SimpleButton.svelte';
 
     let inviteCode: string = "";
     let password: string = "";
@@ -47,11 +46,7 @@
     <div class="join-campaign-content">
         <Textfield style="width: 15em;" bind:value={inviteCode} label="Invite Code" required variant="outlined"></Textfield>
         <PasswordField bind:password={password} label="Password"></PasswordField>
-        <div style="padding-top: 3em;">
-            <Button variant="raised" color="primary" on:click={joinCampaign}>
-                <Label>Join!</Label>
-            </Button>
-        </div>
+        <SimpleButton value="Join!" type="primary" onClickFn={joinCampaign}></SimpleButton>
     </div>
 {:else}
     <div id="progress-circle">
@@ -75,6 +70,12 @@
         align-items: center;
         flex-direction: column;
         gap: 2em;        
+    }
+
+    :global(.join-campaign-content > simple-button) {
+        margin-top: 3rem;
+        padding: 0.5rem 0em;
+        font-size: 1.2em;
     }
 
     #cancel-button {

@@ -8,8 +8,8 @@
     import { accessToken, user, socket } from '../../stores';
     import axios from "axios";
     import SimpleButton from "../SimpleButton.svelte";
-import type UserSimple from "../../interfaces/UserSimple";
-import ANIMALS from "../../enum/Animals";
+    import type UserSimple from "../../interfaces/UserSimple";
+    import ANIMALS from "../../enum/Animals";
 
     export let character: Character;
 
@@ -17,12 +17,13 @@ import ANIMALS from "../../enum/Animals";
 
     const deleteCharacter = async () => {
         try {
-            const response = await axios.post('/api/delete-character', {
+            await axios.post('/api/delete-character', {
                 campaignID: $params.id,
                 characterID: character._id,
+                isNPC: character.playerID === $user.gameData.owner
             });
 
-            $socket.emit('delete-character', { modifierID: $user._id, roomID: $params.id, character: character });
+            $socket.emit('delete-character', { modifierID: $user._id, roomID: $params.id, character: character, isNPC: character.playerID === $user.gameData.owner });
             selectedCharacter.set(undefined);
             character = undefined;
 		}
@@ -44,9 +45,10 @@ import ANIMALS from "../../enum/Animals";
         const characterNoIDs = (({ _id, playerID, ...other }) => other)(character);
         downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? character.name : 'untitled'}-msvtt.json`);
     }
+    
 
-    let playerObj: UserSimple = $user.gameData.players.find( player => player._id === character.playerID);
-    console.log(playerObj);
+    let playerObj: UserSimple = character.playerID === $user.gameData.owner ? {_id: $user._id, username: $user.username, settings: $user.settings}
+        : $user.gameData.players.find( player => player._id === character.playerID);
 
 </script>
 

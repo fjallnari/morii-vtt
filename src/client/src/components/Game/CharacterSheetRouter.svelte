@@ -14,7 +14,7 @@
         character = modifiedCharacter;
     });
 
-    $socket.on('delete-character', (deletedCharacter: Character) => {
+    $socket.on('delete-character', (_: Character, isNPC: boolean) => {
         character = undefined;
     });
 

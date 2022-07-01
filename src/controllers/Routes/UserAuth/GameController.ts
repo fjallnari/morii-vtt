@@ -26,13 +26,18 @@ export default class GameController extends RouteController {
         const usersObjs = <UserDB[]> await getIdsFromCollection(campaignInfo.players.map( playerObj => playerObj.playerID), 'users');
         const simpleUsers = usersObjs.map(user => { return { _id: user._id.toString(), username: user.username, settings: user.settings }});
 
+        // get all npcs
+        const npcsObj = <Character[]> await getIdsFromCollection(campaignInfo.npcs, 'characters');
+        const cleanNpcs = npcsObj.map(npc => Object.assign(npc, {_id: npc._id.toString(), playerID: npc.playerID.toString()}));
+
         return {
             id: campaignInfo._id,
             owner: campaignInfo.owner.toString(),
             name: campaignInfo.name,
             system: campaignInfo.system,
             characters: cleanCharacters,
-            players: simpleUsers
+            players: simpleUsers,
+            npcs: cleanNpcs
         }
 
     }

@@ -8,4 +8,5 @@ export default interface GameData {
     system: string;
     characters: Character[];
     players: UserSimple[];
+    npcs: Character[];
 }

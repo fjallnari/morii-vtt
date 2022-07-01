@@ -49,7 +49,7 @@ export default class SocketsController {
         const ownerSocketID = <string> socketRoom?.owner?.socketID;
         const playerSocketID = <string> socketRoom?.players?.[<string> data.character.playerID];
 
-        this.io.to([playerSocketID, ownerSocketID]).emit('delete-character', data.character);
+        this.io.to([playerSocketID, ownerSocketID]).emit('delete-character', data.character, data.isNPC);
     }
 
     /**

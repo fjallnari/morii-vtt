@@ -3,11 +3,11 @@
     import io from 'socket.io-client';
     import { user, socket } from '../stores';
     import { push, replace } from "svelte-spa-router";
-    import Chat from "../components/Game/Chat.svelte";
+    import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
     import CircularProgress from '@smui/circular-progress';
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
-    import GameDashboard from "../components/Game/GameDashboard.svelte";
+    import GameDashboard from "../components/Game/GameDashboard/GameDashboard.svelte";
 
     export let params: { id?: string } = {};
 

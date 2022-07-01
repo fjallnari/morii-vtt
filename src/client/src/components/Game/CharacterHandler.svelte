@@ -1,11 +1,10 @@
 <script lang="ts">
     import type GameData from "../../interfaces/GameData";
-    import Button, { Label, Icon } from '@smui/button';
     import axios from 'axios';
-    import { params, push, replace } from "svelte-spa-router";
-    import { accessToken, user, socket } from '../../stores';
-    import CharacterSheetRouter from "./CharacterSheetRouter.svelte";
+    import { params, replace } from "svelte-spa-router";
+    import { user, socket } from '../../stores';
     import SimpleButton from "../SimpleButton.svelte";
+    import CharacterSheetRouter from "./CharacterSheet/CharacterSheetRouter.svelte";
 
     export let gameData: GameData;
 

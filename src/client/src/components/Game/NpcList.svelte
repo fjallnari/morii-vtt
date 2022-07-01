@@ -4,7 +4,7 @@
     import axios from 'axios';
     import { params } from "svelte-spa-router";
     import type { Character } from '../../interfaces/Character';
-import { selectedCharacter } from '../../stores';
+    import { selectedCharacter } from '../../stores';
 
     export let gameData: GameData;
     export let getClassIcon: (character: Character) => string;

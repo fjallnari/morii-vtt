@@ -20,6 +20,7 @@
             await axios.post('/api/delete-character', {
                 campaignID: $params.id,
                 characterID: character._id,
+                isNPC: character.playerID === $user.gameData.owner
             });
 
             $socket.emit('delete-character', { modifierID: $user._id, roomID: $params.id, character: character, isNPC: character.playerID === $user.gameData.owner });

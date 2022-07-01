@@ -3,13 +3,12 @@ import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
 import jwt from 'jsonwebtoken';
-import { CHARACTER_SKELETON } from "../../../enum/CHARACTER_SKELETON";
 
 export default class DeleteCharacterController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
         const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
-        const { campaignID, characterID } = this.req.body;
+        const { campaignID, characterID, isNPC = false } = this.req.body;
     
         try {
             const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
@@ -20,14 +19,20 @@ export default class DeleteCharacterController extends RouteController {
             const charactersCollection = <Collection<Document>> await getCollection('characters');
             
             const characterObjectID = new ObjectId(characterID);
-            
-            // deletes character link from campaigns' player records
-            await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": userID}, {$unset: { "players.$.characterID": ''}});
 
-            // deletes character link from users characters list
+            if (isNPC){
+                // delete character link from campaigns' npcs array
+                await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$pull: { npcs: characterObjectID }});
+            }
+            else {
+                // delete character link from campaigns' player records
+                await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": userID}, {$unset: { "players.$.characterID": ''}});
+            }
+
+            // delete character link from users characters list
             await usersCollection.updateOne({_id: userID}, {$pull: { characters: characterObjectID }});
 
-            // finally deletes the character itself
+            // finally delete the character itself
             await charactersCollection.deleteOne({ _id: characterObjectID });
 
             return this.res.status(200).end();

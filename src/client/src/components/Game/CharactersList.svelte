@@ -3,17 +3,8 @@
     import type GameData from "../../interfaces/GameData";
     import { selectedCharacter } from "../../stores";
 
-    export let gameData:GameData;
-
-    const CLASSES = ['artificer', 'barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard'];
-
-    const getClassIcon = (character: Character) => {
-        const classes = character.classes.split(' ');
-        const className = classes[0].toLowerCase();
-        const validatedClassName = CLASSES.includes(className) ? className : 'no-class';
-
-        return classes.length <= 2 ? validatedClassName : 'multiclass-mockup';
-    }
+    export let gameData: GameData;
+    export let getClassIcon: (character: Character) => string;
 
 </script>
 
@@ -37,14 +28,15 @@
 
 
 <style>
-    .characters-container {  display: grid;
+    .characters-container { grid-area: characters-list;
+        display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 0.3fr 1.7fr;
         gap: 0px 0px;
         grid-auto-flow: row;
         grid-template-areas:
-        "title"
-        "character-list";
+            "title"
+            "character-list";
     }
 
     .character-list { grid-area: character-list;

@@ -5,6 +5,7 @@
     export let label: string;
     export let styleClass: string = '';
     export let addNewListItem: () => void;
+    export let isModifyDisabled: boolean = false;
 
 </script>
 
@@ -12,7 +13,7 @@
     <slot name="filter-menu"></slot>
     <div class="inside-box-list">
         <slot name="list"></slot>
-        <sendable class="add-new-item" on:click={() => { addNewListItem(); $modifyCharacter() }}>
+        <sendable class="add-new-item" on:click={() => { addNewListItem(); if (!isModifyDisabled) { $modifyCharacter()}}}>
             <Icon class="material-icons">{'add'}</Icon>
         </sendable>
     </div>

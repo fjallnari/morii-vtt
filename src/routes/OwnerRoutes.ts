@@ -4,6 +4,7 @@ import KickPlayerController from '../controllers/Routes/OwnerAuth/KickPlayerCont
 import CreateInviteCodeController from '../controllers/Routes/OwnerAuth/CreateInviteController';
 import RemoveInviteCodeController from '../controllers/Routes/OwnerAuth/RemoveInviteController';
 import DeleteCampaignController from '../controllers/Routes/OwnerAuth/DeleteCampaignController';
+import CreateNPCController from '../controllers/Routes/OwnerAuth/CreateNPCController';
 
 const router = express.Router();
 
@@ -21,6 +22,10 @@ router.post("/api/remove-invite-code", verifyToken, async (req, res) => {
 
 router.post("/api/delete-campaign", verifyToken, async (req, res) => {
     await new DeleteCampaignController(req, res).handleRequest();
+});
+
+router.post('/api/create-npc', verifyToken, async (req, res, next) => {
+    await new CreateNPCController(req, res).handleRequest();
 });
 
 export default router;

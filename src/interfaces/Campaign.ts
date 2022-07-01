@@ -12,4 +12,5 @@ export default interface Campaign {
     owner: ObjectId,
     players: PlayerInfo[],
     invite?: ObjectId,
+    npcs: ObjectId[]
 }

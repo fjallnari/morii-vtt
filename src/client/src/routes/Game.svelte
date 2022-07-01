@@ -53,7 +53,6 @@
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        align-items: center;
         padding-top: 1em;
         height: 95vh;
         gap: 1em;

@@ -1,0 +1,67 @@
+<script lang="ts">
+    import { modifyCharacter } from "../stores";
+
+    export let charAttribute: string;
+    export let styleClass: string;
+    export let label: string = styleClass;
+
+</script>
+
+<box class="{styleClass} box-with-label">
+    <textarea on:change={() => $modifyCharacter()} bind:value={charAttribute}></textarea>
+    <div class="box-justify-filler"></div>
+    <div class="box-label">
+        { label ? label : styleClass }
+    </div>
+</box>
+
+<style>
+    textarea {
+        border: transparent;
+        height: 100%;
+        font-family: Quicksand;
+    }
+
+    textarea:focus {
+        outline: none !important;
+        border: 2px solid var(--primary-accent-color);
+        caret-color: var(--primary-accent-color);
+    }
+
+    .box-with-label {
+        height: auto;
+    }
+
+    .appearance { grid-area: appearance;
+        margin-left: var(--outer-edge-margin);
+    }
+
+    .backstory { grid-area: backstory;
+        margin: 0em 0em 0.5em var(--outer-edge-margin);
+    }
+
+    .allies-orgs { grid-area: allies-orgs; }
+    .enemies { grid-area: enemies; }
+    .treasury { grid-area: treasury; }
+
+    .personality-traits { grid-area: personality-traits; 
+        margin-right: var(--outer-edge-margin);
+    }
+
+    .ideals { grid-area: ideals; 
+        margin-right: var(--outer-edge-margin);
+    }
+
+    .bonds { grid-area: bonds; 
+        margin-right: var(--outer-edge-margin);
+    }
+
+    .flaws { grid-area: flaws; 
+        margin-right: var(--outer-edge-margin);
+    }
+
+    .other-notes { grid-area: other-notes; 
+        margin: 0em var(--outer-edge-margin) 0.5em 0em;
+    }
+
+</style>

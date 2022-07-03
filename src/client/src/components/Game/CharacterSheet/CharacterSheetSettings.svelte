@@ -19,6 +19,7 @@
             await axios.post('/api/delete-character', {
                 campaignID: $params.id,
                 characterID: character._id,
+                playerID: character.playerID,
                 isNPC: character.playerID === $user.gameData.owner
             });
 

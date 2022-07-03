@@ -78,7 +78,6 @@
     :global(.npcs .inside-box-content) {
         scrollbar-width: thin;
         overflow-y: auto;
-        margin-top: 0.5em;
         justify-content: flex-start;
     }
 

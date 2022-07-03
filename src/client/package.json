@@ -14,6 +14,7 @@
   "devDependencies": {
     "@material/elevation": "^13.0.0",
     "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@smui/card": "^6.0.0-beta.14",
@@ -39,6 +40,7 @@
     "svelte": "^3.0.0",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.10.1",
+    "ts-json-schema-generator": "^1.0.0",
     "tslib": "^2.0.0",
     "typescript": "^4.0.0"
   },
@@ -47,6 +49,7 @@
     "@smui/circular-progress": "^6.0.0-beta.14",
     "@smui/select": "^6.0.0-beta.14",
     "@smui/switch": "^6.0.0-beta.15",
+    "ajv": "^8.11.0",
     "mem": "^9.0.2",
     "sirv-cli": "^2.0.0",
     "socket.io-client": "^4.4.1",

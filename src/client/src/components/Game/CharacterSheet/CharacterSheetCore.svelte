@@ -33,6 +33,9 @@
         character.hp_current = ~~character.hp_current > ~~character.hp_max ? character.hp_max : character.hp_current;
     }
 
+    $: weight_of_items = character.inventory.filter(item => item.has_weight).reduce((sum, item) => sum + ~~item.weight, 0);
+    $: carrying_capacity = ~~character.ability_scores['STR'].value * 15;
+
 </script>
 
 
@@ -136,6 +139,18 @@
                                 </sendable>
                             </div>
                         </box>
+                    {:else if AS === 'STR' && character.settings.use_encumbrance}
+                    <box class="additional-skill-box">
+                        <div class="box-with-label">
+                            <div class="box-main-text" style="{weight_of_items > carrying_capacity ? 'color: #BC4B51' : ''}">
+                                {weight_of_items}/{carrying_capacity}
+                            </div>
+                            <div class="box-justify-filler"></div>
+                            <div class="box-label">
+                                Carrying Capacity
+                            </div>
+                        </div>
+                    </box>
                     {/if}
                 </div>
             {/each}

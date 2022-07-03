@@ -7,18 +7,15 @@ import jwt from 'jsonwebtoken';
 export default class DeleteCharacterController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
-        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
-        const { campaignID, characterID, isNPC = false } = this.req.body;
+        const { campaignID, characterID, playerID, isNPC = false } = this.req.body;
     
         try {
-            const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-            const userID = new ObjectId(decodedToken.user._id);
-
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
             const usersCollection = <Collection<Document>> await getCollection('users');
             const charactersCollection = <Collection<Document>> await getCollection('characters');
             
             const characterObjectID = new ObjectId(characterID);
+            const playerObjectID = new ObjectId(playerID);
 
             if (isNPC){
                 // delete character link from campaigns' npcs array
@@ -26,11 +23,11 @@ export default class DeleteCharacterController extends RouteController {
             }
             else {
                 // delete character link from campaigns' player records
-                await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": userID}, {$unset: { "players.$.characterID": ''}});
+                await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": playerObjectID}, {$unset: { "players.$.characterID": ''}});
             }
 
             // delete character link from users characters list
-            await usersCollection.updateOne({_id: userID}, {$pull: { characters: characterObjectID }});
+            await usersCollection.updateOne({_id: playerObjectID}, {$pull: { characters: characterObjectID }});
 
             // finally delete the character itself
             await charactersCollection.deleteOne({ _id: characterObjectID });

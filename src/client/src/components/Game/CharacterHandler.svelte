@@ -5,16 +5,18 @@
     import { user, socket } from '../../stores';
     import SimpleButton from "../SimpleButton.svelte";
     import CharacterSheetRouter from "./CharacterSheet/CharacterSheetRouter.svelte";
+    import { fileReader, validateCharacter } from "../../main";
 
     export let gameData: GameData;
 
     let character = gameData.characters.find(character => character.playerID === $user._id);
 
     // returns user's updated game data
-    const createCharacter = async () => {
+    const createCharacter = async (characterTemplate = {}) => {
 		try {
             const response = await axios.post('/api/create-character', {
                 campaignID: $params.id,
+                characterTemplate: characterTemplate
             });
 
             character = response.data.characterInfo;
@@ -26,8 +28,27 @@
 		}
 	}
 
-    const importFromJSON = () => {
-        // TODO
+    let fileInput: HTMLInputElement;
+
+    const validateCharacterObject = (object) => {
+        const isValid = validateCharacter(object);
+
+        if (!isValid) {
+            throw new Error(`JSON Validation Error.`);
+            // TODO:  add UI popup or smth for this error
+        }  
+        return object;
+    }
+	
+	const importFromJSON = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
+        let jsonSheet = event.currentTarget.files[0];
+        if (jsonSheet && jsonSheet.type === 'application/json'){
+            fileReader.readAsText(jsonSheet);
+            fileReader.onload = _ => {
+                const validatedSheet = validateCharacterObject(JSON.parse(<string> fileReader.result));
+                createCharacter(validatedSheet);
+            };
+        }
     }
 
 </script>
@@ -41,9 +62,12 @@
         <h3>You don't have any character assigned to this campaign.</h3>
         <div class="new-character-options">
             <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createCharacter}></SimpleButton>
-            <SimpleButton value='Create With Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
+            <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
             <SimpleButton value='Copy Existing Sheet' icon="file_copy" onClickFn={() => {}} disabled></SimpleButton>
-            <SimpleButton value='Import from MSVTT JSON' icon="upload_file" onClickFn={() => {}} disabled></SimpleButton>
+
+            <SimpleButton value='Import from MSVTT JSON' icon="upload_file" onClickFn={() => { fileInput.click() }}></SimpleButton>
+            <input style="display:none" type="file" accept=".json" on:change={ (event) => importFromJSON(event)} bind:this={fileInput}>
+
             <SimpleButton value='Import from roll20 JSON' icon="upload_file" onClickFn={() => {}} disabled></SimpleButton>
         </div>
     </div>
@@ -80,7 +104,7 @@
 
     :global(.new-character-options simple-button) {
         font-size: 1.5em;
-        padding: 0.5em 0.5em;
+        padding: 0.5em 0.5em !important;
     }
 
 </style>

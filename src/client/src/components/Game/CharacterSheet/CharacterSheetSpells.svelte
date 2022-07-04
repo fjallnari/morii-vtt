@@ -9,7 +9,7 @@
 
     export let character: Character;
 
-    const addNewSpell = (spellLevel: number) => {
+    const addNewSpell = (spellLevel: number, spellTemplate: object = {}) => {
         const spellSkeleton: Spell = {
             id: uuidv4(),
             name: '',
@@ -31,7 +31,7 @@
             at_higher_levels: ''
         }
 
-        character.spells_by_level[spellLevel].spells.push(spellSkeleton);
+        character.spells_by_level[spellLevel].spells.push(Object.assign(spellSkeleton, { ...spellTemplate }));
     };
 
     const spellGridClasses = ['cantrips'].concat([...Array(9)].map((_, i) => `level-${1 + i}`)); // ~= ['cantrips', 'level-1', 'level-2', etc.]
@@ -39,7 +39,7 @@
 </script>
 
 <tab-container>
-    <Spellcasting character={character}></Spellcasting>
+    <Spellcasting bind:character={character} addNewSpell={addNewSpell}></Spellcasting>
     {#each spellGridClasses as spellGridClass, spellLevel}
         <div class= "main-spell-box {spellGridClass}">
             {#if spellLevel !== 0}

@@ -9,20 +9,30 @@
     export let addNewSpell: (spellLevel: number, spellTemplate?: any) => void;
 
     let isFillSpellDialogOpen: boolean = false;
+    let isSummaryValid: boolean = true;
     let fillSpellContent: string = '';
     
     // if the field is empty, show zero
     $: spellSaveDC = ['', '---'].includes(character.spell_ability) ? 0 : 8 + $getASModifier(character.spell_ability) + ~~character.prof_bonus + ~~character.spell_save_dc_bonus;
     $: spellAttackBonus = ['', '---'].includes(character.spell_ability) ? 0 : $getASModifier(character.spell_ability) + ~~character.prof_bonus;
 
-    const createSpellFromSummary = () => {
-        if (!fillSpellContent) {return}
+    const validateSpellSummary = () => {
+        if (!fillSpellContent) {return null}
 
         const regex = /^(?<name>[a-zA-Z ]+)\n\n.*\n\n(?:(?<level>[0-9]*)[a-z]*-level (?<school>[a-zA-Z ]*)(?<ritual>\(ritual\))*|(?:(?<school_b>[a-zA-Z]*) cantrip))\n\nCasting Time: (?<cast_time>[0-9a-zA-Z ]+)\nRange: (?<range>.+)\nComponents: (?<components>[VSM, ]+)(?:\((?<mat_comp>[a-zA-Z0-9 ]*)\))*\nDuration: (?<duration>[a-zA-Z0-9, ]*)\n\n(?<description>(.|\n)*)$/gm;
-        
-        const { groups: { name, level, school, school_b, ritual, cast_time, range, components, mat_comp, duration, description }} = regex.exec(fillSpellContent);
 
-        // TODO: Add error handling
+        return regex.exec(fillSpellContent);
+    }
+
+    const createSpellFromSummary = () => {
+        const matchedGroups = validateSpellSummary();
+        if (matchedGroups === null) {
+            isSummaryValid = false;
+            return;
+        }
+
+        
+        const { groups: { name, level, school, school_b, ritual, cast_time, range, components, mat_comp, duration, description }} = matchedGroups;        
 
         const splitDescription = description.split('\n\nAt Higher Levels. ');
         const needsConcentration = duration.includes('Concentration');
@@ -33,21 +43,19 @@
             casting_time: cast_time,
             is_ritual: ritual === '(ritual)',
             range: range,
-            school: school ? school : school_b ? school_b : '',
+            school: school ? school.toLowerCase() : school_b ? school_b.toLowerCase() : '',
             components: {
                 verbal: components.includes('V'),
                 somatic: components.includes('S'),
                 material: components.includes('M'),
                 material_content: mat_comp ? mat_comp : ''
             },
-            duration: needsConcentration ? duration.split('Concentration, ') : duration,
+            duration: needsConcentration ? duration.split('Concentration, ')[1] : duration,
             concentration: needsConcentration,
             description: splitDescription[0],
             at_higher_levels: splitDescription.length == 2 ? splitDescription[1] : ''
         }
-
-        // TODO: add loading circle
-
+        
         addNewSpell(~~level, spellTemplate);
         $modifyCharacter();
         isFillSpellDialogOpen = false;
@@ -90,7 +98,12 @@
         </sendable>
     </box>
     <div class="fill-spell-button">
-        <SimpleButton value='' icon='content_paste_go' type='default' onClickFn={() => isFillSpellDialogOpen = true}></SimpleButton>
+        <SimpleButton 
+            value='' 
+            icon='content_paste_go' 
+            type='default' 
+            onClickFn={() => { fillSpellContent = ''; isSummaryValid = true; isFillSpellDialogOpen = true } }>
+        </SimpleButton>
         <Dialog
             bind:open={isFillSpellDialogOpen}
             aria-labelledby="simple-title"
@@ -98,10 +111,16 @@
         >
             <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
             <h3 id="simple-title">Create spell from text summary</h3>
-            <textarea style="height: 100%;" bind:value={fillSpellContent}></textarea>
+            <textarea style="height: 100%;" on:change={() => {isSummaryValid = true}} bind:value={fillSpellContent}></textarea>
             <Actions id="dialog-buttons">
                 <SimpleButton value='' icon='close' type='default' onClickFn={() => isFillSpellDialogOpen = false}></SimpleButton>
-                <SimpleButton value='Create' icon='create' type='green' onClickFn={() => createSpellFromSummary()}></SimpleButton>
+                <SimpleButton 
+                    value='{isSummaryValid ? 'Create' : 'Invalid format'}' 
+                    icon='create' 
+                    type='{isSummaryValid ? 'green' : 'delete'}'  
+                    onClickFn={() => createSpellFromSummary()} 
+                    disabled={! isSummaryValid}>
+                </SimpleButton>
             </Actions>
         </Dialog>
     </div>

@@ -11,7 +11,7 @@
     export let character: Character;
     let isOpen: boolean = false;
 
-    const MAGIC_SCHOOLS = [ 'Abjuration', 'Conjuration', 'Divination', 'Enchantment', 'Evocation', 'Illusion', 'Necromancy', 'Transmutation'];
+    const MAGIC_SCHOOLS = [ 'abjuration', 'conjuration', 'divination', 'enchantment', 'evocation', 'illusion', 'necromancy', 'transmutation'];
 
     // from https://gist.github.com/jlbruno/1535691/db35b4f3af3dcbb42babc01541410f291a8e8fac
     const numToOrdinal = (num: number) => {
@@ -116,7 +116,7 @@
                     <option value="" selected disabled hidden>---</option>
                     {#each MAGIC_SCHOOLS as school}
                         <option value={school}>
-                            {school}
+                            {school.charAt(0).toUpperCase() + school.slice(1)}
                         </option>
                     {/each}
                 </select>

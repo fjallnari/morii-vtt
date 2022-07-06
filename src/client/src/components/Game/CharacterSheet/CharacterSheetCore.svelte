@@ -12,7 +12,8 @@
     import Exhaustion from './Components/Exhaustion.svelte';
     import Features from './Components/Features.svelte';
     import HitDice from './Components/HitDice.svelte';
-    import HpBar from './Components/HpBar.svelte';
+    import HitPoints from './Components/HitPoints.svelte';
+    import Speed from './Components/Speed.svelte';
     import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
 
     export let character: Character;
@@ -27,10 +28,6 @@
 
     const getSavingThrowModifier = (AS: string) => {
         return $getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
-    }
-
-    const correctHP = () => {
-        character.hp_current = ~~character.hp_current > ~~character.hp_max ? character.hp_max : character.hp_current;
     }
 
     $: weight_of_items = character.inventory.filter(item => item.has_weight).reduce((sum, item) => sum + ~~item.weight, 0);
@@ -163,46 +160,11 @@
         </div>
 
         <div class="speed">
-            <box class="max-speed-box box-with-label">
-                <div class="box-main-text">
-                    <InPlaceEdit bind:value={character.speed_max} editWidth="2em" editHeight="2em" on:submit={() => $modifyCharacter()}/>ft.
-                </div>
-                <div class="box-justify-filler"></div>
-                <div class="box-label">
-                    Max
-                </div>
-            </box>
-            <box class="current-speed-box box-with-label">
-                <div class="box-main-text">
-                    {~~character.speed_max + ~~character.speed_bonus}ft.
-                </div>
-                <div class="box-justify-filler"></div>
-                <div class="box-label">
-                    Speed
-                </div>
-            </box>
+            <Speed bind:character={character}></Speed>
         </div>
 
         <div class="hit-points">
-            <div class="hp-double-box">
-                <InPlaceEditBox bind:value={character.hp_max} 
-                    boxLabel="Max" 
-                    inlineStyle="margin-top: 0.5em;" 
-                    editWidth="2em" 
-                    editHeight="2em" 
-                    onSubmitFce={() => { correctHP(); $modifyCharacter()}}>
-                </InPlaceEditBox>
-                <InPlaceEditBox bind:value={character.hp_temp} boxLabel="Temp" inlineStyle="margin-bottom: 0.5em;" editWidth="2em" editHeight="2em"></InPlaceEditBox>
-            </div>
-            <box class="hp-main-box">
-                <HpBar character={character}></HpBar>
-                <div class="current-hp-text">
-                    <InPlaceEdit bind:value={character.hp_current} editWidth="2em" editHeight="2em" on:submit={() => { correctHP(); $modifyCharacter(); }}/>
-                </div>
-                <div class="box-label hp-footer">
-                    Hit Points
-                </div>
-            </box>
+            <HitPoints bind:character={character}></HitPoints>
         </div>
 
         <div class="exhaustion">
@@ -462,31 +424,6 @@
         align-items: center;
     }
 
-    .speed .max-speed-box {
-        height: 65%;
-        width: 3em;
-        margin-right: 1em;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .speed .max-speed-box .box-main-text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .speed .current-speed-box {
-        height: 85%;
-        width: 50%;
-        margin-left: -1em;
-    }
-
-    .speed .current-speed-box .box-main-text {
-        font-weight: bold;
-        font-size: 1.2em;
-    }
-
     .exhaustion { grid-area: exhaustion; }
 
     .death-saves { grid-area: death-saves; }
@@ -495,48 +432,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .hit-points .hp-main-box {
-        display: grid; 
-        grid-template-columns: 1fr; 
-        grid-template-rows: 1fr 1fr; 
-        gap: 0.5em 0px; 
-        grid-template-areas: 
-            "hp-bar"
-            "current-hp-text"
-            "hp-footer";
-        
-        margin-left: -2em;
-        height: 100%;
-    }
-
-    .hit-points .hp-main-box .current-hp-text {
-        grid-area: current-hp-text;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-
-    .hp-footer { grid-area: hp-footer;
-    }
-
-    .hit-points .hp-double-box {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5em;
-        align-items: center;
-        height: 100%;
-    }
-
-    .hit-points .hp-double-box :global(box) {
-        width: 4em;
-        height: 1em;
-        margin-right: 2em;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
     }
 
     .hit-dice { grid-area: hit-dice; 

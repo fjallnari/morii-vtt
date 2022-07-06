@@ -34,7 +34,6 @@ export default class SocketsController {
         const ownerSocketID = <string> socketRoom?.owner?.socketID;
         const playerSocketID = <string> socketRoom?.players?.[<string> data.character.playerID];
 
-        // console.log(data, data.character.playerID, this.rooms, ownerSocketID, playerSocketID);
         this.io.to([playerSocketID, ownerSocketID]).emit('change-character', data.character);
     }
 

@@ -30,7 +30,6 @@
             isSummaryValid = false;
             return;
         }
-
         
         const { groups: { name, level, school, school_b, ritual, cast_time, range, components, mat_comp, duration, description }} = matchedGroups;        
 

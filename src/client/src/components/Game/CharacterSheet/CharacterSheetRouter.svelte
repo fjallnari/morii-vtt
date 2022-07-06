@@ -19,13 +19,15 @@
         character = undefined;
     });
 
-    // modifyCharacter is inside global store
     modifyCharacter.set(async () => {
         try {
             await axios.post('/api/modify-character', {
                 modifiedCharacter: character,
             });
-            $socket.emit('change-character', { modifierID: $user._id, roomID: $params.id, character: character });
+            // don't send socket emit if the character is an npc
+            if ($user.gameData.owner !== character.playerID) {
+                $socket.emit('change-character', { modifierID: $user._id, roomID: $params.id, character: character });
+            }
         }
         catch (err){
             console.log(err);

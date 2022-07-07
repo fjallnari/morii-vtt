@@ -20,7 +20,7 @@ export default class CreateCharacterController extends RouteController {
             const usersCollection = <Collection<Document>> await getCollection('users');
             const charactersCollection = <Collection<Document>> await getCollection('characters');
 
-            const newCharacterObj = Object.assign(CHARACTER_SKELETON, { _id: new ObjectId(), playerID: userID, ... characterTemplate });
+            const newCharacterObj = Object.assign({}, { _id: new ObjectId(), playerID: userID, ... CHARACTER_SKELETON, ... characterTemplate });
 
             const insertResult = await charactersCollection.insertOne(newCharacterObj);
             const newCharacterID = insertResult.insertedId;
@@ -29,7 +29,7 @@ export default class CreateCharacterController extends RouteController {
             await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": userID}, {$set: { "players.$.characterID": newCharacterID }});
             
             // sends newly created blank character object
-            return this.res.status(200).send({characterInfo: Object.assign(CHARACTER_SKELETON, {_id: insertResult.insertedId.toString(), playerID: userID.toString()})});
+            return this.res.status(200).send({characterInfo: Object.assign(newCharacterObj, {_id: insertResult.insertedId.toString(), playerID: userID.toString()})});
         }
         catch (error) {
             return this.res.status(500).send('Creation failed');

@@ -46,7 +46,7 @@
             fileReader.readAsText(jsonSheet);
             fileReader.onload = _ => {
                 const validatedSheet = createValidatedCharacter(JSON.parse(<string> fileReader.result), isVTTES);
-                    createNPC(validatedSheet);
+                createNPC(validatedSheet);
             };
         }
     }

@@ -44,7 +44,7 @@ export interface Item {
 export interface OtherProf {
     id: string,
     name: string,
-    type: number,
+    type: number, // index of [OTHER, ARMOR, WEAPON, LANGUAGE, INSTRUMENT]
     content: string
 }
 

@@ -5,11 +5,14 @@
         Wrapper,
         Content,
     } from '@smui/tooltip';
-import InPlaceEdit from "../../../InPlaceEdit.svelte";
+    import InPlaceEdit from "../../../InPlaceEdit.svelte";
+    import { onMount } from "svelte";
 
     export let character: Character;
 
     type RollNotationRegexGroups = { groups: { diceCount: string, diceSides: string } } | null;
+
+    onMount (() => parseHitDiceStr());
 
     const parseHitDiceStr = () => {
         const splitHDTotal = character.hd_total.split(' ');

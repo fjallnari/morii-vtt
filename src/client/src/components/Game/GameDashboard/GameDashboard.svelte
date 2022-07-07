@@ -5,9 +5,11 @@
     import { selectedCharacter, socket } from "../../../stores";
     import CharacterSheetRouter from "../CharacterSheet/CharacterSheetRouter.svelte";
     import CharactersList from "./CharactersList.svelte";
+    import CreateNpc from "./CreateNpc.svelte";
     import NpcList from "./NpcList.svelte";
 
     export let gameData: GameData;
+    let createMenuEnabled: boolean = false;
 
     $socket.on('change-character', (modifiedCharacter: Character) => {
         const index = gameData.characters.findIndex( char => char._id === modifiedCharacter._id);
@@ -46,7 +48,11 @@
         <CharactersList gameData={gameData} getClassIcon={getClassIcon}></CharactersList>
         <div class="npcs">
             <h3>NPCs</h3>
-            <NpcList gameData={gameData} getClassIcon={getClassIcon}></NpcList>
+            {#if createMenuEnabled}
+                <CreateNpc gameData={gameData} bind:createMenuEnabled={createMenuEnabled}></CreateNpc>
+            {:else}
+                <NpcList gameData={gameData} getClassIcon={getClassIcon} bind:createMenuEnabled={createMenuEnabled}></NpcList>
+            {/if}
         </div>
     </div>
 {/if}

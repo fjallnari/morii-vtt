@@ -1,6 +1,5 @@
 <script lang="ts">
-    import axios from 'axios';
-    import { params } from "svelte-spa-router";
+
     import type { Character } from '../../../interfaces/Character';
     import type GameData from '../../../interfaces/GameData';
     import { selectedCharacter } from '../../../stores';
@@ -8,24 +7,13 @@
 
     export let gameData: GameData;
     export let getClassIcon: (character: Character) => string;
+    export let createMenuEnabled: boolean;
 
-    const createNPC = async () => {
-		try {
-            const response = await axios.post('/api/create-npc', {
-                campaignID: $params.id,
-            });
 
-            const newNpc = response.data.characterInfo;
-            gameData.npcs = gameData.npcs.concat([newNpc]);
-		}
-		catch (err) {
-            console.log(err);
-		}
-	}
 
 </script>
 
-<BoxWithList label={''} addNewListItem={() => createNPC()} isModifyDisabled>
+<BoxWithList label={''} addNewListItem={() => createMenuEnabled = true} isModifyDisabled>
     <div class="npc-list" slot='list'>
         {#each gameData.npcs as npc}
             <box class="npc-main-container" on:click={() => selectedCharacter.set(npc)}>

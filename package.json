@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-server": "tsc",
+    "build-server": "tsc --outDir dist",
     "build-client": "cd src/client && yarn build-prod && cd ../..",
     "start-server-dev": "ts-node-dev src/index.ts",
     "run-dev": "yarn build-client && yarn start-server-dev",

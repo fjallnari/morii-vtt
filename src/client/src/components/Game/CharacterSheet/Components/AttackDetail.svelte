@@ -13,7 +13,7 @@
 
     const getAttackFormula = () => {
         return $formatModifier(
-            (attack.atk_ability !== '---' ? ~~$getASModifier(attack.atk_ability) : 0) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus
+            (attack.atk_ability !== '---' && attack.atk_ability !== '' ? ~~$getASModifier(attack.atk_ability) : 0) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus
         );
     }
 
@@ -25,7 +25,7 @@
     }
 
     const getUnbiasedModifier = (abilityTag: string) => {
-        return (abilityTag !== '---' ? ~~$getASModifier(abilityTag) : 0);
+        return (abilityTag !== '---' && abilityTag !== '' ? ~~$getASModifier(abilityTag) : 0);
     } 
 
     const getDmgModifier = (abilityTag: string) => {

@@ -20,7 +20,7 @@ export default class CreateCharacterController extends RouteController {
             const usersCollection = <Collection<Document>> await getCollection('users');
             const charactersCollection = <Collection<Document>> await getCollection('characters');
 
-            const newCharacterObj = Object.assign(CHARACTER_SKELETON, { _id: new ObjectId(), playerID: userID, ... characterTemplate });
+            const newCharacterObj = Object.assign({}, { _id: new ObjectId(), playerID: userID, ... CHARACTER_SKELETON, ... characterTemplate });
 
             const insertResult = await charactersCollection.insertOne(newCharacterObj);
             const newCharacterID = insertResult.insertedId;

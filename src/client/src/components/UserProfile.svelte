@@ -29,6 +29,7 @@
         justify-content: flex-end;
         align-items: center;
         height: 4em;
+        position: relative;
     }
 
     #menu-profile {

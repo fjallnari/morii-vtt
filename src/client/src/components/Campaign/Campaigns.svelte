@@ -28,7 +28,6 @@
 <div class="campaigns-content">
     <List
         class="demo-list"
-        style="width: 36em; text-align: left; gap: 1em;"
         twoLine
         singleSelection
     >
@@ -73,9 +72,20 @@
     }
 
     .campaigns-content {
-        height: 25em;
         overflow-y: auto;
         overflow-x: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        width: 85%;
+    }
+
+    :global(.campaigns-content ul) {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        text-align: left; 
     }
 
     .role-image {

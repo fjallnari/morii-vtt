@@ -2,14 +2,12 @@
     import IconButton from '@smui/icon-button';
     import List, {
         Item,
-        Graphic,
         Separator,
-        Meta,
         Text,
     } from '@smui/list';
     import { push, replace } from 'svelte-spa-router';
 
-    import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
+    import { campaignDetailActive, selectedCampaign } from '../../stores';
     import CampaignLeave from './CampaignLeave.svelte';
 
 </script>
@@ -19,10 +17,8 @@
         <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => {push(`/game/${$selectedCampaign._id}`)}}>play_arrow</IconButton>
         <CampaignLeave></CampaignLeave>
     </div>
-    <div id="players-list">
-        <List
-        style="width: 34em; text-align: left; gap: 1em;"
-        >
+    <div class="players-list">
+        <List>
         <Item style="font-family: Montserrat">
             <img class="player-role-image" src="../static/crown.svg" alt="crown">
             <Text>
@@ -52,9 +48,17 @@
     .campaign-detail-content {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        width: 85%;
         gap: 1em;
+    }
+
+    :global(.players-list ul) {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        text-align: left;
     }
 
     .campaign-action-bar {

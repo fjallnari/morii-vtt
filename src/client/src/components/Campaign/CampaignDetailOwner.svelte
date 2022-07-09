@@ -2,7 +2,6 @@
     import IconButton from '@smui/icon-button';
     import List, {
         Item,
-        Graphic,
         Separator,
         Meta,
         Text,
@@ -10,11 +9,9 @@
     import axios from 'axios';
     import { push, replace } from 'svelte-spa-router';
     import type UserSimple from '../../interfaces/UserSimple';
-    import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
+    import { campaignDetailActive, selectedCampaign } from '../../stores';
     import CampaignDelete from './CampaignDelete.svelte';
     import CreateInviteCode from './CreateInviteCode.svelte';
-
-    let options = [ 'Cyril', 'Tom Bombadill', 'Queen Elisabeth The Thirteenth of Her Name, Leader of The Island Folk'];
 
 
     const kickPlayer = async (kickedPlayer: UserSimple) => {
@@ -44,10 +41,8 @@
         <CreateInviteCode></CreateInviteCode>
         <CampaignDelete></CampaignDelete>       
     </div>
-    <div id="players-list">
-        <List
-        style="width: 34em; text-align: left; gap: 1em;"
-        >
+    <div class="players-list">
+        <List>
         <Item style="font-family: Montserrat">
             <img class="player-role-image" src="../static/crown.svg" alt="crown">
             <Text>
@@ -80,9 +75,17 @@
     .campaign-detail-content {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        width: 85%;
         gap: 1em;
+    }
+
+    :global(.players-list ul) {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        text-align: left;
     }
 
     .campaign-action-bar {

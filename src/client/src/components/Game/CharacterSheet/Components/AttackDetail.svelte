@@ -86,7 +86,7 @@
                 <justify-filler></justify-filler>
                 {#if attack.versatile_die}
                     <img class="skill-prof-icon" 
-                        src="../static/{attack.versatile_active ? 'two': 'one'}-handed.svg" 
+                        src="../static/{attack.versatile_active ? 'hand-clap': 'hand-one'}.svg" 
                         alt="versatile"
                         on:click={() => { attack.versatile_active = !attack.versatile_active; $modifyCharacter() }}
                     >

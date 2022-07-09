@@ -40,8 +40,7 @@
 
     .skill-prof-icon {
         cursor: pointer;
-        width: 1.8em; 
-        height: 1.8em;
+        width: 1.5vw;
     }
 
 </style>

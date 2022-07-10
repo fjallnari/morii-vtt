@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Character, Feature } from "../../../../interfaces/Character";
     import { modifyCharacter } from '../../../../stores';
-    import IconButton, { Icon } from '@smui/icon-button';
+    import { Icon } from '@smui/icon-button';
     import { v4 as uuidv4 } from 'uuid';
     import FeatureDetail from "./FeatureDetail.svelte";
     export let character: Character;
@@ -25,7 +25,7 @@
             content: ''
         }
 
-        character.features.push(featureSkeleton);
+        character.features = character.features.concat([featureSkeleton]);
     }
 
     const isSelectedType = (filteredType: number, profType: number) => {
@@ -47,7 +47,7 @@
     </div>
     <div class="inside-box-list">
         {#each character.features.filter( feature => isSelectedType(currentFilter, feature.type)) as feature}
-            <FeatureDetail feature={feature} character={character}></FeatureDetail>
+            <FeatureDetail bind:feature={feature} bind:character={character}></FeatureDetail>
         {/each}
         <sendable class="add-new-item" on:click={() => { addNewFeature(); $modifyCharacter() }}>
             <Icon class="material-icons">{'add'}</Icon>

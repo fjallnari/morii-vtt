@@ -21,13 +21,14 @@
 
     modifyCharacter.set(async () => {
         try {
-            await axios.post('/api/modify-character', {
-                modifiedCharacter: character,
-            });
             // don't send socket emit if the character is an npc
             if ($user.gameData.owner !== character.playerID) {
                 $socket.emit('change-character', { modifierID: $user._id, roomID: $params.id, character: character });
             }
+
+            await axios.post('/api/modify-character', {
+                modifiedCharacter: character,
+            });
         }
         catch (err){
             console.log(err);

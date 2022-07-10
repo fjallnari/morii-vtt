@@ -4,7 +4,7 @@
     import { selectedCharacter } from "../../../stores";
 
     export let gameData: GameData;
-    export let getClassIcon: (character: Character) => string;
+    export let getClassIcon: (character: Character) => string[];
 
 </script>
 
@@ -16,7 +16,12 @@
         {:else}
             {#each gameData.characters as character}
                 <li class="character-item" on:click={() => selectedCharacter.set(character)}>
-                    <img id="tile" src="../static/class-icons/{getClassIcon(character)}.svg" alt="class-icon">
+                    <class-icon>
+                        <img id="main-class" src="../static/class-icons/{getClassIcon(character)[0]}.svg" alt="class-icon">
+                        {#if getClassIcon(character).length > 2}
+                            <img id="multi-class" src="../static/class-icons/{getClassIcon(character)[2]}.svg" alt="class-icon">
+                        {/if}
+                    </class-icon>
                     <div class="character-name">
                         {character.name}
                     </div>
@@ -66,10 +71,24 @@
         border-radius: 4px;
     }
 
-    #tile {
+    class-icon {
         border-radius: 25%;
         width: 5em;
         height: 5em;
+        position: relative;
+    }
+
+    #main-class {
+        width: 100%;
+        height: 100%;
+    }
+
+    #multi-class {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 3em;
+        height: 3em;
     }
     
     .character-name {

@@ -31,7 +31,7 @@
             at_higher_levels: ''
         }
 
-        character.spells_by_level[spellLevel].spells.push(Object.assign(spellSkeleton, { ...spellTemplate }));
+        character.spells_by_level[spellLevel].spells = character.spells_by_level[spellLevel].spells.concat([Object.assign(spellSkeleton, { ...spellTemplate })]);
     };
 
     const spellGridClasses = ['cantrips'].concat([...Array(9)].map((_, i) => `level-${1 + i}`)); // ~= ['cantrips', 'level-1', 'level-2', etc.]
@@ -57,7 +57,7 @@
             <BoxWithList label={spellGridClass.split('-').join(' ')} styleClass={spellLevel === 0 ? '' : 'spell-box-with-slots'} addNewListItem={() => addNewSpell(spellLevel)}>
                 <div class="spell-list" slot='list'>
                     {#each character.spells_by_level[spellLevel].spells as spell}
-                        <SpellDetail spell={spell} character={character}></SpellDetail>
+                        <SpellDetail bind:spell={spell} bind:character={character}></SpellDetail>
                     {/each}  
                 </div>
             </BoxWithList>

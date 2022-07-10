@@ -6,7 +6,6 @@
     import Attacks from './Components/Attacks.svelte';
     import CharacterSheetMenu from './Components/CharSheetMenu.svelte';
     import DeathSaves from './Components/DeathSaves.svelte';
-    import Equipment from './Components/Equipment.svelte';
     import Exhaustion from './Components/Exhaustion.svelte';
     import Features from './Components/Features.svelte';
     import HitDice from './Components/HitDice.svelte';
@@ -14,6 +13,7 @@
     import ProfBonusInspiration from './Components/ProfBonusInspiration.svelte';
     import Speed from './Components/Speed.svelte';
     import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
+    import Inventory from './Components/Inventory.svelte';
 
     export let character: Character;
 
@@ -72,8 +72,8 @@
         <Attacks bind:character={character}></Attacks>
     </div>
 
-    <div class="equipment">
-        <Equipment bind:character={character}></Equipment>
+    <div class="inventory">
+        <Inventory bind:character={character}></Inventory>
     </div>
 
     <div class="other-prof-languages">
@@ -112,9 +112,9 @@
         "ability-scores-bonuses character-stats features-traits"
         "ability-scores-bonuses attacks features-traits"
         "ability-scores-bonuses attacks features-traits"
-        "ability-scores-bonuses equipment features-traits"
-        "ability-scores-bonuses equipment features-traits"
-        "ability-scores-bonuses equipment features-traits"
+        "ability-scores-bonuses inventory features-traits"
+        "ability-scores-bonuses inventory features-traits"
+        "ability-scores-bonuses inventory features-traits"
         "ability-scores-bonuses char-sheet-menu features-traits"; 
     }
 
@@ -228,7 +228,7 @@
         align-items: center;
     }
 
-    .equipment { grid-area: equipment;
+    .inventory { grid-area: inventory;
         display: flex;
         justify-content: center;
         align-items: center; 

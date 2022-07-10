@@ -30,12 +30,13 @@
         selectedCharacter.set(undefined);
     });
 
-    const getClassIcon = (character: Character) => {
-        const classes = character.classes.split(' ');
-        const className = classes[0].toLowerCase();
-        const validatedClassName = CLASS_NAMES.includes(className) ? className : 'no-class';
+    const validateClassName = (className: string) => {
+        return CLASS_NAMES.includes(className) ? className : 'no-class';  
+    }
 
-        return classes.length <= 2 ? validatedClassName : 'multiclass-mockup';
+    const getClassIcon = (character: Character) => {
+        const classes = character.classes.split(' ').map(charClass => charClass.toLowerCase());
+        return classes.length <= 2 ? [validateClassName(classes[0])] : classes.map(charClass => validateClassName(charClass));
     }
 
 </script>

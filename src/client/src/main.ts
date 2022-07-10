@@ -7,7 +7,7 @@ const app = new App({
 	target: document.body
 });
 
-export const ajv = new Ajv();
+export const ajv = new Ajv({allowUnionTypes: true});
 export const validateCharacter = ajv.compile(characterSchema);
 export const validateVTTESCharacter = ajv.compile(characterVTTESSchema);
 export const fileReader = new FileReader();

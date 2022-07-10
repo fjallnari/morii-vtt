@@ -27,7 +27,7 @@
             //// properties: [] // only property ids are saved, e.g. 0 ~ Ammunition
         }
 
-        character.attacks.push(attackObjSkeleton);
+        character.attacks = character.attacks.concat([attackObjSkeleton]);
         return attackObjSkeleton.id;
     });
 

@@ -1,37 +1,21 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
-    import type { AbilitySkill, Character } from '../../../interfaces/Character';
-    import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from "../../../stores";
-    import InPlaceEdit from '../../InPlaceEdit.svelte';
+    import type { Character } from '../../../interfaces/Character';
     import InPlaceEditBox from '../../InPlaceEditBox.svelte';
+    import AbilityScores from './Components/AbilityScores.svelte';
     import ArmorClass from './Components/ArmorClass.svelte';
     import Attacks from './Components/Attacks.svelte';
     import CharacterSheetMenu from './Components/CharSheetMenu.svelte';
     import DeathSaves from './Components/DeathSaves.svelte';
-    import Equipment from './Components/Equipment.svelte';
     import Exhaustion from './Components/Exhaustion.svelte';
     import Features from './Components/Features.svelte';
     import HitDice from './Components/HitDice.svelte';
     import HitPoints from './Components/HitPoints.svelte';
+    import ProfBonusInspiration from './Components/ProfBonusInspiration.svelte';
     import Speed from './Components/Speed.svelte';
     import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
+    import Inventory from './Components/Inventory.svelte';
 
     export let character: Character;
-
-    const getSkill = (AS: string, skillName: string) => {
-        return character.ability_scores[AS].skills.find(skill => skill.name === skillName);
-    }
-
-    const getSkillModifier = (AS: string, skill: AbilitySkill) => {
-        return $getASModifier(AS) + (skill.proficiency * ~~character.prof_bonus);
-    }
-
-    const getSavingThrowModifier = (AS: string) => {
-        return $getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
-    }
-
-    $: weight_of_items = character.inventory.filter(item => item.has_weight).reduce((sum, item) => sum + ~~item.weight, 0);
-    $: carrying_capacity = ~~character.ability_scores['STR'].value * 15;
 
 </script>
 
@@ -51,106 +35,10 @@
 
     <div class="ability-scores-bonuses">
         <div class="bonuses">
-            <div class="row-box-with-label">
-                <box class="row-box-value">
-                    <InPlaceEdit bind:value={character.prof_bonus} editWidth="2em" editHeight="2em" on:submit={() => $modifyCharacter()}/>
-                </box>
-                <box class="row-box-label">
-                    Proficiency Bonus    
-                </box>
-            </div>
-            <div class="row-box-with-label">
-                <!-- inverts inspiration value on click -->
-                <box class="row-box-value" style="cursor: pointer;" on:click={() => { character.inspiration = !character.inspiration; $modifyCharacter() }}>
-                    <Icon class="material-icons">{character.inspiration ? 'auto_awesome': ''}</Icon>
-                </box>
-                <box class="row-box-label">
-                    Inspiration    
-                </box>
-            </div>
+            <ProfBonusInspiration bind:character={character}></ProfBonusInspiration>
         </div>
         <div class="ability-scores">
-            {#each Object.keys(character.ability_scores) as AS}
-                <div class="ability-score-container" style="{['WIS', 'INT'].includes(AS) ? 'padding-bottom: 2.2em;': ''}">
-                    <div class="ability-score-info">
-                        <box class="ability-score-modifier">
-                            {$formatModifier($getASModifier(AS))}
-                        </box>
-
-                        <div class="ability-score-value">
-                            <InPlaceEditBox 
-                                bind:value={character.ability_scores[AS].value}
-                                boxLabel={character.ability_scores[AS].name}
-                                inlineStyle="flex-grow: 2;" 
-                                editWidth="2em">
-                            </InPlaceEditBox>
-                        </div>
-                    </div>
-
-                    <div class="skills">
-                        <div class="skill-field">
-                            <img class="skill-prof-icon" 
-                                src="../static/rhombus{character.ability_scores[AS].saving_throw ? '' : '-outline'}.svg" 
-                                alt="rhombus"
-                                on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; $modifyCharacter() }}
-                            >
-                            <mod>
-                                {$formatModifier(getSavingThrowModifier(AS))}
-                            </mod>
-                            <sendable on:click={() => { $sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`) }}>{AS} saving throws<br></sendable>
-                        </div>
-                        {#each character.ability_scores[AS].skills as skill}
-                            <div class="skill-field">
-                                <!-- cycles through proficiency values 0, 1 and 2 -->
-                                <img class="skill-prof-icon" 
-                                    src="../static/{['checkbox-blank-outline', 'checkbox-marked', 'flare'][skill.proficiency]}.svg" 
-                                    alt="checkbox"
-                                    on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}
-                                >
-                                <mod>{$formatModifier(getSkillModifier(AS, skill))}</mod>
-                                <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name) }}>{skill.name}<br></sendable>
-                            </div>
-                        {/each}
-                    </div>
-                    {#if AS === 'WIS'}
-                        <box class="additional-skill-box">
-                            <div class="box-with-label">
-                                <div class="box-main-text">
-                                    {10 + getSkillModifier('WIS', character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception'))}
-                                </div>
-                                <div class="box-justify-filler"></div>
-                                <div class="box-label">
-                                    Passive Perception
-                                </div>
-                            </div>
-                        </box>
-                    {:else if AS === 'DEX'}
-                        <box class="additional-skill-box">
-                            <div class="box-with-label">
-                                <div class="box-main-text">
-                                    {$formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
-                                </div>
-                                <div class="box-justify-filler"></div>
-                                <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`)}>
-                                    Initiative
-                                </sendable>
-                            </div>
-                        </box>
-                    {:else if AS === 'STR' && character.settings.use_encumbrance}
-                    <box class="additional-skill-box">
-                        <div class="box-with-label">
-                            <div class="box-main-text" style="{weight_of_items > carrying_capacity ? 'color: #BC4B51' : ''}">
-                                {weight_of_items}/{carrying_capacity}
-                            </div>
-                            <div class="box-justify-filler"></div>
-                            <div class="box-label">
-                                Carrying Capacity
-                            </div>
-                        </div>
-                    </box>
-                    {/if}
-                </div>
-            {/each}
+            <AbilityScores bind:character={character}></AbilityScores>
         </div>
     </div>
 
@@ -184,8 +72,8 @@
         <Attacks bind:character={character}></Attacks>
     </div>
 
-    <div class="equipment">
-        <Equipment bind:character={character}></Equipment>
+    <div class="inventory">
+        <Inventory bind:character={character}></Inventory>
     </div>
 
     <div class="other-prof-languages">
@@ -224,9 +112,9 @@
         "ability-scores-bonuses character-stats features-traits"
         "ability-scores-bonuses attacks features-traits"
         "ability-scores-bonuses attacks features-traits"
-        "ability-scores-bonuses equipment features-traits"
-        "ability-scores-bonuses equipment features-traits"
-        "ability-scores-bonuses equipment features-traits"
+        "ability-scores-bonuses inventory features-traits"
+        "ability-scores-bonuses inventory features-traits"
+        "ability-scores-bonuses inventory features-traits"
         "ability-scores-bonuses char-sheet-menu features-traits"; 
     }
 
@@ -239,36 +127,6 @@
         font-size: 2em;
         margin: 0.4em 0em 0em 0.4em;
         width: inherit;
-    }
-
-    .row-box-with-label {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .row-box-value {
-        display: flex;
-        width: 2em;
-        height: 2em;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5em;
-        font-weight: bold;
-        font-family: Quicksand;
-        z-index: 2;
-    }
-
-    .row-box-label {
-        padding: 0.5em;
-        text-transform: uppercase;
-        font-family: Athiti;
-        margin-left: -5px;
-        z-index: 1;
-        padding-left: 15px;
-        padding-right: 0.75em;
     }
 
     .character-basic-info { grid-area: character-basic-info;
@@ -307,83 +165,6 @@
         justify-content: flex-start;
         align-items: center;
         padding-top: 0.25em;
-    }
-
-    .ability-score-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-        gap: 0.5em;
-    }
-
-    .ability-score-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .ability-score-modifier {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        height: 2.5em;
-        width: 2.5em;
-        z-index: 2;
-        margin-bottom: -1.2em;
-
-        font-size: 1.2em;
-        font-weight: bold;
-        font-family: Quicksand;
-    }
-
-    .ability-score-value {
-        width: 5em;
-        height: 5em;
-    }
-
-    .ability-score-value :global(.box-main-text) {
-        margin-bottom: -1.5em
-    }
-
-    .skills {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        text-align: center;
-        width: inherit;
-        height: 7em;
-        font-family: Quicksand;
-        font-size: medium;
-        text-transform: capitalize;
-    }
-
-    .skill-field {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-    }
-
-    .skill-prof-icon {
-        cursor: pointer; 
-        height: 1.4em; 
-        width: 1.4em;
-    }
-
-    .additional-skill-box {
-        padding: 0.4em;
-    }
-
-    .additional-skill-box .box-main-text {
-        font-weight: bold;
-        font-size: 1.2em;
-        padding-bottom: 0.8em;
     }
 
     .character-stats { grid-area: character-stats;
@@ -447,7 +228,7 @@
         align-items: center;
     }
 
-    .equipment { grid-area: equipment;
+    .inventory { grid-area: inventory;
         display: flex;
         justify-content: center;
         align-items: center; 

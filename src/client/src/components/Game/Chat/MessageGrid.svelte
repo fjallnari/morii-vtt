@@ -22,7 +22,7 @@
     {#if message && message.isPublic}
         <div class="sender-pfp">
             {#if $user.gameData && message.senderInfo._id === $user.gameData.owner}
-                <img src="../static/crown.svg" alt="crown">
+                <img src="../static/crown.svg" alt="gm">
             {:else}
                 <img style="background-color: #{message.senderInfo.settings.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.settings.pfpID]}.svg" alt="pfp">
             {/if}

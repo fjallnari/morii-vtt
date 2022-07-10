@@ -21,7 +21,7 @@
             want_tooltip: false,
         }
 
-        character.inventory.push(itemSkeleton);
+        character.inventory = character.inventory.concat([itemSkeleton]);
         return itemSkeleton.id;
     }
 

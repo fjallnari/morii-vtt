@@ -17,7 +17,7 @@
             content: ''
         }
 
-        character.other_profs.push(profSkeleton);
+        character.other_profs = character.other_profs.concat([profSkeleton]);
     }
 
     const addNewTool = () => {
@@ -28,7 +28,7 @@
             proficiency: 1
         }
 
-        character.tools.push(toolSkeleton);
+        character.tools = character.tools.concat([toolSkeleton]);
     }
 
     const isSelectedType = (filteredType: number, profType: number) => {
@@ -42,7 +42,7 @@
     <box class="tools inside-box-content">
         <div class="inside-box-list">
             {#each character.tools as tool}
-                <ToolDetail tool={tool} character={character}></ToolDetail>
+                <ToolDetail bind:tool={tool} bind:character={character}></ToolDetail>
             {/each}
             <sendable class="add-new-item" on:click={() => { addNewTool(); $modifyCharacter() }}>
                 <Icon class="material-icons">{'add'}</Icon>
@@ -67,7 +67,7 @@
         </div>
         <div class="inside-box-list">
             {#each character.other_profs.filter( prof => isSelectedType(currentFilter, prof.type)) as other_prof}
-                <OtherProfDetail other_prof={other_prof} character={character}></OtherProfDetail>
+                <OtherProfDetail bind:other_prof={other_prof} bind:character={character}></OtherProfDetail>
             {/each}
             <sendable class="add-new-item" on:click={() => { addNewProf(); $modifyCharacter() }}>
                 <Icon class="material-icons">{'add'}</Icon>

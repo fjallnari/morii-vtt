@@ -392,7 +392,7 @@ export class CharacterVTTESConverter {
             subclass: this.getAttribute(/^subclass$/),
             race: this.getAttribute(/^race$/),
             background: this.getAttribute(/^background$/),
-            prof_bonus: new Intl.NumberFormat("en-US", { signDisplay: 'exceptZero'}).format(~~this.getAttribute(/^pb$/)),
+            prof_bonus: new Intl.NumberFormat("en-US", { signDisplay: 'always'}).format(~~this.getAttribute(/^pb$/)),
             inspiration: this.getAttribute(/^inspiration$/) !== "0",
             ability_scores: { 
                 'STR': {

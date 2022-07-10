@@ -42,7 +42,7 @@
     </form>
 {:else}
     <div on:click={() => edit()}>
-        {value ? value : defaultValue}
+        {value && value.trim() ? value : defaultValue}
     </div>
 {/if}
 

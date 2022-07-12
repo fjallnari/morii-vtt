@@ -1,6 +1,6 @@
 <script lang="ts">
     import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
-    import { modifyCharacter, selectedCharacter, user, socket } from "../../../stores";
+    import { modifyCharacter, selectedCharacter, user, socket, ownerSocketID, userIDPairs } from "../../../stores";
     import Button, { Label } from '@smui/button';
     import Dialog, { Content, Actions } from '@smui/dialog';
     import { params, replace } from "svelte-spa-router";
@@ -16,14 +16,15 @@
 
     const deleteCharacter = async () => {
         try {
+            const isNPC = character.playerID === $user.gameData.owner;
             await axios.post('/api/delete-character', {
                 campaignID: $params.id,
                 characterID: character._id,
                 playerID: character.playerID,
-                isNPC: character.playerID === $user.gameData.owner
+                isNPC: isNPC
             });
-
-            $socket.emit('delete-character', { modifierID: $user._id, roomID: $params.id, character: character, isNPC: character.playerID === $user.gameData.owner });
+            
+            $socket.emit('delete-character', { ownerSocketID: $ownerSocketID, userSocketID: $userIDPairs[character.playerID], characterID: character._id, isNPC: isNPC });
             selectedCharacter.set(undefined);
             character = undefined;
 		}

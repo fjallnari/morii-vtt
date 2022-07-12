@@ -27,6 +27,14 @@ const main = async () => {
             socketsController.joinRoom(socket, data);
         });
 
+        socket.on('ack-join', data => {
+            socketsController.ackUserJoin(socket, data);
+        });
+
+        socket.on('ack-owner-join', data => {
+            socketsController.ackOwnerJoin(socket, data);
+        });
+
         socket.on('chat-message', data => {
             socketsController.handleMessage(socket, data);
         });

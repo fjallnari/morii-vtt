@@ -2,7 +2,7 @@
     import type GameData from "../../interfaces/GameData";
     import axios from 'axios';
     import { params, replace } from "svelte-spa-router";
-    import { user, socket } from '../../stores';
+    import { user, socket, ownerSocketID } from '../../stores';
     import SimpleButton from "../SimpleButton.svelte";
     import CharacterSheetRouter from "./CharacterSheet/CharacterSheetRouter.svelte";
     import { fileReader, validateCharacter, validateVTTESCharacter } from "../../main";
@@ -23,7 +23,9 @@
 
             character = response.data.characterInfo;
 			user.set(Object.assign($user, {gameData: Object.assign( gameData, { characters: gameData.characters.concat([response.data.characterInfo]) })}));
-            $socket.emit('add-character', { modifierID: $user._id, roomID: $params.id, character: character });
+            if ($ownerSocketID) {
+                $socket.emit('add-character', { ownerSocketID: $ownerSocketID, character: character });
+            }
 		}
 		catch {
             replace('/');
@@ -33,7 +35,7 @@
     let fileInput: HTMLInputElement;
     let fileInputVTTES: HTMLInputElement;
 
-    const createValidatedCharacter = (characterObj, isVTTES: boolean) => {
+    const createValidatedCharacter = (characterObj: object, isVTTES: boolean) => {
         const isValid = isVTTES ? validateVTTESCharacter(characterObj) : validateCharacter(characterObj);
 
         if (!isValid) {

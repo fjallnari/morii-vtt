@@ -22,7 +22,7 @@
 
 <tab-container>
     <div class="character-name">
-        <InPlaceEditBox bind:value={character.name} boxLabel="Character Name"></InPlaceEditBox>  
+        <InPlaceEditBox bind:value={character.name} characterLimit={20} boxLabel="Character Name"></InPlaceEditBox>  
     </div>
 
     <div class="character-basic-info">

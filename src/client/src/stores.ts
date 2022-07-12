@@ -5,15 +5,16 @@ import type Campaign from './interfaces/Campaign';
 import type { Character } from './interfaces/Character';
 import type User from './interfaces/User';
 
-
 export const accessToken = writable("");
 export const user: Writable<User> = writable();
 export const campaignNewActive: Writable<boolean> = writable(false);
 export const campaignDetailActive: Writable<boolean> = writable(false);
 export const selectedCampaign: Writable<Campaign> = writable();
-export const selectedCharacter: Writable<Character> = writable();
+export const selectedCharacter: Writable<Character> = writable(undefined);
 export const selectedCharacterTab: Writable<number> = writable(0);
 export const socket: Writable<Socket<DefaultEventsMap, DefaultEventsMap>> = writable();
+export const ownerSocketID: Writable<string> = writable("");
+export const userIDPairs: Writable<Record<string, string>> = writable({});
 export const isMessagePublic: Writable<boolean> = writable(true);
 export const modifyCharacter: Writable<() => Promise<void>> = writable();
 export const sendSkillCheck: Writable<(modifier: number, skillName: string, dice_type?: string) => Promise<void>> = writable();

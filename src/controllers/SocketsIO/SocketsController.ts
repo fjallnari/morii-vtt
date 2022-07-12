@@ -7,18 +7,20 @@ import Campaign from "../../interfaces/Campaign";
 import DiceHandler from "../../services/DiceHandler";
 import { DateTime } from "luxon";
 import MessageData from "../../interfaces/MessageData";
-import JoinRoomEmitData from "../../interfaces/JoinRoomEmitData";
-import ChangeCharacterEmitData from "../../interfaces/ChangeCharacterEmitData";
+import JoinRoomEmit from "../../interfaces/emits/JoinRoomEmit";
+import ChangeCharacterEmit from "../../interfaces/emits/ChangeCharacterEmit";
+import AddCharacterEmit from "../../interfaces/emits/AddCharacterEmit";
+import DeleteCharacterEmit from "../../interfaces/emits/DeleteCharacterEmit";
+import ACKUserJoinEmit from "../../interfaces/emits/ACKUserJoinEmit";
+import ACKOwnerJoinEmit from "../../interfaces/emits/ACKOwnerJoinEmit";
 
 
 export default class SocketsController {
     private io: SocketIO;
-    private rooms: Map<string, SocketRoomInfo>;
     private diceHandler: DiceHandler;
 
     constructor(io: SocketIO) {
         this.io = io;
-        this.rooms = new Map<string, SocketRoomInfo>();
         this.diceHandler = new DiceHandler();
     }
 
@@ -29,47 +31,36 @@ export default class SocketsController {
         return campaignInfo.owner.toString();
     }
 
-    public async changeCharacter(socket: Socket, data: ChangeCharacterEmitData) {
-        const socketRoom = this.rooms.get(data.roomID);
-        const ownerSocketID = <string> socketRoom?.owner?.socketID;
-        const playerSocketID = <string> socketRoom?.players?.[<string> data.character.playerID];
-
-        this.io.to([playerSocketID, ownerSocketID]).emit('change-character', data.character);
+    public async changeCharacter(_: Socket, data: ChangeCharacterEmit) {
+        this.io.to(data.receiverSocketID).emit('change-character', data.character);
     }
 
-    public async addCharacter(socket: Socket, data: ChangeCharacterEmitData) {
-        const socketRoom = this.rooms.get(data.roomID);
-        const ownerSocketID = <string> socketRoom?.owner?.socketID;
-        this.io.to([ownerSocketID]).emit('add-character', data.character);
+    public async addCharacter(_: Socket, data: AddCharacterEmit) {
+        this.io.to(data.ownerSocketID).emit('add-character', data.character);
     }
 
-    public async deleteCharacter(socket: Socket, data: ChangeCharacterEmitData) {
-        const socketRoom = this.rooms.get(data.roomID);
-        const ownerSocketID = <string> socketRoom?.owner?.socketID;
-        const playerSocketID = <string> socketRoom?.players?.[<string> data.character.playerID];
-
-        this.io.to([playerSocketID, ownerSocketID]).emit('delete-character', data.character, data.isNPC);
+    public async deleteCharacter(socket: Socket, data: DeleteCharacterEmit) {
+        const recipientSocketIDs = [...new Set([data.ownerSocketID, data.userSocketID, socket.id])].filter((socketID): socketID is string => !!socketID);
+        this.io.to(recipientSocketIDs).emit('delete-character', data.characterID, data.isNPC);
     }
 
     /**
-     * Saves socketID + userID pair to memory; also adds the user to the socket room
+     * Starts the 'user-joined-room' process, so the owner (if they have active socket) can get user's paired ids
+     * Also the users (again, if they are active) can get owner's socket id
+     * Pretty much puts keeping track of sockets onto individual clients, so the server can chill
      */
-    public async joinRoom(socket: Socket, data: JoinRoomEmitData) {
-        // if the first user joins, get & save owner's userID
-        if (! this.rooms.has(data.roomID)) {
-            const ownerID = await this.getOwnerID(data.roomID);
-            this.rooms.set(data.roomID, { owner: { userID: ownerID }, players: {}});
-        }
-
-        const roomInfo = this.rooms.get(data.roomID);
-
-        // fill in owner's socketID or add newly joined regular player to the record of players
-        this.rooms.set(data.roomID, Object.assign(roomInfo ? roomInfo : {}, 
-            data.userID === roomInfo?.owner?.userID ? { owner: { userID: data.userID, socketID: socket.id }} : 
-            { players: Object.assign(roomInfo?.players ? roomInfo?.players : {}, { [data.userID] : socket.id })}
-        ));
-
+    public async joinRoom(socket: Socket, data: JoinRoomEmit) {
+        const ownerID = await this.getOwnerID(data.roomID);
+        this.io.to(data.roomID).emit('user-joined-room', { userID: data.userID, socketID: socket.id, isOwner: data.userID === ownerID});
         socket.join(data.roomID);
+    }
+
+    public async ackUserJoin(_: Socket, data: ACKUserJoinEmit) {
+        this.io.to(data.joinedUserSocketID).emit('ack-join', data.ownerSocketID);
+    }
+
+    public async ackOwnerJoin(_: Socket, data: ACKOwnerJoinEmit) {
+        this.io.to(data.ownerSocketID).emit('ack-owner-join', { userID: data.userID, socketID: data.socketID });
     }
 
     /**
@@ -93,8 +84,7 @@ export default class SocketsController {
         Object.assign(messageData, { timestamp: timestamp });
 
         // sends message to either the whole room or only back to the sender
-        this.io.to(messageData.isPublic ? messageData.gameID : senderSocket.id)
-            .emit('chat-message', messageData);
+        this.io.to(messageData.isPublic ? messageData.gameID : senderSocket.id).emit('chat-message', messageData);
     }
     
 }

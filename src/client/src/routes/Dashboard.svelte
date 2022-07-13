@@ -1,12 +1,12 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
     import Campaigns from "../components/Campaign/Campaigns.svelte";
-    import UserProfile from "../components/UserProfile.svelte";
     import DashboardBox from "../components/DashboardBox.svelte";
     import { campaignNewActive, campaignDetailActive, selectedCampaign, user } from "../stores";
     import CampaignChoice from '../components/Campaign/CampaignChoice.svelte';
     import CampaignDetailOwner from "../components/Campaign/CampaignDetailOwner.svelte";
     import CampaignDetailPlayer from '../components/Campaign/CampaignDetailPlayer.svelte';
+    import DashboardHeader from '../components/Campaign/DashboardHeader.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
@@ -15,7 +15,7 @@
 
 <div class="upper-container">
     <div class="dashboard-container">
-        <UserProfile></UserProfile>
+        <DashboardHeader></DashboardHeader>
         <h1>Dashboard</h1>
         <div class="dashboard-content">
             <div class:active = {$campaignDetailActive} class="campaigns-list">

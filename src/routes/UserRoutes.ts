@@ -8,6 +8,7 @@ import LeaveCampaignController from '../controllers/Routes/UserAuth/LeaveCampaig
 import CreateCharacterController from '../controllers/Routes/UserAuth/CreateCharacterController';
 import ModifyCharacterController from '../controllers/Routes/UserAuth/ModifyCharacterController';
 import DeleteCharacterController from '../controllers/Routes/UserAuth/DeleteCharacterController';
+import ChangeUserSettingsController from '../controllers/Routes/UserAuth/ChangeUserSettingsController';
 
 const router = express.Router();
 
@@ -42,6 +43,10 @@ router.post('/api/modify-character', verifyToken, async (req, res, next) => {
 
 router.post('/api/delete-character', verifyToken, async (req, res, next) => {
     await new DeleteCharacterController(req, res).handleRequest();
+});
+
+router.post('/api/change-user-settings', verifyToken, async (req, res, next) => {
+    await new ChangeUserSettingsController(req, res).handleRequest();
 });
 
 export default router;

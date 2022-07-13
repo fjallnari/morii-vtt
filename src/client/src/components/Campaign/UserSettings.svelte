@@ -145,7 +145,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-
+        overflow: auto;
     }
 
     :global(.color-picker .main-container), :global(.color-picker .colorsquare), :global(.color-picker .saturation-gradient) {
@@ -167,13 +167,12 @@
         align-items: center; 
         gap: 1em;
 
-        padding: 0.1em 0.5em;
-        margin-top: 1em;
+        padding: 0.5em;
+        margin: 1em 4px 4px 4px;
         background-color:#212125;
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
         max-width: 70%;
-        height: 25%;
     }
 
     user-tag img {

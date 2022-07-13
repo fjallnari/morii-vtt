@@ -6,7 +6,7 @@ const ANIMALS = [
     "dragon",
     "elephant",
     "gecko",
-    "gorilla",
+    "anteater",
     "bee",
     "leaf",
     "octopus",

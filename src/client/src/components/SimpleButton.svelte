@@ -33,6 +33,7 @@
     style="--bg-color:{BUTTON_TYPES[type].bg_color}; --active-bg-color:{BUTTON_TYPES[type].active_bg_color};"
     {disabled}
     on:click={() => onClickFn()}
+    tabindex="0"
 >
     {#if icon}
         <Icon class="material-icons">{icon}</Icon>

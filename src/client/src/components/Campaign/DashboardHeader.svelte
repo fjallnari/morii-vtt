@@ -1,19 +1,19 @@
 <script lang="ts">
-    import { user } from "../stores";
-    import ANIMALS from "../enum/Animals";
-    import Logout from "./Logout.svelte";
+    import ANIMALS from "../../enum/Animals";
+    import { user } from "../../stores";
+    import UserSettings from "./UserSettings.svelte";
 
     let openSettings = false;
 
 </script>
 
-<div class="menu-top">
-    <div id="menu-profile" on:click={() => {openSettings = true}}>
-        <img id="pfp" style="background-color: #{$user.settings.pfpColor};" src="../static/pfp/{ANIMALS[$user.settings.pfpID]}.svg" alt="pfp">
+<header>
+    <user-tag on:click={() => {openSettings = true}}>
+        <img class="pfp" style="background-color: #{$user.settings.pfpColor};" src="../static/pfp/{ANIMALS[$user.settings.pfpID]}.svg" alt="pfp">
         <h3>{$user.username}</h3>
-    </div>
-</div>
-<Logout bind:open={openSettings}></Logout>
+    </user-tag>
+</header>
+<UserSettings bind:open={openSettings}></UserSettings>
 
 <style>
     h3 {
@@ -24,15 +24,14 @@
         font-weight: 400;
     }
 
-    .menu-top {
+    header {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        height: 4em;
         position: relative;
     }
 
-    #menu-profile {
+    user-tag {
         display: flex; 
         justify-content: center; 
         align-items: center; 
@@ -47,7 +46,7 @@
         border-radius: 4px;
     }
 
-    #pfp {
+    user-tag img {
         border-radius: 15%;
         width: 3em;
         height: 3em;

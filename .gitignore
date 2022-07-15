@@ -134,18 +134,10 @@ dist
 
 .tern-port
 
-# The Tyria map .jpg file
-
-tyria.jpg
-
-# Tiles bmap test folder
-
-output/tiles/*
-
-# Donwloaded tiles
-
-tiles/*
-
 # Environment variables
 
 .env
+
+# WSL junk files
+
+**/*Zone.Identifier

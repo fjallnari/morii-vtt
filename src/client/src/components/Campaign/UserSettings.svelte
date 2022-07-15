@@ -6,6 +6,7 @@
     import type UserSettings from '../../interfaces/UserSettings';
     import { accessToken, user } from '../../stores';
     import SimpleButton from '../SimpleButton.svelte';
+    // @ts-check
     import { HsvPicker } from 'svelte-color-picker';
     import axios from 'axios';
 

@@ -2,7 +2,7 @@
     import type { Character, Feature } from "../../../../interfaces/Character";
     import { modifyCharacter } from '../../../../stores';
     import { Icon } from '@smui/icon-button';
-    import { v4 as uuidv4 } from 'uuid';
+    import { nanoid } from 'nanoid/non-secure'
     import FeatureDetail from "./FeatureDetail.svelte";
     export let character: Character;
     let currentFilter = 0;
@@ -18,7 +18,7 @@
 
     const addNewFeature = () => {
         const featureSkeleton: Feature = {
-            id: uuidv4(),
+            id: nanoid(16),
             name: '',
             type: currentFilter === SOURCE_TYPES.ALL ? 0 : currentFilter - 1,
             source_name: '',

@@ -48,7 +48,7 @@
     }
 
     .current-speed-box .box-main-text {
-        font-weight: bold;
+        font-weight: var(--semi-bold);
         font-size: 1.2em;
     }
 

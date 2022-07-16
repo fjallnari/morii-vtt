@@ -1,6 +1,6 @@
 <script lang="ts">
     import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
-    import { v4 as uuidv4 } from 'uuid';
+    import { nanoid } from 'nanoid/non-secure'
     import type { Character, Spell } from "../../../interfaces/Character";
     import Spellcasting from "./Components/Spellcasting.svelte";
     import InPlaceEditBox from "../../InPlaceEditBox.svelte";
@@ -11,7 +11,7 @@
 
     const addNewSpell = (spellLevel: number, spellTemplate: object = {}) => {
         const spellSkeleton: Spell = {
-            id: uuidv4(),
+            id: nanoid(16),
             name: '',
             level: spellLevel,
             is_prepared: false,
@@ -68,16 +68,6 @@
 
 <style>
     tab-container {
-        height: inherit;
-        flex: 5;
-
-        background-color: #212125;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 4px;
-        
-        font-weight: 100;
-        font-family: Quicksand;
-
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         grid-template-rows: 1.25fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 

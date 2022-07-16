@@ -24,7 +24,7 @@
 
     .armor-class-wrapper :global(box .box-main-text) {
         font-size: 1.5em;
-        font-weight: bold;
+        font-weight: var(--semi-bold);
     }
 
     .armor-class-wrapper :global(box .box-label) {

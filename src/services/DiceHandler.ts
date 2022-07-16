@@ -1,4 +1,4 @@
-import { DiceRoll, DiceRoller, NumberGenerator } from '@dice-roller/rpg-dice-roller';
+import { DiceRoll, NumberGenerator } from '@dice-roller/rpg-dice-roller';
 import { RollResultData, SplitRolls } from '../interfaces/RollResultData';
 import { getErrorMessage } from '../util/getErrorMessage';
 

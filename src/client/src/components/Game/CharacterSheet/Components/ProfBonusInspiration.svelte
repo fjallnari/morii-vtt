@@ -42,7 +42,7 @@
         align-items: center;
         justify-content: center;
         font-size: 1.5em;
-        font-weight: bold;
+        font-weight: var(--semi-bold);
         font-family: Quicksand;
         z-index: 2;
     }

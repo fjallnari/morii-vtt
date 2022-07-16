@@ -42,7 +42,7 @@
         color: #fff;
         text-align: center;
         font-family: Montserrat;
-        font-weight: bold;
+        font-weight: var(--semi-bold);
     }
 
     .hp-bar-fill {

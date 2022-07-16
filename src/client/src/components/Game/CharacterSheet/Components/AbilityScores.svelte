@@ -133,7 +133,7 @@
         margin-bottom: -1.2em;
 
         font-size: 1.2em;
-        font-weight: bold;
+        font-weight: var(--semi-bold);
         font-family: Quicksand;
     }
 
@@ -177,7 +177,7 @@
     }
 
     .additional-skill-box .box-main-text {
-        font-weight: bold;
+        font-weight: var(--semi-bold);
         font-size: 1.2em;
         padding-bottom: 0.8em;
     }

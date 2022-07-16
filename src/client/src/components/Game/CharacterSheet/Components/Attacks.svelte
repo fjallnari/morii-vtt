@@ -1,6 +1,6 @@
 <script lang="ts">
-    import IconButton, { Icon } from '@smui/icon-button';
-    import { v4 as uuidv4 } from 'uuid';
+    import { Icon } from '@smui/icon-button';
+    import { nanoid } from 'nanoid/non-secure'
     import type { Attack, Character } from '../../../../interfaces/Character';
     import { createNewAttack, modifyCharacter } from '../../../../stores';
     import AttackDetail from "./AttackDetail.svelte";
@@ -11,7 +11,7 @@
 
     createNewAttack.set((customName: string = '', itemID: string = '') => {
         const attackObjSkeleton: Attack = {
-            id: uuidv4(),
+            id: nanoid(16),
             name: customName,
             atk_ability: '', // e.g. STR
             atk_bonus: '',

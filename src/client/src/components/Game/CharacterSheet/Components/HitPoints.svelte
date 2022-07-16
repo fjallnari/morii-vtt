@@ -54,7 +54,7 @@
         align-items: center;
         justify-content: center;
         font-size: 1.5em;
-        font-weight: bold;
+        font-weight: var(--semi-bold);
     }
 
     .hp-footer { grid-area: hp-footer;

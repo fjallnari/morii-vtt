@@ -17,3 +17,7 @@ h2 {
     font-family: Quicksand;
     padding-top: 10%;
 }
+
+strong {
+    font-weight: 600;
+}

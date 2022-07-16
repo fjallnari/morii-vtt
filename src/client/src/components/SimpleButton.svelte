@@ -59,7 +59,7 @@
         transition-duration: 200ms;
         transition-property: color;
 
-        font-weight: bold;
+        font-weight: var(--semi-bold);
         font-family: Athiti;
         text-transform: uppercase;
     }

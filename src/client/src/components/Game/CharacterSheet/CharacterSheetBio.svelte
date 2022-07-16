@@ -58,17 +58,7 @@
             "backstory treasury flaws"
             "backstory treasury other-notes"
             "backstory treasury other-notes"
-            "backstory char-sheet-menu other-notes"; 
-
-        height: inherit;
-        flex: 5;
-
-        background-color: #212125;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 4px;
-        
-        font-weight: 100;
-        font-family: Quicksand;
+            "backstory char-sheet-menu other-notes";
     }
 
     .character-additional-info { grid-area: character-additional-info; 

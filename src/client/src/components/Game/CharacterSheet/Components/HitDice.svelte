@@ -114,7 +114,7 @@
         justify-content: center;
         align-items: center;
         gap: 0.4em;
-        font-weight: bold;
+        font-weight: var(--semi-bold);
     }
 
     .hit-dice-single-type {

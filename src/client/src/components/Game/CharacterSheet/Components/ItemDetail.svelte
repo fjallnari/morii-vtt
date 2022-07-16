@@ -110,11 +110,6 @@
         gap: 0.5em;
         width: 97%;
         background-color: var(--secondary-box-background-color);
-        /*
-        border-bottom: 1px solid var(--primary-text-color);
-        border-image: linear-gradient(to right, rgba(108,219,141,0) 5%,#FCF7F8 25%,#FCF7F8 75%,rgba(108,219,141,0) 95%);
-        border-image-slice: 3;
-        */
     }
 
     .item-summary {
@@ -144,7 +139,7 @@
     }
 
     .main-item-info .item-amount {
-        font-weight: bold;
+        font-weight: var(--semi-bold);
         width: 2em;
         height: 1.5em;
         display: flex;

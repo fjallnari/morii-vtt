@@ -102,7 +102,7 @@
 
     .tool-name { grid-area: tool-name; }
     .tool-modifier { grid-area: tool-modifier; 
-        font-weight: bold;
+        font-weight: var(--semi-bold);
     }
     .tool-menu { grid-area: tool-menu; }
 

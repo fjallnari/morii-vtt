@@ -84,6 +84,18 @@
 <svelte:component this={tabsComponents[$selectedCharacterTab]} bind:character={character}></svelte:component>
 
 <style>
+    :global(tab-container) {
+        height: inherit;
+        flex: 5;
+
+        background-color: #212125;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        
+        font-weight: 400;
+        font-family: Quicksand;
+    }
+
     :global(box) {
         background-color: var(--primary-box-background-color);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -91,7 +103,7 @@
     }
 
     :global(mod) {
-        font-weight: bold;
+        font-weight: var(--semi-bold);
         border-bottom: 1px #F2E8CF dotted;
         min-width: 1.2em;
         margin: 0em 0.3em;
@@ -161,7 +173,7 @@
     :global(.box-label) {
         color: #FCF7F8;
         font-size: 0.6vw;
-        font-weight: 200;
+        font-weight: 400;
         font-family: Athiti;
         text-transform: uppercase;
     }

@@ -35,8 +35,7 @@
         messageText = '';
     }
 
-    const handleKeydown = (event) => {
-
+    const handleKeydown = (event: KeyboardEvent) => {
         // handles sending the message on 'Enter' keypress; Shift + Enter works as regular Enter key
         if (isMsgBoxFocused) {
             if (lastKeypress !== 'Shift' && event.key === 'Enter') {
@@ -56,7 +55,7 @@
             <MessageGrid message={message}></MessageGrid>
         {/each}
         <div class="help-message">
-            Dice rolling e.g. /r 1d20 + 2 or /roll 1d8 - 3
+            Use either /r or /roll to roll dice.<br>E.g. /r 5d4k2, /roll d20 - 2, /r 6d8dl2 + 1 ...
         </div>
     </div>
     <div class="send-message-box">

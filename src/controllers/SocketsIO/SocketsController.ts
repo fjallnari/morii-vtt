@@ -4,7 +4,6 @@ import { SocketRoomInfo } from "../../interfaces/SocketRoomInfo";
 import { getCollection } from "../../db/Mongo";
 import { Collection, Document, ObjectId, WithId } from "mongodb";
 import Campaign from "../../interfaces/Campaign";
-import DiceHandler from "../../services/DiceHandler";
 import { DateTime } from "luxon";
 import MessageData from "../../interfaces/MessageData";
 import JoinRoomEmit from "../../interfaces/emits/JoinRoomEmit";
@@ -13,6 +12,7 @@ import AddCharacterEmit from "../../interfaces/emits/AddCharacterEmit";
 import DeleteCharacterEmit from "../../interfaces/emits/DeleteCharacterEmit";
 import ACKUserJoinEmit from "../../interfaces/emits/ACKUserJoinEmit";
 import ACKOwnerJoinEmit from "../../interfaces/emits/ACKOwnerJoinEmit";
+import DiceHandler from "../../services/DiceHandler";
 
 
 export default class SocketsController {

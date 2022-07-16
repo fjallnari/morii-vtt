@@ -10,7 +10,6 @@ export enum PALETTE {
 
 
     RAISIN = "#1C1D21",
-    SNOW = "#FCF7F8",
     ORANGE = "#F96E46",
     MAIZE = "#E2C044",
     AMBER = "#FFBF00",
@@ -30,5 +29,6 @@ export enum PALETTE {
     APRICOT = "#FCC8B2",
     OLIVINE = "#A7C284",
     SPRING_BUD = "#DBD8B3",
-    ELEM_BCKG = "#212125"
+    ELEM_BCKG = "#212125",
+    SNOW = "#FCF7F8"
 }

@@ -58,8 +58,8 @@
         justify-content: center;
         flex-direction: row;
         align-items: center;
-        padding-right: 15em;
-        padding-left: 15em;
+        padding-right: 10%;
+        padding-left: 10%;
         position: relative;
     }
     

@@ -1,9 +1,9 @@
 <script lang="ts">
     import type { Character, OtherProf, Tool } from "../../../../interfaces/Character";
     import { modifyCharacter } from '../../../../stores';
-    import IconButton, { Icon } from '@smui/icon-button';
+    import { Icon } from '@smui/icon-button';
     import OtherProfDetail from "./OtherProfDetail.svelte";
-    import { v4 as uuidv4 } from 'uuid';
+    import { nanoid } from 'nanoid/non-secure';
     import ToolDetail from "./ToolDetail.svelte";
 
     export let character: Character;
@@ -11,7 +11,7 @@
 
     const addNewProf = () => {
         const profSkeleton: OtherProf = {
-            id: uuidv4(),
+            id: nanoid(16),
             name: '',
             type: currentFilter === 0 ? 0 : currentFilter - 1,
             content: ''
@@ -22,7 +22,7 @@
 
     const addNewTool = () => {
         const toolSkeleton: Tool = {
-            id: uuidv4(),
+            id: nanoid(16),
             name: '',
             ability: '',
             proficiency: 1

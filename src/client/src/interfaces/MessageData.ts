@@ -1,4 +1,4 @@
-import type RollResultData from "./RollResultData";
+import type { RollResultData } from "./RollResultData";
 import type SkillCheckInfo from "./SkillCheckInfo";
 import type UserSimple from "./UserSimple";
 

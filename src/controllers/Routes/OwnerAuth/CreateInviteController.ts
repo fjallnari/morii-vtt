@@ -2,8 +2,8 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
-import bcrypt from 'bcrypt'
-import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcrypt';
+import { nanoid } from 'nanoid/non-secure';
 
 export default class CreateInviteCodeController extends RouteController {
 
@@ -11,7 +11,7 @@ export default class CreateInviteCodeController extends RouteController {
         try {
             // TODO: verify if the owner of campaign is the one actually making the request
             const { campaignID, password } = this.req.body;
-            const inviteCode = uuidv4();
+            const inviteCode = nanoid(16);
     
             // hash password only if it exists
             const newInvite = {

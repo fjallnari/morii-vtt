@@ -1,10 +1,10 @@
 <script lang="ts">
     import { modifyCharacter } from "../../../../stores";
     import { Icon } from '@smui/icon-button';
-    import { v4 as uuidv4 } from 'uuid';
     import ItemDetail from "./ItemDetail.svelte";
     import type { Character, Item } from "../../../../interfaces/Character";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
+    import { nanoid } from 'nanoid/non-secure'
 
     export let character: Character;
 
@@ -12,7 +12,7 @@
 
     const addNewItem = () => {
         const itemSkeleton: Item = {
-            id: uuidv4(),
+            id: nanoid(16),
             name: '',
             is_equipped: false,
             amount: '1',

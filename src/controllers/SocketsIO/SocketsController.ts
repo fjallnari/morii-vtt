@@ -1,6 +1,5 @@
 import { Socket } from "socket.io";
 import SocketIO from "../../interfaces/SocketIO";
-import { SocketRoomInfo } from "../../interfaces/SocketRoomInfo";
 import { getCollection } from "../../db/Mongo";
 import { Collection, Document, ObjectId, WithId } from "mongodb";
 import Campaign from "../../interfaces/Campaign";

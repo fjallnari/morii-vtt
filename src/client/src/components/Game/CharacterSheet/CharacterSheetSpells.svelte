@@ -1,6 +1,6 @@
 <script lang="ts">
     import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
-    import { v4 as uuidv4 } from 'uuid';
+    import { nanoid } from 'nanoid/non-secure'
     import type { Character, Spell } from "../../../interfaces/Character";
     import Spellcasting from "./Components/Spellcasting.svelte";
     import InPlaceEditBox from "../../InPlaceEditBox.svelte";
@@ -11,7 +11,7 @@
 
     const addNewSpell = (spellLevel: number, spellTemplate: object = {}) => {
         const spellSkeleton: Spell = {
-            id: uuidv4(),
+            id: nanoid(16),
             name: '',
             level: spellLevel,
             is_prepared: false,

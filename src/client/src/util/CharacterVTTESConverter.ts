@@ -1,6 +1,6 @@
 import type { Attack, Feature, Item, OtherProf, Spell, Tool } from "../interfaces/Character";
 import type { AttributeVTTES, CharacterVTTES } from "../interfaces/CharacterVTTES";
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid/non-secure';
 
 /**
  * I mean, it ain't pretty, but it kinda works.
@@ -39,7 +39,7 @@ export class CharacterVTTESConverter {
 
             if(!toolMap[toolNameArr[1]]) {
                 toolMap[toolNameArr[1]] = {
-                    id: uuidv4(),
+                    id: nanoid(16),
                     name: '',
                     ability: '',
                     proficiency: 1
@@ -70,7 +70,7 @@ export class CharacterVTTESConverter {
 
             if(!profMap[profNameArr[1]]) {
                 profMap[profNameArr[1]] = {
-                    id: uuidv4(),
+                    id: nanoid(16),
                     name: '',
                     type: 3,
                     content: ''
@@ -99,7 +99,7 @@ export class CharacterVTTESConverter {
 
             if(!itemMap[itemNameArr[1]]) {
                 itemMap[itemNameArr[1]] = {
-                    id: uuidv4(),
+                    id: nanoid(16),
                     name: '',
                     is_equipped: true,
                     amount: '1',
@@ -141,7 +141,7 @@ export class CharacterVTTESConverter {
 
             if(!featureMap[featureNameArr[1]]) {
                 featureMap[featureNameArr[1]] = {
-                    id: uuidv4(),
+                    id: nanoid(16),
                     name: '',
                     type: 0,
                     source_name: '',
@@ -177,7 +177,7 @@ export class CharacterVTTESConverter {
 
             if(!attackMap[attackNameArr[1]]) {
                 attackMap[attackNameArr[1]] = {
-                    id: uuidv4(),
+                    id: nanoid(16),
                     name: '',
                     atk_ability: 'STR', // e.g. STR
                     atk_bonus: '',
@@ -292,7 +292,7 @@ export class CharacterVTTESConverter {
 
             if(!spellMap[spellNameArr[2]]) {
                 spellMap[spellNameArr[2]] = {
-                    id: uuidv4(),
+                    id: nanoid(16),
                     name: '',
                     level: spellNameArr[1] === 'cantrip' ? 0 : ~~spellNameArr[1],
                     is_prepared: false,

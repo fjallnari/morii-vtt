@@ -126,6 +126,7 @@
   		--delete-button-background-color: #BC4B51;
 		--primary-text-color: #FCF7F8;
 		--primary-accent-color: #EFA48B;
+		--semi-bold: 600;
 	}
 
 	@media only screen and (min-width: 640px) {

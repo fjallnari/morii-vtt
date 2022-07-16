@@ -47,18 +47,21 @@
         justify-content: center;
         align-items: center;
         gap: 0.5em;
+        width: 100%;
+        padding: 0.2em 0em;
 
         background-color: var(--bg-color);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
-        width: 100%;
+
         cursor: pointer;
+
         transition-duration: 200ms;
         transition-property: color;
+
         font-weight: bold;
         font-family: Athiti;
         text-transform: uppercase;
-        padding: 0.2em 0em;
     }
 
     simple-button:active {

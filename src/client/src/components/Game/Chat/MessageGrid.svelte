@@ -8,6 +8,11 @@
 
     export let message: MessageData;
 
+    const getCleanErrorMessage = (errorMessage: string, messageText: string) => {
+        const cleanError = errorMessage.startsWith('Expected') ? `Invalid dice notation: ${messageText}.` : errorMessage;
+        return `ERROR: ${cleanError}`;
+    }
+
 </script>
 
 <div class="message-content">
@@ -34,10 +39,10 @@
     {/if}
 
     <div class="message-text" style="background: { message.isPublic ? '#252529' : '#303036' }">
-        {#if message.rollResult}
+        {#if message.rollResult && ! message.rollResult.error}
             <PrettyRollResult message={message}></PrettyRollResult>
         {:else}
-            <SvelteMarkdown source={message.messageText} />
+            <SvelteMarkdown source={message.rollResult && message.rollResult.error ? getCleanErrorMessage(message.rollResult.error, message.messageText) : message.messageText} />
         {/if}
     </div>
 </div>

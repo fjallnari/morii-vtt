@@ -35,15 +35,6 @@
         selectedCharacter.set(undefined);
     });
 
-    const validateClassName = (className: string) => {
-        return CLASS_NAMES.includes(className) ? className : 'no-class';  
-    }
-
-    const getClassIcon = (character: Character) => {
-        const classes = character.classes.split(' ').map(charClass => charClass.toLowerCase());
-        return classes.length <= 2 ? [validateClassName(classes[0])] : classes.map(charClass => validateClassName(charClass));
-    }
-
 </script>
 
 
@@ -51,13 +42,13 @@
     <CharacterSheetRouter bind:character={$selectedCharacter}></CharacterSheetRouter>
 {:else}
     <div class="dashboard-container">
-        <CharactersList gameData={gameData} getClassIcon={getClassIcon}></CharactersList>
+        <CharactersList gameData={gameData}></CharactersList>
         <div class="npcs">
             <h3>NPCs</h3>
             {#if createMenuEnabled}
                 <CreateNpc gameData={gameData} bind:createMenuEnabled={createMenuEnabled}></CreateNpc>
             {:else}
-                <NpcList gameData={gameData} getClassIcon={getClassIcon} bind:createMenuEnabled={createMenuEnabled}></NpcList>
+                <NpcList gameData={gameData} bind:createMenuEnabled={createMenuEnabled}></NpcList>
             {/if}
         </div>
     </div>

@@ -3,14 +3,11 @@
     import type { Character } from '../../../interfaces/Character';
     import type GameData from '../../../interfaces/GameData';
     import { selectedCharacter } from '../../../stores';
+    import { getClassIcon } from '../../../util/util';
     import BoxWithList from '../../BoxWithList.svelte';
 
     export let gameData: GameData;
-    export let getClassIcon: (character: Character) => string[];
     export let createMenuEnabled: boolean;
-
-
-
 </script>
 
 <BoxWithList label={''} addNewListItem={() => createMenuEnabled = true} isModifyDisabled>

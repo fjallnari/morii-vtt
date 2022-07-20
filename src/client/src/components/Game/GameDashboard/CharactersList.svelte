@@ -2,10 +2,9 @@
     import type { Character } from "../../../interfaces/Character";
     import type GameData from "../../../interfaces/GameData";
     import { selectedCharacter } from "../../../stores";
+    import { getClassIcon } from "../../../util/util";
 
     export let gameData: GameData;
-    export let getClassIcon: (character: Character) => string[];
-
 </script>
 
 <div class="characters-container">

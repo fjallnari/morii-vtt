@@ -42,6 +42,7 @@
         <h3>You don't have any character assigned to this campaign.</h3>
         <div class="new-character-options">
             <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createCharacter}></SimpleButton>
+            <SimpleButton value='Quick-Create' icon="electric_bolt" type="primary" onClickFn={() => {}} disabled></SimpleButton>
             <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
 
             <CopySheetDialog createCharacter={createCharacter}></CopySheetDialog>
@@ -76,7 +77,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 2em;
+        gap: 1.5em;
     }
 
     :global(.new-character-options simple-button) {

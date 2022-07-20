@@ -5,10 +5,8 @@
     import { user, socket, ownerSocketID } from '../../stores';
     import SimpleButton from "../SimpleButton.svelte";
     import CharacterSheetRouter from "./CharacterSheet/CharacterSheetRouter.svelte";
-    import { fileReader, validateCharacter, validateVTTESCharacter } from "../../main";
-    import type { CharacterVTTES } from "../../interfaces/CharacterVTTES";
-    import { CharacterVTTESConverter } from "../../util/CharacterVTTESConverter";
     import CopySheetDialog from "./CopySheetDialog.svelte";
+    import ImportJsonSheet from "./ImportJsonSheet.svelte";
 
     export let gameData: GameData;
 
@@ -33,31 +31,6 @@
 		}
 	}
 
-    let fileInput: HTMLInputElement;
-    let fileInputVTTES: HTMLInputElement;
-
-    const createValidatedCharacter = (characterObj: object, isVTTES: boolean) => {
-        const isValid = isVTTES ? validateVTTESCharacter(characterObj) : validateCharacter(characterObj);
-
-        if (!isValid) {
-            throw new Error(`JSON Validation Error.`);
-            // TODO:  add UI popup or smth for this error
-        }
-
-        return isVTTES ? new CharacterVTTESConverter(<CharacterVTTES> characterObj).constructCharacter() : characterObj;
-    }
-	
-	const importFromJSON = (event: Event & { currentTarget: EventTarget & HTMLInputElement }, isVTTES: boolean = false) => {
-        let jsonSheet = event.currentTarget.files[0];
-        if (jsonSheet && jsonSheet.type === 'application/json'){
-            fileReader.readAsText(jsonSheet);
-            fileReader.onload = _ => {
-                const validatedSheet = createValidatedCharacter(JSON.parse(<string> fileReader.result), isVTTES);
-                createCharacter(validatedSheet);
-            };
-        }
-    }
-
 </script>
 
 
@@ -72,12 +45,7 @@
             <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
 
             <CopySheetDialog createCharacter={createCharacter}></CopySheetDialog>
-
-            <SimpleButton value='Import from MSVTT JSON' icon="upload_file" onClickFn={() => { fileInput.click() }}></SimpleButton>
-            <input style="display:none" type="file" accept=".json" on:change={ (event) => importFromJSON(event)} bind:this={fileInput}>
-
-            <SimpleButton value='Import from roll20 JSON' icon="upload_file" onClickFn={() => { fileInputVTTES.click() }}></SimpleButton>
-            <input style="display:none" type="file" accept=".json" on:change={ (event) => importFromJSON(event, true)} bind:this={fileInputVTTES}>
+            <ImportJsonSheet createCharacter={createCharacter}></ImportJsonSheet>
         </div>
     </div>
 {/if}

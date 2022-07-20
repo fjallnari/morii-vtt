@@ -1,5 +1,4 @@
 <script lang="ts">
-    import CLASS_NAMES from "../../../enum/ClassNames";
     import type { Character } from "../../../interfaces/Character";
     import type GameData from "../../../interfaces/GameData";
     import { selectedCharacter, socket, user } from "../../../stores";

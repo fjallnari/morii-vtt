@@ -6,6 +6,7 @@
     import { fileReader, validateCharacter, validateVTTESCharacter } from "../../../main";
     import { CharacterVTTESConverter } from "../../../util/CharacterVTTESConverter";
     import type { CharacterVTTES } from "../../../interfaces/CharacterVTTES";
+    import CopySheetDialog from "../CopySheetDialog.svelte";
 
     export let gameData: GameData;
     export let createMenuEnabled: boolean;
@@ -56,7 +57,8 @@
 <div class="create-npc-container">
     <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createNPC}></SimpleButton>
     <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
-    <SimpleButton value='Copy Existing Sheet' icon="file_copy" onClickFn={() => {}} disabled></SimpleButton>
+
+    <CopySheetDialog createCharacter={createNPC}></CopySheetDialog>
 
     <SimpleButton value='Import from MSVTT JSON' icon="upload_file" onClickFn={() => { fileInput.click() }}></SimpleButton>
     <input style="display:none" type="file" accept=".json" on:change={ (event) => importFromJSON(event)} bind:this={fileInput}>

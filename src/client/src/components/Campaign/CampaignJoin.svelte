@@ -7,10 +7,17 @@
     import PasswordField from '../PasswordField.svelte';
     import ProgressCircle from '../ProgressCircle.svelte';
     import SimpleButton from '../SimpleButton.svelte';
+    import Snackbar, {
+        Actions,
+        SnackbarComponentDev,
+    } from '@smui/snackbar';
+    import Button, { Label } from "@smui/button";
 
     let inviteCode: string = "";
     let password: string = "";
     let inProgress: boolean = false;
+
+    let invalidInviteSnackbar: SnackbarComponentDev;
 
     const joinCampaign = async () => {
         if (! inviteCode) {
@@ -18,24 +25,26 @@
         }
         try {
             inProgress = true;
-            // await new Promise(res => setTimeout(res, 1000));
 
             const response = await axios.post('/api/join-campaign', {
                 inviteCode: inviteCode,
                 password: password
             });
 
+            const newCampaign = response.data.campaigns[0];
+
             // "live-reloading" to see the newly added campaign instantly without the need to hard reload
-            if (response.status === 200 && response.data.campaigns) {
+            if (response.status === 200 && newCampaign && ! $user.campaigns.find( campaign => campaign._id === newCampaign._id)) {
                 user.update( userInfo => {
-                    return Object.assign( userInfo, { campaigns: userInfo.campaigns.concat(response.data.campaigns) });
+                    return Object.assign( userInfo, { campaigns: userInfo.campaigns.concat([newCampaign]) });
                 });
             }
             
             campaignNewActive.set(! $campaignNewActive);
         }
         catch (err) {
-            console.log(err);
+            invalidInviteSnackbar.open();
+            inProgress = false;
         }
         
     }
@@ -57,6 +66,13 @@
 <div id="cancel-button">
     <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>close</IconButton>
 </div>
+
+<Snackbar bind:this={invalidInviteSnackbar}>
+    <Label>Failed to join. Invalid invite code.</Label>
+    <Actions>
+      <IconButton class="material-icons" title="Dismiss">close</IconButton>
+    </Actions>
+</Snackbar>
 
 
 

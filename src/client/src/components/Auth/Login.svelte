@@ -38,7 +38,6 @@
         }
         catch (err) {
             // if login fails -> popup with 'login failed' appears
-
             loginFailedSnackbar.open();
             inProgress = false;
         }

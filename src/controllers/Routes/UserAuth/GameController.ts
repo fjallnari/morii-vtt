@@ -5,14 +5,12 @@ import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
 import UserDB from "../../../interfaces/UserDB";
 import { getFullCampaignsInfo, getUserFromToken, simplifyPlayerInfo } from "../../../util/helpers";
-import { zip } from "../../../util/util";
 import RouteController from "../RouteController";
 
 export default class GameController extends RouteController {
 
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
-        const charactersCollection = <Collection<Document>> await getCollection('characters');
         const campaignInfo = <Campaign> await campaignsCollection?.findOne({ _id: campaignID });
 
         // get all character ids, if they exist (filters out all undefineds)

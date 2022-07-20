@@ -7,8 +7,8 @@
     import GameInfo from "../components/Game/GameInfo.svelte";
     import CircularProgress from '@smui/circular-progress';
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
-    import GameDashboard from "../components/Game/GameDashboard/GameDashboard.svelte";
     import type UserIDPair from "../interfaces/UserIDPair";
+    import GameOverview from "../components/Game/GameOverview/GameOverview.svelte";
 
     export let params: { id?: string } = {};
 
@@ -72,7 +72,7 @@
 {:then gameData}
     <div class="game-content">
         {#if $user && $user._id === gameData.owner}
-            <GameDashboard gameData={gameData}></GameDashboard>
+            <GameOverview gameData={gameData}></GameOverview>
         {:else}
             <CharacterHandler gameData={gameData}></CharacterHandler>
         {/if}

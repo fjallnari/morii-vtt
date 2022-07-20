@@ -13,7 +13,8 @@ export default class ModifyCharacterController extends RouteController {
             const characterID = new ObjectId(modifiedCharacter._id);
 
             const characterWithoutID = (({ _id, ...other }) => other)(modifiedCharacter);
-            await charactersCollection.updateOne({ _id: characterID }, { $set: { ...characterWithoutID }});
+            const characterObj = Object.assign(characterWithoutID, {playerID: new ObjectId(characterWithoutID.playerID)});
+            await charactersCollection.updateOne({ _id: characterID }, { $set: { ...characterObj }});
     
             return this.res.status(200).end();
         }

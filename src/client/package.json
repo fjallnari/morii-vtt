@@ -42,7 +42,7 @@
     "svelte-preprocess": "^4.10.1",
     "ts-json-schema-generator": "^1.0.0",
     "tslib": "^2.0.0",
-    "typescript": "^4.0.0"
+    "typescript": "^4.2.0"
   },
   "dependencies": {
     "@mdi/font": "^6.5.95",

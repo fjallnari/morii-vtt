@@ -9,6 +9,7 @@ import CreateCharacterController from '../controllers/Routes/UserAuth/CreateChar
 import ModifyCharacterController from '../controllers/Routes/UserAuth/ModifyCharacterController';
 import DeleteCharacterController from '../controllers/Routes/UserAuth/DeleteCharacterController';
 import ChangeUserSettingsController from '../controllers/Routes/UserAuth/ChangeUserSettingsController';
+import GetCharactersController from '../controllers/Routes/UserAuth/GetCharactersController';
 
 const router = express.Router();
 
@@ -19,6 +20,10 @@ router.get("/api/dashboard", verifyToken, async (req, res) => {
 
 router.get("/api/game/:id", verifyToken, async (req, res) => {
     await new GameController(req, res).handleRequest();
+});
+
+router.get('/api/characters', verifyToken, async (req, res, next) => {
+    await new GetCharactersController(req, res).handleRequest();
 });
 
 router.post('/api/create-campaign', verifyToken, async (req, res, next) => {

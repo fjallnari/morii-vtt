@@ -57,6 +57,14 @@ export interface Tool {
     proficiency: number // 0 ~ jack of all trades, 1 ~ proficient, 2 ~ expertise ( 2^n * 1/2 )
 }
 
+export interface Resource {
+    id: string,
+    name: string,
+    total: string,
+    current: string,
+    item_id?: string
+}
+
 export interface Feature {
     id: string,
     name: string,
@@ -128,6 +136,7 @@ export default interface Character {
     inventory: Item[],
     other_profs: OtherProf[],
     tools: Tool[],
+    resources: Resource[],
     features: Feature[],
 
     // bio tab

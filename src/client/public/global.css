@@ -21,3 +21,11 @@ h2 {
 strong {
     font-weight: 600;
 }
+
+#simple-title {
+    color: #FCF7F8;
+    font-size: 1.5em;
+    font-family: Montserrat;
+    text-transform: uppercase;
+    font-weight: 400;
+}

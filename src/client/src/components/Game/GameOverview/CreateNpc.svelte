@@ -3,7 +3,7 @@
     import axios from 'axios';
     import { params } from "svelte-spa-router";
     import SimpleButton from "../../SimpleButton.svelte";
-    import CopySheetDialog from "../CopySheetDialog.svelte";
+    import CopyExistingSheet from "../CopyExistingSheet.svelte";
     import ImportJsonSheet from "../ImportJsonSheet.svelte";
 
     export let gameData: GameData;
@@ -30,7 +30,7 @@
     <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createNPC}></SimpleButton>
     <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
 
-    <CopySheetDialog createCharacter={createNPC}></CopySheetDialog>
+    <CopyExistingSheet createCharacter={createNPC}></CopyExistingSheet>
     <ImportJsonSheet createCharacter={createNPC}></ImportJsonSheet>
     
     <SimpleButton value='' icon="close" onClickFn={() => {createMenuEnabled = false}}></SimpleButton>

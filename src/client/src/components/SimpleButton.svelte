@@ -56,8 +56,7 @@
 
         cursor: pointer;
 
-        transition-duration: 200ms;
-        transition-property: color;
+        transition: all .2s ease-in-out;
 
         font-weight: var(--semi-bold);
         font-family: Athiti;
@@ -66,11 +65,11 @@
 
     simple-button:active {
         background-color: var(--active-bg-color);
-        transition-duration: 200ms;
-        transition-property: color;        
+        transition: all .2s ease-in-out;      
     }
 
     simple-button:hover {
+        transform: scale(1.025);
         filter: opacity(0.9);
     }
 

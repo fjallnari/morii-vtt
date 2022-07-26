@@ -5,8 +5,9 @@
     import { user, socket, ownerSocketID } from '../../stores';
     import SimpleButton from "../SimpleButton.svelte";
     import CharacterSheetRouter from "./CharacterSheet/CharacterSheetRouter.svelte";
-    import CopySheetDialog from "./CopySheetDialog.svelte";
     import ImportJsonSheet from "./ImportJsonSheet.svelte";
+    import CopyExistingSheet from "./CopyExistingSheet.svelte";
+    import QuickCreateSheet from "./QuickCreateSheet.svelte";
 
     export let gameData: GameData;
 
@@ -42,10 +43,10 @@
         <h3>You don't have any character assigned to this campaign.</h3>
         <div class="new-character-options">
             <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createCharacter}></SimpleButton>
-            <SimpleButton value='Quick-Create' icon="electric_bolt" type="primary" onClickFn={() => {}} disabled></SimpleButton>
-            <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
+            <QuickCreateSheet createCharacter={createCharacter}></QuickCreateSheet>
+            <!-- <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton> !-->
 
-            <CopySheetDialog createCharacter={createCharacter}></CopySheetDialog>
+            <CopyExistingSheet createCharacter={createCharacter}></CopyExistingSheet>
             <ImportJsonSheet createCharacter={createCharacter}></ImportJsonSheet>
         </div>
     </div>

@@ -78,7 +78,7 @@
             {/await}
         </characters-list>
         <dialog-buttons>
-            <SimpleButton value='' icon="close" onClickFn={() => open = false}></SimpleButton>
+            <SimpleButton value='Cancel' icon="close" onClickFn={() => open = false}></SimpleButton>
             <SimpleButton value='Copy & Load' icon='file_copy' type='green' onClickFn={() => copyCharacterSheet()}></SimpleButton>
         </dialog-buttons>
     </dialog-content>

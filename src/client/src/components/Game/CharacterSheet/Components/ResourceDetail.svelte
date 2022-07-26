@@ -38,7 +38,7 @@
 <box class="card {isFlipped ? 'card-flipped' : ''}">
     <div class="resource-item-container">
         <div class="resource-values">
-            <InPlaceEdit bind:value={resource.current} editWidth="2rem" editHeight="2rem" on:submit={() => {changeCurrentValue(0)}}></InPlaceEdit>/
+            <InPlaceEdit bind:value={resource.current} editWidth="2rem" editHeight="2rem" on:submit={() => {changeCurrentValue()}}></InPlaceEdit>/
             <InPlaceEdit bind:value={resource.total} editWidth="2rem" editHeight="2rem" on:submit={$modifyCharacter}></InPlaceEdit>
         </div>
         <div class="resource-name">

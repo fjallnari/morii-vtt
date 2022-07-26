@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createNewAttack, modifyCharacter } from '../../../../stores';
+    import { addNewResource, createNewAttack, modifyCharacter } from '../../../../stores';
     import IconButton, { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import Tooltip, { Wrapper, Content } from '@smui/tooltip';
@@ -10,11 +10,6 @@
     export let item: Item;
     export let character: Character;
     let isOpen = false;
-
-    const changeItemAmount = () => {
-        item.is_equipped = ~~item.amount !== 0;
-        $modifyCharacter();
-    }
 
     const deleteItem = () => {
         character.inventory = character.inventory.filter(obj => obj.id !== item.id);
@@ -38,6 +33,44 @@
 
         $modifyCharacter();
     }
+
+    const addResource = () => {
+        const newResourceID = $addNewResource(item.name, item.amount, item.id);
+        item.resource_id = newResourceID;
+        
+        if (item.resource_id === '') {
+            // TODO - add popup that the max number of resources have been reached
+            item.use_as_resource = !item.use_as_resource;
+        }
+    }
+
+    const deleteResource = () => {
+        character.resources = character.resources.filter(obj => obj.id !== item.resource_id);
+        item.resource_id = '';
+    }
+
+    const changeUseAsResource = () => {
+        item.use_as_resource ? deleteResource() : addResource();
+        item.use_as_resource = !item.use_as_resource;
+
+        $modifyCharacter();
+    }
+
+    const changeItemAmount = () => {
+        if (item.use_as_resource) {
+            character.resources = character.resources.map(resource => {
+                if (resource.id === item.resource_id) {
+                    return Object.assign(resource, { current: item.amount });
+                }
+                else {
+                    return resource;
+                }
+            })
+        }
+        $modifyCharacter();
+    }
+
+    $: item.is_equipped = item.is_equipped && ~~item.amount !== 0;
 
 </script>
 
@@ -66,16 +99,6 @@
         </div>
     
         <div class="toggable-item-info">
-            <img class="has-attack-icon" 
-                src="../static/{item.has_attack? 'shield-sword' : 'shield-sword-outline'}.svg" 
-                alt="has-attack"
-                on:click={() => changeHasAttack()}
-            >
-            <img class="want-tooltip-icon" 
-                src="../static/{ item.want_tooltip ? 'tooltip-text': 'tooltip-text-outline'}.svg" 
-                alt="want-tooltip"
-                on:click={() => { item.want_tooltip = !item.want_tooltip; $modifyCharacter(); }}
-            >
             {#if character.settings.use_encumbrance}
                 <img class="has-weight-icon" 
                     src="../static/{ item.has_weight ? 'weight': 'weight-crossed'}.svg" 
@@ -95,6 +118,38 @@
     </div>
     {#if isOpen}
         <div class="details" transition:slide|local>
+            <div class="special-tags">
+                <div class="tag-with-icon">
+                    <img class="want-tooltip-icon" 
+                        src="../static/{item.want_tooltip ? 'tooltip-text': 'tooltip-text-outline'}.svg" 
+                        alt="checkbox"
+                        on:click={() => { item.want_tooltip = !item.want_tooltip; $modifyCharacter(); }}
+                    >
+                    <div class="box-label">
+                        Show on hover
+                    </div>
+                </div>
+                <div class="tag-with-icon">
+                    <img class="has-attack-icon" 
+                        src="../static/{item.has_attack? 'shield-sword' : 'shield-sword-outline'}.svg"
+                        alt="checkbox"
+                        on:click={() => { changeHasAttack() }}
+                    >
+                    <div class="box-label">
+                        Has Attack
+                    </div>
+                </div>
+                <div class="tag-with-icon">
+                    <img class="use-as-resource-icon" 
+                        src="../static/{item.use_as_resource ? 'checkbox-marked': 'checkbox-blank-outline'}.svg"
+                        alt="checkbox"
+                        on:click={() => { changeUseAsResource() }}
+                    >
+                    <div class="box-label">
+                        Use as resource
+                    </div>
+                </div>
+            </div>
             <textarea on:change={() => $modifyCharacter()} bind:value={item.tooltip}></textarea>
             <SimpleButton value='Delete' type="delete" onClickFn={deleteItem}></SimpleButton>
         </div>
@@ -114,9 +169,9 @@
 
     .item-summary {
         display: grid; 
-        grid-template-columns: 5fr 2fr; 
+        grid-template-columns: 5fr 1fr; 
         grid-template-rows: 1fr; 
-        gap: 0px 0px; 
+        gap: 0em; 
         grid-template-areas: 
             "main-item-info toggable-item-info";
         
@@ -177,6 +232,24 @@
 
     textarea {
         height: 7em;
+    }
+
+    .special-tags {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+    }
+
+    .tag-with-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2em;
+    }
+
+    .tag-with-icon img {
+        cursor: pointer;
     }
     
     :global(.mdc-tooltip__surface) {

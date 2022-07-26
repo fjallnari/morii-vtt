@@ -38,7 +38,9 @@ export interface Item {
     has_attack: boolean,
     attack_id?: string,
     want_tooltip: boolean,
-    tooltip?: string
+    tooltip?: string,
+    use_as_resource: boolean,
+    resource_id?: string
 }
 
 export interface OtherProf {

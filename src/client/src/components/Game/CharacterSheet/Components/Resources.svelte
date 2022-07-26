@@ -1,11 +1,10 @@
 <script lang="ts">
     import type { Character, Resource } from "../../../../interfaces/Character";
-    import { modifyCharacter } from '../../../../stores';
+    import { addNewResource, modifyCharacter } from '../../../../stores';
     import { Icon } from '@smui/icon-button';
     import { nanoid } from "nanoid/non-secure";
     import { onMount } from "svelte";
     import ResourceDetail from "./ResourceDetail.svelte";
-    import { slide, fade } from 'svelte/transition';
 
     onMount(() => {
         if(!character.resources){
@@ -16,18 +15,22 @@
 
     export let character: Character;
 
-    const addNewResource = (totalAmount: string = '') => {
+    addNewResource.set((customName: string = '', customAmount: string = '', itemID: string = '') => {
+        if (character.resources.length === 4) {
+            return '';
+        }
+        
         const resourceSkeleton: Resource = {
             id: nanoid(16),
-            name: '',
-            current: totalAmount,
-            total: totalAmount
+            name: customName,
+            current: customAmount,
+            total: customAmount,
+            item_id: itemID
         }
 
         character.resources = character.resources.concat([resourceSkeleton]);
-    }
-
-
+        return resourceSkeleton.id;
+    });
 
 </script>
 
@@ -37,7 +40,7 @@
             <ResourceDetail bind:resource={resource} bind:character={character}></ResourceDetail>
         {/each}
         {#if character.resources.length < 4}
-            <sendable class="add-new-item" on:click={() => { addNewResource(); $modifyCharacter() }}>
+            <sendable class="add-new-item" on:click={() => { $addNewResource(); $modifyCharacter() }}>
                 <Icon class="material-icons">{'add'}</Icon>
             </sendable>
         {/if}

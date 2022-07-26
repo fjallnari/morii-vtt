@@ -21,3 +21,4 @@ export const sendSkillCheck: Writable<(modifier: number, skillName: string, dice
 export const getASModifier: Writable<(AS: string) => number> = writable();
 export const formatModifier: Writable<(modifier: number, signDisplay?: ("exceptZero" | "always" | "auto" | "never")) => string> = writable();
 export const createNewAttack: Writable<(customName?: string, itemID?: string ) => string> = writable();
+export const addNewResource: Writable<(customName?: string, customAmount?: string, itemID?: string) => string> = writable();

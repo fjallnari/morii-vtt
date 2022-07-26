@@ -10,29 +10,39 @@
     let isFlipped: boolean = false;
 
     const deleteResource = () => {
+        // change the item detail
+        if (resource.item_id !== '') {
+            Object.assign(character.inventory.find(item => item.id === resource.item_id), { resource_id: '', use_as_resource: false });
+        }
         character.resources = character.resources.filter(resourceIter => resourceIter.id !== resource.id);
         $modifyCharacter();
     }
 
-    const changeCurrentValue = (diff: number) => {
+    const changeCurrentValue = (diff: number = 0) => {
         resource.current = (~~resource.current + diff).toString();
+        // cannot have negative amount of resources
         if (~~resource.current < 0) {
-            resource.current = '0'
+            resource.current = '0';
         }
+
+        // change the amount in the item detail aswell
+        if (resource.item_id !== '') {
+            Object.assign(character.inventory.find(item => item.id === resource.item_id), { amount: resource.current });
+        }
+
         $modifyCharacter();
     }
-
 
 </script>
 
 <box class="card {isFlipped ? 'card-flipped' : ''}">
     <div class="resource-item-container">
         <div class="resource-values">
-            <InPlaceEdit bind:value={resource.current} editWidth="2rem" editHeight="2rem" on:submit={() => $modifyCharacter()}></InPlaceEdit>/
-            <InPlaceEdit bind:value={resource.total} editWidth="2rem" editHeight="2rem" on:submit={() => $modifyCharacter()}></InPlaceEdit>
+            <InPlaceEdit bind:value={resource.current} editWidth="2rem" editHeight="2rem" on:submit={() => {changeCurrentValue(0)}}></InPlaceEdit>/
+            <InPlaceEdit bind:value={resource.total} editWidth="2rem" editHeight="2rem" on:submit={$modifyCharacter}></InPlaceEdit>
         </div>
         <div class="resource-name">
-            <InPlaceEdit bind:value={resource.name} editWidth="4rem" editHeight="2rem" on:submit={() => $modifyCharacter()}></InPlaceEdit>
+            <InPlaceEdit bind:value={resource.name} editWidth="4rem" editHeight="2rem" on:submit={$modifyCharacter}></InPlaceEdit>  
         </div>
         <sendable class="flip-card-icon" on:click={() => { isFlipped = true}}>
             <Icon class="material-icons">arrow_left</Icon>

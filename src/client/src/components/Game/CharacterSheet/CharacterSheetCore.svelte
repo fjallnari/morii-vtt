@@ -14,6 +14,7 @@
     import Speed from './Components/Speed.svelte';
     import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
     import Inventory from './Components/Inventory.svelte';
+import Resources from './Components/Resources.svelte';
 
     export let character: Character;
 
@@ -80,6 +81,10 @@
         <ToolsOtherProf bind:character={character}></ToolsOtherProf>
     </div>
 
+    <div class="resources">
+        <Resources bind:character={character}></Resources>
+    </div>
+
     <div class="features-traits">
         <Features bind:character={character}></Features>
     </div>
@@ -91,21 +96,21 @@
 <style>
     tab-container {  display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 1fr 2fr 2fr 1fr; 
+        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 2fr 2fr 1fr; 
         gap: 0.5em 0.5em;
         grid-template-areas: 
-        "character-name character-basic-info character-basic-info"
-        "ability-scores-bonuses character-stats other-prof-languages"
-        "ability-scores-bonuses character-stats other-prof-languages"
-        "ability-scores-bonuses character-stats other-prof-languages"
-        "ability-scores-bonuses character-stats other-prof-languages"
-        "ability-scores-bonuses character-stats features-traits"
-        "ability-scores-bonuses attacks features-traits"
-        "ability-scores-bonuses attacks features-traits"
-        "ability-scores-bonuses inventory features-traits"
-        "ability-scores-bonuses inventory features-traits"
-        "ability-scores-bonuses inventory features-traits"
-        "ability-scores-bonuses char-sheet-menu features-traits"; 
+            "character-name character-basic-info character-basic-info"
+            "ability-scores-bonuses character-stats other-prof-languages"
+            "ability-scores-bonuses character-stats other-prof-languages"
+            "ability-scores-bonuses character-stats other-prof-languages"
+            "ability-scores-bonuses character-stats other-prof-languages"
+            "ability-scores-bonuses character-stats resources"
+            "ability-scores-bonuses attacks resources"
+            "ability-scores-bonuses attacks features-traits"
+            "ability-scores-bonuses inventory features-traits"
+            "ability-scores-bonuses inventory features-traits"
+            "ability-scores-bonuses inventory features-traits"
+            "ability-scores-bonuses char-sheet-menu features-traits"; 
     }
 
     .character-name { grid-area: character-name;
@@ -225,6 +230,10 @@
     }
 
     .other-prof-languages { grid-area: other-prof-languages;
+        margin: 0em 0.75em 0em 0em;
+    }
+
+    .resources { grid-area: resources;
         margin: 0em 0.75em 0em 0em;
     }
 

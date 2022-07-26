@@ -11,7 +11,7 @@
 
 <div class="triple-checkbox">
     {#each Array.from({ length: 3 }, (_, i) => i + 1) as iter_level}
-        <img class="skill-prof-icon"
+        <img class="checkbox-icon"
             src="../static/{iter_level > value ? `${iter_level === 3 ? blankBoxLast : blankBox}`: `${iter_level === 3 ? fullBoxLast : fullBox}`}.svg" 
             alt="checkbox"
             on:click={() => { value = iter_level === value ? 0 : iter_level; $modifyCharacter()}}
@@ -25,7 +25,7 @@
         gap: 0.2em;
     }
 
-    .skill-prof-icon {
+    .checkbox-icon {
         cursor: pointer;
         width: 1.8em; 
         height: 1.8em;

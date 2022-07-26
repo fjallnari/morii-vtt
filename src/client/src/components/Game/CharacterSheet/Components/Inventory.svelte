@@ -19,6 +19,7 @@
             has_weight: false,
             has_attack: false,
             want_tooltip: false,
+            use_as_resource: false,
         }
 
         character.inventory = character.inventory.concat([itemSkeleton]);

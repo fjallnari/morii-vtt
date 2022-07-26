@@ -40,7 +40,9 @@ export interface Item {
     has_attack: boolean,
     attack_id?: string,
     want_tooltip: boolean,
-    tooltip?: string
+    tooltip?: string,
+    use_as_resource: boolean,
+    resource_id?: string
 }
 
 export interface OtherProf {
@@ -55,6 +57,14 @@ export interface Tool {
     name: string,
     ability: string, // e.g. STR
     proficiency: number // 0 ~ jack of all trades, 1 ~ proficient, 2 ~ expertise ( 2^n * 1/2 )
+}
+
+export interface Resource {
+    id: string,
+    name: string,
+    total: string,
+    current: string,
+    item_id?: string
 }
 
 export interface Feature {
@@ -128,6 +138,7 @@ export default interface Character {
     inventory: Item[],
     other_profs: OtherProf[],
     tools: Tool[],
+    resources: Resource[],
     features: Feature[],
 
     // bio tab

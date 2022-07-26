@@ -13,8 +13,6 @@ export default class JoinCampaignController extends RouteController {
         const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
         const { inviteCode, password } = this.req.body;
     
-        // TODO: check if inviteCode is valid uuidv4
-    
         try {
             const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
             const userID = new ObjectId(decodedToken.user._id);

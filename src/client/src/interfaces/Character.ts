@@ -38,7 +38,9 @@ export interface Item {
     has_attack: boolean,
     attack_id?: string,
     want_tooltip: boolean,
-    tooltip?: string
+    tooltip?: string,
+    use_as_resource: boolean,
+    resource_id?: string
 }
 
 export interface OtherProf {
@@ -53,6 +55,14 @@ export interface Tool {
     name: string,
     ability: string, // e.g. STR
     proficiency: number // 0 ~ jack of all trades, 1 ~ proficient, 2 ~ expertise; ( 2^n * 1/2 )
+}
+
+export interface Resource {
+    id: string,
+    name: string,
+    total: string,
+    current: string,
+    item_id?: string
 }
 
 export interface Feature {
@@ -126,6 +136,7 @@ export interface Character {
     inventory: Item[],
     other_profs: OtherProf[],
     tools: Tool[],
+    resources: Resource[],
     features: Feature[],
 
     // bio tab
@@ -147,6 +158,7 @@ export interface Character {
     enemies: string,
     other_notes: string,
 
+    // spells
     spell_ability: string,
     spell_save_dc_bonus: string,
     spells_by_level: Record<number, SpellsByLevel>,

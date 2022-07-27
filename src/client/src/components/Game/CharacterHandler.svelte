@@ -81,7 +81,7 @@
         gap: 1.5em;
     }
 
-    :global(.new-character-options simple-button) {
+    :global(.new-character-options > simple-button) {
         font-size: 1.5em;
         padding: 0.5em 0.5em !important;
     }

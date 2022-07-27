@@ -9,3 +9,7 @@ export const getClassIcon = (character: Character) => {
     const classes = character.classes.split(' ').map(charClass => charClass.toLowerCase());
     return classes.length <= 2 ? [validateClassName(classes[0])] : classes.map(charClass => validateClassName(charClass));
 }
+
+export const capitalize = (text: string) => {
+    return text.replace(/^./, str => str.toUpperCase());
+}

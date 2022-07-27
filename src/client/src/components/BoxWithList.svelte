@@ -4,12 +4,13 @@
 
     export let label: string;
     export let styleClass: string = '';
+    export let inlineStyle: string = '';
     export let addNewListItem: () => void;
     export let isModifyDisabled: boolean = false;
 
 </script>
 
-<box class="inside-box-content {styleClass}">
+<box class="inside-box-content {styleClass}" style={inlineStyle}>
     <slot name="filter-menu"></slot>
     <div class="inside-box-list">
         <slot name="list"></slot>
@@ -25,7 +26,6 @@
 
 
 <style>
-
     .inside-box-content {
         display: flex;
         flex-direction: column;
@@ -33,7 +33,6 @@
         height: 100%;
         width: 100%;
     }
-    
 
     .inside-box-list {
         display: flex;

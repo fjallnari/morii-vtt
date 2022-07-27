@@ -3,12 +3,18 @@
     import SimpleButton from "../SimpleButton.svelte";
     import Dialog from '@smui/dialog';
     import StepDetailRace from "./StepDetailRace.svelte";
+    import CircularProgress from '@smui/circular-progress';
+    import axios from "axios";
+    import type QuickCreateData from "../../interfaces/QuickCreateData";
+    import { Icon } from '@smui/button';
+    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
     let open: boolean = false;
     let selectedStepIndex: number = 0;
     let characterTemplate: Partial<Character> = {};
+    let characterParts: Partial<QuickCreateCharacterParts> = {};
 
     let creationSteps = [
         { name: 'Race', icon: 'account-supervisor', filled_in: false, component: StepDetailRace },
@@ -19,8 +25,29 @@
     ]
 
     const closeDialog = () => {
+        characterParts = {};
         selectedStepIndex = 0;
         open = false;
+    }
+
+    const loadQuickCreateData = async () => {
+        try {
+            const response = await axios.get('/api/quick-create-data');
+            const { characterSkeleton, ...quickCreateData } = response.data;
+
+            characterTemplate = characterSkeleton;
+            return quickCreateData as QuickCreateData;
+		}
+		catch (err) {
+            console.log(err); 
+		}
+    }
+
+    const assembleCharacterSheet = () => {
+        // TODO: process character sheet
+        console.log(characterParts);
+                
+        createCharacter(characterTemplate);
     }
 
 </script>
@@ -36,24 +63,37 @@
 >
     <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
     <h3 id="simple-title">Quick-Create</h3>
-    <dialog-content>
-        <div class="creation-steps-list">
-            {#each creationSteps as step, index}
-                <box class="creation-step-item {index === selectedStepIndex ? 'selected': ''}" on:click={() => {selectedStepIndex = index}} tabindex='0'>
-                    <img class="step-icon"  
-                        src="../static/{step.icon}.svg" 
-                        alt="step-icon"
-                    >
-                    {step.name}
-                </box>
-            {/each}
-        </div>
-        <svelte:component this={creationSteps[selectedStepIndex].component} bind:characterTemplate={characterTemplate}/>
-        <dialog-buttons class="quick-create-buttons">
-            <SimpleButton value='Cancel' icon="close" onClickFn={() => closeDialog()}></SimpleButton>
-            <SimpleButton value='Create' icon='create' type='green' onClickFn={() => createCharacter(characterTemplate)}></SimpleButton>
-        </dialog-buttons>
-    </dialog-content>
+    {#await loadQuickCreateData()}
+        <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+    {:then quickCreateData}
+        <dialog-content>
+            <div class="creation-steps-list">
+                {#each creationSteps as step, index}
+                    <box class="creation-step-item {index === selectedStepIndex ? 'selected': ''}" on:click={() => {selectedStepIndex = index}} tabindex='0'>
+                        <img class="step-icon"  
+                            src="../static/{step.icon}.svg" 
+                            alt="step-icon"
+                        >
+                        {step.name}
+                        {#if characterParts[`${step.name.toLowerCase()}`]}
+                            <Icon id="filled-in-icon" class="material-icons">done</Icon>
+                        {/if}
+                    </box>
+                {/each}
+            </div>
+
+            <svelte:component 
+                this={creationSteps[selectedStepIndex].component}
+                quickCreateData={quickCreateData}
+                bind:characterParts={characterParts}
+            />
+
+            <dialog-buttons class="quick-create-buttons">
+                <SimpleButton value='Cancel' icon="close" onClickFn={() => closeDialog()}></SimpleButton>
+                <SimpleButton value='Create' icon='create' type='green' onClickFn={() => assembleCharacterSheet()}></SimpleButton>
+            </dialog-buttons>
+        </dialog-content>
+    {/await}
 </Dialog>
 
 <style>
@@ -78,6 +118,8 @@
 
     :global(dialog-buttons.quick-create-buttons simple-button) {
         max-width: 25%;
+        font-size: 1.5em;
+        padding: 0.5em 0.5em !important;
     }
 
     .creation-steps-list { grid-area: creation-steps; 

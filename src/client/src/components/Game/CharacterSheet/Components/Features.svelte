@@ -4,6 +4,7 @@
     import { Icon } from '@smui/icon-button';
     import { nanoid } from 'nanoid/non-secure'
     import FeatureDetail from "./FeatureDetail.svelte";
+    
     export let character: Character;
     let currentFilter = 0;
 

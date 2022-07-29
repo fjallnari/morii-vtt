@@ -36,6 +36,11 @@
         selectedRace.features = selectedRace.features.filter((_, index: number) => i !== index);
     }
 
+    $: if (chosenTool) {
+        selectedRace.tools_prof = selectedRace.tools_prof.slice(1).concat([[chosenTool]]);
+        chosenTool = undefined;
+    }
+
 </script>
 
 <div class="race-detail">
@@ -87,7 +92,7 @@
                 {#if selectedRace.tools_prof[index].length < 2}
                     <InPlaceEdit bind:value={selectedRace.tools_prof[index][0]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
                 {:else}
-                    <SegmentedButton segments={selectedRace.tools_prof[index]} let:segment singleSelect bind:chosenTool>
+                    <SegmentedButton segments={selectedRace.tools_prof[index]} let:segment singleSelect bind:selected={chosenTool}>
                         <!-- Note: the `segment` property is required! -->
                         <Segment {segment}>
                             <Label>{segment}</Label>

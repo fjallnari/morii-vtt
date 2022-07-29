@@ -15,6 +15,7 @@
     let selectedStepIndex: number = 0;
     let characterTemplate: Partial<Character> = {};
     let characterParts: Partial<QuickCreateCharacterParts> = {};
+    let quickCreateData: Partial<QuickCreateData>;
 
     let creationSteps = [
         { name: 'Race', icon: 'account-supervisor', filled_in: false, component: StepDetailRace },
@@ -29,8 +30,10 @@
         selectedStepIndex = 0;
         open = false;
     }
-
-    const loadQuickCreateData = async () => {
+    
+    // open is here just so the quick create fully resets for each open of the dialog
+    // quick and dirty way to trigger the reactivity
+    const loadQuickCreateData = async (open: boolean) => {
         try {
             const response = await axios.get('/api/quick-create-data');
             const { characterSkeleton, ...quickCreateData } = response.data;
@@ -63,7 +66,7 @@
 >
     <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
     <h3 id="simple-title">Quick-Create</h3>
-    {#await loadQuickCreateData()}
+    {#await loadQuickCreateData(open)}
         <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
     {:then quickCreateData}
         <dialog-content>

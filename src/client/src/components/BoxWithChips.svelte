@@ -8,7 +8,8 @@
 
 
     const addChip = () => {
-        chipsArray = chipsArray.concat([blankChip]);
+        const cleanBlankChip = typeof blankChip === 'object' && typeof blankChip[0] !== 'string' ? {...blankChip} : [...blankChip];
+        chipsArray = chipsArray.concat([cleanBlankChip]);
     }
 
     const deleteChip = (i: number) => {

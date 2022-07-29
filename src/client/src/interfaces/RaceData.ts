@@ -1,6 +1,12 @@
 interface SimpleFeature {
     name: string,
-    content: string
+    content: string,
+    source?: string
+}
+
+interface SimpleOtherProf {
+    name: string,
+    type: number,
 }
 
 export default interface RaceData {
@@ -16,7 +22,7 @@ export default interface RaceData {
     speed_info: string,
     languages: string[],
     features: SimpleFeature[],
-    skill_prof: [],
-    tools_prof: [],
-    other_prof: []
+    skill_prof: string[],
+    tools_prof: string[][],
+    other_prof: SimpleOtherProf[]
 }

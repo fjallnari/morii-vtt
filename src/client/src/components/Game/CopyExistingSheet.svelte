@@ -77,7 +77,7 @@
                 {/if}                
             {/await}
         </characters-list>
-        <dialog-buttons>
+        <dialog-buttons class="copy-existing">
             <SimpleButton value='Cancel' icon="close" onClickFn={() => open = false}></SimpleButton>
             <SimpleButton value='Copy & Load' icon='file_copy' type='green' onClickFn={() => copyCharacterSheet()}></SimpleButton>
         </dialog-buttons>
@@ -121,6 +121,11 @@
         display: flex;
         justify-content: center;
         gap: 0.5em;
+    }
+
+    :global(dialog-buttons.copy-existing > simple-button) {
+        font-size: 1.5em;
+        padding: 0.5em 0.5em !important;
     }
 
     h4 {

@@ -109,5 +109,19 @@
       height: 95vh;
     }
 
+    :global(::-webkit-scrollbar) {
+        width: 8px;
+    }
+    :global(::-webkit-scrollbar-track) {
+        background: #1d1d22;
+    }
+    :global(::-webkit-scrollbar-thumb) {
+        background-color: #757578;
+        border: transparent;
+    }
+    :global(::-webkit-scrollbar-thumb:hover) {
+        background-color: #404044;
+    }
+
 
 </style>

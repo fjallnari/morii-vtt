@@ -6,7 +6,9 @@
 
     export let value: string = '';
     export let content: string = '';
+    export let source: string = '';
     export let icon: string = '';
+    export let deleteItem: () => void;
 
     let isOpen: boolean = false;
     
@@ -32,9 +34,17 @@
         </sendable>
     </div>
     {#if isOpen}
+        {#if source}
+            <div class="single-detail-line">
+                <div class="box-label">
+                    Source:
+                </div>
+                {source}
+            </div>
+        {/if}
         <div class="details" transition:slide|local>
             <textarea on:change={() => {}} bind:value={content}></textarea>
-            <SimpleButton value='Delete' type="delete" onClickFn={() => {}}></SimpleButton>
+            <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem()}></SimpleButton>
         </div>
     {/if}
 </box>
@@ -90,18 +100,17 @@
         gap: 0.5em;
     }
 
-    ::-webkit-scrollbar {
-        width: 8px;
+    .single-detail-line {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4em;
+        font-weight: 400;
+        font-family: Quicksand;
     }
-    ::-webkit-scrollbar-track {
-        background: #1d1d22;
-    }
-    ::-webkit-scrollbar-thumb {
-        background-color: #757578;
-        border: transparent;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background-color: #404044;
+
+    .single-detail-line div {
+        font-size: 1em;
     }
 
 </style>

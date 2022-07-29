@@ -86,6 +86,7 @@
                 this={creationSteps[selectedStepIndex].component}
                 quickCreateData={quickCreateData}
                 bind:characterParts={characterParts}
+                isDialogOpen={open}
             />
 
             <dialog-buttons class="quick-create-buttons">

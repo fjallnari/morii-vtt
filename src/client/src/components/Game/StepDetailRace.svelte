@@ -9,19 +9,31 @@
     import ABILITY_TAGS from '../../enum/AbilityTags';
     import BoxWithList from '../BoxWithList.svelte';
     import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
+    import BoxWithChips from '../BoxWithChips.svelte';
+    import SKILLS from '../../enum/Skills';
+    import SegmentedButton, { Label, Segment } from '@smui/segmented-button';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
+    export let isDialogOpen: boolean;
 
     let selectedRace: RaceData | undefined = characterParts.race;
+    let chosenTool: string = '';
 
     // fires up on every change of selected race
-    $ : if (selectedRace) {
-        characterParts.race = selectedRace;
+    $ : characterParts.race = selectedRace;
+
+    // reset the selectedRace if the quick-create dialog is closed
+    $: if (! isDialogOpen) {
+        selectedRace = undefined;
     }
 
-    const addRacialTrait = () => {
-        selectedRace.features = selectedRace.features.concat([ {name: '', content: ''} ]);    
+    const addTrait = () => {
+        selectedRace.features = selectedRace.features.concat([ {name: '', content: ''} ]); 
+    }
+
+    const deleteTrait = (i: number) => {
+        selectedRace.features = selectedRace.features.filter((_, index: number) => i !== index);
     }
 
 </script>
@@ -55,19 +67,55 @@
     <BoxWithInfo bind:mainObject={selectedRace} label="size" editWidth="4em"></BoxWithInfo>
     <BoxWithInfo bind:mainObject={selectedRace} label="speed"></BoxWithInfo>
 
-    <box class="languages"></box>
-    <box class="skill-prof"></box>
-    <box class="tools-prof"></box>
-    <box class="other-prof"></box>
-
     {#if selectedRace && selectedRace.features}
-        <BoxWithList label='Racial Traits' inlineStyle='grid-area: features; max-height: 26em;' addNewListItem={addRacialTrait}>
+        <BoxWithList label='Racial Traits' inlineStyle='grid-area: features; max-height: 25.7em;' addNewListItem={addTrait} isModifyDisabled>
             <div class="features-list" slot='list'>
-                {#each selectedRace.features as feature}
-                    <SimpleAccordionDetail bind:value={feature.name} bind:content={feature.content} icon='account-supervisor'></SimpleAccordionDetail>
+                {#each selectedRace.features as feature, index}
+                    <SimpleAccordionDetail 
+                        bind:value={feature.name} 
+                        bind:content={feature.content} 
+                        bind:source={feature.source} 
+                        icon='account-supervisor' 
+                        deleteItem={() => deleteTrait(index)}>
+                    </SimpleAccordionDetail>
                 {/each}
             </div>
         </BoxWithList>
+
+        <BoxWithChips bind:chipsArray={selectedRace.tools_prof} label='Tool Proficiencies' let:index={index} gridArea='tools-prof' blankChip={['']}>
+            <div class="chip">
+                {#if selectedRace.tools_prof[index].length < 2}
+                    <InPlaceEdit bind:value={selectedRace.tools_prof[index][0]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
+                {:else}
+                    <SegmentedButton segments={selectedRace.tools_prof[index]} let:segment singleSelect bind:chosenTool>
+                        <!-- Note: the `segment` property is required! -->
+                        <Segment {segment}>
+                            <Label>{segment}</Label>
+                        </Segment>
+                    </SegmentedButton>
+                {/if}
+            </div>
+        </BoxWithChips>
+
+        <BoxWithChips bind:chipsArray={selectedRace.other_prof} label='Other Proficiencies' let:index={index} gridArea='other-prof' blankChip={{name: '', type: 0}}>
+            <InPlaceEdit bind:value={selectedRace.other_prof[index].name} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
+        </BoxWithChips>
+
+        <BoxWithChips bind:chipsArray={selectedRace.skill_prof} label='Skill Proficiencies' let:index={index} gridArea='skill-prof'>
+            <select bind:value={selectedRace.skill_prof[index]} on:change={() => {}}>
+                <option value="" selected disabled hidden>???</option>
+                {#each SKILLS as skill}
+                    <option value={skill}>
+                        {skill}
+                    </option>
+                {/each}
+            </select>
+        </BoxWithChips>
+
+        <BoxWithChips bind:chipsArray={selectedRace.languages} label='Languages' let:index={index}>
+            <InPlaceEdit bind:value={selectedRace.languages[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
+        </BoxWithChips>
+
     {:else}
         <box class="features-placeholder">
             <div class="box-main-text">X</div>
@@ -76,7 +124,37 @@
                 Racial Traits
             </div>
         </box>
+        <box class="tools-prof-placeholder">
+            <div class="box-main-text">X</div>
+            <div class="box-justify-filler"></div>
+            <div class="box-label">
+                Tools Proficiencies
+            </div>
+        </box>
+        <box class="other-prof-placeholder">
+            <div class="box-main-text">X</div>
+            <div class="box-justify-filler"></div>
+            <div class="box-label">
+                Other Proficiencies
+            </div>
+        </box>
+        <box class="skill-prof-placeholder">
+            <div class="box-main-text">X</div>
+            <div class="box-justify-filler"></div>
+            <div class="box-label">
+                Skill Proficiencies
+            </div>
+        </box>
+        <box class="languages-placeholder">
+            <div class="box-main-text">X</div>
+            <div class="box-justify-filler"></div>
+            <div class="box-label">
+                Languages
+            </div>
+        </box>
     {/if}
+    
+
 </div>
 
 
@@ -93,8 +171,8 @@
             "age age alignment alignment features features features features"
             "size size speed speed features features features features"
             "size size speed speed features features features features"
-            "languages languages skill-prof skill-prof tools-prof tools-prof other-prof other-prof"
-            "languages languages skill-prof skill-prof tools-prof tools-prof other-prof other-prof"; 
+            "tools-prof tools-prof other-prof other-prof skill-prof skill-prof languages languages"
+            "tools-prof tools-prof other-prof other-prof skill-prof skill-prof languages languages"; 
     }
 
     .select-race { grid-area: select-race; 
@@ -129,7 +207,15 @@
         gap: 0.25em;
     }
 
-    .features-placeholder { grid-area: features;
+    .features-placeholder { grid-area: features; }
+    .languages-placeholder { grid-area: languages; }
+    .skill-prof-placeholder { grid-area: skill-prof; }
+    .tools-prof-placeholder { grid-area: tools-prof; }
+    .other-prof-placeholder { grid-area: other-prof; }
+
+    .languages-placeholder, .skill-prof-placeholder, 
+    .tools-prof-placeholder, .other-prof-placeholder, 
+    .skill-prof-placeholder, .features-placeholder {
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -138,10 +224,5 @@
         font-weight: var(--semi-bold);
         font-family: Quicksand;
     }
-
-    .languages { grid-area: languages; }
-    .skill-prof { grid-area: skill-prof; }
-    .tools-prof { grid-area: tools-prof; }
-    .other-prof { grid-area: other-prof; }
 
 </style>

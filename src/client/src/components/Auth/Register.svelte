@@ -53,7 +53,7 @@
 
 </script>
 
-<div class="background-box">
+<auth-simple-box>
     <h2>Sign up</h2>
     {#if ! inProgress}
         <Textfield variant="outlined" style="width: 15em" bind:value={username} label="Username">
@@ -81,28 +81,4 @@
           <IconButton class="material-icons" title="Dismiss">close</IconButton>
         </Actions>
     </Snackbar>
-</div>
-
-
-
-
-<style>
-    h2 {
-        padding-top: 0.5em;
-        text-transform: none;
-    }
-
-    .background-box {
-        width: 25em;
-        height: 40em;
-        background-color:#212125;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 1%;
-
-        display: flex;
-		justify-content: flex-start;
-		align-items: center;
-        flex-direction: column;
-        gap: 2em;
-    }
-</style>
+</auth-simple-box>

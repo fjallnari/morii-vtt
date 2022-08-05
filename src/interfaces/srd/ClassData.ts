@@ -20,10 +20,16 @@ interface ClassFeatures {
 
 }
 
+interface ClassHitPoints {
+    hit_die: number, // e.g. '12', {level}d12
+    current?: string,
+}
+
+
 export default interface ClassData {
     name: string,
     level: number,
-    hit_dice: number, // e.g. '12', {level}d12
+    hp: ClassHitPoints,
     tool_prof: ClassToolProf[],
     other_prof: ClassOtherProf[],
     saving_throws: string[], // e.g. ['STR', 'CON']

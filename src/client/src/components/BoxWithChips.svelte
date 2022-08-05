@@ -100,7 +100,7 @@
         cursor: pointer;
     }
 
-    :global(.chip.selectable > i) {
+    :global(.chip i) {
         font-size: 1.2em;
     }
 

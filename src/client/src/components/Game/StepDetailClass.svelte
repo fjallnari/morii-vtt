@@ -7,7 +7,8 @@
     import BoxWithChips from '../BoxWithChips.svelte';
     import ABILITY_TAGS from '../../enum/AbilityTags';
     import SKILLS from '../../enum/Skills';
-    import { Icon } from '@smui/icon-button';
+    import InPlaceEdit from '../InPlaceEdit.svelte';
+    import QCreateHitPoints from './QCreateHitPoints.svelte';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -31,17 +32,6 @@
 
     $: skillChooseList = selectedClass && selectedClass.skills && selectedClass.skills.type === 'list' ? selectedClass.skills.choose_list : SKILLS;
 
-
-    const toggleSkillChip = (skill: string) => {
-        // add skill if it was not chosen before and there is still space for more skills within the choose_n limit
-        if (!selectedClass.skills.final.includes(skill) && selectedClass.skills.final.length !== selectedClass.skills.choose_n) {
-            selectedClass.skills.final = selectedClass.skills.final.concat([skill]);
-        }
-        else {
-            selectedClass.skills.final = selectedClass.skills.final.filter(skillIter => skillIter !== skill);
-        }        
-    }
-
 </script>
 
 <div class="class-detail">
@@ -59,12 +49,17 @@
     {#if selectedClass}
         <box class="features">
             <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
+            <div class="level-slider-label">Level: {selectedClass.level}</div>
         </box>
         <box class="class-resources"></box>
         <box class="tools"></box>
-        <box class="other-prof"></box>
-        <box class="hit-points"></box>
         <box class="equipment"></box>
+
+        <QCreateHitPoints bind:selectedClass={selectedClass}></QCreateHitPoints>
+
+        <BoxWithChips bind:chipsArray={selectedClass.other_prof} label='Other Proficiencies' let:index={index} gridArea='other-prof' blankChip={{name: '', type: 0}}>
+            <InPlaceEdit bind:value={selectedClass.other_prof[index].name} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
+        </BoxWithChips>
 
         {#if selectedClass.skills.choose_n !== 0}
             <BoxWithChips 
@@ -149,10 +144,19 @@
     }
 
     .features { grid-area: features; }
+
+    .level-slider-label {
+        font-size: 1em;
+        font-family: Quicksand;
+        text-transform: none;
+    }
+
     .class-resources { grid-area: class-resources; }
     .tools { grid-area: tools; }
     .other-prof { grid-area: other-prof; }
+
     .hit-points { grid-area: hit-points; }
+
     .equipment { grid-area: equipment; }
     .saving-throws { grid-area: saving-throws; }
     .class-nav { grid-area: class-nav; }

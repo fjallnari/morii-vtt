@@ -5,7 +5,9 @@ export const CLASSES: ClassData[] = [
     {
         name: 'Custom',
         level: 1,
-        hit_dice: 0,
+        hp: {
+            hit_die: 0
+        },
         other_prof: [],
         tool_prof: [],
         saving_throws: [ '???', '???' ],
@@ -19,7 +21,9 @@ export const CLASSES: ClassData[] = [
     {
         name: 'Barbarian',
         level: 1,
-        hit_dice: 12,
+        hp: {
+            hit_die: 12
+        },
         other_prof: [
             {
                 type: OTHER_PROF.ARMOR,
@@ -57,7 +61,9 @@ export const CLASSES: ClassData[] = [
     {
         name: 'Bard',
         level: 1,
-        hit_dice: 8,
+        hp: {
+            hit_die: 8
+        },
         other_prof: [
             {
                 type: OTHER_PROF.ARMOR,

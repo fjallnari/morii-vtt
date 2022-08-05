@@ -13,6 +13,10 @@
             active_bg_color: '#27272B'
         },
         'primary': {
+            bg_color: '#C78B77',
+            active_bg_color: '#A3634E'
+        },
+        'orange': {
             bg_color: '#E9805D',
             active_bg_color: '#E7724B'
         },

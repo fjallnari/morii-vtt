@@ -41,6 +41,14 @@
         chosenTool = undefined;
     }
 
+    const placeholderBoxes = [
+        { label: 'Skill Proficiencies', gridArea: 'skill-prof' },
+        { label: 'Other Proficiencies', gridArea: 'other-prof' },
+        { label: 'Tools Proficiencies', gridArea: 'tools-prof' },
+        { label: 'Languages', gridArea: 'languages' },
+        { label: 'Racial Traits', gridArea: 'features' }
+    ];
+
 </script>
 
 <div class="race-detail">
@@ -57,7 +65,7 @@
 
     <div class="ability-score-increase">
         {#each ABILITY_TAGS.slice(1) as abilityTag}
-            <RowBoxWithLabel label={abilityTag} valueWidth='4rem' valueFontSize='1.5em' labelFontSize='large'>
+            <RowBoxWithLabel label={abilityTag} valueWidth='4rem' valueHeight='100%' valueFontSize='1.5em' labelFontSize='large'>
                 <div slot='value'>
                     {#if selectedRace && selectedRace.as_increase}
                         <InPlaceEdit bind:value={selectedRace.as_increase[`${abilityTag}`]} editWidth="2em" editHeight="2em" on:submit={() => {}}/>
@@ -122,44 +130,16 @@
         </BoxWithChips>
 
     {:else}
-        <box class="features-placeholder">
-            <div class="box-main-text">X</div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Racial Traits
-            </div>
-        </box>
-        <box class="tools-prof-placeholder">
-            <div class="box-main-text">X</div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Tools Proficiencies
-            </div>
-        </box>
-        <box class="other-prof-placeholder">
-            <div class="box-main-text">X</div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Other Proficiencies
-            </div>
-        </box>
-        <box class="skill-prof-placeholder">
-            <div class="box-main-text">X</div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Skill Proficiencies
-            </div>
-        </box>
-        <box class="languages-placeholder">
-            <div class="box-main-text">X</div>
-            <div class="box-justify-filler"></div>
-            <div class="box-label">
-                Languages
-            </div>
-        </box>
+        {#each placeholderBoxes as placeholderBox}
+            <box class="{placeholderBox.gridArea} placeholder">
+                <div class="box-main-text">X</div>
+                <div class="box-justify-filler"></div>
+                <div class="box-label">
+                    {placeholderBox.label}
+                </div>
+            </box>
+        {/each}
     {/if}
-    
-
 </div>
 
 
@@ -203,6 +183,10 @@
         gap: 0em 10%;
     }
 
+    :global(.ability-score-increase row-box-with-label) {
+        height: 40% !important;
+    }
+
     .features-list {
         width: 100%;
         display: flex;
@@ -212,15 +196,13 @@
         gap: 0.25em;
     }
 
-    .features-placeholder { grid-area: features; }
-    .languages-placeholder { grid-area: languages; }
-    .skill-prof-placeholder { grid-area: skill-prof; }
-    .tools-prof-placeholder { grid-area: tools-prof; }
-    .other-prof-placeholder { grid-area: other-prof; }
+    .features { grid-area: features; }
+    .languages { grid-area: languages; }
+    .skill-prof { grid-area: skill-prof; }
+    .tools-prof { grid-area: tools-prof; }
+    .other-prof { grid-area: other-prof; }
 
-    .languages-placeholder, .skill-prof-placeholder, 
-    .tools-prof-placeholder, .other-prof-placeholder, 
-    .skill-prof-placeholder, .features-placeholder {
+    .placeholder {
         display: flex;
         flex-direction: column;
         height: 100%;

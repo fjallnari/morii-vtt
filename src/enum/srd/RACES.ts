@@ -1,4 +1,4 @@
-import RaceData from "../../interfaces/ogl/RaceData";
+import RaceData from "../../interfaces/srd/RaceData";
 import { OTHER_PROF } from "../OTHER_PROF";
 
 export const RACES: RaceData[] = [
@@ -364,6 +364,5 @@ export const RACES: RaceData[] = [
         skill_prof: [],
         tools_prof: [],
         other_prof: []
-    },
-    
+    }
 ]

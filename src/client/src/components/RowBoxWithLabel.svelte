@@ -8,17 +8,17 @@
 
 </script>
 
-<div class="row-box-with-label">
+<row-box-with-label>
     <box class="row-box-value" style="width:{valueWidth}; height: {valueHeight}; font-size: {valueFontSize};">
         <slot name='value'></slot>
     </box>
     <box class="row-box-label" style="font-size: {labelFontSize};">
         {label}
     </box>
-</div>
+</row-box-with-label>
 
 <style>
-    .row-box-with-label {
+    row-box-with-label {
         display: flex;
         flex-direction: row;
         align-items: center;

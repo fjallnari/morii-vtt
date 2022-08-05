@@ -8,18 +8,18 @@
     import type QuickCreateData from "../../interfaces/QuickCreateData";
     import { Icon } from '@smui/button';
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
+    import StepDetailClass from "./StepDetailClass.svelte";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
-    let open: boolean = false;
+    let open: boolean = true;
     let selectedStepIndex: number = 0;
     let characterTemplate: Partial<Character> = {};
     let characterParts: Partial<QuickCreateCharacterParts> = {};
-    let quickCreateData: Partial<QuickCreateData>;
 
     let creationSteps = [
         { name: 'Race', icon: 'account-supervisor', filled_in: false, component: StepDetailRace },
-        { name: 'Class', icon: 'arrow-projectile-multiple', filled_in: false },
+        { name: 'Class', icon: 'arrow-projectile-multiple', filled_in: false, component: StepDetailClass },
         { name: 'Ability Scores', icon: 'atom', filled_in: false },
         { name: 'Background', icon: 'sprout', filled_in: false },
         { name: 'Summary', icon: 'clipboard-text', filled_in: false },
@@ -62,7 +62,7 @@
     scrimClickAction=""
     escapeKeyAction=""
     aria-labelledby="simple-title"
-    surface$style="padding: 1em 1em;"
+    surface$style="padding: 1em 1em; width: 80vw !important;"
 >
     <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
     <h3 id="simple-title">Quick-Create</h3>
@@ -103,7 +103,7 @@
 <style>
 
     dialog-content {
-        height: 100%;
+        height: calc(80vh - 2.5em);
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr; 
         grid-template-rows: 5fr 5fr 1fr;

@@ -1,47 +1,46 @@
 <script lang="ts">
     import type ClassData from "../../interfaces/ClassData";
+    import BoxWithHeaderToggle from '../BoxWithHeaderToggle.svelte';
+    import InPlaceEdit from "../InPlaceEdit.svelte";
     import SimpleButton from "../SimpleButton.svelte";
 
     export let selectedClass: ClassData;
 
+    $: averageHP = ~~(selectedClass.hp.hit_die/2) + 1;
+
 </script>
 
 <div class="hit-points">
-    <box class="hit-dice">
-        <box-header>
-            1d{selectedClass.hp.hit_die} per {selectedClass.name} level
-        </box-header>
-        <div class="box-main-text">
-            {selectedClass.level}d{selectedClass.hp.hit_die}
-        </div>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Hit Dice
-        </div>
-    </box>
-    <box class="hp-at-higher-levels">
-        <box-header>
-            1d{selectedClass.hp.hit_die} (or {~~(selectedClass.hp.hit_die/2) + 1}) + CON mod per {selectedClass.name} level after 1st
-        </box-header>
-        <div class="box-main-text">1d{selectedClass.hp.hit_die} + ???</div>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Hit Points at Higher Levels
-        </div>
-    </box>
-    <box class="hp-at-1st-level">
-        <box-header>
-            {selectedClass.hp.hit_die} + CON mod
-        </box-header>
-        <div class="box-main-text">???</div>
-        <div class="box-justify-filler"></div>
-        <div class="box-label">
-            Hit Points at 1st Level
-        </div>
-    </box>
+
+    <BoxWithHeaderToggle 
+        label='Hit Dice'
+        headerText='1d{selectedClass.hp.hit_die} per {selectedClass.name} level'
+        gridArea='hit-dice'
+    >
+        {selectedClass.level}d{selectedClass.hp.hit_die}
+    </BoxWithHeaderToggle>
+
+    <BoxWithHeaderToggle 
+        label='Hit Points at Higher Levels'
+        headerText='1d{selectedClass.hp.hit_die} (or {averageHP}) + CON mod per {selectedClass.name} level after 1st'
+        gridArea='hp-at-higher-levels'
+    >
+        1d{selectedClass.hp.hit_die} (or {averageHP}) + ???
+    </BoxWithHeaderToggle>
+
+    <BoxWithHeaderToggle 
+        label='Hit Points at 1st Level' 
+        headerText='{selectedClass.hp.hit_die} + CON mod' 
+        gridArea='hp-at-1st-level'
+    >
+        ???
+    </BoxWithHeaderToggle>
+
     <div class="current-hp">
         <box class="current-hp-edit-box">
-            <div class="box-main-text">X</div>
+            <div class="box-main-text">
+                <InPlaceEdit bind:value={selectedClass.hp.current} editWidth="3rem" editHeight="3rem" on:submit={() => {}}/>
+            </div>
             <div class="box-justify-filler"></div>
             <div class="box-label">
                 Current HP
@@ -65,37 +64,6 @@
             "hp-at-1st-level current-hp"; 
         font-family: Quicksand;
     }
-
-    .hit-points > box {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-    }
-
-    box-header {
-        font-family: Quicksand;
-        text-transform: none;
-        margin-top: 0.2em;
-        font-size: 0.6vw;
-    }
-
-    .box-main-text {
-        margin-bottom: 0em;
-        font-weight: var(--semi-bold);
-    }
-
-    .hit-dice { grid-area: hit-dice; }
-
-    .hit-dice .box-main-text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.1em;
-    }
-
-    .hp-at-higher-levels { grid-area: hp-at-higher-levels; }
-    .hp-at-1st-level { grid-area: hp-at-1st-level; }
 
     .current-hp { grid-area: current-hp; 
         display: grid; 
@@ -123,6 +91,8 @@
     }
 
     .current-hp-edit-box .box-main-text {
+        font-size: 1.5em;
         margin-bottom: -0.6vw;
     }
+
 </style>

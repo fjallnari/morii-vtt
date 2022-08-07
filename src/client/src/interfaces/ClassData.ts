@@ -12,7 +12,14 @@ interface ClassOtherProf {
 }
 
 interface ClassToolProf {
+    label: string,
+    tools: ClassTool[]
+}
 
+interface ClassTool {
+    name: string,
+    placeholder?: string,
+    choose_list?: string[],
 }
 
 interface ClassFeatures {
@@ -28,7 +35,7 @@ export default interface ClassData {
     name: string,
     level: number,
     hp: ClassHitPoints,
-    tool_prof: ClassToolProf[],
+    tool_prof: ClassToolProf,
     other_prof: ClassOtherProf[],
     saving_throws: string[], // e.g. ['STR', 'CON']
     skills: ClassSkills,

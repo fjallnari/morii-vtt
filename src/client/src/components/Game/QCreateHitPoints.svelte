@@ -6,7 +6,14 @@
 
     export let selectedClass: ClassData;
 
-    $: averageHP = ~~(selectedClass.hp.hit_die/2) + 1;
+    $: averageHPPerLevel = ~~(selectedClass.hp.hit_die/2) + 1;
+    $: level1HP = selectedClass.hp.hit_die + 0;
+
+    // TODO: replace the 0 with the actual CON modifier
+    const getAverageHP = () => {
+        // HP at first level + (average hp per level + CON mod) * (level - 1)
+        selectedClass.hp.current = (level1HP + (averageHPPerLevel + 0) * (selectedClass.level - 1)).toString();
+    }
 
 </script>
 
@@ -22,10 +29,10 @@
 
     <BoxWithHeaderToggle 
         label='Hit Points at Higher Levels'
-        headerText='1d{selectedClass.hp.hit_die} (or {averageHP}) + CON mod per {selectedClass.name} level after 1st'
+        headerText='1d{selectedClass.hp.hit_die} (or {averageHPPerLevel}) + CON mod per {selectedClass.name} level after 1st'
         gridArea='hp-at-higher-levels'
     >
-        1d{selectedClass.hp.hit_die} (or {averageHP}) + ???
+        1d{selectedClass.hp.hit_die} (or {averageHPPerLevel}) + ???
     </BoxWithHeaderToggle>
 
     <BoxWithHeaderToggle 
@@ -33,7 +40,7 @@
         headerText='{selectedClass.hp.hit_die} + CON mod' 
         gridArea='hp-at-1st-level'
     >
-        ???
+        {level1HP}
     </BoxWithHeaderToggle>
 
     <div class="current-hp">
@@ -48,7 +55,7 @@
         </box>
         <div class="roll-calc-hp">
             <SimpleButton value='Roll' icon="casino" type='primary' onClickFn={() => {}}></SimpleButton>
-            <SimpleButton value='Calc' icon="calculate" type='default' onClickFn={() => {}}></SimpleButton>
+            <SimpleButton value='AVG' icon="calculate" type='default' onClickFn={() => getAverageHP()}></SimpleButton>
         </div>
     </div>     
 </div>

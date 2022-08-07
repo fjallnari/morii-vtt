@@ -58,9 +58,9 @@
                             tabindex='0'
                         >
                             <class-icon>
-                                <img id="main-class" src="../static/class-icons/{getClassIcon(character)[0]}.svg" alt="class-icon">
-                                {#if getClassIcon(character).length > 2}
-                                    <img id="multi-class" src="../static/class-icons/{getClassIcon(character)[2]}.svg" alt="class-icon">
+                                <img id="main-class" src="../static/class-icons/{getClassIcon(character.classes)[0]}.svg" alt="class-icon">
+                                {#if getClassIcon(character.classes).length > 2}
+                                    <img id="multi-class" src="../static/class-icons/{getClassIcon(character.classes)[2]}.svg" alt="class-icon">
                                 {/if}
                             </class-icon>
                             <div class="character-tag-name">

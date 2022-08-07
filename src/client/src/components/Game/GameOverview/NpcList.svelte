@@ -1,6 +1,4 @@
 <script lang="ts">
-
-    import type { Character } from '../../../interfaces/Character';
     import type GameData from '../../../interfaces/GameData';
     import { selectedCharacter } from '../../../stores';
     import { getClassIcon } from '../../../util/util';
@@ -15,9 +13,9 @@
         {#each gameData.npcs as npc}
             <box class="npc-main-container" on:click={() => selectedCharacter.set(npc)}>
                 <class-icon>
-                    <img id="main-class" src="../static/class-icons/{getClassIcon(npc)[0]}.svg" alt="class-icon">
-                    {#if getClassIcon(npc).length > 2}
-                        <img id="multi-class" src="../static/class-icons/{getClassIcon(npc)[2]}.svg" alt="class-icon">
+                    <img id="main-class" src="../static/class-icons/{getClassIcon(npc.classes)[0]}.svg" alt="class-icon">
+                    {#if getClassIcon(npc.classes).length > 2}
+                        <img id="multi-class" src="../static/class-icons/{getClassIcon(npc.classes)[2]}.svg" alt="class-icon">
                     {/if}
                 </class-icon>
                 <div class="npc-name">

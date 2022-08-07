@@ -5,14 +5,16 @@
     export let blankChip: any = '';
     export let label: string = '';
     export let gridArea: string = label.toLowerCase();
+    export let headerText: string = '';
     export let chipsType: 'crud' | 'select-n' = 'crud';
     export let selectNFinalArray: any[] = [];
     export let selectNMaxChips: number = 0;
-    export let selectNTooltip: string = '';
+    
 
 
     const addChip = () => {
-        const cleanBlankChip = typeof blankChip === 'object' && typeof blankChip[0] !== 'string' ? {...blankChip} : [...blankChip];
+        // just so BoxWithChips works with either object, arrays of strings or simple strings
+        const cleanBlankChip = typeof blankChip === 'object' && typeof blankChip[0] !== 'string' ? {...blankChip} : typeof blankChip === 'string' ? blankChip.slice() : [...blankChip];
         chipsArray = chipsArray.concat([cleanBlankChip]);
     }
 
@@ -36,12 +38,15 @@
 
 
 <box class="box-with-chips" style="grid-area: {gridArea};">
+    {#if headerText}
+        <p class="header-text">{headerText}</p>
+    {/if}
     {#if chipsType === 'crud'}
-        <sendable class="add-new-item" on:click={() => { addChip()}}>
-            <Icon class="material-icons">{'add'}</Icon>
-        </sendable>
-    {:else}
-        <p class="select-n-tooltip">{selectNTooltip}</p>
+        <div class="add-new-item">
+            <sendable on:click={() => { addChip()}}>
+                <Icon class="material-icons">{'add'}</Icon>
+            </sendable>
+        </div>
     {/if}
     <div class="chips-array box-main-text">
         {#each chipsArray as chip, index}
@@ -108,9 +113,10 @@
         background-color: #C78B77 !important;
     }
 
-    p.select-n-tooltip {
+    p.header-text {
         font-family: 'Quicksand';
-        font-size: 1em;        
+        font-size: 1em;
+        margin: 0.5em;      
     }
 
     .delete-chip {

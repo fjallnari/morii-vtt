@@ -9,6 +9,7 @@
     import SKILLS from '../../enum/Skills';
     import InPlaceEdit from '../InPlaceEdit.svelte';
     import QCreateHitPoints from './QCreateHitPoints.svelte';
+    import { validateClassName } from '../../util/util';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -44,6 +45,9 @@
                 charClass ? `${charClass.name}` : ''}
             bind:value={selectedClass}
         />
+        <box class="class-icon">
+            <img id="main-class" src="../static/class-icons/{validateClassName(selectedClass ? selectedClass.name.toLowerCase() : '')}.svg" alt="class-icon">
+        </box>
     </div>
 
     {#if selectedClass}
@@ -52,8 +56,31 @@
             <div class="level-slider-label">Level: {selectedClass.level}</div>
         </box>
         <box class="class-resources"></box>
-        <box class="tools"></box>
+        
         <box class="equipment"></box>
+        <box class="tools"></box>
+
+        <BoxWithChips 
+            bind:chipsArray={selectedClass.tool_prof.tools} 
+            label='Tools' 
+            let:index={index} 
+            gridArea='tools' 
+            blankChip={{name: ''}}
+            headerText={selectedClass.tool_prof.label}
+        >
+            {#if selectedClass.tool_prof.tools[index].choose_list}
+                <select bind:value={selectedClass.tool_prof.tools[index].name} on:change={() => {}}>
+                    <option value="" selected disabled hidden>{selectedClass.tool_prof.tools[index].placeholder ?? '???'}</option>
+                    {#each selectedClass.tool_prof.tools[index].choose_list as tool}
+                        <option value={tool}>
+                            {tool}
+                        </option>
+                    {/each}
+                </select>
+            {:else}
+                <InPlaceEdit bind:value={selectedClass.tool_prof.tools[index].name} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>                    
+            {/if}
+        </BoxWithChips>
 
         <QCreateHitPoints bind:selectedClass={selectedClass}></QCreateHitPoints>
 
@@ -65,11 +92,11 @@
             <BoxWithChips 
                 bind:chipsArray={skillChooseList} 
                 let:index={index} 
-                gridArea='skills' 
+                gridArea='skills'
                 chipsType='select-n' 
                 bind:selectNFinalArray={selectedClass.skills.final}
                 selectNMaxChips={selectedClass.skills.choose_n}
-                selectNTooltip={`Choose ${selectedClass.skills.choose_n} skills from:`}
+                headerText={`Choose ${selectedClass.skills.choose_n} skills from:`}
             >
                 {skillChooseList[index]}
             </BoxWithChips>
@@ -108,7 +135,6 @@
             </box>
         {/each}
     {/if}
-
     <box class="class-nav"></box>
 </div>
 
@@ -123,9 +149,9 @@
             "hit-points hit-points hit-points skills skills skills features features features features"
             "tools tools tools other-prof other-prof other-prof features features features features"
             "tools tools tools other-prof other-prof other-prof features features features features"
-            "saving-throws saving-throws equipment equipment equipment equipment features features features features"
-            "saving-throws saving-throws equipment equipment equipment equipment features features features features"
-            "class-nav class-nav equipment equipment equipment equipment class-resources class-resources class-resources class-resources";
+            "equipment equipment equipment equipment saving-throws saving-throws features features features features"
+            "equipment equipment equipment equipment saving-throws saving-throws features features features features"
+            "equipment equipment equipment equipment class-nav class-nav class-resources class-resources class-resources class-resources";
     }
 
     .select-class { grid-area: select-class; 
@@ -140,7 +166,22 @@
         font-size: x-large;
         font-weight: 500;
         text-transform: uppercase;
-        margin: 0em;
+    }
+
+    :global(.select-class > .smui-autocomplete) {
+        max-width: 10em;
+    }
+
+    .class-icon {
+        height: 100%;
+        width: 100%;
+        max-width: 5em;
+        max-height: 5em;
+    }
+
+    #main-class {
+        width: inherit;
+        height: inherit;
     }
 
     .features { grid-area: features; }
@@ -154,9 +195,7 @@
     .class-resources { grid-area: class-resources; }
     .tools { grid-area: tools; }
     .other-prof { grid-area: other-prof; }
-
     .hit-points { grid-area: hit-points; }
-
     .equipment { grid-area: equipment; }
     .saving-throws { grid-area: saving-throws; }
     .class-nav { grid-area: class-nav; }

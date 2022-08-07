@@ -1,13 +1,12 @@
 import CLASS_NAMES from "../enum/ClassNames";
-import type { Character } from "../interfaces/Character";
 
 export const validateClassName = (className: string) => {
     return CLASS_NAMES.includes(className) ? className : 'no-class';  
 }
 
-export const getClassIcon = (character: Character) => {
-    const classes = character.classes.split(' ').map(charClass => charClass.toLowerCase());
-    return classes.length <= 2 ? [validateClassName(classes[0])] : classes.map(charClass => validateClassName(charClass));
+export const getClassIcon = (characterClasses: string) => {
+    const classesArray = characterClasses.split(' ').map(charClass => charClass.toLowerCase());
+    return classesArray.length <= 2 ? [validateClassName(classesArray[0])] : classesArray.map(charClass => validateClassName(charClass));
 }
 
 export const capitalize = (text: string) => {

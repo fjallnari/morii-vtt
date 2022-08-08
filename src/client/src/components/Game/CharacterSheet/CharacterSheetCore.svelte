@@ -118,7 +118,6 @@ import Resources from './Components/Resources.svelte';
         align-items: center;
         justify-content: center;
         text-align: center;
-        color: #FCF7F8;
         font-size: 2em;
         margin: 0.4em 0em 0em 0.4em;
         width: inherit;
@@ -130,7 +129,6 @@ import Resources from './Components/Resources.svelte';
         justify-content: space-between;
         align-items: center;
         text-align: center;
-        color: #FCF7F8;
         font-size: 1.5em;
         gap: 0.35em;
     }

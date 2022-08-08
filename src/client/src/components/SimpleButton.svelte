@@ -20,8 +20,8 @@
             active_bg_color: '#27272B'
         },
         'primary': {
-            bg_color: '#C78B77',
-            active_bg_color: '#A3634E'
+            bg_color: 'var(--clr-accent-dark)',
+            active_bg_color: 'var(--clr-accent-darker)'
         },
         'orange': {
             bg_color: '#E9805D',
@@ -29,7 +29,7 @@
         },
         'green': {
             bg_color: '#80A451',
-            active_bg_color: '#75964A'
+            active_bg_color: '#556D36'
         },
         'delete': {
             bg_color: '#BC4B51',
@@ -44,6 +44,7 @@
     style="--bg-color:{BUTTON_TYPES[type].bg_color}; --active-bg-color:{BUTTON_TYPES[type].active_bg_color};"
     {disabled}
     on:click={() => onClickFn()}
+    on:keydown={(event) => {if (event.key === 'Enter') {onClickFn();}}}
     tabindex="0"
 >
     {#if icon}
@@ -80,7 +81,7 @@
     }
 
     simple-button:hover {
-        transform: scale(1.025);
+        transform: scale(1.048);
         filter: opacity(0.9);
     }
 

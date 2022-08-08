@@ -87,7 +87,6 @@
 
 <style>
     #simple-title {
-        color: #FCF7F8;
         font-size: 1.5em;
         font-family: Montserrat;
         text-transform: uppercase;

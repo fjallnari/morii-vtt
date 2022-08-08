@@ -27,7 +27,7 @@
     }
 
     h3 {
-        color: #FCF7F8;
+        color: var(--primary-text-color);
         font-size: 2em;
         font-family: Quicksand;
         font-weight: 200;

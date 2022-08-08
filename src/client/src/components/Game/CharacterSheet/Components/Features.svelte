@@ -39,7 +39,7 @@
     <div class="filter-menu">
         {#each ['all', 'racial', 'class', 'feat', 'background', 'other'] as featureType, index}
             <sendable class="filter-names"
-                style="{currentFilter === index ? 'border-bottom: 1px solid #EFA48B; padding-bottom: 0.2em;': ''}"
+                style="{currentFilter === index ? 'border-bottom: 1px solid var(--clr-accent-normal); padding-bottom: 0.2em;': ''}"
                 on:click={ () => { currentFilter = index;}}
             >
                 {featureType}

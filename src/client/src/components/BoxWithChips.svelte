@@ -110,7 +110,7 @@
     }
 
     .chip.selected {
-        background-color: #C78B77 !important;
+        background-color: var(--clr-accent-dark) !important;
         font-weight: var(--semi-bold);
     }
 

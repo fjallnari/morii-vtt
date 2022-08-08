@@ -60,7 +60,7 @@
                 <img class="prof-type-icon" 
                     src="../static/{profType}.svg"
                     alt="prof-type-icon"
-                    style="{currentFilter === index ? 'border-bottom: 1px solid #EFA48B; padding-bottom: 0.2em;': ''}"
+                    style="{currentFilter === index ? 'border-bottom: 1px solid var(--clr-accent-normal); padding-bottom: 0.2em;': ''}"
                     on:click={ () => { currentFilter = index;}}
                 >
             {/each}                

@@ -98,12 +98,8 @@
         <h3 id="simple-title">Delete character</h3>
         <Content>Are you sure you want to delete <strong>{character.name}</strong>?<br><em>This is irreversible.</em></Content>
         <Actions>
-            <Button variant="raised" on:click={() => isDeleteCharDialogOpen = false}>
-                <Label>No</Label>
-            </Button>
-            <Button color="secondary" on:click={() => deleteCharacter()}>
-                <Label>Yes</Label>
-            </Button>
+            <SimpleButton value='No' type='primary' onClickFn={() => isDeleteCharDialogOpen = false}></SimpleButton>
+            <SimpleButton value='Yes' onClickFn={() => deleteCharacter()}></SimpleButton>
         </Actions>
     </Dialog>
 </tab-container>
@@ -161,7 +157,6 @@
     }
 
     h4 {
-        color: #FCF7F8;
         text-transform: uppercase;
         font-size: 2em;
         font-weight: 100;
@@ -171,6 +166,14 @@
     :global(.settings-tab simple-button) {
         font-size: 1.25em;
         padding: 0.5em 0em;
+    }
+
+    :global(.mdc-dialog__actions) {
+        gap: 0.5em;
+    }
+
+    :global(.mdc-dialog__actions > simple-button) {
+        max-width: 40%;
     }
 
     .player-tag {
@@ -183,7 +186,6 @@
         border-radius: 4px;
         padding: 0.4em;
         font-family: Montserrat;
-        color: #FCF7F8;
         text-transform: uppercase;
         font-size: 1.2em;
     }

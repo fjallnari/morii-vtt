@@ -93,7 +93,6 @@
 
 <style>
     #simple-title {
-        color: #FCF7F8;
         font-size: 1.5em;
         font-family: Montserrat;
         text-transform: uppercase;
@@ -129,16 +128,16 @@
     }
 
     .pfp-select img:hover {
-        filter: invert(25%) sepia(90%) saturate(30%) hue-rotate(323deg) brightness(70%) contrast(90%);
+        filter: brightness(0) saturate(100%) invert(68%) sepia(12%) saturate(919%) hue-rotate(160deg) brightness(89%) contrast(91%);
     }
 
     .pfp-select img:active {
-        filter: invert(31%) sepia(11%) saturate(1200%) hue-rotate(323deg) brightness(98%) contrast(90%);
+        filter: brightness(0) saturate(100%) invert(30%) sepia(10%) saturate(3076%) hue-rotate(190deg) brightness(90%) contrast(90%);
     }
 
     .pfp-select > img.selected {
-        border-bottom: 2px #dbad23 solid;
-        filter: invert(31%) sepia(11%) saturate(1400%) hue-rotate(320deg) brightness(125%) contrast(90%);
+        border-bottom: 2px var(--primary-text-color) solid;
+        filter: brightness(0) saturate(100%) invert(50%) sepia(49%) saturate(409%) hue-rotate(176deg) brightness(81%) contrast(82%);
     }
 
 
@@ -183,7 +182,6 @@
     }
 
     user-tag h3 {
-        color: #FCF7F8;
         font-size: 1em;
         font-family: Montserrat;
         text-transform: uppercase;

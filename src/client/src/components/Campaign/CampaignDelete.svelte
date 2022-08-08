@@ -59,7 +59,6 @@
     }
 
     #simple-title {
-        color: #FCF7F8;
         font-size: 1.5em;
         text-transform: uppercase;
         font-weight: 400;

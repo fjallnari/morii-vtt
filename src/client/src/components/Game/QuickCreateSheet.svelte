@@ -154,12 +154,12 @@
     }
 
     .creation-step-item:active {
-        background-color: #4D3E3D;
+        background-color: var(--clr-accent-darker);
     }
 
     .selected {
         transform: scale(1.04) !important;
-        background-color: #C78B77 !important;
+        background-color: var(--clr-accent-dark) !important;
     }
 
     .creation-step-item img {

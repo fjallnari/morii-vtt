@@ -132,13 +132,11 @@
         gap: 1em;
         padding-left: 1em;
         padding-right: 1em;
-        color: #FCF7F8;
         font-size: 1em;
         font-family: Montserrat;
     }
 
     #simple-title {
-        color: #FCF7F8;
         font-size: 1.5em;
         font-family: Montserrat;
         font-weight: 400;
@@ -153,7 +151,6 @@
     }
 
     #invite-tooltip {
-        color: #FCF7F8;
         font-size: 1em;
         font-family: Montserrat;
     }

@@ -10,8 +10,7 @@
     import QCreateHitPoints from './QCreateHitPoints.svelte';
     import { validateClassName } from '../../util/util';
     import ABILITY_NAMES from '../../enum/AbilityNames';
-    import SimpleButton from '../SimpleButton.svelte';
-import QCreateEquipment from './QCreateEquipment.svelte';
+    import QCreateEquipment from './QCreateEquipment.svelte';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -224,12 +223,6 @@ import QCreateEquipment from './QCreateEquipment.svelte';
         font-size: 1.3em;
         font-weight: var(--semi-bold);
         font-family: Quicksand;
-    }
-
-    :global(.mdc-slider__value-indicator) {
-        color: #FCF7F8 !important;
-        background-color: #1b1b1e !important;
-        opacity: 1 !important;
     }
 
 </style>

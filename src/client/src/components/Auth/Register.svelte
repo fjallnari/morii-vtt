@@ -10,6 +10,7 @@
     } from '@smui/snackbar';
     import IconButton from '@smui/icon-button';
     import { axiosPublic } from '../../axiosPublic';
+import SimpleButton from '../SimpleButton.svelte';
     
     let successSnackbar: SnackbarComponentDev;
 
@@ -63,10 +64,8 @@
         <PasswordField bind:password={password} label="Password" icon="lock_open"></PasswordField>
         <PasswordField bind:password={passwordCheck} label="Confirm password" icon="lock"></PasswordField>
 
-        <div style="padding-top: 2em; padding-bottom: 2em;">
-            <Button on:click={registerNewUser} variant="raised">
-                <Label>Sign Up</Label>
-            </Button>
+        <div class="button-container">
+            <SimpleButton value='Sign In' type='primary' onClickFn={registerNewUser}></SimpleButton>
         </div>
     {:else}
         <div>
@@ -82,3 +81,10 @@
         </Actions>
     </Snackbar>
 </auth-simple-box>
+
+<style>
+    .button-container {
+        display: flex;
+        padding-top: 2em; 
+    }
+</style>

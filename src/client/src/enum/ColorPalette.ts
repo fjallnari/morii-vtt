@@ -26,11 +26,12 @@ export enum PALETTE {
     
     // the actual color palette
     DARK_SALMON = "#EFA48B",
+    DARKER_SALMON = "#C78B77",
     APRICOT = "#FCC8B2",
     OLIVINE = "#A7C284",
     SPRING_BUD = "#DBD8B3",
     ELEM_BCKG = "#212125",
     SNOW = "#FCF7F8",
 
-    PRETTY_BLUE = "#3c4c87"
+    PRETTY_BLUE = "#3C4C87"
 }

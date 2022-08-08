@@ -24,8 +24,8 @@
 
     textarea:focus {
         outline: none !important;
-        border: 2px solid var(--primary-accent-color);
-        caret-color: var(--primary-accent-color);
+        border: 2px solid var(--clr-accent-normal);
+        caret-color: var(--clr-accent-normal);
     }
 
     .box-with-label {

@@ -59,7 +59,7 @@
         box-shadow: none;
         width: inherit;
         max-width: inherit;
-        outline: solid 1.5px #EFA48B;
+        outline: solid 1.5px var(--clr-accent-normal);
         border-radius: 4px;
     }
 

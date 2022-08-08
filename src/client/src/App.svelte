@@ -111,22 +111,177 @@
 	<Router {routes} on:conditionsFailed={conditionsFailed}/>
 </main>
 
-<style>
+<style lang="scss">
 	main {
 		text-align: center;
 		padding: 1em;
 		padding-top: 0px;
 		max-width: 240px;
 		margin: 0 auto;
+		color: var(--primary-text-color);
+	}
+
+	$scheme-salmon: #FCC8B2, #EFA48B, #E7724B, #E7724B, url('../static/bg/waves-salmon.svg');
+	$scheme-blue: #78A1BB, #5A77A1, #3C4C87, #2C3863, url('../static/bg/waves-blue-darker.svg');
+
+	@mixin color-scheme($accent-light, $accent-normal, $accent-dark, $accent-darker, $bg-image) {
+		--clr-accent-light: #{$accent-light};
+		--clr-accent-normal: #{$accent-normal};
+		--clr-accent-dark: #{$accent-dark};
+		--clr-accent-darker: #{$accent-darker};
+		--bg-waves: #{$bg-image};
 	}
 
 	:root {
+		--semi-bold: 600;
+
+		--clr-bg: #1B1B1E;
 		--primary-box-background-color: #252529;
 		--secondary-box-background-color: #303036;
-  		--delete-button-background-color: #BC4B51;
-		--primary-text-color: #FCF7F8;
-		--primary-accent-color: #EFA48B;
-		--semi-bold: 600;
+		--primary-text-color: #F9F9F9;
+		--clr-contrast: #FF5A5F;
+
+		@include color-scheme($scheme-salmon ...);
+	}
+	
+	:global(tab-container) {
+        height: inherit;
+        flex: 5;
+
+        background-color: #212125;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        
+        font-weight: 400;
+        font-family: Quicksand;
+    }
+
+    :global(box) {
+        background-color: var(--primary-box-background-color);
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+    }
+
+    :global(mod) {
+        font-weight: var(--semi-bold);
+        border-bottom: 1px #F2E8CF dotted;
+        min-width: 1.2em;
+        margin: 0em 0.3em;
+    }
+
+    :global(sendable) {
+        cursor: pointer;
+        transition-duration: 200ms;
+        transition-property: color;
+    }
+
+    :global(sendable:active) {
+        color: var(--clr-accent-normal);
+        transition-duration: 200ms;
+        transition-property: color;
+    }
+
+    :global(textarea) {
+        width: 100%;
+        padding: 0.5em 0.5em;
+        box-sizing: border-box;
+        border: 1px solid #ffffff8a;
+        border-radius: 4px;
+        background-color: transparent;
+        font-size: 1em;
+        font-family: Athiti;
+        color: var(--primary-text-color);
+        resize: none;
+        scrollbar-width: thin;
+    }
+
+    :global(textarea:focus) {
+        outline: none !important;
+        border: 2px solid var(--clr-accent-normal) !important;
+        caret-color: var(--clr-accent-normal) !important;
+    }
+
+	:global(textarea:hover) {
+        outline: none !important;
+        border: 2px solid #ffffffb4;
+    }
+
+    :global(select) {
+        background-color: var(--secondary-box-background-color);
+        color: inherit;
+        border: none;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    :global(.box-with-label) {
+        flex-grow: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    :global(.box-main-text) {
+        margin-top: auto;
+        margin-bottom: -0.6vw;
+    }
+
+    :global(.box-justify-filler) {
+        margin-top: auto; 
+        height: 0;
+    }
+    
+    :global(.box-label) {
+        font-size: 0.6vw;
+        font-weight: 400;
+        font-family: Athiti;
+        text-transform: uppercase;
+    }
+
+	:global(.mdc-text-field .mdc-text-field__input) {
+		caret-color: var(--clr-accent-normal) !important;
+	}
+
+	:global(.mdc-slider .mdc-slider__value-indicator) {
+        color: var(--primary-text-color) !important;
+        background-color: var(--clr-bg) !important;
+        opacity: 1 !important;
+    }
+
+    :global(.mdc-slider__track .mdc-slider__tick-mark--inactive) {
+        background-color: var(--clr-accent-normal) !important;
+    }
+
+    :global(.mdc-slider .mdc-slider__thumb-knob) {
+        background-color: var(--clr-accent-dark) !important;
+        border-color: var(--clr-accent-normal) !important;
+    }
+
+    :global(.mdc-slider .mdc-slider__track--active_fill) {
+        background-color: var(--clr-accent-dark) !important;
+        border-color: var(--clr-accent-dark) !important;
+    }
+
+	:global(.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading, 
+	.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch, 
+	.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing) {
+		border-color: var(--clr-accent-normal) !important;
+	}
+
+	:global(.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label) {
+		color: var(--clr-accent-normal) !important;
+	}
+
+	:global(.mdc-deprecated-list-item--selected, .mdc-deprecated-list-item--activated) {
+		color: var(--clr-accent-normal) !important;
+	}
+
+	:global(.mdc-circular-progress__determinate-circle, .mdc-circular-progress__indeterminate-circle-graphic) {
+		stroke: var(--clr-accent-normal) !important;
 	}
 
 	@media only screen and (min-width: 640px) {

@@ -12,6 +12,7 @@
     } from '@smui/snackbar';
     import IconButton from '@smui/icon-button';
     import { axiosPublic } from '../../axiosPublic';
+import SimpleButton from '../SimpleButton.svelte';
 
     let loginFailedSnackbar: SnackbarComponentDev;
 
@@ -55,10 +56,8 @@
 
         <PasswordField bind:password={password} label="Password"></PasswordField>
 
-        <div style="padding-top: 2em; ">
-            <Button on:click={loginUser} variant="raised">
-                <Label>Sign In</Label>
-            </Button>
+        <div class="button-container">
+            <SimpleButton value='Sign In' type='green' onClickFn={loginUser}></SimpleButton>
         </div>
     {:else}
         <ProgressCircle></ProgressCircle>
@@ -71,3 +70,15 @@
         </Actions>
     </Snackbar>
 </auth-simple-box>
+
+<style>
+    .button-container {
+        display: flex;
+        padding-top: 2em; 
+    }
+
+    :global(auth-simple-box .button-container simple-button) {
+        padding: 0.5em 1em !important;
+    }
+    
+</style>

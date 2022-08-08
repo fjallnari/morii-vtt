@@ -42,7 +42,6 @@
     }
 
     .game-info h3 {
-        color: #FCF7F8;
         text-transform: uppercase;
         font-size: 2em;
         font-weight: 100;

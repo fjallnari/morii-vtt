@@ -17,7 +17,6 @@
 
 <style>
     h3 {
-        color: #FCF7F8;
         font-size: 1.5em;
         font-family: Montserrat;
         text-transform: uppercase;

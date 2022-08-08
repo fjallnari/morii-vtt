@@ -1,9 +1,5 @@
-﻿:root {
-    --main-accent-color: #FFBF00;
-}
-
-h1 {
-    color: #FCF7F8;
+﻿h1 {
+    color: var(--primary-text-color);
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
@@ -11,7 +7,7 @@ h1 {
 }
 
 h2 {
-    color: #FCF7F8;
+    color: var(--primary-text-color);
     font-size: 4em;
     font-weight: 100;
     font-family: Quicksand;
@@ -23,7 +19,7 @@ strong {
 }
 
 #simple-title {
-    color: #FCF7F8;
+    color: var(--primary-text-color);
     font-size: 1.5em;
     font-family: Montserrat;
     text-transform: uppercase;

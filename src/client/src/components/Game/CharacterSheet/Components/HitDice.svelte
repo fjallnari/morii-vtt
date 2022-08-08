@@ -72,7 +72,7 @@
         {#each Object.keys(character.hd_current) as d_type}
             <div class="hit-dice-single-type">
                 <InPlaceEdit bind:value={character.hd_current[d_type]} editWidth="1.5em" editHeight="1.5em" on:submit={() => $modifyCharacter()}/>x
-                <sendable style="{~~character.hd_current[d_type] === 0 ? 'pointer-events: none; color: #EFA48B': ''}" on:click={() => sendHitDiceRoll(d_type)}>
+                <sendable style="{~~character.hd_current[d_type] === 0 ? 'pointer-events: none; color: var(--clr-accent-normal);': ''}" on:click={() => sendHitDiceRoll(d_type)}>
                     {` ${d_type.toUpperCase()};`}
                 </sendable>
             </div>

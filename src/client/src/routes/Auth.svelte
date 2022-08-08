@@ -18,7 +18,7 @@
         flex-direction: row;
         gap: 5em;
         height: 95vh;
-        background: url('../static/background-waves.svg') no-repeat;
+        background: var(--bg-waves) no-repeat;
         background-size: 100%;
         margin: 0em -1em;
     }

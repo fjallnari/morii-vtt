@@ -38,7 +38,7 @@
         </div>
     {/if}
 
-    <div class="message-text" style="background: { message.isPublic ? '#252529' : '#303036' }">
+    <div class="message-text" style="background: { message.isPublic ? 'var(--clr-box-bg-normal);' : 'var(--clr-box-bg-light);' }">
         {#if message.rollResult && ! message.rollResult.error}
             <PrettyRollResult message={message}></PrettyRollResult>
         {:else}
@@ -78,7 +78,7 @@
     }
 
     .message-text { grid-area: message-text;
-        background-color:#252529;
+        background-color:var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 1%;
         font-family: Quicksand;
@@ -89,7 +89,7 @@
         border-radius: 25%;
         width: 2.5em;
         height: 2.5em;
-        background-color: #252529;
+        background-color: var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     }
 

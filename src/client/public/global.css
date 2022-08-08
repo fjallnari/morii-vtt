@@ -1,4 +1,10 @@
-﻿h1 {
+﻿html,
+body {
+    background-color: var(--clr-bg) !important;
+    color: var(--clr-text) !important;
+}
+
+h1 {
     color: var(--clr-text);
     text-transform: uppercase;
     font-size: 4em;

@@ -150,7 +150,7 @@
 
     .creation-step-item:hover {
         transform: scale(1.04);
-        background-color: #303036;
+        background-color: var(--clr-box-bg-light);
     }
 
     .creation-step-item:active {

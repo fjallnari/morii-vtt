@@ -54,7 +54,7 @@
                     {#each characters as character}
                         <box class="character-tag" 
                             on:click={() => selectedCharacter = character} 
-                            style="{selectedCharacter === character ? 'background-color: #303036;' : ''}"
+                            style="{selectedCharacter === character ? 'background-color: var(--clr-box-bg-light);' : ''}"
                             tabindex='0'
                         >
                             <class-icon>

@@ -112,6 +112,7 @@
 </main>
 
 <style lang="scss">
+
 	main {
 		text-align: center;
 		padding: 1em;
@@ -121,13 +122,17 @@
 		color: var(--clr-text);
 	}
 
-	$scheme-salmon: #FCC8B2, #EFA48B, #E7724B, #E7724B, url('../static/bg/waves-salmon.svg');
+	$scheme-salmon: #FCC8B2, #EFA48B, #E9805D, #875343, url('../static/bg/waves-salmon-b.svg');
+	$scheme-rajah: #F6D0A7, #F2A654, #BF864A, #8C663F, url('../static/bg/waves-rajah.svg');	
 	$scheme-blue: #78A1BB, #5A77A1, #3C4C87, #2C3863, url('../static/bg/waves-blue.svg');
 	$scheme-cyan: #AAD5DA, #5AB1BB, #457179, #3B5158, url('../static/bg/waves-cyan.svg');
+	$scheme-viridian: #8BBBA7, #549C7E, #1C7C54, #21513F, url('../static/bg/waves-viridian.svg');
 	$scheme-cordovan: #C5A4A7,#AB797E, #904E55, #603F46, url('../static/bg/waves-cordovan.svg');
-	$scheme-moss: #B7C4A4, #96A97A, #758E4F, #535F43, url('../static/bg/waves-moss.svg');
+	$scheme-auburn: #CE9391, #B8605D, #A22C29, #642929, url('../static/bg/waves-auburn.svg');
+	$scheme-forest: #A68A64, #936639, #7F4F24, #582F0E, url('../static/bg/waves-forest.svg');
 
 	$scheme-bg-default: #1B1B1E, #212125, #252529, #303036, #F9F9F9;
+	$scheme-bg-forest: #1F2518, #333D29, #414833, #656D4A, #C2C5AA;
 
 	@mixin color-scheme($accent-light, $accent-normal, $accent-dark, $accent-darker, $bg-image) {
 		--clr-accent-light: #{$accent-light};
@@ -249,6 +254,10 @@
         font-family: Athiti;
         text-transform: uppercase;
     }
+
+	:global(.mdc-dialog .mdc-dialog__surface) {
+		background-color: var(--clr-box-bg-dark);
+	}
 
 	:global(.mdc-text-field .mdc-text-field__input) {
 		caret-color: var(--clr-accent-normal) !important;

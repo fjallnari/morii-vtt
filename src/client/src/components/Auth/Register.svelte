@@ -65,7 +65,7 @@ import SimpleButton from '../SimpleButton.svelte';
         <PasswordField bind:password={passwordCheck} label="Confirm password" icon="lock"></PasswordField>
 
         <div class="button-container">
-            <SimpleButton value='Sign In' type='primary' onClickFn={registerNewUser}></SimpleButton>
+            <SimpleButton value='Sign Up' type='primary' onClickFn={registerNewUser}></SimpleButton>
         </div>
     {:else}
         <div>

@@ -98,7 +98,7 @@
         font-family: 'Quicksand';
         font-size: 1em;
         padding: 0.4em;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     .chip.selectable {

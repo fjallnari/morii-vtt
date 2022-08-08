@@ -55,7 +55,7 @@
         flex-direction: column;
         justify-content: center;
         width: 95%;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     img {

@@ -118,11 +118,16 @@
 		padding-top: 0px;
 		max-width: 240px;
 		margin: 0 auto;
-		color: var(--primary-text-color);
+		color: var(--clr-text);
 	}
 
 	$scheme-salmon: #FCC8B2, #EFA48B, #E7724B, #E7724B, url('../static/bg/waves-salmon.svg');
-	$scheme-blue: #78A1BB, #5A77A1, #3C4C87, #2C3863, url('../static/bg/waves-blue-darker.svg');
+	$scheme-blue: #78A1BB, #5A77A1, #3C4C87, #2C3863, url('../static/bg/waves-blue.svg');
+	$scheme-cyan: #AAD5DA, #5AB1BB, #457179, #3B5158, url('../static/bg/waves-cyan.svg');
+	$scheme-cordovan: #C5A4A7,#AB797E, #904E55, #603F46, url('../static/bg/waves-cordovan.svg');
+	$scheme-moss: #B7C4A4, #96A97A, #758E4F, #535F43, url('../static/bg/waves-moss.svg');
+
+	$scheme-bg-default: #1B1B1E, #212125, #252529, #303036, #F9F9F9;
 
 	@mixin color-scheme($accent-light, $accent-normal, $accent-dark, $accent-darker, $bg-image) {
 		--clr-accent-light: #{$accent-light};
@@ -132,15 +137,18 @@
 		--bg-waves: #{$bg-image};
 	}
 
+	@mixin color-scheme-bg($bg, $box-bg-dark, $box-bg-normal, $box-bg-light, $text) {
+		--clr-bg: #{$bg};
+		--clr-box-bg-dark: #{$box-bg-dark};
+		--clr-box-bg-normal: #{$box-bg-normal};
+		--clr-box-bg-light: #{$box-bg-light};
+		--clr-text: #{$text};
+	}
+
 	:root {
 		--semi-bold: 600;
 
-		--clr-bg: #1B1B1E;
-		--primary-box-background-color: #252529;
-		--secondary-box-background-color: #303036;
-		--primary-text-color: #F9F9F9;
-		--clr-contrast: #FF5A5F;
-
+		@include color-scheme-bg($scheme-bg-default ...);
 		@include color-scheme($scheme-salmon ...);
 	}
 	
@@ -148,7 +156,7 @@
         height: inherit;
         flex: 5;
 
-        background-color: #212125;
+        background-color: var(--clr-box-bg-dark);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
         
@@ -157,7 +165,7 @@
     }
 
     :global(box) {
-        background-color: var(--primary-box-background-color);
+        background-color: var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
     }
@@ -190,7 +198,7 @@
         background-color: transparent;
         font-size: 1em;
         font-family: Athiti;
-        color: var(--primary-text-color);
+        color: var(--clr-text);
         resize: none;
         scrollbar-width: thin;
     }
@@ -207,7 +215,7 @@
     }
 
     :global(select) {
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
         color: inherit;
         border: none;
         font-size: inherit;
@@ -247,7 +255,7 @@
 	}
 
 	:global(.mdc-slider .mdc-slider__value-indicator) {
-        color: var(--primary-text-color) !important;
+        color: var(--clr-text) !important;
         background-color: var(--clr-bg) !important;
         opacity: 1 !important;
     }

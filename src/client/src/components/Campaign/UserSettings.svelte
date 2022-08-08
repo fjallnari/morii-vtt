@@ -136,7 +136,7 @@
     }
 
     .pfp-select > img.selected {
-        border-bottom: 2px var(--primary-text-color) solid;
+        border-bottom: 2px var(--clr-text) solid;
         filter: brightness(0) saturate(100%) invert(50%) sepia(49%) saturate(409%) hue-rotate(176deg) brightness(81%) contrast(82%);
     }
 
@@ -169,7 +169,7 @@
 
         padding: 0.5em;
         margin: 1em 4px 4px 4px;
-        background-color:#212125;
+        background-color: var(--clr-box-bg-dark);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
         max-width: 70%;

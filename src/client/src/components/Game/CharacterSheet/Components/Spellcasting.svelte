@@ -128,7 +128,7 @@
 <style>
     select {
         font-size: 1.5em;
-        background-color: var(--primary-box-background-color);
+        background-color: var(--clr-box-bg-normal);
     }
     .spellcasting-container {  display: grid;
         grid-template-columns: 1fr 1fr 1fr 0.5fr;

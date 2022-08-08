@@ -229,7 +229,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0em;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     div.details {
@@ -249,7 +249,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0.5em;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     div.details > box line-div {

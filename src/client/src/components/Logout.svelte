@@ -42,7 +42,7 @@
 
 <style>
   #simple-title {
-    color: var(--primary-text-color);
+    color: var(--clr-text);
     font-size: 1.5em;
     font-family: Montserrat;
     text-transform: uppercase;

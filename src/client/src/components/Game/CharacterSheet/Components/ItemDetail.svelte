@@ -164,7 +164,7 @@
         justify-content: center;
         gap: 0.5em;
         width: 97%;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     .item-summary {
@@ -253,13 +253,13 @@
     }
     
     :global(.mdc-tooltip__surface) {
-        background-color: #212125;
+        background-color: var(--clr-box-bg-dark);
     }
 
     :global(.mdc-tooltip__content) {
         font-size: 1em;
         font-family: Athiti;
-        color: var(--primary-text-color);
+        color: var(--clr-text);
         width: 100%;
     }
 

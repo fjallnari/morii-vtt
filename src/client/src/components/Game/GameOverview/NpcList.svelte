@@ -28,7 +28,7 @@
 
 <style>
     box {
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     .npc-list {

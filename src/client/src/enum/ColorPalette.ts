@@ -33,5 +33,6 @@ export enum PALETTE {
     ELEM_BCKG = "#212125",
     SNOW = "#FCF7F8",
 
-    PRETTY_BLUE = "#3C4C87"
+    PRETTY_BLUE = "#3C4C87",
+    CONTRAST = "#FF5A5F"
 }

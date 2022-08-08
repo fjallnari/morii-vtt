@@ -1,5 +1,5 @@
 ﻿h1 {
-    color: var(--primary-text-color);
+    color: var(--clr-text);
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
@@ -7,7 +7,7 @@
 }
 
 h2 {
-    color: var(--primary-text-color);
+    color: var(--clr-text);
     font-size: 4em;
     font-weight: 100;
     font-family: Quicksand;
@@ -19,7 +19,7 @@ strong {
 }
 
 #simple-title {
-    color: var(--primary-text-color);
+    color: var(--clr-text);
     font-size: 1.5em;
     font-family: Montserrat;
     text-transform: uppercase;

@@ -193,7 +193,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     img {

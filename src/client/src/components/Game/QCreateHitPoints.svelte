@@ -18,7 +18,6 @@
 </script>
 
 <div class="hit-points">
-
     <BoxWithHeaderToggle 
         label='Hit Dice'
         headerText='1d{selectedClass.hp.hit_die} per {selectedClass.name} level'

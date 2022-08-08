@@ -105,12 +105,13 @@
         cursor: pointer;
     }
 
-    :global(.chip i) {
+    :global(.chips-array .chip i) {
         font-size: 1.2em;
     }
 
     .chip.selected {
         background-color: #C78B77 !important;
+        font-weight: var(--semi-bold);
     }
 
     p.header-text {

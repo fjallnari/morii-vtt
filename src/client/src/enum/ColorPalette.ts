@@ -30,5 +30,7 @@ export enum PALETTE {
     OLIVINE = "#A7C284",
     SPRING_BUD = "#DBD8B3",
     ELEM_BCKG = "#212125",
-    SNOW = "#FCF7F8"
+    SNOW = "#FCF7F8",
+
+    PRETTY_BLUE = "#3c4c87"
 }

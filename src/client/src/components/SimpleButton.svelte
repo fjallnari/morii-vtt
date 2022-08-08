@@ -1,13 +1,20 @@
 <script lang="ts">
     import { Icon } from '@smui/button';
 
+    type ButtonType = 'default' | 'primary' | 'green' | 'delete' | 'orange';
+    
+    interface ButtonColors {
+        bg_color: string,
+        active_bg_color: string,
+    }
+
     export let value: string;
     export let icon: string = '';
     export let disabled: boolean = false;
-    export let type: 'default' | 'primary' | 'green' | 'delete' = 'default';
+    export let type: ButtonType = 'default';
     export let onClickFn: () => void;    
 
-    const BUTTON_TYPES = {
+    const BUTTON_TYPES: Record<ButtonType, ButtonColors> = {
         'default': {
             bg_color: '#303036',
             active_bg_color: '#27272B'

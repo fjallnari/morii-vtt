@@ -5,11 +5,13 @@
     import type QuickCreateData from "../../interfaces/QuickCreateData";
     import Slider from '@smui/slider';
     import BoxWithChips from '../BoxWithChips.svelte';
-    import ABILITY_TAGS from '../../enum/AbilityTags';
     import SKILLS from '../../enum/Skills';
     import InPlaceEdit from '../InPlaceEdit.svelte';
     import QCreateHitPoints from './QCreateHitPoints.svelte';
     import { validateClassName } from '../../util/util';
+    import ABILITY_NAMES from '../../enum/AbilityNames';
+    import SimpleButton from '../SimpleButton.svelte';
+import QCreateEquipment from './QCreateEquipment.svelte';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -55,14 +57,16 @@
             <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
             <div class="level-slider-label">Level: {selectedClass.level}</div>
         </box>
-        <box class="class-resources"></box>
-        
-        <box class="equipment"></box>
-        <box class="tools"></box>
 
+        <box class="class-resources"></box>
+
+        <!-- EQUIPMENT -->
+        <QCreateEquipment bind:selectedClass={selectedClass}></QCreateEquipment>
+
+        <!-- TOOLS -->
         <BoxWithChips 
             bind:chipsArray={selectedClass.tool_prof.tools} 
-            label='Tools' 
+            label='Tools Proficiencies' 
             let:index={index} 
             gridArea='tools' 
             blankChip={{name: ''}}
@@ -82,12 +86,15 @@
             {/if}
         </BoxWithChips>
 
+        <!-- HIT POINTS -->
         <QCreateHitPoints bind:selectedClass={selectedClass}></QCreateHitPoints>
 
+        <!-- OTHER PROFICIENCIES -->
         <BoxWithChips bind:chipsArray={selectedClass.other_prof} label='Other Proficiencies' let:index={index} gridArea='other-prof' blankChip={{name: '', type: 0}}>
             <InPlaceEdit bind:value={selectedClass.other_prof[index].name} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
         </BoxWithChips>
 
+        <!-- SKILLS -->
         {#if selectedClass.skills.choose_n !== 0}
             <BoxWithChips 
                 bind:chipsArray={skillChooseList} 
@@ -114,12 +121,13 @@
             </BoxWithChips>
         {/if}
 
+        <!-- SAVING THROWS -->
         <BoxWithChips bind:chipsArray={selectedClass.saving_throws} label='Saving Throws' let:index={index} gridArea='saving-throws'>
             <select bind:value={selectedClass.saving_throws[index]} on:change={() => {}}>
                 <option value="" selected disabled hidden>---</option>
-                {#each ABILITY_TAGS as abilityTag}
-                    <option value={abilityTag}>
-                        {abilityTag}
+                {#each ABILITY_NAMES as abilityName}
+                    <option value={abilityName}>
+                        {abilityName}
                     </option>
                 {/each}
             </select>
@@ -135,7 +143,8 @@
             </box>
         {/each}
     {/if}
-    <box class="class-nav"></box>
+
+    <div class="class-nav"></div>
 </div>
 
 <style>
@@ -196,10 +205,16 @@
     .tools { grid-area: tools; }
     .other-prof { grid-area: other-prof; }
     .hit-points { grid-area: hit-points; }
-    .equipment { grid-area: equipment; }
     .saving-throws { grid-area: saving-throws; }
-    .class-nav { grid-area: class-nav; }
     .skills { grid-area: skills; }
+    .equipment { grid-area: equipment; }
+
+    .class-nav { grid-area: class-nav; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+    }
 
     .placeholder {
         display: flex;

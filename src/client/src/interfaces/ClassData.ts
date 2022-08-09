@@ -29,10 +29,6 @@ interface ClassSkills {
     choose_list?: string[]
 }
 
-interface ClassFeatures {
-
-}
-
 interface EquipmentItem {
     name: string,
     amount: number,
@@ -49,6 +45,13 @@ interface EquipmentSingleLine {
 
 type ClassEquipment = EquipmentSingleLine[];
 
+interface ClassFeature {
+    name: string,
+    level: number, // level on which the feature first appears
+    content: string,
+    variants?: Record<number, Partial<ClassFeature>> // level ~ variant
+}
+
 export default interface ClassData {
     name: string,
     level: number,
@@ -57,6 +60,6 @@ export default interface ClassData {
     other_prof: ClassOtherProf[],
     saving_throws: string[], // e.g. ['STR', 'CON']
     skills: ClassSkills,
-    features: ClassFeatures[],
-    equipment: ClassEquipment
+    equipment: ClassEquipment,
+    features: ClassFeature[],
 }

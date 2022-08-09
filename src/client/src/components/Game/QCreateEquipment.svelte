@@ -29,7 +29,7 @@
                                         <Icon class="material-icons">{'add'}</Icon>
                                     {/if}
                                     {#if item.options}
-                                        <select bind:value={item.name} on:change={() => {}}>
+                                        <select bind:value={item.name}>
                                             <option value="" selected disabled hidden>{item.placeholder ?? '???'}</option>
                                             {#each item.options as itemOption}
                                                 <option value={itemOption}>

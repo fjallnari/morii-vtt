@@ -154,7 +154,7 @@
 		--semi-bold: 600;
 
 		@include color-scheme-bg($scheme-bg-default ...);
-		@include color-scheme($scheme-salmon ...);
+		@include color-scheme($scheme-blue ...);
 	}
 	
 	:global(tab-container) {

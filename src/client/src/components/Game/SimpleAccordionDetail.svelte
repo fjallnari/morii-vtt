@@ -2,7 +2,7 @@
     import { Icon } from '@smui/icon-button';
     import InPlaceEdit from '../InPlaceEdit.svelte';
     import SimpleButton from '../SimpleButton.svelte';
-    import { slide } from 'svelte/transition';
+    import { fade, slide } from 'svelte/transition';
 
     export let value: string = '';
     export let content: string = '';
@@ -14,7 +14,7 @@
     
 </script>
 
-<box class="feature-main-container">
+<box class="feature-main-container" transition:fade|local>
     <div class="feature-summary" style={`grid-template-areas: "feature-${icon ? 'type' : 'name'} feature-name feature-menu";`}>
         {#if icon}
             <div class="feature-type">

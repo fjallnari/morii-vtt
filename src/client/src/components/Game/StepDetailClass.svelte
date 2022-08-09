@@ -11,6 +11,8 @@
     import { validateClassName } from '../../util/util';
     import ABILITY_NAMES from '../../enum/AbilityNames';
     import QCreateEquipment from './QCreateEquipment.svelte';
+    import BoxWithList from '../BoxWithList.svelte';
+    import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -52,10 +54,22 @@
     </div>
 
     {#if selectedClass}
-        <box class="features">
-            <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
-            <div class="level-slider-label">Level: {selectedClass.level}</div>
-        </box>
+        <BoxWithList label='Features' inlineStyle='grid-area: features;' addNewListItem={() => {}} isModifyDisabled>
+            <div class='level-slider' slot='filter-menu'>
+                <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
+                <!-- <div class="level-slider-label">Level: {selectedClass.level}</div> -->            
+            </div>
+            <div class="features-list" slot='list'>
+                {#each selectedClass.features.filter(feature => feature.level <= selectedClass.level) as feature, index}
+                    <SimpleAccordionDetail 
+                        bind:value={feature.name} 
+                        bind:content={feature.content}
+                        icon='arrow-projectile-multiple' 
+                        deleteItem={() => {}}>
+                    </SimpleAccordionDetail>
+                {/each}
+            </div>
+        </BoxWithList>
 
         <box class="class-resources"></box>
 
@@ -193,6 +207,15 @@
     }
 
     .features { grid-area: features; }
+
+    .features-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25em;
+    }
 
     .level-slider-label {
         font-size: 1em;

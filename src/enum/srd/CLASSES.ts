@@ -67,7 +67,7 @@ export const CLASSES: ClassData[] = [
             label: 'None',
             tools: []
         },
-        saving_throws: [ 'Strength', 'Constitution' ],
+        saving_throws: [ 'STR', 'CON' ],
         skills: {
             final: [],
             choose_n: 2,
@@ -348,7 +348,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                 },
             ]
         },
-        saving_throws: [ 'Dexterity', 'Charisma' ],
+        saving_throws: [ 'DEX', 'CHA' ],
         skills: {
             final: [],
             choose_n: 3,
@@ -492,7 +492,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
             label: 'None',
             tools: []
         },
-        saving_throws: [ 'Wisdom', 'Charisma' ],
+        saving_throws: [ 'WIS', 'CHA' ],
         skills: {
             final: [],
             choose_n: 2,
@@ -701,7 +701,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                 }
             ]
         },
-        saving_throws: [ 'Intelligence', 'Wisdom' ],
+        saving_throws: [ 'INT', 'WIS' ],
         skills: {
             final: [],
             choose_n: 2,

@@ -169,7 +169,7 @@
 
     .item-summary {
         display: grid; 
-        grid-template-columns: 5fr 1fr; 
+        grid-template-columns: 5fr 1.5fr; 
         grid-template-rows: 1fr; 
         gap: 0em; 
         grid-template-areas: 

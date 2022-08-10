@@ -9,11 +9,11 @@
     import InPlaceEdit from '../InPlaceEdit.svelte';
     import QCreateHitPoints from './QCreateHitPoints.svelte';
     import { validateClassName } from '../../util/util';
-    import ABILITY_NAMES from '../../enum/AbilityNames';
     import QCreateEquipment from './QCreateEquipment.svelte';
     import BoxWithList from '../BoxWithList.svelte';
     import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
-import QCreateResources from './QCreateResources.svelte';
+    import QCreateResources from './QCreateResources.svelte';
+    import ABILITY_TAGS from '../../enum/AbilityTags';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -49,6 +49,8 @@ import QCreateResources from './QCreateResources.svelte';
 </script>
 
 <div class="class-detail">
+    <p class='subclass-disclaimer'>Subclass has to be filled in manually since most of them are not publicly available under the OGL license.</p>
+
     <div class="select-class">
         <h4>Select class:</h4>
         <Autocomplete
@@ -146,12 +148,12 @@ import QCreateResources from './QCreateResources.svelte';
         {/if}
 
         <!-- SAVING THROWS -->
-        <BoxWithChips bind:chipsArray={selectedClass.saving_throws} label='Saving Throws' let:index={index} gridArea='saving-throws'>
+        <BoxWithChips bind:chipsArray={selectedClass.saving_throws} label='Saving Throws' let:index={index} gridArea='saving-throws' maxHeight='6em'>
             <select bind:value={selectedClass.saving_throws[index]} on:change={() => {}}>
                 <option value="" selected disabled hidden>---</option>
-                {#each ABILITY_NAMES as abilityName}
-                    <option value={abilityName}>
-                        {abilityName}
+                {#each ABILITY_TAGS as abilityTag}
+                    <option value={abilityTag}>
+                        {abilityTag}
                     </option>
                 {/each}
             </select>
@@ -168,7 +170,6 @@ import QCreateResources from './QCreateResources.svelte';
         {/each}
     {/if}
 
-    <div class="class-nav"></div>
 </div>
 
 <style>
@@ -180,12 +181,12 @@ import QCreateResources from './QCreateResources.svelte';
         font-family: Quicksand;
         grid-template-areas: 
             "hit-points hit-points hit-points skills skills skills select-class select-class select-class select-class"
-            "hit-points hit-points hit-points skills skills skills class-resources class-resources class-resources class-resources"
+            "hit-points hit-points hit-points skills skills skills features features features features"
             "tools tools tools other-prof other-prof other-prof features features features features"
             "tools tools tools other-prof other-prof other-prof features features features features"
             "equipment equipment equipment equipment saving-throws saving-throws features features features features"
-            "equipment equipment equipment equipment saving-throws saving-throws features features features features"
-            "equipment equipment equipment equipment class-nav class-nav features features features features";
+            "equipment equipment equipment equipment class-resources class-resources features features features features"
+            "equipment equipment equipment equipment class-resources class-resources features features features features";
     }
 
     .select-class { grid-area: select-class; 
@@ -263,6 +264,14 @@ import QCreateResources from './QCreateResources.svelte';
         font-size: 1.3em;
         font-weight: var(--semi-bold);
         font-family: Quicksand;
+    }
+
+    p.subclass-disclaimer {
+        position: absolute;
+        top: 0.5em;
+        right: 5em;
+        width: 20em;
+        color: var(--clr-contrast-normal);
     }
 
 </style>

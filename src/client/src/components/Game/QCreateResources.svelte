@@ -27,13 +27,13 @@
 
     // dynamic resources
     $: selectedClass.resources = selectedClass.resources.map(resource => {
-        return resource.levels ? Object.assign(resource, { total: resource.levels[selectedClass.level], current: resource.levels[selectedClass.level] }) : resource;
+        return resource.levels ? Object.assign(resource, { total: resource.levels[selectedClass.level] ?? '', current: resource.levels[selectedClass.level] ?? '' }) : resource;
     });
 
 </script>
 
 <div class="class-resources{selectedClass.resources.length === 0 ? ' empty' : ''}">
-    <div class="resources-list">
+    <div class="resources-list {selectedClass.resources.length !== 0 && selectedClass.resources.length !== 4 ? ' off-center' : ''}">
         {#each selectedClass.resources as resource}
             <ResourceDetail bind:resource={resource} deleteFce={() => {deleteResource(resource)}}></ResourceDetail>
         {/each}
@@ -55,8 +55,6 @@
     .class-resources { grid-area: class-resources; 
         display: flex;
         justify-content: flex-start;
-        gap: 0.5em;
-
         width: 100%;
         height: 100%;
     }
@@ -64,7 +62,7 @@
     .class-resources.empty {
         flex-direction: column;
         background-color: var(--clr-box-bg-normal);
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
         border-radius: 4px;
     }
     
@@ -72,9 +70,17 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
         gap: 0.5em;
         width: 100%;
+        height: 100%;
+    }
+
+    :global(.class-resources .resources-list .card) {
+        width: 48% !important;
+        height: 48% !important;
+        max-width: unset !important;
     }
 
 </style>

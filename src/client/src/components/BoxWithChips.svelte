@@ -5,6 +5,7 @@
     export let blankChip: any = '';
     export let label: string = '';
     export let gridArea: string = label.toLowerCase();
+    export let maxHeight: string = '';
     export let headerText: string = '';
     export let chipsType: 'crud' | 'select-n' = 'crud';
     export let selectNFinalArray: any[] = [];
@@ -37,7 +38,7 @@
 </script>
 
 
-<box class="box-with-chips" style="grid-area: {gridArea};">
+<box class="box-with-chips" style="grid-area: {gridArea}; max-height: {maxHeight};">
     {#if headerText}
         <p class="header-text">{headerText}</p>
     {/if}

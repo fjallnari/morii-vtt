@@ -38,7 +38,7 @@
 </script>
 
 <div class="resources-main-container" style="{character.resources.length === 0 ? 'flex-direction: column;' : ''}">
-    <div class="resources-list">
+    <div class="resources-list {character.resources.length !== 0 && character.resources.length !== 4 ? ' off-center' : ''}">
         {#each character.resources as resource}
             <ResourceDetail bind:resource={resource} bind:character={character} deleteFce={deleteResource}></ResourceDetail>
         {/each}
@@ -73,6 +73,10 @@
         align-items: center;
         gap: 0.5em;
         width: 100%;
+    }
+
+    .resources-list.off-center:first-child {
+        margin-left: calc(0.5em + 24px);
     }
 
 </style>

@@ -4,13 +4,10 @@
 
     export let selectedClass: ClassData;
 
-    const toggleChip = () => {
-        
-    }
-
 </script>
 
 <box class="equipment">
+    <p class='header-text'>You start with the following equipment, in addition to the equipment granted by your background:</p>
     <div class="choices-container">
         {#each selectedClass.equipment as equipmentLine}
             {#if equipmentLine.line_options}
@@ -72,7 +69,11 @@
         height: 100%;
         width: 100%;
         font-family: 'Quicksand';
+    }
 
+    p.header-text {
+        font-size: 1em;
+        margin: 0.5em 1em calc(0.5em - 4px) 1em;
     }
 
     .choices-container {

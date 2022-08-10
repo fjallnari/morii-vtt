@@ -32,8 +32,8 @@
             active_bg_color: '#556D36'
         },
         'delete': {
-            bg_color: '#BC4B51',
-            active_bg_color: '#A43D42'
+            bg_color: 'var(--clr-contrast-normal)',
+            active_bg_color: 'var(--clr-contrast-dark)'
         }
     }
 

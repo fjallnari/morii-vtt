@@ -126,12 +126,14 @@
 	$scheme-rajah: #F6D0A7, #F2A654, #BF864A, #8C663F, url('../static/bg/waves-rajah.svg');	
 	$scheme-blue: #78A1BB, #5A77A1, #3C4C87, #2C3863, url('../static/bg/waves-blue.svg');
 	$scheme-cyan: #AAD5DA, #5AB1BB, #457179, #3B5158, url('../static/bg/waves-cyan.svg');
+	$scheme-sea: #79B1A3, #5F9B8D, #417D71, #335E57, url('../static/bg/waves-sea.svg');
 	$scheme-viridian: #8BBBA7, #549C7E, #1C7C54, #21513F, url('../static/bg/waves-viridian.svg');
 	$scheme-cordovan: #C5A4A7,#AB797E, #904E55, #603F46, url('../static/bg/waves-cordovan.svg');
 	$scheme-auburn: #CE9391, #B8605D, #A22C29, #642929, url('../static/bg/waves-auburn.svg');
 	$scheme-forest: #A68A64, #936639, #7F4F24, #582F0E, url('../static/bg/waves-forest.svg');
 
 	$scheme-bg-default: #1B1B1E, #212125, #252529, #303036, #F9F9F9;
+	$scheme-bg-sea: #041F1E, #0B2323, #112627, #1E2D2F, #FAF6EF;
 	$scheme-bg-forest: #1F2518, #333D29, #414833, #656D4A, #C2C5AA;
 
 	@mixin color-scheme($accent-light, $accent-normal, $accent-dark, $accent-darker, $bg-image) {
@@ -139,6 +141,8 @@
 		--clr-accent-normal: #{$accent-normal};
 		--clr-accent-dark: #{$accent-dark};
 		--clr-accent-darker: #{$accent-darker};
+		--clr-contrast-normal: #BC4B51;
+		--clr-contrast-dark: #A43D42;
 		--bg-waves: #{$bg-image};
 	}
 

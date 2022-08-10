@@ -13,6 +13,7 @@
     import QCreateEquipment from './QCreateEquipment.svelte';
     import BoxWithList from '../BoxWithList.svelte';
     import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
+import QCreateResources from './QCreateResources.svelte';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -36,6 +37,15 @@
 
     $: skillChooseList = selectedClass && selectedClass.skills && selectedClass.skills.type === 'list' ? selectedClass.skills.choose_list : SKILLS;
 
+    const addFeature = () => {
+        selectedClass.features = selectedClass.features.concat([ {name: '', level: 1, content: ''} ]); 
+    }
+
+    // not optimal, custom feature names dont have to be unique
+    const deleteFeature = (name: string) => {
+        selectedClass.features = selectedClass.features.filter((feature) => feature.name !== name);
+    }
+
 </script>
 
 <div class="class-detail">
@@ -54,7 +64,7 @@
     </div>
 
     {#if selectedClass}
-        <BoxWithList label='Features' inlineStyle='grid-area: features;' addNewListItem={() => {}} isModifyDisabled>
+        <BoxWithList label='Features' inlineStyle='grid-area: features;' addNewListItem={addFeature} isModifyDisabled>
             <div class='level-slider' slot='filter-menu'>
                 <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
                 <!-- <div class="level-slider-label">Level: {selectedClass.level}</div> -->            
@@ -65,13 +75,14 @@
                         bind:value={feature.name} 
                         bind:content={feature.content}
                         icon='arrow-projectile-multiple' 
-                        deleteItem={() => {}}>
+                        deleteItem={() => deleteFeature(feature.name)}>
                     </SimpleAccordionDetail>
                 {/each}
             </div>
         </BoxWithList>
 
-        <box class="class-resources"></box>
+        <!-- CLASS RESOURCES -->
+        <QCreateResources bind:selectedClass={selectedClass}></QCreateResources>
 
         <!-- EQUIPMENT -->
         <QCreateEquipment bind:selectedClass={selectedClass}></QCreateEquipment>
@@ -165,15 +176,16 @@
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        gap: 0.5em; 
+        gap: 0.5em;
+        font-family: Quicksand;
         grid-template-areas: 
             "hit-points hit-points hit-points skills skills skills select-class select-class select-class select-class"
-            "hit-points hit-points hit-points skills skills skills features features features features"
+            "hit-points hit-points hit-points skills skills skills class-resources class-resources class-resources class-resources"
             "tools tools tools other-prof other-prof other-prof features features features features"
             "tools tools tools other-prof other-prof other-prof features features features features"
             "equipment equipment equipment equipment saving-throws saving-throws features features features features"
             "equipment equipment equipment equipment saving-throws saving-throws features features features features"
-            "equipment equipment equipment equipment class-nav class-nav class-resources class-resources class-resources class-resources";
+            "equipment equipment equipment equipment class-nav class-nav features features features features";
     }
 
     .select-class { grid-area: select-class; 
@@ -217,13 +229,18 @@
         gap: 0.25em;
     }
 
+    .level-slider {
+        position: relative;
+        z-index: 2;
+    }
+
     .level-slider-label {
         font-size: 1em;
         font-family: Quicksand;
         text-transform: none;
     }
 
-    .class-resources { grid-area: class-resources; }
+    .class-resources { grid-area: class-resources;}
     .tools { grid-area: tools; }
     .other-prof { grid-area: other-prof; }
     .hit-points { grid-area: hit-points; }

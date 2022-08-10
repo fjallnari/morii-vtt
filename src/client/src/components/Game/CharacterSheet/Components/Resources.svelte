@@ -3,15 +3,7 @@
     import { addNewResource, modifyCharacter } from '../../../../stores';
     import { Icon } from '@smui/icon-button';
     import { nanoid } from "nanoid/non-secure";
-    import { onMount } from "svelte";
     import ResourceDetail from "./ResourceDetail.svelte";
-
-    onMount(() => {
-        if(!character.resources){
-            character.resources = [];
-            $modifyCharacter();
-        }
-	});
 
     export let character: Character;
 
@@ -32,12 +24,23 @@
         return resourceSkeleton.id;
     });
 
+    const deleteResource = (resource: Partial<Resource>) => {
+        // change the item detail
+        if (character && resource.item_id) {
+            Object.assign(character.inventory.find(item => item.id === resource.item_id), { resource_id: '', use_as_resource: false });
+        }
+
+        character.resources = character.resources.filter(resourceIter => resourceIter.id !== resource.id);
+
+        $modifyCharacter();
+    }
+
 </script>
 
 <div class="resources-main-container" style="{character.resources.length === 0 ? 'flex-direction: column;' : ''}">
     <div class="resources-list">
         {#each character.resources as resource}
-            <ResourceDetail bind:resource={resource} bind:character={character}></ResourceDetail>
+            <ResourceDetail bind:resource={resource} bind:character={character} deleteFce={deleteResource}></ResourceDetail>
         {/each}
         {#if character.resources.length < 4}
             <sendable class="add-new-item" on:click={() => { $addNewResource(); $modifyCharacter() }}>

@@ -1,0 +1,80 @@
+<script lang="ts">
+    import type ClassData from "../../interfaces/ClassData";
+    import ResourceDetail from './CharacterSheet/Components/ResourceDetail.svelte';
+    import { Icon } from '@smui/icon-button';
+    import type { ClassResource } from "../../interfaces/ClassData";
+
+    export let selectedClass: ClassData;
+
+    const addResource = () => {
+        if (selectedClass.resources.length === 4) {
+            return '';
+        }
+
+        const resourceSkeleton: ClassResource = {
+            name: '',
+            current: '',
+            total: '',
+            type: 'simple'
+        }
+
+        selectedClass.resources = selectedClass.resources.concat([resourceSkeleton]);
+    }
+
+    const deleteResource = (resource: Partial<ClassResource>) => {
+        selectedClass.resources = selectedClass.resources.filter(resourceIter => resourceIter !== resource);
+    }
+
+    // dynamic resources
+    $: selectedClass.resources = selectedClass.resources.map(resource => {
+        return resource.levels ? Object.assign(resource, { total: resource.levels[selectedClass.level], current: resource.levels[selectedClass.level] }) : resource;
+    });
+
+</script>
+
+<div class="class-resources{selectedClass.resources.length === 0 ? ' empty' : ''}">
+    <div class="resources-list">
+        {#each selectedClass.resources as resource}
+            <ResourceDetail bind:resource={resource} deleteFce={() => {deleteResource(resource)}}></ResourceDetail>
+        {/each}
+        {#if selectedClass.resources.length < 4}
+            <sendable class="add-new-item" on:click={() => addResource()}>
+                <Icon class="material-icons">{'add'}</Icon>
+            </sendable>
+        {/if}
+    </div>
+    {#if selectedClass.resources.length === 0}
+        <div class="box-justify-filler"></div>
+        <div class="box-label">
+            Class Resources
+        </div>
+    {/if}
+</div>
+
+<style>
+    .class-resources { grid-area: class-resources; 
+        display: flex;
+        justify-content: flex-start;
+        gap: 0.5em;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .class-resources.empty {
+        flex-direction: column;
+        background-color: var(--clr-box-bg-normal);
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+    }
+    
+    .resources-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        width: 100%;
+    }
+
+</style>

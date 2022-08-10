@@ -54,6 +54,14 @@ interface ClassFeature {
     variants?: Record<number, Partial<ClassFeature>> // level ~ variant
 }
 
+interface ClassResource {
+    name: string,
+    total: string,
+    current: string,
+    type: 'simple' | 'complex',
+    levels?: Record<number, string> // total per level
+}
+
 export default interface ClassData {
     name: string,
     level: number,
@@ -64,4 +72,5 @@ export default interface ClassData {
     skills: ClassSkills,
     equipment: ClassEquipment,
     features: ClassFeature[],
+    resources: ClassResource[]
 }

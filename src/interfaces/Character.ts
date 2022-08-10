@@ -62,6 +62,7 @@ export interface Tool {
 export interface Resource {
     id: string,
     name: string,
+    type?: 'simple' | 'complex',
     total: string,
     current: string,
     item_id?: string

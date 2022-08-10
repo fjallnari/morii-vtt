@@ -25,9 +25,24 @@
         selectedClass.resources = selectedClass.resources.filter(resourceIter => resourceIter !== resource);
     }
 
+    // looks through the record of levels ( level: total) to find the highest one under or equal to current class level
+    // this way we don't have to have all the levels saved, only the ones where the value changes
+    const findHighestPossibleTotal = (resource: Partial<ClassResource>) => {
+        if ( !resource.levels ) { return '' }
+
+        for (var iterLevel = selectedClass.level; iterLevel >= 1; iterLevel--) {
+            if (resource.levels[iterLevel]) {
+                return resource.levels[iterLevel];
+            }
+        }
+
+        return '';
+    }
+
     // dynamic resources
     $: selectedClass.resources = selectedClass.resources.map(resource => {
-        return resource.levels ? Object.assign(resource, { total: resource.levels[selectedClass.level] ?? '', current: resource.levels[selectedClass.level] ?? '' }) : resource;
+        const resourceTotal = findHighestPossibleTotal(resource);
+        return resource.levels ? Object.assign(resource, { total: resourceTotal, current: resourceTotal }) : resource;
     });
 
 </script>

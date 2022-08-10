@@ -28,7 +28,7 @@ interface ClassSkills {
     final: string[],
     choose_n: number, // 0 is reserved for custom class, so you can pick skills the way you want to
     type: 'any' | 'list',
-    choose_list?: string[]
+    options?: string[]
 }
 
 interface EquipmentItem {

@@ -35,7 +35,7 @@
         { label: 'Features', gridArea: 'features' }
     ];
 
-    $: skillChooseList = selectedClass && selectedClass.skills && selectedClass.skills.type === 'list' ? selectedClass.skills.choose_list : SKILLS;
+    $: skillsOptions = selectedClass && selectedClass.skills && selectedClass.skills.type === 'list' ? selectedClass.skills.options : SKILLS;
 
     const addFeature = () => {
         selectedClass.features = selectedClass.features.concat([ {name: '', level: 1, content: ''} ]); 
@@ -123,7 +123,7 @@
         <!-- SKILLS -->
         {#if selectedClass.skills.choose_n !== 0}
             <BoxWithChips 
-                bind:chipsArray={skillChooseList} 
+                bind:chipsArray={skillsOptions} 
                 let:index={index} 
                 gridArea='skills'
                 chipsType='select-n' 
@@ -131,7 +131,7 @@
                 selectNMaxChips={selectedClass.skills.choose_n}
                 headerText={`Choose ${selectedClass.skills.choose_n} skills from:`}
             >
-                {skillChooseList[index]}
+                {skillsOptions[index]}
             </BoxWithChips>
         {:else}
             <!-- here only for the 'Custom' class, to let people pick their desired skills -->

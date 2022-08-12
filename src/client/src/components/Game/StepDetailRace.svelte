@@ -15,18 +15,12 @@
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
-    export let isDialogOpen: boolean;
 
     let selectedRace: RaceData | undefined = characterParts.race;
     let chosenTool: string = '';
 
     // fires up on every change of selected race
     $ : characterParts.race = selectedRace;
-
-    // reset the selectedRace if the quick-create dialog is closed
-    $: if (! isDialogOpen) {
-        selectedRace = undefined;
-    }
 
     const addTrait = () => {
         selectedRace.features = selectedRace.features.concat([ {name: '', content: ''} ]); 

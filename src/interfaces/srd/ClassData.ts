@@ -1,4 +1,5 @@
 import { OTHER_PROF } from "../../enum/OTHER_PROF";
+import { Spell } from "../Character";
 
 
 interface ClassHitPoints {
@@ -62,6 +63,29 @@ interface ClassResource {
     levels?: Record<number, string> // total per level
 }
 
+interface ClassSpellsByLevel {
+    slots_total: string,
+    slots_current: string,
+    spells: Partial<Spell>[]
+}
+
+interface SpellsKnown {
+    base: number,
+    levels: Record<number, number>,
+}
+
+interface ClassSpellcasting {
+    casting_info: string,
+    ability: string,
+    ability_info: string,
+    ritual_casting?: string,
+    focus: string,
+    spells_known?: SpellsKnown,
+    cantrips_known?: SpellsKnown,
+    spell_slots: number[][] // [{1: 2}, {1:3}, {1:4, 2:2}], index ~= classLevel, key ~= spell slot level, value ~= amount of spell slots
+    spells_by_level: Record<number, ClassSpellsByLevel>
+}
+
 export default interface ClassData {
     name: string,
     level: number,
@@ -72,5 +96,6 @@ export default interface ClassData {
     skills: ClassSkills,
     equipment: ClassEquipment,
     features: ClassFeature[],
-    resources: ClassResource[]
+    resources: ClassResource[],
+    spellcasting?: ClassSpellcasting
 }

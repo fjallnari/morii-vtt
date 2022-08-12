@@ -1,3 +1,4 @@
+import type { Spell } from "./Character"
 
 interface ClassHitPoints {
     hit_die: number, // e.g. '12', {level}d12
@@ -60,6 +61,24 @@ export interface ClassResource {
     levels?: Record<number, string>
 }
 
+interface ClassSpellsByLevel {
+    slots_total: string,
+    slots_current: string,
+    spells: Partial<Spell>[]
+}
+
+interface ClassSpellcasting {
+    casting_info: string,
+    ability: string,
+    ability_info: string,
+    ritual_casting?: string,
+    focus: string,
+    spells_known?: Record<number, number>,
+    cantrips_known?: Record<number, number>,
+    spell_slots: Record<number, number>[] // [{1: 2}, {1:3}, {1:4, 2:2}], index ~= classLevel, key ~= spell slot level, value ~= amount of spell slots
+    spells_by_level: Record<number, ClassSpellsByLevel>
+}
+
 export default interface ClassData {
     name: string,
     level: number,
@@ -70,5 +89,6 @@ export default interface ClassData {
     skills: ClassSkills,
     equipment: ClassEquipment,
     features: ClassFeature[],
-    resources: ClassResource[]
+    resources: ClassResource[],
+    spellcasting?: ClassSpellcasting
 }

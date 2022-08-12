@@ -45,6 +45,7 @@
             "box-main box-main box-info box-info box-info"
             "box-main box-main box-info box-info box-info";
         max-height: 10em;
+        font-family: Quicksand;
     }
 
     .box-main { grid-area: box-main; 
@@ -68,19 +69,22 @@
     }
 
     .box-label {
-        font-size: 1vw !important;
+        font-size: 0.8vw !important;
     }
     
     .box-info { grid-area: box-info;
-        overflow-y: auto;
-        scrollbar-width: thin;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .box-info p {
+        overflow-y: auto;
+        scrollbar-width: thin;
         font-family: 'Quicksand';
         font-size: 0.8vw;
         text-align: left;
-        margin: 0.5em !important;
+        margin: 0.5em 0em 0.5em 0.5em !important;
     }
 
     ::-webkit-scrollbar {

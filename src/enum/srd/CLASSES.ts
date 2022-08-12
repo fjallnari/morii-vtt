@@ -553,7 +553,92 @@ You learn two additional spells from any class at 14th level and again at 18th l
                     17: 'd12'
                 }
             },
-        ], // TODO  - SPELLCASTING
+        ],
+        // TODO  - SPELLCASTING
+        spellcasting: {
+            ability: 'CHA',
+            ability_info: `Charisma is your spellcasting ability for your bard spells. Your magic comes from the heart and soul you pour into the performance of your music or oration. You use your Charisma whenever a spell refers to your spellcasting ability. 
+
+In addition, you use your Charisma modifier when setting the saving throw DC for a bard spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier
+
+**Spell attack modifier** = your proficiency bonus + your Charisma modifier`,
+            ritual_casting: 'You can cast any bard spell you know as a ritual if that spell has the ritual tag.',
+            focus: 'You can use a musical instrument as a spellcasting focus for your bard spells.',
+            casting_info: `You have learned to untangle and reshape the fabric of reality in harmony with your wishes and music.
+
+Your spells are part of your vast repertoire, magic that you can tune to different situations.
+
+#### Cantrips
+You know two cantrips of your choice from the bard spell list. You learn additional bard cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Bard table.
+
+#### Spell Slots
+The Bard table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+For example, if you know the 1st-level spell cure wounds and have a 1st-level and a 2nd-level spell slot available, you can cast cure wounds using either slot.
+
+#### Spells Known of 1st Level and Higher
+You know four 1st-level spells of your choice from the bard spell list.
+
+The Spells Known column of the Bard table shows when you learn more bard spells of your choice. Each of these spells must be of a level for which you have spell slots, as shown on the table. For instance, when you reach 3rd level in this class, you can learn one new spell of 1st or 2nd level.
+
+Additionally, when you gain a level in this class, you can choose one of the bard spells you know and replace it with another spell from the bard spell list, which also must be of a level for which you have spell slots.`,
+            spells_known: {
+                base: 4,
+                levels: {
+                    1: 2,
+                    4: 3,
+                    10: 4
+                }
+            },
+            cantrips_known: {
+                base: 2,
+                levels: {
+                    1: 4,
+                    2: 5,
+                    3: 6,
+                    4: 7,
+                    5: 8,
+                    6: 9,
+                    7: 10,
+                    8: 11,
+                    9: 12,
+                    10: 14,
+                    11: 15,
+                    13: 16,
+                    14: 18,
+                    15: 19,
+                    17: 20,
+                    18: 22
+                }
+            },
+            spell_slots: [
+                [ 2 ],
+                [ 3 ],
+                [ 4, 2 ],
+                [ 4, 3 ],
+                [ 4, 3, 2 ],
+                [ 4, 3, 3 ], 
+                [ 4, 3, 3, 1 ], 
+                [ 4, 3, 3, 2 ],
+                [ 4, 3, 3, 3, 1 ],
+                [ 4, 3, 3, 3, 2 ],
+                [ 4, 3, 3, 3, 2, 1 ],
+                [ 4, 3, 3, 3, 2, 1 ],
+                [ 4, 3, 3, 3, 2, 1, 1 ],
+                [ 4, 3, 3, 3, 2, 1, 1 ],
+                [ 4, 3, 3, 3, 2, 1, 1, 1 ],
+                [ 4, 3, 3, 3, 2, 1, 1, 1 ],
+                [ 4, 3, 3, 3, 2, 1, 1, 1, 1 ],
+                [ 4, 3, 3, 3, 3, 1, 1, 1, 1 ],
+                [ 4, 3, 3, 3, 3, 2, 1, 1, 1 ],
+                [ 4, 3, 3, 3, 3, 2, 2, 1, 1 ],
+            ],
+            spells_by_level: {
+
+            }
+        }
     },
     {
         name: 'Cleric',

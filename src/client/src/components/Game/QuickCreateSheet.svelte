@@ -2,13 +2,14 @@
     import type { Character } from "../../interfaces/Character";
     import SimpleButton from "../SimpleButton.svelte";
     import Dialog from '@smui/dialog';
-    import StepDetailRace from "./StepDetailRace.svelte";
     import CircularProgress from '@smui/circular-progress';
     import axios from "axios";
     import type QuickCreateData from "../../interfaces/QuickCreateData";
     import { Icon } from '@smui/button';
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
+    import StepDetailRace from "./StepDetailRace.svelte";
     import StepDetailClass from "./StepDetailClass.svelte";
+    import StepDetailSpellcasting from "./StepDetailSpellcasting.svelte";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -20,7 +21,7 @@
     let creationSteps = [
         { name: 'Race', icon: 'account-supervisor', filled_in: false, component: StepDetailRace },
         { name: 'Class', icon: 'arrow-projectile-multiple', filled_in: false, component: StepDetailClass },
-        { name: 'Spellcasting', icon: 'fire', filled_in: false },
+        { name: 'Spellcasting', icon: 'fire', filled_in: false, component: StepDetailSpellcasting },
         { name: 'Ability Scores', icon: 'atom', filled_in: false },
         { name: 'Background', icon: 'sprout', filled_in: false },
         { name: 'Summary', icon: 'clipboard-text', filled_in: false },
@@ -90,7 +91,6 @@
                 this={creationSteps[selectedStepIndex].component}
                 quickCreateData={quickCreateData}
                 bind:characterParts={characterParts}
-                isDialogOpen={open}
             />
 
             <dialog-buttons class="quick-create-buttons">
@@ -113,6 +113,7 @@
             "creation-steps step-detail step-detail step-detail"
             "creation-steps step-detail step-detail step-detail"
             "dialog-buttons dialog-buttons dialog-buttons dialog-buttons";
+        font-family: Quicksand;
     }
 
     dialog-buttons { grid-area: dialog-buttons;

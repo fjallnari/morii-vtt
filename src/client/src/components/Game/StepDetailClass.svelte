@@ -17,7 +17,6 @@
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
-    export let isDialogOpen: boolean;
 
     let selectedClass: ClassData | undefined = characterParts.class;
     

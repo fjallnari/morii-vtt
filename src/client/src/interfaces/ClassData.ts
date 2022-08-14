@@ -67,14 +67,16 @@ interface ClassSpellsByLevel {
     spells: Partial<Spell>[]
 }
 
+type SpellsKnown = Record<number, number>;
+
 interface ClassSpellcasting {
     casting_info: string,
     ability: string,
     ability_info: string,
     ritual_casting?: string,
     focus: string,
-    spells_known?: Record<number, number>,
-    cantrips_known?: Record<number, number>,
+    cantrips_known?: SpellsKnown,
+    spells_known?: SpellsKnown,
     spell_slots: Record<number, number>[] // [{1: 2}, {1:3}, {1:4, 2:2}], index ~= classLevel, key ~= spell slot level, value ~= amount of spell slots
     spells_by_level: Record<number, ClassSpellsByLevel>
 }

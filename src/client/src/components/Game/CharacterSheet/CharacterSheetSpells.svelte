@@ -6,6 +6,7 @@
     import InPlaceEditBox from "../../InPlaceEditBox.svelte";
     import BoxWithList from "../../BoxWithList.svelte";
     import SpellDetail from "./Components/SpellDetail.svelte";
+import { modifyCharacter } from "../../../stores";
 
     export let character: Character;
 
@@ -16,25 +17,30 @@
             level: spellLevel,
             is_prepared: false,
             casting_time: '',
-            is_ritual: false,
+            ritual: false,
             range: '',
             school: '',
             components: {
                 verbal: false,
                 somatic: false,
                 material: false,
-                material_content: ''
+                materials_needed: ''
             },
             duration: '',
             concentration: false,
             description: '',
-            at_higher_levels: ''
+            higher_levels: ''
         }
 
         character.spells_by_level[spellLevel].spells = character.spells_by_level[spellLevel].spells.concat([Object.assign(spellSkeleton, { ...spellTemplate })]);
     };
 
     const spellGridClasses = ['cantrips'].concat([...Array(9)].map((_, i) => `level-${1 + i}`)); // ~= ['cantrips', 'level-1', 'level-2', etc.]
+
+    const deleteSpell = (spell: Spell) => {
+        character.spells_by_level[spell.level].spells = character.spells_by_level[spell.level].spells.filter(obj => obj.id !== spell.id);
+        $modifyCharacter();
+    }
 
 </script>
 
@@ -57,7 +63,7 @@
             <BoxWithList label={spellGridClass.split('-').join(' ')} styleClass={spellLevel === 0 ? '' : 'spell-box-with-slots'} addNewListItem={() => addNewSpell(spellLevel)}>
                 <div class="spell-list" slot='list'>
                     {#each character.spells_by_level[spellLevel].spells as spell}
-                        <SpellDetail bind:spell={spell} bind:character={character}></SpellDetail>
+                        <SpellDetail bind:spell={spell} bind:character={character} deleteSpellFce={() => deleteSpell(spell)}></SpellDetail>
                     {/each}  
                 </div>
             </BoxWithList>

@@ -16,6 +16,82 @@ const ASI_VARIANTS = {
     19: { name: 'x5' }
 };
 
+const SPELLSLOTS_STANDARD = [
+    [ 2 ],
+    [ 3 ],
+    [ 4, 2 ],
+    [ 4, 3 ],
+    [ 4, 3, 2 ],
+    [ 4, 3, 3 ], 
+    [ 4, 3, 3, 1 ], 
+    [ 4, 3, 3, 2 ],
+    [ 4, 3, 3, 3, 1 ],
+    [ 4, 3, 3, 3, 2 ],
+    [ 4, 3, 3, 3, 2, 1 ],
+    [ 4, 3, 3, 3, 2, 1 ],
+    [ 4, 3, 3, 3, 2, 1, 1 ],
+    [ 4, 3, 3, 3, 2, 1, 1 ],
+    [ 4, 3, 3, 3, 2, 1, 1, 1 ],
+    [ 4, 3, 3, 3, 2, 1, 1, 1 ],
+    [ 4, 3, 3, 3, 2, 1, 1, 1, 1 ],
+    [ 4, 3, 3, 3, 3, 1, 1, 1, 1 ],
+    [ 4, 3, 3, 3, 3, 2, 1, 1, 1 ],
+    [ 4, 3, 3, 3, 3, 2, 2, 1, 1 ],
+];
+
+const SPELLS_BY_LEVEL_BLANK = {
+    0: { // ~= cantrips
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    1: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    2: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    3: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    4: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    5: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    6: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    7: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    8: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+    9: {
+        slots_total: '',
+        slots_current: '',
+        spells: []
+    },
+}
+
 export const CLASSES: ClassData[] = [
     // {
     //     name: 'Custom',
@@ -584,60 +660,31 @@ You know four 1st-level spells of your choice from the bard spell list.
 The Spells Known column of the Bard table shows when you learn more bard spells of your choice. Each of these spells must be of a level for which you have spell slots, as shown on the table. For instance, when you reach 3rd level in this class, you can learn one new spell of 1st or 2nd level.
 
 Additionally, when you gain a level in this class, you can choose one of the bard spells you know and replace it with another spell from the bard spell list, which also must be of a level for which you have spell slots.`,
-            spells_known: {
-                base: 4,
-                levels: {
-                    1: 2,
-                    4: 3,
-                    10: 4
-                }
-            },
             cantrips_known: {
-                base: 2,
-                levels: {
-                    1: 4,
-                    2: 5,
-                    3: 6,
-                    4: 7,
-                    5: 8,
-                    6: 9,
-                    7: 10,
-                    8: 11,
-                    9: 12,
-                    10: 14,
-                    11: 15,
-                    13: 16,
-                    14: 18,
-                    15: 19,
-                    17: 20,
-                    18: 22
-                }
+                1: 2,
+                4: 3,
+                10: 4
             },
-            spell_slots: [
-                [ 2 ],
-                [ 3 ],
-                [ 4, 2 ],
-                [ 4, 3 ],
-                [ 4, 3, 2 ],
-                [ 4, 3, 3 ], 
-                [ 4, 3, 3, 1 ], 
-                [ 4, 3, 3, 2 ],
-                [ 4, 3, 3, 3, 1 ],
-                [ 4, 3, 3, 3, 2 ],
-                [ 4, 3, 3, 3, 2, 1 ],
-                [ 4, 3, 3, 3, 2, 1 ],
-                [ 4, 3, 3, 3, 2, 1, 1 ],
-                [ 4, 3, 3, 3, 2, 1, 1 ],
-                [ 4, 3, 3, 3, 2, 1, 1, 1 ],
-                [ 4, 3, 3, 3, 2, 1, 1, 1 ],
-                [ 4, 3, 3, 3, 2, 1, 1, 1, 1 ],
-                [ 4, 3, 3, 3, 3, 1, 1, 1, 1 ],
-                [ 4, 3, 3, 3, 3, 2, 1, 1, 1 ],
-                [ 4, 3, 3, 3, 3, 2, 2, 1, 1 ],
-            ],
-            spells_by_level: {
-
-            }
+            spells_known: {
+                1: 4,
+                2: 5,
+                3: 6,
+                4: 7,
+                5: 8,
+                6: 9,
+                7: 10,
+                8: 11,
+                9: 12,
+                10: 14,
+                11: 15,
+                13: 16,
+                14: 18,
+                15: 19,
+                17: 20,
+                18: 22
+            },
+            spell_slots: SPELLSLOTS_STANDARD,
+            spells_by_level: SPELLS_BY_LEVEL_BLANK
         }
     },
     {

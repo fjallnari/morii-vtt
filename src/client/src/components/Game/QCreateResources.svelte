@@ -3,6 +3,7 @@
     import ResourceDetail from './CharacterSheet/Components/ResourceDetail.svelte';
     import { Icon } from '@smui/icon-button';
     import type { ClassResource } from "../../interfaces/ClassData";
+import { findHighestPossibleValue } from "../../util/util";
 
     export let selectedClass: ClassData;
 
@@ -25,23 +26,9 @@
         selectedClass.resources = selectedClass.resources.filter(resourceIter => resourceIter !== resource);
     }
 
-    // looks through the record of levels ( level: total) to find the highest one under or equal to current class level
-    // this way we don't have to have all the levels saved, only the ones where the value changes
-    const findHighestPossibleTotal = (resource: Partial<ClassResource>) => {
-        if ( !resource.levels ) { return '' }
-
-        for (var iterLevel = selectedClass.level; iterLevel >= 1; iterLevel--) {
-            if (resource.levels[iterLevel]) {
-                return resource.levels[iterLevel];
-            }
-        }
-
-        return '';
-    }
-
     // dynamic resources
     $: selectedClass.resources = selectedClass.resources.map(resource => {
-        const resourceTotal = findHighestPossibleTotal(resource);
+        const resourceTotal = findHighestPossibleValue(resource.levels, selectedClass.level);
         return resource.levels ? Object.assign(resource, { total: resourceTotal, current: resourceTotal }) : resource;
     });
 

@@ -40,19 +40,19 @@
             name: name,
             level: ~~level,
             casting_time: cast_time,
-            is_ritual: ritual === '(ritual)',
+            ritual: ritual === '(ritual)',
             range: range,
             school: school ? school.toLowerCase() : school_b ? school_b.toLowerCase() : '',
             components: {
                 verbal: components.includes('V'),
                 somatic: components.includes('S'),
                 material: components.includes('M'),
-                material_content: mat_comp ? mat_comp : ''
+                materials_needed: mat_comp ? mat_comp : ''
             },
             duration: needsConcentration ? duration.split('Concentration, ')[1] : duration,
             concentration: needsConcentration,
             description: splitDescription[0],
-            at_higher_levels: splitDescription.length == 2 ? splitDescription[1] : ''
+            higher_levels: splitDescription.length == 2 ? splitDescription[1] : ''
         }
         
         addNewSpell(~~level, spellTemplate);

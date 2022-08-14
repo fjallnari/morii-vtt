@@ -444,7 +444,7 @@
     "Spell": {
       "additionalProperties": false,
       "properties": {
-        "at_higher_levels": {
+        "higher_levels": {
           "type": "string"
         },
         "casting_time": {
@@ -456,7 +456,7 @@
             "material": {
               "type": "boolean"
             },
-            "material_content": {
+            "materials_needed": {
               "type": "string"
             },
             "somatic": {
@@ -470,7 +470,7 @@
             "verbal",
             "somatic",
             "material",
-            "material_content"
+            "materials_needed"
           ],
           "type": "object"
         },
@@ -489,7 +489,7 @@
         "is_prepared": {
           "type": "boolean"
         },
-        "is_ritual": {
+        "ritual": {
           "type": "boolean"
         },
         "level": {
@@ -511,14 +511,14 @@
         "level",
         "is_prepared",
         "casting_time",
-        "is_ritual",
+        "ritual",
         "range",
         "school",
         "components",
         "duration",
         "concentration",
         "description",
-        "at_higher_levels"
+        "higher_levels"
       ],
       "type": "object"
     },

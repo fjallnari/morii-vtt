@@ -22,7 +22,7 @@
         { name: 'Race', icon: 'account-supervisor', filled_in: false, component: StepDetailRace },
         { name: 'Class', icon: 'arrow-projectile-multiple', filled_in: false, component: StepDetailClass },
         { name: 'Spellcasting', icon: 'fire', filled_in: false, component: StepDetailSpellcasting },
-        { name: 'Ability Scores', icon: 'atom', filled_in: false },
+        { name: 'Ability Scores', icon: 'counter', filled_in: false },
         { name: 'Background', icon: 'sprout', filled_in: false },
         { name: 'Summary', icon: 'clipboard-text', filled_in: false },
     ]
@@ -54,6 +54,8 @@
                 
         createCharacter(characterTemplate);
     }
+
+    $ : characterParts.spellcasting = characterParts.class && typeof characterParts.class.spellcasting !== 'undefined';
 
 </script>
 

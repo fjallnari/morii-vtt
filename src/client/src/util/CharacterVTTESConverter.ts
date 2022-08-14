@@ -298,19 +298,19 @@ export class CharacterVTTESConverter {
                     level: spellNameArr[1] === 'cantrip' ? 0 : ~~spellNameArr[1],
                     is_prepared: false,
                     casting_time: '',
-                    is_ritual: false,
+                    ritual: false,
                     range: '',
                     school: '',
                     components: {
                         verbal: true,
                         somatic: true,
                         material: false,
-                        material_content: ''
+                        materials_needed: ''
                     },
                     duration: '',
                     concentration: false,
                     description: '',
-                    at_higher_levels: ''
+                    higher_levels: ''
                 }
             }
 
@@ -328,7 +328,7 @@ export class CharacterVTTESConverter {
                     break;
 
                 case 'spellritual':
-                    spellMap[spellNameArr[2]].is_ritual = spellShard.current.toString() === 'Yes'; // ...
+                    spellMap[spellNameArr[2]].ritual = spellShard.current.toString() === 'Yes'; // ...
                     break;
 
                 case 'spellrange':
@@ -352,7 +352,7 @@ export class CharacterVTTESConverter {
                     break;
 
                 case 'spellcomp_materials':
-                    spellMap[spellNameArr[2]].components.material_content = spellShard.current.toString();
+                    spellMap[spellNameArr[2]].components.materials_needed = spellShard.current.toString();
                     break;
 
                 case 'spellduration':
@@ -368,7 +368,7 @@ export class CharacterVTTESConverter {
                     break;
                 
                 case 'spellathigherlevels':
-                    spellMap[spellNameArr[2]].at_higher_levels = spellShard.current.toString();
+                    spellMap[spellNameArr[2]].higher_levels = spellShard.current.toString();
                     break;
             }
         });

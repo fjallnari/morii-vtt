@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Autocomplete from '@smui-extra/autocomplete';
     import type ClassData from "../../interfaces/ClassData";
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../interfaces/QuickCreateData";
@@ -14,6 +13,7 @@
     import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
     import QCreateResources from './QCreateResources.svelte';
     import ABILITY_TAGS from '../../enum/AbilityTags';
+    import Svelecte from 'svelecte/src/Svelecte.svelte';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -52,13 +52,12 @@
 
     <div class="select-class">
         <h4>Select class:</h4>
-        <Autocomplete
+        <Svelecte 
             options={quickCreateData.classes}
-            textfield$variant="outlined"
-            getOptionLabel={(charClass) =>
-                charClass ? `${charClass.name}` : ''}
-            bind:value={selectedClass}
-        />
+            valueAsObject
+            placeholder='Classes'
+            bind:value={selectedClass}>
+        </Svelecte>
         <box class="class-icon">
             <img id="main-class" src="../static/class-icons/{validateClassName(selectedClass ? selectedClass.name.toLowerCase() : '')}.svg" alt="class-icon">
         </box>
@@ -202,8 +201,9 @@
         text-transform: uppercase;
     }
 
-    :global(.select-class > .smui-autocomplete) {
-        max-width: 10em;
+    :global(.select-class > .svelecte-control) {
+        font-size: large;
+        --sv-min-height: 3em !important;
     }
 
     .class-icon {
@@ -231,7 +231,7 @@
 
     .level-slider {
         position: relative;
-        z-index: 2;
+        /* z-index: 2; */
     }
 
     .level-slider-label {

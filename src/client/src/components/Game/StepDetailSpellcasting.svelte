@@ -165,7 +165,6 @@
                 <Svelecte 
                     options={filteredSpells}
                     valueAsObject
-                    resetOnSelect
                     placeholder='{currentFilter === 0 ? '': `${spellLevelsStr[currentFilter]} level`} {selectedClass.name} {currentFilter === 0 ? 'cantrips': 'spells'}'
                     bind:value={newSpell}>
                 </Svelecte>
@@ -339,11 +338,6 @@
     :global(.add-spell > .svelecte-control) {
         max-width: 16em;
         --sv-min-height: 3em !important;
-    }
-
-    :global(.add-spell > .smui-autocomplete) {
-        max-width: 12em;
-        align-self: center;
     }
 
     .spell-slots {

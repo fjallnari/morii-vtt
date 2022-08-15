@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Autocomplete from '@smui-extra/autocomplete';
     import type RaceData from "../../interfaces/RaceData";
     import type QuickCreateData from "../../interfaces/QuickCreateData";
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
@@ -12,6 +11,7 @@
     import BoxWithChips from '../BoxWithChips.svelte';
     import SKILLS from '../../enum/Skills';
     import SegmentedButton, { Label, Segment } from '@smui/segmented-button';
+    import Svelecte from 'svelecte/src/Svelecte.svelte';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -48,13 +48,12 @@
 <div class="race-detail">
     <div class="select-race">
         <h4>Select race:</h4>
-        <Autocomplete
+        <Svelecte 
             options={quickCreateData.races}
-            textfield$variant="outlined"
-            getOptionLabel={(race) =>
-                race ? `${race.name}` : ''}
-            bind:value={selectedRace}
-        />
+            valueAsObject
+            placeholder='Races'
+            bind:value={selectedRace}>
+        </Svelecte>
     </div>
 
     <div class="ability-score-increase">
@@ -156,7 +155,7 @@
 
     .select-race { grid-area: select-race; 
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         gap: 1em;
     }
@@ -167,6 +166,12 @@
         font-weight: 500;
         text-transform: uppercase;
         margin: 0em;
+    }
+
+    :global(.select-race > .svelecte-control) {
+        font-size: large;
+        --sv-min-height: 3em !important;
+        max-width: 15em;
     }
 
     .ability-score-increase { grid-area: ability-score-increase; 

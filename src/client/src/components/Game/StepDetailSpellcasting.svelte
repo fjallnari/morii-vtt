@@ -228,7 +228,7 @@ import InPlaceEdit from "../InPlaceEdit.svelte";
         </box>
 
         <box class="ritual">
-            <MarkdownBoxText text={selectedClass.spellcasting.ritual_casting}></MarkdownBoxText>
+            <MarkdownBoxText text={selectedClass.spellcasting.ritual_casting ?? 'None'}></MarkdownBoxText>
             <div class="box-label auto-margin">
                 Ritual Casting
             </div>
@@ -247,6 +247,16 @@ import InPlaceEdit from "../InPlaceEdit.svelte";
                 Casting Spells
             </div>
         </box>
+
+        {#if selectedClass.spellcasting.unique_info}
+            <box class="unique-info">
+                <MarkdownBoxText text={selectedClass.spellcasting.unique_info.content}></MarkdownBoxText>
+                <div class="box-label auto-margin">
+                    {selectedClass.spellcasting.unique_info.label}
+                </div>
+            </box>
+        {/if}
+
     </spellcasting-detail>
 {/if}
 
@@ -262,10 +272,10 @@ import InPlaceEdit from "../InPlaceEdit.svelte";
             "spell-ability-info spell-ability-info spell-ability-info casting-info casting-info casting-info casting-info spells-header spells-header spells-header spells-header spells-header"
             "spell-ability-info spell-ability-info spell-ability-info casting-info casting-info casting-info casting-info spells spells spells spells spells"
             "spell-ability-info spell-ability-info spell-ability-info casting-info casting-info casting-info casting-info spells spells spells spells spells"
-            ". . . casting-info casting-info casting-info casting-info spells spells spells spells spells"
-            ". . . casting-info casting-info casting-info casting-info spells spells spells spells spells"
-            ". . . ritual ritual spell-focus spell-focus spells spells spells spells spells"
-            ". . . ritual ritual spell-focus spell-focus spells spells spells spells spells"; 
+            "uniq uniq uniq casting-info casting-info casting-info casting-info spells spells spells spells spells"
+            "uniq uniq uniq casting-info casting-info casting-info casting-info spells spells spells spells spells"
+            "uniq uniq uniq ritual ritual spell-focus spell-focus spells spells spells spells spells"
+            "uniq uniq uniq ritual ritual spell-focus spell-focus spells spells spells spells spells"; 
     }
 
     spellcasting-detail box {
@@ -395,6 +405,7 @@ import InPlaceEdit from "../InPlaceEdit.svelte";
     .ritual { grid-area: ritual;}
     .spell-focus { grid-area: spell-focus; }
     .casting-info { grid-area: casting-info; }
+    .unique-info { grid-area: uniq; }
 
     select {
         background-color: inherit;

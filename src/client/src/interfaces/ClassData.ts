@@ -69,6 +69,11 @@ interface ClassSpellsByLevel {
 
 type SpellsKnown = Record<number, number>;
 
+interface UniqueSpellcastingInfo {
+    label: string,
+    content: string
+}
+
 export interface ClassSpellcasting {
     casting_info: string,
     ability: string,
@@ -79,6 +84,7 @@ export interface ClassSpellcasting {
     spells_known?: SpellsKnown,
     spell_slots: string[][]
     spells_by_level: Record<number, ClassSpellsByLevel>,
+    unique_info?: UniqueSpellcastingInfo
     isCustom?: boolean,
 }
 

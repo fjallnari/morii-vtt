@@ -71,6 +71,11 @@ interface ClassSpellsByLevel {
 
 type SpellsKnown = Record<number, number>;
 
+interface SpecificSpellcastingInfo {
+    label: string,
+    content: string
+}
+
 interface ClassSpellcasting {
     casting_info: string,
     ability: string,
@@ -80,7 +85,8 @@ interface ClassSpellcasting {
     cantrips_known?: SpellsKnown,
     spells_known?: SpellsKnown,
     spell_slots: string[][] // [{1: 2}, {1:3}, {1:4, 2:2}], index ~= classLevel, key ~= spell slot level, value ~= amount of spell slots
-    spells_by_level: Record<number, ClassSpellsByLevel>
+    spells_by_level: Record<number, ClassSpellsByLevel>,
+    unique_info?: SpecificSpellcastingInfo
 }
 
 export default interface ClassData {

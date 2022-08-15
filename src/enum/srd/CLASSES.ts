@@ -2661,4 +2661,356 @@ Once you use this feature, you can’t use it again until you finish a short or 
             }
         ],
     },
+    {
+        name: 'Sorcerer',
+        level: 1,
+        hp: {
+            hit_die: 6
+        },
+        other_prof: [
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Daggers'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Slings'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Quarterstaffs'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Light crossbows'
+            },
+        ],
+        tool_prof: {
+            label: 'None',
+            tools: []
+        },
+        saving_throws: [ 'CON', 'CHA' ],
+        skills: {
+            final: [],
+            choose_n: 2,
+            type: 'list',
+            options: [ 'Arcana', 'Deception', 'Insight', 'Intimidation', 'Persuasion', 'Religion' ]
+        },
+        equipment: [
+            // 1st line ~ (a) a light crossbow and 20 bolts or (b) any simple weapon
+            {
+                final: [],
+                line_options: [
+                    // (a)
+                    [
+                        {
+                            name: 'Light crossbow',
+                            amount: 1,
+                            tags: [
+                                'weapon'
+                            ]
+                        },
+                        {
+                            name: 'Bolts',
+                            amount: 20,
+                            tags: [
+                                'resource'
+                            ]
+                        }
+                    ],
+                    // (b)
+                    [
+                        {
+                            name: '',
+                            amount: 1,
+                            tags: [
+                                'weapon'
+                            ],
+                            placeholder: 'any simple ⚔️',
+                            options: WEAPONS_SIMPLE_ALL
+                        }
+                    ]
+                ]
+            },
+            // 2nd line ~ (a) a component pouch or (b) an arcane focus
+            {
+                final: [],
+                line_options: [
+                    // (a)
+                    [
+                        {
+                            name: "Component pouch",
+                            amount: 1,
+                            tags: [],
+                        }
+                    ],
+                    // (b)
+                    [
+                        {
+                            name: "Arcane focus",
+                            amount: 1,
+                            tags: [],
+                        }
+                    ],
+                ]
+            },
+            // 3rd line ~ (a) a dungeoneer’s pack or (b) an explorer’s pack
+            {
+                final: [],
+                line_options: [
+                    // (a)
+                    [
+                        {
+                            name: "Dungeoneer’s pack",
+                            amount: 1,
+                            tags: [],
+                            description: '' // TODO
+                        }
+                    ],
+                    // (b)
+                    // (a)
+                    [
+                        {
+                            name: "Explorer’s pack",
+                            amount: 1,
+                            tags: [],
+                            description: '' // TODO
+                        }
+                    ],
+                ]
+            },
+            // 4th line ~ Two daggers
+            {
+                final: [
+                    {
+                        name: 'Dagger',
+                        amount: 2,
+                        tags: [
+                            'weapon',
+                        ]
+                    }
+                ]
+            }
+        ],
+        features: [
+            {
+                name: 'Spellcasting',
+                level: 1,
+                content: `An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells.
+**Cantrips**
+At 1st level, you know four cantrips of your choice from the sorcerer spell list. You learn additional sorcerer cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Sorcerer table.
+
+**Spell Slots**
+The Sorcerer table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these sorcerer spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+For example, if you know the 1st-level spell burning hands and have a 1st-level and a 2nd-level spell slot available, you can cast burning hands using either slot.
+
+**Spells Known of 1st Level and Higher**
+You know two 1st-level spells of your choice from the sorcerer spell list.
+
+The Spells Known column of the Sorcerer table shows when you learn more sorcerer spells of your choice. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 3rd level in this class, you can learn one new spell of 1st or 2nd level.
+
+Additionally, when you gain a level in this class, you can choose one of the sorcerer spells you know and replace it with another spell from the sorcerer spell list, which also must be of a level for which you have spell slots.
+
+**Spellcasting Ability**
+Charisma is your spellcasting ability for your sorcerer spells, since the power of your magic relies on your ability to project your will into the world. You use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a sorcerer spell you cast and when making an attack roll with one.
+
+Spell save DC = 8 + your proficiency bonus + your Charisma modifier
+
+Spell attack modifier = your proficiency bonus + your Charisma modifier
+
+**Spellcasting Focus**
+You can use an arcane focus as a spellcasting focus for your sorcerer spells.`
+            },
+            {
+                name: 'Sorcerous Origin ~ Subclass',
+                level: 1,
+                content: `Choose a sorcerous origin, which describes the source of your innate magical power. Your choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level.`
+            },
+            {
+                name: 'Font of Magic',
+                level: 2,
+                content: `At 2nd level, you tap into a deep wellspring of magic within yourself. This wellspring is represented by sorcery points, which allow you to create a variety of magical effects.
+**Sorcery Points**
+You have 2 sorcery points, and you gain more as you reach higher levels, as shown in the Sorcery Points column of the Sorcerer table. You can never have more sorcery points than shown on the table for your level. You regain all spent sorcery points when you finish a long rest.
+
+**Flexible Casting **
+You can use your sorcery points to gain additional spell slots, or sacrifice spell slots to gain additional sorcery points. You learn other ways to use your sorcery points as you reach higher levels.
+
+**Creating Spell Slots.** You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th.
+
+Any spell slot you create with this feature vanishes when you finish a long rest.
+
+Creating Spell Slots
+Spell Slot Level ~ Sorcery Point Cost
+1st ~ 2
+2nd ~ 3
+3rd ~ 5
+4th ~ 6
+5th ~ 7
+
+Converting a Spell Slot to Sorcery Points. As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot’s level.`
+            },
+            {
+                name: 'Metamagic',
+                level: 3,
+                content: `At 3rd level, you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.
+
+You can use only one Metamagic option on a spell when you cast it, unless otherwise noted.
+
+**Careful Spell**
+When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell’s full force. To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell.
+
+**Distant Spell**
+When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.
+
+When you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet.
+
+**Empowered Spell**
+When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.
+
+You can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell.
+
+**Extended Spell**
+When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours.
+
+**Heightened Spell**
+When you cast a spell that forces a creature to make a saving throw to resist its effects, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw made against the spell.
+
+**Quickened Spell**
+When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting.
+
+**Subtle Spell**
+When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components.
+
+**Twinned Spell**
+When you cast a spell that targets only one creature and doesn’t have a range of self, you can spend a number of sorcery points equal to the spell’s level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).
+
+To be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are.`
+            },
+            {
+                name: 'Ability Score Improvement',
+                level: 4,
+                content: ASI_CONTENT_STANDARD
+            },
+            {
+                name: 'Sorcerous Restoration',
+                level: 20,
+                content: `At 20th level, you regain 4 expended sorcery points whenever you finish a short rest.`
+            },
+        ],
+        resources: [
+            {
+                name: 'Sorcery Points',
+                total: '',
+                current: '',
+                type: 'complex',
+                levels: {
+                    2: '2',
+                    3: '3',
+                    4: '4',
+                    5: '5',
+                    6: '6',
+                    7: '7',
+                    8: '8',
+                    9: '9',
+                    10: '10',
+                    11: '11',
+                    12: '12',
+                    13: '13',
+                    14: '14',
+                    15: '16',
+                    17: '17',
+                    18: '19',
+                    19: '19',
+                    20: '20',
+                }
+            },
+        ],
+        spellcasting: {
+            ability: 'CHA',
+            ability_info: `Charisma is your spellcasting ability for your sorcerer spells, since the power of your magic relies on your ability to project your will into the world. You use your Charisma whenever a spell refers to your spellcasting ability. 
+
+In addition, you use your Charisma modifier when setting the saving throw DC for a sorcerer spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier
+
+**Spell attack modifier** = your proficiency bonus + your Charisma modifier`,
+            focus: 'You can use an arcane focus as a spellcasting focus for your sorcerer spells.',
+            casting_info: `An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells.
+#### Cantrips
+At 1st level, you know four cantrips of your choice from the sorcerer spell list. You learn additional sorcerer cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Sorcerer table.
+
+#### Spell Slots
+The Sorcerer table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these sorcerer spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+For example, if you know the 1st-level spell burning hands and have a 1st-level and a 2nd-level spell slot available, you can cast burning hands using either slot.
+
+#### Spells Known of 1st Level and Higher
+You know two 1st-level spells of your choice from the sorcerer spell list.
+
+The Spells Known column of the Sorcerer table shows when you learn more sorcerer spells of your choice. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 3rd level in this class, you can learn one new spell of 1st or 2nd level.
+
+Additionally, when you gain a level in this class, you can choose one of the sorcerer spells you know and replace it with another spell from the sorcerer spell list, which also must be of a level for which you have spell slots.`,
+            cantrips_known: {
+                1: 4,
+                4: 5,
+                10: 6
+            },
+            spells_known: {
+                1: 2,
+                2: 3,
+                3: 4,
+                4: 5,
+                5: 6,
+                6: 7,
+                7: 8,
+                8: 9,
+                9: 10,
+                10: 11,
+                11: 12,
+                13: 13,
+                15: 14,
+                17: 15,
+            },
+            spell_slots: SPELLSLOTS_STANDARD,
+            spells_by_level: SPELLS_BY_LEVEL_BLANK,
+            unique_info: {
+                label: 'Metamagic',
+                content: `You can use only one Metamagic option on a spell when you cast it, unless otherwise noted.
+
+#### Careful Spell
+When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell’s full force. 
+
+To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell.
+
+#### Distant Spell
+When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.
+
+When you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet.
+
+#### Empowered Spell
+When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.
+
+You can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell.
+
+#### Extended Spell
+When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours.
+
+#### Heightened Spell
+When you cast a spell that forces a creature to make a saving throw to resist its effects, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw made against the spell.
+
+#### Quickened Spell
+When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting.
+
+#### Subtle Spell
+When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components.
+
+#### Twinned Spell
+When you cast a spell that targets only one creature and doesn’t have a range of self, you can spend a number of sorcery points equal to the spell’s level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).
+
+To be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are.`
+            }
+        }
+    },
 ]

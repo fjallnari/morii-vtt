@@ -9,6 +9,7 @@
     export let source: string = '';
     export let icon: string = '';
     export let deleteItem: () => void;
+    export let textareaHeight: string = '10em';
 
     let isOpen: boolean = false;
     
@@ -43,7 +44,7 @@
             </div>
         {/if}
         <div class="details" transition:slide|local>
-            <textarea on:change={() => {}} bind:value={content}></textarea>
+            <textarea style='height: {textareaHeight};' on:change={() => {}} bind:value={content}></textarea>
             <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem()}></SimpleButton>
         </div>
     {/if}
@@ -61,10 +62,6 @@
     img {
         height: 1.25em;
         width: 1.25em;
-    }
-
-    textarea {
-        height: 10em;
     }
 
     .feature-summary {

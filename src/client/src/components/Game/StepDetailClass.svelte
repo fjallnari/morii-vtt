@@ -75,7 +75,8 @@
                         bind:value={feature.name} 
                         bind:content={feature.content}
                         icon='arrow-projectile-multiple' 
-                        deleteItem={() => deleteFeature(feature.name)}>
+                        deleteItem={() => deleteFeature(feature.name)}
+                        textareaHeight='15em'>
                     </SimpleAccordionDetail>
                 {/each}
             </div>

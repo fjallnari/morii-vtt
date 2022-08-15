@@ -39,6 +39,29 @@ const SPELLSLOTS_STANDARD = [
     [ 4, 3, 3, 3, 3, 2, 2, 1, 1 ],
 ];
 
+const SPELLSLOTS_HALFCASTER = [
+    [ ],
+    [ 2 ],
+    [ 3 ],
+    [ 3 ],
+    [ 4, 2 ],
+    [ 4, 2 ], 
+    [ 4, 3 ], 
+    [ 4, 3 ],
+    [ 4, 3, 2 ],
+    [ 4, 3, 2 ],
+    [ 4, 3, 3 ],
+    [ 4, 3, 3 ],
+    [ 4, 3, 3, 1 ],
+    [ 4, 3, 3, 1 ],
+    [ 4, 3, 3, 2 ],
+    [ 4, 3, 3, 2 ],
+    [ 4, 3, 3, 3, 1 ],
+    [ 4, 3, 3, 3, 1 ],
+    [ 4, 3, 3, 3, 2 ],
+    [ 4, 3, 3, 3, 2 ],
+]
+
 const SPELLS_BY_LEVEL_BLANK = {
     0: { // ~= cantrips
         slots_total: '',
@@ -489,7 +512,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                     ],
                 ]
             },
-            // 3rd line ~ Leather armor and a dagger
+            // 4th line ~ Leather armor and a dagger
             {
                 final: [
                     {
@@ -630,7 +653,6 @@ You learn two additional spells from any class at 14th level and again at 18th l
                 }
             },
         ],
-        // TODO  - SPELLCASTING
         spellcasting: {
             ability: 'CHA',
             ability_info: `Charisma is your spellcasting ability for your bard spells. Your magic comes from the heart and soul you pour into the performance of your music or oration. You use your Charisma whenever a spell refers to your spellcasting ability. 
@@ -929,7 +951,39 @@ At 20th level, your call for intervention succeeds automatically, no roll requir
                     17: 'CR 4'
                 }
             }
-        ]
+        ],
+        spellcasting: {
+            ability: 'WIS',
+            ability_info: `Wisdom is your spellcasting ability for your cleric spells. The power of your spells comes from your devotion to your deity. You use your Wisdom whenever a cleric spell refers to your spellcasting ability. 
+
+In addition, you use your Wisdom modifier when setting the saving throw DC for a cleric spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Wisdom modifier
+
+**Spell attack modifier** = your proficiency bonus + your Wisdom modifier`,
+            ritual_casting: 'You can cast a cleric spell as a ritual if that spell has the ritual tag and you have the spell prepared.',
+            focus: 'You can use a holy symbol as a spellcasting focus for your cleric spells.',
+            casting_info: `As a conduit for divine power, you can cast cleric spells.
+
+#### Cantrips
+At 1st level, you know three cantrips of your choice from the cleric spell list. You learn additional cleric cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Cleric table.
+
+#### Preparing and Casting Spells
+The Cleric table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+You prepare the list of cleric spells that are available for you to cast, choosing from the cleric spell list. When you do so, choose a number of cleric spells equal to your Wisdom modifier + your cleric level (minimum of one spell). The spells must be of a level for which you have spell slots.
+
+For example, if you are a 3rd-level cleric, you have four 1st-level and two 2nd-level spell slots. With a Wisdom of 16, your list of prepared spells can include six spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell cure wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the spell doesn’t remove it from your list of prepared spells.
+
+You can change your list of prepared spells when you finish a long rest. Preparing a new list of cleric spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.`,
+            cantrips_known: {
+                1: 3,
+                4: 4,
+                10: 5
+            },
+            spell_slots: SPELLSLOTS_STANDARD,
+            spells_by_level: SPELLS_BY_LEVEL_BLANK
+        }
     },
     {
         name: 'Druid',
@@ -1167,7 +1221,35 @@ While you are transformed, the following rules apply:
                 content: `At 20th level, you can use your Wild Shape an unlimited number of times.\n\nAdditionally, you can ignore the verbal and somatic components of your druid spells, as well as any material components that lack a cost and aren’t consumed by a spell. You gain this benefit in both your normal shape and your beast shape from Wild Shape.`
             },
         ],
-        resources: []
+        resources: [],
+        spellcasting: {
+            ability: 'WIS',
+            ability_info: `Wisdom is your spellcasting ability for your druid spells, since your magic draws upon your devotion and attunement to nature.
+
+In addition, you use your Wisdom modifier when setting the saving throw DC for a druid spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Wisdom modifier
+
+**Spell attack modifier** = your proficiency bonus + your Wisdom modifier`,
+            ritual_casting: 'You can cast a druid spell as a ritual if that spell has the ritual tag and you have the spell prepared.',
+            focus: 'You can use a druidic focus as a spellcasting focus for your druid spells.',
+            casting_info: `Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will.
+
+#### Cantrips
+At 1st level, you know two cantrips of your choice from the druid spell list. You learn additional druid cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Druid table.
+
+#### Preparing and Casting Spells
+The Druid table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these druid spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+You prepare the list of druid spells that are available for you to cast, choosing from the druid spell list. When you do so, choose a number of druid spells equal to your Wisdom modifier + your druid level (minimum of one spell). The spells must be of a level for which you have spell slots.`,
+            cantrips_known: {
+                1: 2,
+                4: 3,
+                10: 4
+            },
+            spell_slots: SPELLSLOTS_STANDARD,
+            spells_by_level: SPELLS_BY_LEVEL_BLANK
+        }
     },
     {
         name: 'Fighter',
@@ -1343,7 +1425,7 @@ While you are transformed, the following rules apply:
         ],
         features: [
             {
-                name: 'Fighting Style',
+                name: 'Fighting Style - ???',
                 level: 1,
                 content: `You adopt a particular style of fighting as your specialty. Choose one of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.
 
@@ -1706,6 +1788,877 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                     18: '+30 ft.'
                 }
             },
+        ],
+    },
+    {
+        name: 'Paladin',
+        level: 1,
+        hp: {
+            hit_die: 10
+        },
+        other_prof: [
+            {
+                type: OTHER_PROF.ARMOR,
+                name: 'All armor'
+            },
+            {
+                type: OTHER_PROF.ARMOR,
+                name: 'Shields'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Simple weapons'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Martial weapons'
+            },
+        ],
+        tool_prof: {
+            label: 'None',
+            tools: []
+        },
+        saving_throws: [ 'WIS', 'CHA' ],
+        skills: {
+            final: [],
+            choose_n: 2,
+            type: 'list',
+            options: [ 'Athletics', 'Insight', 'Intimidation', 'Medicine', 'Persuasion', 'Religion' ]
+        },
+        equipment: [
+                // 1st line ~ (a) a martial weapon and a shield or (b) two martial weapons
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: '',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ],
+                                placeholder: 'any martial ⚔️',
+                                options: WEAPONS_MARTIAL_ALL
+                            },
+                            {
+                                name: 'Shield',
+                                amount: 1,
+                                tags: []
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: '',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ],
+                                placeholder: 'any martial ⚔️',
+                                options: WEAPONS_MARTIAL_ALL
+                            },
+                            {
+                                name: '',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ],
+                                placeholder: 'any martial ⚔️',
+                                options: WEAPONS_MARTIAL_ALL
+                            },
+                        ],
+                    ]
+                },
+                // 2nd line ~ (a) five javelins or (b) any simple melee weapon
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: 'Javelin',
+                                amount: 5,
+                                tags: [
+                                    'weapon',
+                                    'resource'
+                                ]
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: '',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ],
+                                placeholder: 'any simple melee ⚔️',
+                                options: WEAPONS.SIMPLE.MELEE
+                            }
+                        ],
+                    ]
+                },
+                // 3rd line ~ (a) a priest’s pack or (b) an explorer’s pack
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: "Priest’s pack",
+                                amount: 1,
+                                tags: [],
+                                description: '' // TODO
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: "Explorer’s pack",
+                                amount: 1,
+                                tags: [],
+                                description: '' // TODO
+                            }
+                        ],
+                    ]
+                },
+                // 4th line ~ Leather armor and a dagger
+                {
+                    final: [
+                        {
+                            name: 'Chain Mail',
+                            amount: 1,
+                            tags: [],
+                        },
+                        {
+                            name: 'Holy Symbol',
+                            amount: 1,
+                            tags: []
+                        }
+                    ]
+                }
+            ],
+        features: [
+            {
+                name: 'Divine Sense',
+                level: 1,
+                content: `The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears. As an action, you can open your awareness to detect such forces. 
+
+Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type (celestial, fiend, or undead) of any being whose presence you sense, but not its identity (the vampire Count Strahd von Zarovich, for instance). Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the hallow spell.
+
+You can use this feature a number of times equal to 1 + your Charisma modifier. When you finish a long rest, you regain all expended uses.`
+            },
+            {
+                name: 'Lay on Hands',
+                level: 1,
+                content: `Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level × 5.
+
+As an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool.
+
+Alternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Lay on Hands, expending hit points separately for each one.
+
+This feature has no effect on undead and constructs.`
+            },
+            {
+                name: 'Fighting Style - ???',
+                level: 2,
+                content: `At 2nd level, you adopt a style of fighting as your specialty. Choose one of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.
+
+**Defense**
+While you are wearing armor, you gain a +1 bonus to AC.
+
+**Dueling**
+When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.
+
+**Great Weapon Fighting**
+When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll. The weapon must have the two-handed or versatile property for you to gain this benefit.
+
+**Protection**
+When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.`
+            },
+            {
+                name: 'Spellcasting',
+                level: 2,
+                content: `By 2nd level, you have learned to draw on divine magic through meditation and prayer to cast spells as a cleric does.
+
+**Preparing and Casting Spells**
+The Paladin table shows how many spell slots you have to cast your spells. To cast one of your paladin spells of 1st level or higher, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+You prepare the list of paladin spells that are available for you to cast, choosing from the paladin spell list. When you do so, choose a number of paladin spells equal to your Charisma modifier + half your paladin level, rounded down (minimum of one spell). The spells must be of a level for which you have spell slots.
+
+For example, if you are a 5th-level paladin, you have four 1st-level and two 2nd-level spell slots. With a Charisma of 14, your list of prepared spells can include four spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell cure wounds, you can cast it using a 1st-level or a 2nd- level slot. Casting the spell doesn’t remove it from your list of prepared spells.
+
+You can change your list of prepared spells when you finish a long rest. Preparing a new list of paladin spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.
+
+**Spellcasting Ability**
+Charisma is your spellcasting ability for your paladin spells, since their power derives from the strength of your convictions. You use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a paladin spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier
+
+**Spell attack modifier** = your proficiency bonus + your Charisma modifier
+
+**Spellcasting Focus**
+You can use a holy symbol as a spellcasting focus for your paladin spells.`
+            },
+            {
+                name: 'Divine Smite',
+                level: 2,
+                content: `Starting at 2nd level, when you hit a creature with a melee weapon attack, you can expend one spell slot to deal radiant damage to the target, in addition to the weapon’s damage. The extra damage is 2d8 for a 1st-level spell slot, plus 1d8 for each spell level higher than 1st, to a maximum of 5d8. The damage increases by 1d8 if the target is an undead or a fiend.`
+            },
+            {
+                name: 'Divine Health',
+                level: 3,
+                content: 'By 3rd level, the divine magic flowing through you makes you immune to disease.'
+            },
+            {
+                name: 'Sacred Oath ~ Subclass',
+                level: 3,
+                content: `When you reach 3rd level, you swear the oath that binds you as a paladin forever. Up to this time you have been in a preparatory stage, committed to the path but not yet sworn to it.
+
+Your choice grants you features at 3rd level and again at 7th, 15th, and 20th level. Those features include oath spells and the Channel Divinity feature.
+
+**Oath Spells**
+Each oath has a list of associated spells. You gain access to these spells at the levels specified in the oath description. Once you gain access to an oath spell, you always have it prepared. Oath spells don’t count against the number of spells you can prepare each day.
+
+If you gain an oath spell that doesn’t appear on the paladin spell list, the spell is nonetheless a paladin spell for you.
+
+**Channel Divinity**
+Your oath allows you to channel divine energy to fuel magical effects. Each Channel Divinity option provided by your oath explains how to use it.
+
+When you use your Channel Divinity, you choose which option to use. You must then finish a short or long rest to use your Channel Divinity again.
+
+Some Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your paladin spell save DC.`
+            },
+            {
+                name: 'Breaking Your Oath',
+                level: 3,
+                content: `A paladin tries to hold to the highest standards of conduct, but even the most virtuous paladin is fallible. Sometimes the right path proves too demanding, sometimes a situation calls for the lesser of two evils, and sometimes the heat of emotion causes a paladin to transgress his or her oath.
+
+A paladin who has broken a vow typically seeks absolution from a cleric who shares his or her faith or from another paladin of the same order. The paladin might spend an all- night vigil in prayer as a sign of penitence, or undertake a fast or similar act of self-denial. After a rite of confession and forgiveness, the paladin starts fresh.
+
+If a paladin willfully violates his or her oath and shows no sign of repentance, the consequences can be more serious. At the GM’s discretion, an impenitent paladin might be forced to abandon this class and adopt another.`
+            },
+            {
+                name: 'Ability Score Improvement',
+                level: 4,
+                content: ASI_CONTENT_STANDARD
+            },
+            {
+                name: 'Extra Attack',
+                level: 5,
+                content: 'Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.'
+            },
+            {
+                name: 'Aura of Protection',
+                level: 6,
+                content: `Starting at 6th level, whenever you or a friendly creature within 10 feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Charisma modifier (with a minimum bonus of +1). You must be conscious to grant this bonus.
+
+At 18th level, the range of this aura increases to 30 feet.`
+            },
+            {
+                name: 'Aura of Courage',
+                level: 10,
+                content: `Starting at 10th level, you and friendly creatures within 10 feet of you can’t be frightened while you are conscious.
+
+At 18th level, the range of this aura increases to 30 feet.`
+            },
+            {
+                name: 'Improved Divine Smite',
+                level: 11,
+                content: `By 11th level, you are so suffused with righteous might that all your melee weapon strikes carry divine power with them. Whenever you hit a creature with a melee weapon, the creature takes an extra 1d8 radiant damage. If you also use your Divine Smite with an attack, you add this damage to the extra damage of your Divine Smite.`
+            },
+            {
+                name: 'Cleansing Touch',
+                level: 14,
+                content: `Beginning at 14th level, you can use your action to end one spell on yourself or on one willing creature that you touch.
+
+You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain expended uses when you finish a long rest.`
+            },
+        ],
+        resources: [],
+        spellcasting: {
+            ability: 'CHA',
+            ability_info: `Charisma is your spellcasting ability for your paladin spells, since their power derives from the strength of your convictions.
+
+In addition, you use your Charisma modifier when setting the saving throw DC for a paladin spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier
+
+**Spell attack modifier** = your proficiency bonus + your Charisma modifier`,
+            focus: 'You can use a holy symbol as a spellcasting focus for your paladin spells.',
+            casting_info: `The Paladin table shows how many spell slots you have to cast your spells. To cast one of your paladin spells of 1st level or higher, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+You prepare the list of paladin spells that are available for you to cast, choosing from the paladin spell list. When you do so, choose a number of paladin spells equal to your Charisma modifier + half your paladin level, rounded down (minimum of one spell). The spells must be of a level for which you have spell slots.
+
+For example, if you are a 5th-level paladin, you have four 1st-level and two 2nd-level spell slots. With a Charisma of 14, your list of prepared spells can include four spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell cure wounds, you can cast it using a 1st-level or a 2nd- level slot. Casting the spell doesn’t remove it from your list of prepared spells.
+
+You can change your list of prepared spells when you finish a long rest. Preparing a new list of paladin spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.`,
+            spell_slots: SPELLSLOTS_HALFCASTER,
+            spells_by_level: SPELLS_BY_LEVEL_BLANK
+        }
+    },
+    {
+        name: 'Ranger',
+        level: 1,
+        hp: {
+            hit_die: 10
+        },
+        other_prof: [
+            {
+                type: OTHER_PROF.ARMOR,
+                name: 'Light armor'
+            },
+            {
+                type: OTHER_PROF.ARMOR,
+                name: 'Medium armor'
+            },
+            {
+                type: OTHER_PROF.ARMOR,
+                name: 'Shields'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Simple weapons'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Martial weapons'
+            },
+        ],
+        tool_prof: {
+            label: 'None',
+            tools: []
+        },
+        saving_throws: [ 'STR', 'DEX' ],
+        skills: {
+            final: [],
+            choose_n: 3,
+            type: 'list',
+            options: [ 'Animal Handling', 'Athletics', 'Insight', 'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival' ]
+        },
+        equipment: [
+                // 1st line ~ (a) scale mail or (b) leather armor
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: 'Scale Mail',
+                                amount: 1,
+                                tags: []
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: 'Leather Armor',
+                                amount: 1,
+                                tags: []
+                            }
+                        ],
+                    ]
+                },
+                // 2nd line ~ (a) two shortswords or (b) two simple melee weapons
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: 'Shortsword',
+                                amount: 2,
+                                tags: [
+                                    'weapon',
+                                ]
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: '',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ],
+                                placeholder: 'any simple melee ⚔️',
+                                options: WEAPONS.SIMPLE.MELEE
+                            },
+                            {
+                                name: '',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ],
+                                placeholder: 'any simple melee ⚔️',
+                                options: WEAPONS.SIMPLE.MELEE
+                            }
+                        ],
+                    ]
+                },
+                // 3rd line ~ (a) a dungeoneer’s pack or (b) an explorer’s pack
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: "Dungeoneer’s pack",
+                                amount: 1,
+                                tags: [],
+                                description: '' // TODO
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: "Explorer’s pack",
+                                amount: 1,
+                                tags: [],
+                                description: '' // TODO
+                            }
+                        ],
+                    ]
+                },
+                // 4th line ~ Leather armor and a dagger
+                {
+                    final: [
+                        {
+                            name: 'Longbow',
+                            amount: 1,
+                            tags: [
+                                'weapon'
+                            ],
+                        },
+                        {
+                            name: 'Arrows',
+                            amount: 20,
+                            tags: [
+                                'resource'
+                            ]
+                        }
+                    ]
+                }
+            ],
+        features: [
+            {
+                name: 'Favored Enemy - ???',
+                level: 1,
+                content: `Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.
+
+Choose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. Alternatively, you can select two races of humanoid (such as gnolls and orcs) as favored enemies.
+
+You have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them.
+
+When you gain this feature, you also learn one language of your choice that is spoken by your favored enemies, if they speak one at all.
+
+You choose one additional favored enemy, as well as an associated language, at 6th and 14th level. As you gain levels, your choices should reflect the types of monsters you have encountered on your adventures.`
+            },
+            {
+                name: 'Natural Explorer - ???',
+                level: 1,
+                content: `You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, mountain, or swamp. When you make an Intelligence or Wisdom check related to your favored terrain, your proficiency bonus is doubled if you are using a skill that you’re proficient in.
+
+While traveling for an hour or more in your favored terrain, you gain the following benefits:
+
+- Difficult terrain doesn’t slow your group’s travel.
+- Your group can’t become lost except by magical means.
+- Even when you are engaged in another activity while traveling (such as foraging, navigating, or tracking), you remain alert to danger.
+- If you are traveling alone, you can move stealthily at a normal pace.
+- When you forage, you find twice as much food as you normally would.
+- While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area.
+
+You choose additional favored terrain types at 6th and 10th level.`
+            },
+            {
+                name: 'Fighting Style - ???',
+                level: 2,
+                content: `At 2nd level, you adopt a particular style of fighting as your specialty. Choose one of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.
+**Archery**
+You gain a +2 bonus to attack rolls you make with ranged weapons.
+
+**Defense**
+While you are wearing armor, you gain a +1 bonus to AC.
+
+**Dueling**
+When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.
+
+**Two-Weapon Fighting**
+When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.`
+            },
+            {
+                name: 'Spellcasting',
+                level: 2,
+                content: `By the time you reach 2nd level, you have learned to use the magical essence of nature to cast spells, much as a druid does. See chapter 10 for the general rules of spellcasting and chapter 11 for the ranger spell list.
+**Spell Slots**
+The Ranger table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+For example, if you know the 1st-level spell animal friendship and have a 1st-level and a 2nd-level spell slot available, you can cast animal friendship using either slot.
+
+**Spells Known of 1st Level and Higher**
+You know two 1st-level spells of your choice from the ranger spell list.
+
+The Spells Known column of the Ranger table shows when you learn more ranger spells of your choice. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 5th level in this class, you can learn one new spell of 1st or 2nd level.
+
+Additionally, when you gain a level in this class, you can choose one of the ranger spells you know and replace it with another spell from the ranger spell list, which also must be of a level for which you have spell slots.
+
+**Spellcasting Ability**
+Wisdom is your spellcasting ability for your ranger spells, since your magic draws on your attunement to nature. You use your Wisdom whenever a spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a ranger spell you cast and when making an attack roll with one.
+
+Spell save DC = 8 + your proficiency bonus + your Wisdom modifier
+
+Spell attack modifier = your proficiency bonus + your Wisdom modifier`
+            },
+            {
+                name: 'Ranger Archetype ~ Subclass',
+                level: 3,
+                content: `At 3rd level, you choose an archetype that you strive to emulate. Your choice grants you features at 3rd level and again at 7th, 11th, and 15th level.`
+            },
+            {
+                name: 'Primeval Awareness',
+                level: 3,
+                content: `Beginning at 3rd level, you can use your action and expend one ranger spell slot to focus your awareness on the region around you. For 1 minute per level of the spell slot you expend, you can sense whether the following types of creatures are present within 1 mile of you (or within up to 6 miles if you are in your favored terrain): aberrations, celestials, dragons, elementals, fey, fiends, and undead. This feature doesn’t reveal the creatures’ location or number.`
+            },
+            {
+                name: 'Ability Score Improvement',
+                level: 4,
+                content: ASI_CONTENT_STANDARD
+            },
+            {
+                name: 'Extra Attack',
+                level: 5,
+                content: `Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.`
+            },
+            {
+                name: 'Land’s Stride',
+                level: 8,
+                content: `Starting at 8th level, moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+
+In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.`
+            },
+            {
+                name: 'Hide in Plain Sight',
+                level: 10,
+                content: `Starting at 10th level, you can spend 1 minute creating camouflage for yourself. You must have access to fresh mud, dirt, plants, soot, and other naturally occurring materials with which to create your camouflage.
+
+Once you are camouflaged in this way, you can try to hide by pressing yourself up against a solid surface, such as a tree or wall, that is at least as tall and wide as you are. You gain a +10 bonus to Dexterity (Stealth) checks as long as you remain there without moving or taking actions. Once you move or take an action or a reaction, you must camouflage yourself again to gain this benefit.`
+            },
+            {
+                name: 'Vanish',
+                level: 14,
+                content: `Starting at 14th level, you can use the Hide action as a bonus action on your turn. Also, you can’t be tracked by nonmagical means, unless you choose to leave a trail.`
+            },
+            {
+                name: 'Feral Senses',
+                level: 18,
+                content: `At 18th level, you gain preternatural senses that help you fight creatures you can’t see. When you attack a creature you can’t see, your inability to see it doesn’t impose disadvantage on your attack rolls against it.
+
+You are also aware of the location of any invisible creature within 30 feet of you, provided that the creature isn’t hidden from you and you aren’t blinded or deafened.`
+            },
+            {
+                name: 'Foe Slayer',
+                level: 20,
+                content: `At 20th level, you become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied.`
+            },
+        ],
+        resources: [],
+        spellcasting: {
+            ability: 'WIS',
+            ability_info: `Wisdom  is your spellcasting ability for your ranger spells, since your magic draws on your attunement to nature.
+
+In addition, you use your Wisdom  modifier when setting the saving throw DC for a ranger spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Wisdom  modifier
+
+**Spell attack modifier** = your proficiency bonus + your Wisdom  modifier`,
+            focus: 'No focus needed.',
+            casting_info: `#### Spell Slots
+The Ranger table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+For example, if you know the 1st-level spell animal friendship and have a 1st-level and a 2nd-level spell slot available, you can cast animal friendship using either slot.
+
+#### Spells Known of 1st Level and Higher
+You know two 1st-level spells of your choice from the ranger spell list.
+
+The Spells Known column of the Ranger table shows when you learn more ranger spells of your choice. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 5th level in this class, you can learn one new spell of 1st or 2nd level.
+
+Additionally, when you gain a level in this class, you can choose one of the ranger spells you know and replace it with another spell from the ranger spell list, which also must be of a level for which you have spell slots.`,
+            spells_known: {
+                2: 2,
+                3: 3,
+                5: 4,
+                7: 5,
+                9: 6,
+                11: 7,
+                13: 8,
+                15: 9,
+                17: 10,
+                19: 11
+            },
+            spell_slots: SPELLSLOTS_HALFCASTER,
+            spells_by_level: SPELLS_BY_LEVEL_BLANK
+        }
+    },
+    {
+        name: 'Rogue',
+        level: 1,
+        hp: {
+            hit_die: 8
+        },
+        other_prof: [
+            {
+                type: OTHER_PROF.ARMOR,
+                name: 'Light armor'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Simple weapons'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Hand crossbows'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Longswords'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Rapiers'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Shortswords'
+            },
+        ],
+        tool_prof: {
+            label: '',
+            tools: [
+                {
+                    name: 'Thieves’ tools'
+                }
+            ]
+        },
+        saving_throws: [ 'DEX', 'INT' ],
+        skills: {
+            final: [],
+            choose_n: 4,
+            type: 'list',
+            options: [ 'Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth' ]
+        },
+        equipment: [
+                // 1st line ~ (a) a rapier or (b) a shortsword
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: 'Rapier',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ]
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: 'Shortsword',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ]
+                            }
+                        ],
+                    ]
+                },
+                // 2nd line ~ (a) a shortbow and quiver of 20 arrows or (b) a shortsword
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: 'Shortbow',
+                                amount: 2,
+                                tags: [
+                                    'weapon',
+                                ]
+                            },
+                            {
+                                name: 'Arrows',
+                                amount: 20,
+                                tags: [
+                                    'resource',
+                                ]
+                            },
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: 'Shortsword',
+                                amount: 1,
+                                tags: [
+                                    'weapon'
+                                ],
+                            }
+                        ],
+                    ]
+                },
+                // 3rd line ~ (a) a burglar’s pack, (b) a dungeoneer’s pack, or (c) an explorer’s pack
+                {
+                    final: [],
+                    line_options: [
+                        // (a)
+                        [
+                            {
+                                name: "Burglar’s pack",
+                                amount: 1,
+                                tags: [],
+                                description: '' // TODO
+                            }
+                        ],
+                        // (b)
+                        [
+                            {
+                                name: "Dungeoneer’s pack",
+                                amount: 1,
+                                tags: [],
+                                description: '' // TODO
+                            }
+                        ],
+                        // (c)
+                        [
+                            {
+                                name: "Explorer’s pack",
+                                amount: 1,
+                                tags: [],
+                                description: '' // TODO
+                            }
+                        ],
+                    ]
+                },
+                // 4th line ~ Leather armor, two daggers, and thieves’ tools
+                {
+                    final: [
+                        {
+                            name: 'Leather armor',
+                            amount: 1,
+                            tags: [],
+                        },
+                        {
+                            name: 'Dagger',
+                            amount: 2,
+                            tags: [
+                                'weapon'
+                            ],
+                        },
+                        {
+                            name: 'Thieves’ tools',
+                            amount: 1,
+                            tags: [],
+                        },
+                    ]
+                }
+            ],
+        features: [
+            {
+                name: 'Expertise',
+                level: 1,
+                content: `At 1st level, choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with thieves’ tools. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies.
+
+At 6th level, you can choose two more of your proficiencies (in skills or with thieves’ tools) to gain this benefit.`
+            },
+            {
+                name: 'Sneak Attack',
+                level: 1,
+                content: `Beginning at 1st level, you know how to strike subtly and exploit a foe’s distraction. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack if you have advantage on the attack roll. The attack must use a finesse or a ranged weapon.
+
+You don’t need advantage on the attack roll if another enemy of the target is within 5 feet of it, that enemy isn’t incapacitated, and you don’t have disadvantage on the attack roll.
+
+The amount of the extra damage increases as you gain levels in this class, as shown in the Sneak Attack column of the Rogue table.`
+            },
+            {
+                name: 'Thieves’ Cant',
+                level: 1,
+                content: `During your rogue training you learned thieves’ cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation. Only another creature that knows thieves’ cant understands such messages. It takes four times longer to convey such a message than it does to speak the same idea plainly.
+
+In addition, you understand a set of secret signs and symbols used to convey short, simple messages, such as whether an area is dangerous or the territory of a thieves’ guild, whether loot is nearby, or whether the people in an area are easy marks or will provide a safe house for thieves on the run.`
+            },
+            {
+                name: 'Cunning Action',
+                level: 2,
+                content: `Starting at 2nd level, your quick thinking and agility allow you to move and act quickly. You can take a bonus action on each of your turns in combat. This action can be used only to take the Dash, Disengage, or Hide action.`
+            },
+            {
+                name: 'Roguish Archetype ~ Subclass',
+                level: 3,
+                content: `At 3rd level, you choose an archetype that you emulate in the exercise of your rogue abilities. Your archetype choice grants you features at 3rd level and then again at 9th, 13th, and 17th level.`
+            },
+            {
+                name: 'Ability Score Improvement',
+                level: 4,
+                content: `When you reach 4th level, and again at 8th, 10th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can’t increase an ability score above 20 using this feature.`
+            },
+            {
+                name: 'Uncanny Dodge',
+                level: 5,
+                content: `Starting at 5th level, when an attacker that you can see hits you with an attack, you can use your reaction to halve the attack’s damage against you.`
+            },
+            {
+                name: 'Evasion',
+                level: 7,
+                content: `Beginning at 7th level, you can nimbly dodge out of the way of certain area effects, such as a red dragon’s fiery breath or an ice storm spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.`
+            },
+            {
+                name: 'Reliable Talent',
+                level: 11,
+                content: `By 11th level, you have refined your chosen skills until they approach perfection. Whenever you make an ability check that lets you add your proficiency bonus, you can treat a d20 roll of 9 or lower as a 10.`
+            },
+            {
+                name: 'Blindsense',
+                level: 14,
+                content: `Starting at 14th level, if you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you.`
+            },
+            {
+                name: 'Slippery Mind',
+                level: 15,
+                content: `By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws.`
+            },
+            {
+                name: 'Elusive',
+                level: 18,
+                content: `Beginning at 18th level, you are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren’t incapacitated.`
+            },
+            {
+                name: 'Stroke of Luck',
+                level: 20,
+                content: `At 20th level, you have an uncanny knack for succeeding when you need to. If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the d20 roll as a 20.
+
+Once you use this feature, you can’t use it again until you finish a short or long rest.`
+            },
+        ],
+        resources: [
+            {
+                name: 'Sneak Attack',
+                total: '',
+                current: '',
+                type: 'simple',
+                levels: {
+                    1: '1d6',
+                    3: '2d6',
+                    5: '3d6',
+                    7: '4d6',
+                    9: '5d6',
+                    11: '6d6',
+                    13: '7d6',
+                    15: '8d6',
+                    17: '9d6',
+                    19: '10d6'
+                }
+            }
         ],
     },
 ]

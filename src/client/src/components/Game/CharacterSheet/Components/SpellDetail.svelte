@@ -183,7 +183,7 @@
                     At higher levels:
                 </div>
             </div>
-            <textarea style="height: 5em;" on:change={() => modifyCharacterFce()} bind:value={spell.higher_levels}></textarea>
+            <textarea style="height: 7em;" on:change={() => modifyCharacterFce()} bind:value={spell.higher_levels}></textarea>
             <SimpleButton value='Delete' type="delete" onClickFn={deleteSpellFce}></SimpleButton>
         </div>
     {/if}
@@ -204,7 +204,7 @@
     }
 
     textarea {
-        height: 7em;
+        height: 10em;
     }
 
     .spell-summary {

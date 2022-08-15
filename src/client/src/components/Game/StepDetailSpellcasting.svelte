@@ -7,10 +7,10 @@
     import Slider from '@smui/slider';
     import { findHighestPossibleValue, validateClassName } from "../../util/util";
     import BoxWithList from "../BoxWithList.svelte";
-    import Autocomplete from '@smui-extra/autocomplete';
     import type { Spell } from "../../interfaces/Character";
     import SpellDetail from "./CharacterSheet/Components/SpellDetail.svelte";
-
+    import Svelecte from 'svelecte/src/Svelecte.svelte';
+ 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
 
@@ -22,9 +22,15 @@
 
     $: proficiencyBonus = selectedClass ? Math.floor((selectedClass.level - 1) / 4) + 2 : 0;
     $: proficiencyBonusPretty = new Intl.NumberFormat("en-US", { signDisplay: 'exceptZero' }).format(proficiencyBonus + 0);
+    
     $: if (newSpell) {
         addNewSpell(~~newSpell.level, Object.assign(newSpell, { level: ~~newSpell.level, concentration: newSpell.duration.includes('Concentration')}));
+        newSpell = undefined;
     }
+
+    $: filteredSpells = selectedClass ? quickCreateData.spells.filter(spell => {
+        return ~~spell.level === currentFilter && spell.tags.includes(selectedClass.name.toLowerCase());
+    }) : [];
 
     const addNewSpell = (spellLevel: number = 0, spellTemplate: object = {}) => {
         const spellSkeleton: Partial<Spell> = {
@@ -56,13 +62,10 @@
         selectedClass.spellcasting.spells_by_level[spell.level].spells = selectedClass.spellcasting.spells_by_level[spell.level].spells.filter(obj => obj !== spell);
     }
 
-    $: filteredSpells = quickCreateData.spells.filter(spell => {
-        if (spell.tags.includes(selectedClass.name.toLowerCase())) {
-            console.log(spell.name, spell.level, currentFilter);
-        }
-        const isCorrectLevel = ((~~spell.level === currentFilter) );
-        return spell.tags.includes(selectedClass.name.toLowerCase()) && isCorrectLevel;
-    });
+    const switchFilter = (index: number) => {
+        currentFilter = index;
+        newSpell = undefined;
+    }
 
 </script>
 
@@ -158,14 +161,14 @@
 
         <div class='spells-header'>
             <div class='add-spell'>
-                <h4>Add spell:</h4>
-                <Autocomplete
+                <h4>Add Spell:</h4>
+                <Svelecte 
                     options={filteredSpells}
-                    textfield$variant="outlined"
-                    getOptionLabel={(spell) =>
-                        spell ? `${spell.name}` : ''}
-                    bind:value={newSpell}
-                />
+                    valueAsObject
+                    resetOnSelect
+                    placeholder='{currentFilter === 0 ? '': `${spellLevelsStr[currentFilter]} level`} {selectedClass.name} {currentFilter === 0 ? 'cantrips': 'spells'}'
+                    bind:value={newSpell}>
+                </Svelecte>
             </div>
             {#if currentFilter !== 0}
                 <box class="spell-slots bigger-bold">
@@ -184,7 +187,7 @@
             <div class="filter-menu" slot='filter-menu'>
                 {#each spellLevelsStr as spellLevel, index}
                     <sendable class="filter-names {currentFilter === index ? 'filter-selected': ''}"
-                        on:click={ () => { currentFilter = index; filteredSpells}}
+                        on:click={ () => switchFilter(index)}
                     >
                         {spellLevel}
                     </sendable>
@@ -228,6 +231,7 @@
 {/if}
 
 <style>
+
     spellcasting-detail { grid-area: step-detail;
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
@@ -318,10 +322,9 @@
     .add-spell {
         display: flex;
         gap: 0.5em;
-        padding: 0.5em 0.5em 0em 0.5em;
         align-content: center;
         justify-content: center;
-        flex: 4;
+        flex: 5;
     }
 
     .add-spell h4 {
@@ -331,6 +334,11 @@
         margin: 0em;
         text-transform: uppercase;
         align-self: center;
+    }
+
+    :global(.add-spell > .svelecte-control) {
+        max-width: 16em;
+        --sv-min-height: 3em !important;
     }
 
     :global(.add-spell > .smui-autocomplete) {

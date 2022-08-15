@@ -10,6 +10,10 @@
     import type { Spell } from "../../interfaces/Character";
     import SpellDetail from "./CharacterSheet/Components/SpellDetail.svelte";
     import Svelecte from 'svelecte/src/Svelecte.svelte';
+import type { ClassSpellcasting } from "../../interfaces/ClassData";
+import { SPELLS_BY_LEVEL_BLANK } from "../../enum/SpellsByLevelBlank";
+import SimpleButton from "../SimpleButton.svelte";
+import InPlaceEdit from "../InPlaceEdit.svelte";
  
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -29,7 +33,7 @@
     }
 
     $: filteredSpells = selectedClass ? quickCreateData.spells.filter(spell => {
-        return ~~spell.level === currentFilter && spell.tags.includes(selectedClass.name.toLowerCase());
+        return ~~spell.level === currentFilter && (selectedClass?.spellcasting?.isCustom || spell.tags.includes(selectedClass.name.toLowerCase()));
     }) : [];
 
     const addNewSpell = (spellLevel: number = 0, spellTemplate: object = {}) => {
@@ -67,12 +71,29 @@
         newSpell = undefined;
     }
 
+    const blankSpellcasting: ClassSpellcasting = {
+        isCustom: true,
+        ability: '---',
+        ability_info: '',
+        casting_info: '',
+        focus: '',
+        spell_slots: [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]],
+        spells_by_level: SPELLS_BY_LEVEL_BLANK
+    }
+
+    const addCustomSpellcasting = () => {
+        selectedClass.spellcasting = blankSpellcasting;
+    }
+
 </script>
 
 {#if !selectedClass || !selectedClass.spellcasting}
     <spellcasting-missing>
         {#if selectedClass}
             <p>{`${selectedClass.name} does not have spellcasting.`}<br>Do you want to add it?</p>
+            <div class='add-spellcasting'>
+                <SimpleButton value='Add spellcasting' icon="local_fire_department" type='primary' onClickFn={() => addCustomSpellcasting()}></SimpleButton>
+            </div>
         {:else}
             <p>You don't have any class selected.</p>
         {/if}
@@ -165,14 +186,14 @@
                 <Svelecte 
                     options={filteredSpells}
                     valueAsObject
-                    placeholder='{currentFilter === 0 ? '': `${spellLevelsStr[currentFilter]} level`} {selectedClass.name} {currentFilter === 0 ? 'cantrips': 'spells'}'
+                    placeholder='{currentFilter === 0 ? '': `${spellLevelsStr[currentFilter]} level`} {selectedClass.spellcasting.isCustom ? 'All' : selectedClass.name} {currentFilter === 0 ? 'cantrips': 'spells'}'
                     bind:value={newSpell}>
                 </Svelecte>
             </div>
             {#if currentFilter !== 0}
                 <box class="spell-slots bigger-bold">
                     <div class="box-main-text">
-                        {selectedClass.spellcasting.spell_slots[selectedClass.level - 1][currentFilter - 1] ?? 0}
+                        <InPlaceEdit bind:value={selectedClass.spellcasting.spell_slots[selectedClass.level - 1][currentFilter - 1]} editWidth="3em" editHeight="1.5em"></InPlaceEdit>  
                     </div>
                     <div class="box-justify-filler"></div>
                     <div class="box-label">
@@ -265,6 +286,11 @@
     spellcasting-missing p {
         font-size: 2em;
         font-weight: 400;
+    }
+
+    :global(.add-spellcasting simple-button) {
+        font-size: large;
+        padding: 0.5em;
     }
 
     .info { grid-area: info;

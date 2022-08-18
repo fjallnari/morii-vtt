@@ -3,20 +3,25 @@
     import InPlaceEdit from '../InPlaceEdit.svelte';
     import SimpleButton from '../SimpleButton.svelte';
     import { fade, slide } from 'svelte/transition';
+    import MarkdownBoxText from './MarkdownBoxText.svelte';
 
     export let value: string = '';
     export let content: string = '';
     export let source: string = '';
     export let icon: string = '';
-    export let deleteItem: () => void;
+    export let selectable: boolean = false;
+    export let isSelected: boolean = false;
+    export let editable: boolean = true;
     export let textareaHeight: string = '10em';
+    export let deleteItem: () => void = () => {};
+    export let toggleItem: () => void = () => {};
 
     let isOpen: boolean = false;
     
 </script>
 
-<box class="feature-main-container" transition:fade|local>
-    <div class="feature-summary" style={`grid-template-areas: "feature-${icon ? 'type' : 'name'} feature-name feature-menu";`}>
+<box class="feature-main-container" transition:fade|local style='background-color: {isSelected ? 'var(--clr-accent-dark)' : 'var(--clr-box-bg-light)'};'>
+    <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable ? 'type' : 'name'} feature-name feature-menu";`}>
         {#if icon}
             <div class="feature-type">
                 <img class="feature-type-icon" 
@@ -25,9 +30,17 @@
                 >
             </div>
         {/if}
-
-        <div class="feature-name">
-            <InPlaceEdit bind:value editWidth='18rem' editHeight='1.5rem' on:submit={() => {}}/>
+        {#if selectable && isSelected}
+            <div class="feature-type selected">
+                <Icon class="material-icons">{'check'}</Icon>
+            </div>
+        {/if}
+        <div class="feature-name {selectable ? 'selectable': ''}" on:click={toggleItem}>
+            {#if editable}
+                <InPlaceEdit bind:value editWidth='18rem' editHeight='1.5rem' on:submit={() => {}}/>
+            {:else}
+                {value}
+            {/if}
         </div>
 
         <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }}>
@@ -44,8 +57,12 @@
             </div>
         {/if}
         <div class="details" transition:slide|local>
-            <textarea style='height: {textareaHeight};' on:change={() => {}} bind:value={content}></textarea>
-            <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem()}></SimpleButton>
+            {#if editable}
+                <textarea style='height: {textareaHeight};' on:change={() => {}} bind:value={content}></textarea>
+                <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem()}></SimpleButton>
+            {:else}
+                <MarkdownBoxText text={content}></MarkdownBoxText>
+            {/if}
         </div>
     {/if}
 </box>
@@ -56,7 +73,6 @@
         flex-direction: column;
         justify-content: center;
         width: 95%;
-        background-color: var(--clr-box-bg-light);
     }
 
     img {
@@ -74,10 +90,18 @@
 
     .feature-type { grid-area: feature-type; }
 
+    .feature-type.selected {
+        padding-left: 0.25em;
+    }
+
     .feature-name { grid-area: feature-name; 
         font-size: 1.1em;
         font-weight: 400;
         font-family: Quicksand;
+    }
+
+    .feature-name.selectable {
+        cursor: pointer;
     }
 
     .feature-menu { grid-area: feature-menu; }

@@ -50,7 +50,7 @@ type ClassEquipment = EquipmentSingleLine[];
 
 interface ClassFeature {
     name: string,
-    level: number, // level on which the feature first appears
+    level?: number, // level on which the feature first appears
     content: string,
     variants?: Record<number, Partial<ClassFeature>> // level ~ variant
 }
@@ -71,9 +71,13 @@ interface ClassSpellsByLevel {
 
 type SpellsKnown = Record<number, number>;
 
-interface SpecificSpellcastingInfo {
+interface UniqueSpellcastingInfo {
     label: string,
-    content: string
+    type: 'simple' | 'select-features',
+    levels?: Record<number, string>,
+    content?: string,
+    final?: ClassFeature[],
+    options?: ClassFeature[]    
 }
 
 interface ClassSpellcasting {
@@ -86,7 +90,7 @@ interface ClassSpellcasting {
     spells_known?: SpellsKnown,
     spell_slots: string[][] // [{1: 2}, {1:3}, {1:4, 2:2}], index ~= classLevel, key ~= spell slot level, value ~= amount of spell slots
     spells_by_level: Record<number, ClassSpellsByLevel>,
-    unique_info?: SpecificSpellcastingInfo
+    unique_info?: UniqueSpellcastingInfo
 }
 
 export default interface ClassData {

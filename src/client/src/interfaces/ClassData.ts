@@ -71,7 +71,11 @@ type SpellsKnown = Record<number, number>;
 
 interface UniqueSpellcastingInfo {
     label: string,
-    content: string
+    type: 'simple' | 'select-features',
+    levels?: Record<number, string>,
+    content?: string,
+    final?: ClassFeature[],
+    options?: ClassFeature[]    
 }
 
 export interface ClassSpellcasting {

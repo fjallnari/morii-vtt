@@ -14,6 +14,8 @@ import type { ClassSpellcasting } from "../../interfaces/ClassData";
 import { SPELLS_BY_LEVEL_BLANK } from "../../enum/SpellsByLevelBlank";
 import SimpleButton from "../SimpleButton.svelte";
 import InPlaceEdit from "../InPlaceEdit.svelte";
+import BoxWithChips from "../BoxWithChips.svelte";
+import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
  
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -77,12 +79,26 @@ import InPlaceEdit from "../InPlaceEdit.svelte";
         ability_info: '',
         casting_info: '',
         focus: '',
-        spell_slots: [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]],
+        spell_slots: [ [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[] ],
         spells_by_level: SPELLS_BY_LEVEL_BLANK
     }
 
     const addCustomSpellcasting = () => {
         selectedClass.spellcasting = blankSpellcasting;
+    }
+
+    const getUniqOptionValuePerLevel = (_: number) => {
+        const highestValue = findHighestPossibleValue(selectedClass.spellcasting.unique_info.levels, selectedClass.level);
+        return highestValue === '' ? '0': highestValue;
+    }
+
+    const toggleUniqItem = (item) => {
+        if (!selectedClass.spellcasting.unique_info.final.includes(item)) {
+            selectedClass.spellcasting.unique_info.final = selectedClass.spellcasting.unique_info.final.concat([item]);
+        }
+        else {
+            selectedClass.spellcasting.unique_info.final = selectedClass.spellcasting.unique_info.final.filter(itemIter => itemIter !== item);
+        }        
     }
 
 </script>
@@ -249,12 +265,39 @@ import InPlaceEdit from "../InPlaceEdit.svelte";
         </box>
 
         {#if selectedClass.spellcasting.unique_info}
-            <box class="unique-info">
-                <MarkdownBoxText text={selectedClass.spellcasting.unique_info.content}></MarkdownBoxText>
-                <div class="box-label auto-margin">
-                    {selectedClass.spellcasting.unique_info.label}
-                </div>
-            </box>
+            {#if selectedClass.spellcasting.unique_info.type === 'simple'}
+                <box class="unique-info">
+                    <MarkdownBoxText text={selectedClass.spellcasting.unique_info.content}></MarkdownBoxText>
+                    <div class="box-label auto-margin">
+                        {selectedClass.spellcasting.unique_info.label}
+                    </div>
+                </box>
+            {:else}
+                <BoxWithList 
+                    label={selectedClass.spellcasting.unique_info.label} 
+                    inlineStyle='grid-area: uniq;'
+                    noCrud
+                    isModifyDisabled
+                >
+                    <p class='unique-info-description' slot='filter-menu'>
+                        
+                        You can choose {getUniqOptionValuePerLevel(selectedClass.level)} options at this level.
+                    </p>
+                    <div class="unique-features-list" slot='list'>
+                        {#each selectedClass.spellcasting.unique_info.options as feature, index}
+                            <SimpleAccordionDetail 
+                                bind:value={feature.name} 
+                                bind:content={feature.content}
+                                selectable
+                                editable={false}
+                                textareaHeight='15em'
+                                isSelected={selectedClass.spellcasting.unique_info.final.includes(feature)}
+                                toggleItem={() => toggleUniqItem(feature)}>
+                            </SimpleAccordionDetail>
+                        {/each}
+                    </div>
+                </BoxWithList>
+            {/if}
         {/if}
 
     </spellcasting-detail>
@@ -406,6 +449,16 @@ import InPlaceEdit from "../InPlaceEdit.svelte";
     .spell-focus { grid-area: spell-focus; }
     .casting-info { grid-area: casting-info; }
     .unique-info { grid-area: uniq; }
+
+    .unique-features-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25em;
+        padding-bottom: 4px;
+    }
 
     select {
         background-color: inherit;

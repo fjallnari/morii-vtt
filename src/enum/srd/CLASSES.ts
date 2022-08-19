@@ -60,7 +60,30 @@ const SPELLSLOTS_HALFCASTER = [
     [ '4', '3', '3', '3', '1' ],
     [ '4', '3', '3', '3', '2' ],
     [ '4', '3', '3', '3', '2' ],
-]
+];
+
+const SPELLSLOTS_WARLOCK = [
+    [ '1' ],
+    [ '2' ],
+    [ '0', '2' ],
+    [ '0', '2' ],
+    [ '0', '0', '2' ],
+    [ '0', '0', '2' ], 
+    [ '0', '0', '0', '2' ], 
+    [ '0', '0', '0', '2' ],
+    [ '0', '0', '0', '0', '2' ],
+    [ '0', '0', '0', '0', '2' ],
+    [ '0', '0', '0', '0', '3' ],
+    [ '0', '0', '0', '0', '3'  ],
+    [ '0', '0', '0', '0', '3' ],
+    [ '0', '0', '0', '0', '3' ],
+    [ '0', '0', '0', '0', '3' ],
+    [ '0', '0', '0', '0', '3' ],
+    [ '0', '0', '0', '0', '4' ],
+    [ '0', '0', '0', '0', '4' ],
+    [ '0', '0', '0', '0', '4' ],
+    [ '0', '0', '0', '0', '4' ],
+];
 
 const SPELLS_BY_LEVEL_BLANK = {
     0: { // ~= cantrips
@@ -3022,39 +3045,450 @@ Additionally, when you gain a level in this class, you can choose one of the sor
 \nTo be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are.`
                     },
                 ],
-                content: `You can use only one Metamagic option on a spell when you cast it, unless otherwise noted.
+            }
+        }
+    },
+    {
+        name: 'Warlock',
+        level: 1,
+        hp: {
+            hit_die: 8
+        },
+        other_prof: [
+            {
+                type: OTHER_PROF.ARMOR,
+                name: 'Light Armor'
+            },
+            {
+                type: OTHER_PROF.WEAPON,
+                name: 'Simple weapons'
+            }
+        ],
+        tool_prof: {
+            label: 'None',
+            tools: []
+        },
+        saving_throws: [ 'WIS', 'CHA' ],
+        skills: {
+            final: [],
+            choose_n: 2,
+            type: 'list',
+            options: [ 'Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion' ]
+        },
+        equipment: [
+            // 1st line ~ (a) a light crossbow and 20 bolts or (b) any simple weapon
+            {
+                final: [],
+                line_options: [
+                    // (a)
+                    [
+                        {
+                            name: 'Light crossbow',
+                            amount: 1,
+                            tags: [
+                                'weapon'
+                            ]
+                        },
+                        {
+                            name: 'Bolts',
+                            amount: 20,
+                            tags: [
+                                'resource'
+                            ]
+                        }
+                    ],
+                    // (b)
+                    [
+                        {
+                            name: '',
+                            amount: 1,
+                            tags: [
+                                'weapon'
+                            ],
+                            placeholder: 'any simple ⚔️',
+                            options: WEAPONS_SIMPLE_ALL
+                        }
+                    ]
+                ]
+            },
+            // 2nd line ~ (a) a component pouch or (b) an arcane focus
+            {
+                final: [],
+                line_options: [
+                    // (a)
+                    [
+                        {
+                            name: "Component pouch",
+                            amount: 1,
+                            tags: [],
+                        }
+                    ],
+                    // (b)
+                    [
+                        {
+                            name: 'Arcane focus',
+                            amount: 1,
+                            tags: [],
+                        }
+                    ],
+                ]
+            },
+            // 3rd line ~ (a) a diplomat’s pack or (b) an entertainer’s pack
+            {
+                final: [],
+                line_options: [
+                    // (a)
+                    [
+                        {
+                            name: 'Scholar’s pack',
+                            amount: 1,
+                            tags: [],
+                            description: '' // TODO
+                        }
+                    ],
+                    // (b)
+                    [
+                        {
+                            name: "Dungeoneer’s pack",
+                            amount: 1,
+                            tags: [],
+                            description: '' // TODO
+                        }
+                    ],
+                ]
+            },
 
-#### Careful Spell
-When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell’s full force. 
+            // 4th line ~ Leather armor and a dagger
+            {
+                final: [
+                    {
+                        name: 'Leather armor',
+                        amount: 1,
+                        tags: [],
+                    },
+                    {
+                        name: '',
+                        amount: 1,
+                        tags: [
+                            'weapon'
+                        ],
+                        placeholder: 'any simple ⚔️',
+                        options: WEAPONS_SIMPLE_ALL
+                    },
+                    {
+                        name: 'Dagger',
+                        amount: 2,
+                        tags: [
+                            'weapon',
+                        ]
+                    }
+                ]
+            }
+        ],
+        features: [
+            {
+                name: 'Otherworldly Patron ~ Subclass',
+                level: 1,
+                content: `At 1st level, you have struck a bargain with an otherworldly being of your choice. Your choice grants you features at 1st level and again at 6th, 10th, and 14th level.`
+            },
+            {
+                name: 'Pact Magic',
+                level: 1,
+                content: `Your arcane research and the magic bestowed on you by your patron have given you facility with spells.
+**Cantrips**
+You know two cantrips of your choice from the warlock spell list. You learn additional warlock cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Warlock table.
 
-To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell.
+**Spell Slots**
+The Warlock table shows how many spell slots you have. The table also shows what the level of those slots is; all of your spell slots are the same level. To cast one of your warlock spells of 1st level or higher, you must expend a spell slot. You regain all expended spell slots when you finish a short or long rest.
 
-#### Distant Spell
-When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.
+For example, when you are 5th level, you have two 3rd-level spell slots. To cast the 1st-level spell thunderwave, you must spend one of those slots, and you cast it as a 3rd-level spell.
 
-When you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet.
+**Spells Known of 1st Level and Higher**
+At 1st level, you know two 1st-level spells of your choice from the warlock spell list.
 
-#### Empowered Spell
-When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.
+The Spells Known column of the Warlock table shows when you learn more warlock spells of your choice of 1st level and higher. A spell you choose must be of a level no higher than what’s shown in the table’s Slot Level column for your level. When you reach 6th level, for example, you learn a new warlock spell, which can be 1st, 2nd, or 3rd level.
 
-You can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell.
+Additionally, when you gain a level in this class, you can choose one of the warlock spells you know and replace it with another spell from the warlock spell list, which also must be of a level for which you have spell slots.
 
-#### Extended Spell
-When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours.
+**Spellcasting Ability**
+Charisma is your spellcasting ability for your warlock spells, so you use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a warlock spell you cast and when making an attack roll with one.
 
-#### Heightened Spell
-When you cast a spell that forces a creature to make a saving throw to resist its effects, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw made against the spell.
+Spell save DC = 8 + your proficiency bonus + your Charisma modifier
 
-#### Quickened Spell
-When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting.
+Spell attack modifier = your proficiency bonus + your Charisma modifier
 
-#### Subtle Spell
-When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components.
+**Spellcasting Focus**
+You can use an arcane focus as a spellcasting focus for your warlock spells.`
+            },
+            {
+                name: 'Eldritch Invocations',
+                level: 2,
+                content: `In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.
 
-#### Twinned Spell
-When you cast a spell that targets only one creature and doesn’t have a range of self, you can spend a number of sorcery points equal to the spell’s level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).
+At 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.
 
-To be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are.`
+Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.
+
+If an eldritch invocation has prerequisites, you must meet them to learn it. You can learn the invocation at the same time that you meet its prerequisites. A level prerequisite refers to your level in this class.`
+            },
+            {
+                name: 'Pact Boon ~ ???',
+                level: 3,
+                content: `At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service. You gain one of the following features of your choice.
+**Pact of the Chain**
+You learn the find familiar spell and can cast it as a ritual. The spell doesn’t count against your number of spells known.
+
+When you cast the spell, you can choose one of the normal forms for your familiar or one of the following special forms: imp, pseudodragon, quasit, or sprite.
+
+Additionally, when you take the Attack action, you can forgo one of your own attacks to allow your familiar to make one attack of its own with its reaction.
+
+**Pact of the Blade**
+You can use your action to create a pact weapon in your empty hand. You can choose the form that this melee weapon takes each time you create it. You are proficient with it while you wield it. This weapon counts as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.
+
+Your pact weapon disappears if it is more than 5 feet away from you for 1 minute or more. It also disappears if you use this feature again, if you dismiss the weapon (no action required), or if you die.
+
+You can transform one magic weapon into your pact weapon by performing a special ritual while you hold the weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. You can then dismiss the weapon, shunting it into an extradimensional space, and it appears whenever you create your pact weapon thereafter. You can’t affect an artifact or a sentient weapon in this way. The weapon ceases being your pact weapon if you die, if you perform the 1-hour ritual on a different weapon, or if you use a 1-hour ritual to break your bond to it. The weapon appears at your feet if it is in the extradimensional space when the bond breaks.
+
+**Pact of the Tome**
+Your patron gives you a grimoire called a Book of Shadows. When you gain this feature, choose three cantrips from any class’s spell list (the three needn’t be from the same list). While the book is on your person, you can cast those cantrips at will. They don’t count against your number of cantrips known. If they don’t appear on the warlock spell list, they are nonetheless warlock spells for you.
+
+If you lose your Book of Shadows, you can perform a 1-hour ceremony to receive a replacement from your patron. This ceremony can be performed during a short or long rest, and it destroys the previous book. The book turns to ash when you die.`
+            },
+            {
+                name: 'Ability Score Improvement',
+                level: 4,
+                content: ASI_CONTENT_STANDARD
+            },
+            {
+                name: 'Mystic Arcanum',
+                level: 11,
+                content: `At 11th level, your patron bestows upon you a magical secret called an arcanum. Choose one 6th- level spell from the warlock spell list as this arcanum.
+
+You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again.
+
+At higher levels, you gain more warlock spells of your choice that can be cast in this way: one 7th- level spell at 13th level, one 8th-level spell at 15th level, and one 9th-level spell at 17th level. You regain all uses of your Mystic Arcanum when you finish a long rest.`
+            },
+            {
+                name: 'Eldritch Master',
+                level: 20,
+                content: `At 20th level, you can draw on your inner reserve of mystical power while entreating your patron to regain expended spell slots. You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.`
+            },
+        ],
+        resources: [
+            {
+                name: 'Mystic Arcanum',
+                total: '',
+                current: '',
+                type: 'simple',
+                levels: {
+                    11: '6th level',
+                    13: '7th level',
+                    15: '8th level',
+                    17: '9th level'
+                }
+            }
+        ],
+        spellcasting: {
+            ability: 'CHA',
+            ability_info: `Charisma is your spellcasting ability for your warlock spells, so you use your Charisma whenever a spell refers to your spellcasting ability. 
+
+In addition, you use your Charisma modifier when setting the saving throw DC for a warlock spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Charisma modifier
+
+**Spell attack modifier** = your proficiency bonus + your Charisma modifier`,
+            focus: 'You can use an arcane focus as a spellcasting focus for your warlock spells.',
+            casting_info: `Your arcane research and the magic bestowed on you by your patron have given you facility with spells.
+#### Cantrips
+You know two cantrips of your choice from the warlock spell list. You learn additional warlock cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Warlock table.
+
+#### Spell Slots
+The Warlock table shows how many spell slots you have. The table also shows what the level of those slots is; all of your spell slots are the same level. To cast one of your warlock spells of 1st level or higher, you must expend a spell slot. You regain all expended spell slots when you finish a short or long rest.
+
+For example, when you are 5th level, you have two 3rd-level spell slots. To cast the 1st-level spell thunderwave, you must spend one of those slots, and you cast it as a 3rd-level spell.
+
+#### Spells Known of 1st Level and Higher
+At 1st level, you know two 1st-level spells of your choice from the warlock spell list.
+
+The Spells Known column of the Warlock table shows when you learn more warlock spells of your choice of 1st level and higher. A spell you choose must be of a level no higher than what’s shown in the table’s Slot Level column for your level. When you reach 6th level, for example, you learn a new warlock spell, which can be 1st, 2nd, or 3rd level.
+
+Additionally, when you gain a level in this class, you can choose one of the warlock spells you know and replace it with another spell from the warlock spell list, which also must be of a level for which you have spell slots.`,
+            cantrips_known: {
+                1: 2,
+                4: 3,
+                10: 4
+            },
+            spells_known: {
+                1: 2,
+                2: 3,
+                3: 4,
+                4: 5,
+                5: 6,
+                6: 7,
+                7: 8,
+                8: 9 ,
+                9: 10,
+                11: 11,
+                13: 12,
+                15: 13,
+                17: 14,
+                19: 15, 
+            },
+            spell_slots: SPELLSLOTS_WARLOCK,
+            spells_by_level: SPELLS_BY_LEVEL_BLANK,
+            unique_info: {
+                label: 'Eldritch Invocations',
+                type: 'select-features',
+                levels: {
+                    2: '2',
+                    5: '3',
+                    7: '4',
+                    9: '5',
+                    12: '6',
+                    15: '7',
+                    18: '8'
+                },
+                final: [],
+                options: [
+                    {
+                        name: 'Agonizing Blast',
+                        content: `*Prerequisite: eldritch blast cantrip*\n\nWhen you cast eldritch blast, add your Charisma modifier to the damage it deals on a hit.`,
+                    },
+                    {
+                        name: 'Armor of Shadows',
+                        content: `You can cast mage armor on yourself at will, without expending a spell slot or material components.`
+                    },
+                    {
+                        name: 'Ascendant Step',
+                        content: `*Prerequisite: 9th level*\n\nYou can cast levitate on yourself at will, without expending a spell slot or material components.`
+                    },
+                    {
+                        name: 'Beast Speech',
+                        content: `You can cast speak with animals at will, without expending a spell slot.`
+                    },
+                    {
+                        name: 'Beguiling Influence',
+                        content: `You gain proficiency in the Deception and Persuasion skills.`
+                    },
+                    {
+                        name: 'Bewitching Whispers',
+                        content: `Prerequisite: 7th level\n\nYou can cast compulsion once using a warlock spell slot. You can’t do so again until you finish a long rest.`
+                    },
+                    {
+                        name: 'Book of Ancient Secrets',
+                        content: `*Prerequisite: Pact of the Tome feature*
+
+You can now inscribe magical rituals in your Book of Shadows. Choose two 1st-level spells that have the ritual tag from any class’s spell list (the two needn’t be from the same list). The spells appear in the book and don’t count against the number of spells you know. With your Book of Shadows in hand, you can cast the chosen spells as rituals. You can’t cast the spells except as rituals, unless you’ve learned them by some other means. You can also cast a warlock spell you know as a ritual if it has the ritual tag.
+
+On your adventures, you can add other ritual spells to your Book of Shadows. When you find such a spell, you can add it to the book if the spell’s level is equal to or less than half your warlock level (rounded up) and if you can spare the time to transcribe the spell. For each level of the spell, the transcription process takes 2 hours and costs 50 gp for the rare inks needed to inscribe it.`
+                    },
+                    {
+                        name: 'Chains of Carceri',
+                        content: `*Prerequisite: 15th level, Pact of the Chain feature*
+
+You can cast hold monster at will—targeting a celestial, fiend, or elemental—without expending a spell slot or material components. You must finish a long rest before you can use this invocation on the same creature again.`
+                    },
+                    {
+                        name: 'Devil’s Sight',
+                        content: `You can see normally in darkness, both magical and nonmagical, to a distance of 120 feet.`
+                    },
+                    {
+                        name: 'Dreadful Word',
+                        content: `*Prerequisite: 7th level*
+
+You can cast confusion once using a warlock spell slot. You can’t do so again until you finish a long rest.`
+                    },
+                    {
+                        name: 'Eldritch Sight',
+                        content: `You can cast detect magic at will, without expending a spell slot.`
+                    },
+                    {
+                        name: 'Eldritch Spear',
+                        content: `*Prerequisite: eldritch blast cantrip*\n\nWhen you cast eldritch blast, its range is 300 feet.`
+                    },
+                    {
+                        name: 'Eyes of the Rune Keeper',
+                        content: `You can read all writing.`
+                    },
+                    {
+                        name: 'Fiendish Vigor',
+                        content: `You can cast false life on yourself at will as a 1st-level spell, without expending a spell slot or material components.`
+                    },
+                    {
+                        name: 'Gaze of Two Minds',
+                        content: `You can use your action to touch a willing humanoid and perceive through its senses until the end of your next turn. As long as the creature is on the same plane of existence as you, you can use your action on subsequent turns to maintain this connection, extending the duration until the end of your next turn. While perceiving through the other creature’s senses, you benefit from any special senses possessed by that creature, and you are blinded and deafened to your own surroundings.`
+                    },
+                    {
+                        name: 'Lifedrinker',
+                        content: `*Prerequisite: 12th level, Pact of the Blade feature*\n\nWhen you hit a creature with your pact weapon, the creature takes extra necrotic damage equal to your Charisma modifier (minimum 1).`
+                    },
+                    {
+                        name: 'Mask of Many Faces',
+                        content: `You can cast disguise self at will, without expending a spell slot.`
+                    },
+                    {
+                        name: 'Master of Myriad Forms',
+                        content: `*Prerequisite: 15th level*\n\nYou can cast alter self at will, without expending a spell slot.`
+                    },
+                    {
+                        name: 'Minions of Chaos',
+                        content: `*Prerequisite: 9th level*\n\nYou can cast conjure elemental once using a warlock spell slot. You can’t do so again until you finish a long rest.`
+                    },
+                    {
+                        name: 'Mire the Mind',
+                        content: `*Prerequisite: 5th level*\n\nYou can cast slow once using a warlock spell slot. You can’t do so again until you finish a long rest.`
+                    },
+                    {
+                        name: 'Misty Visions',
+                        content: `You can cast silent image at will, without expending a spell slot or material components.`
+                    },
+                    {
+                        name: 'One with Shadows',
+                        content: `*Prerequisite: 5th level*\n\nWhen you are in an area of dim light or darkness, you can use your action to become invisible until you move or take an action or a reaction.`
+                    },
+                    {
+                        name: 'Otherworldly Leap',
+                        content: `*Prerequisite: 9th level*\n\nYou can cast jump on yourself at will, without expending a spell slot or material components.`
+                    },
+                    {
+                        name: 'Repelling Blast',
+                        content: `*Prerequisite: eldritch blast cantrip*\n\nWhen you hit a creature with eldritch blast, you can push the creature up to 10 feet away from you in a straight line.`
+                    },
+                    {
+                        name: 'Sculptor of Flesh',
+                        content: `*Prerequisite: 7th level*\n\nYou can cast polymorph once using a warlock spell slot. You can’t do so again until you finish a long rest.`
+                    },
+                    {
+                        name: 'Sign of Ill Omen',
+                        content: `*Prerequisite: 5th level*\n\nYou can cast bestow curse once using a warlock spell slot. You can’t do so again until you finish a long rest.`
+                    },
+                    {
+                        name: 'Thief of Five Fates',
+                        content: `You can cast bane once using a warlock spell slot. You can’t do so again until you finish a long rest.`
+                    },
+                    {
+                        name: 'Thirsting Blade',
+                        content: `*Prerequisite: 5th level, Pact of the Blade feature*\n\nYou can attack with your pact weapon twice, instead of once, whenever you take the Attack action on your turn.`
+                    },
+                    {
+                        name: 'Visions of Distant Realms',
+                        content: `*Prerequisite: 15th level*\n\nYou can cast arcane eye at will, without expending a spell slot.`
+                    },
+                    {
+                        name: 'Voice of the Chain Master',
+                        content: `*Prerequisite: Pact of the Chain feature*
+
+You can communicate telepathically with your familiar and perceive through your familiar’s senses as long as you are on the same plane of existence. Additionally, while perceiving through your familiar’s senses, you can also speak through your familiar in your own voice, even if your familiar is normally incapable of speech.`
+                    },
+                    {
+                        name: 'Whispers of the Grave',
+                        content: `*Prerequisite: 9th level*\n\nYou can cast speak with dead at will, without expending a spell slot.`
+                    },
+                    {
+                        name: 'Witch Sight',
+                        content: `*Prerequisite: 15th level*\n\nYou can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight.`
+                    },
+                ],
             }
         }
     },

@@ -284,7 +284,19 @@ import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
                         You can choose {getUniqOptionValuePerLevel(selectedClass.level)} options at this level.
                     </p>
                     <div class="unique-features-list" slot='list'>
-                        {#each selectedClass.spellcasting.unique_info.options as feature, index}
+                        <!-- first shows the features which are selected, then compares the names alphabetically -->
+                        {#each selectedClass.spellcasting.unique_info.options.sort((a, b) => {
+                            const isASelected = selectedClass.spellcasting.unique_info.final.includes(a);
+                            const isBSelected = selectedClass.spellcasting.unique_info.final.includes(b);
+                            
+                            if (isASelected && ! isBSelected) {
+                                return -1;
+                            }
+                            else if (isBSelected && !isASelected) {
+                                return 1;
+                            }
+                            return a.name.localeCompare(b.name);
+                        }) as feature}
                             <SimpleAccordionDetail 
                                 bind:value={feature.name} 
                                 bind:content={feature.content}

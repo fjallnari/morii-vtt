@@ -49,7 +49,18 @@
                                 {#if index !== 0}
                                     <Icon class="material-icons">{'add'}</Icon>
                                 {/if}
-                                {`${item.amount !== 1 ? `${item.amount}x` : ''} ${item.name}`}
+                                {#if item.options}
+                                    <select bind:value={item.name}>
+                                        <option value="" selected disabled hidden>{item.placeholder ?? '???'}</option>
+                                        {#each item.options as itemOption}
+                                            <option value={itemOption}>
+                                                {itemOption}
+                                            </option>
+                                        {/each}
+                                    </select>
+                                {:else}
+                                    {`${item.amount !== 1 ? `${item.amount}x` : ''} ${item.name}`}
+                                {/if}
                             {/each}
                         </box>
                 </single-line>

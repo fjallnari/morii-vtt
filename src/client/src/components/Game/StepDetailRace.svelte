@@ -47,7 +47,7 @@
 
 <div class="race-detail">
     <div class="select-race">
-        <h4>Select race:</h4>
+        <h4 class="{selectedRace ? '' : 'pulse'}">Select race:</h4>
         <Svelecte 
             options={quickCreateData.races}
             valueAsObject

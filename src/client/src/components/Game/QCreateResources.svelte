@@ -3,7 +3,7 @@
     import ResourceDetail from './CharacterSheet/Components/ResourceDetail.svelte';
     import { Icon } from '@smui/icon-button';
     import type { ClassResource } from "../../interfaces/ClassData";
-import { findHighestPossibleValue } from "../../util/util";
+    import { findHighestPossibleValue } from "../../util/util";
 
     export let selectedClass: ClassData;
 
@@ -80,7 +80,7 @@ import { findHighestPossibleValue } from "../../util/util";
     }
 
     :global(.class-resources .resources-list .card) {
-        width: 48% !important;
+        width: 45% !important;
         height: 48% !important;
         max-width: unset !important;
     }

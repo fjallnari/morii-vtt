@@ -10,12 +10,12 @@
     import type { Spell } from "../../interfaces/Character";
     import SpellDetail from "./CharacterSheet/Components/SpellDetail.svelte";
     import Svelecte from 'svelecte/src/Svelecte.svelte';
-import type { ClassSpellcasting } from "../../interfaces/ClassData";
-import { SPELLS_BY_LEVEL_BLANK } from "../../enum/SpellsByLevelBlank";
-import SimpleButton from "../SimpleButton.svelte";
-import InPlaceEdit from "../InPlaceEdit.svelte";
-import BoxWithChips from "../BoxWithChips.svelte";
-import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
+    import type { ClassSpellcasting } from "../../interfaces/ClassData";
+    import { SPELLS_BY_LEVEL_BLANK } from "../../enum/SpellsByLevelBlank";
+    import SimpleButton from "../SimpleButton.svelte";
+    import InPlaceEdit from "../InPlaceEdit.svelte";
+    import BoxWithChips from "../BoxWithChips.svelte";
+    import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
  
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

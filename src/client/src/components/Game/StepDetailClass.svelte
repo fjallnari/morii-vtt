@@ -51,7 +51,7 @@
     <p class='subclass-disclaimer'>Subclass has to be filled in manually since most of them are not publicly available under the OGL license.</p>
 
     <div class="select-class">
-        <h4>Select class:</h4>
+        <h4 class="{selectedClass ? '' : 'pulse'}">Select class:</h4>
         <Svelecte 
             options={quickCreateData.classes}
             valueAsObject
@@ -67,7 +67,7 @@
         <BoxWithList label='Features' inlineStyle='grid-area: features;' addNewListItem={addFeature} isModifyDisabled>
             <div class='level-slider' slot='filter-menu'>
                 <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
-                <!-- <div class="level-slider-label">Level: {selectedClass.level}</div> -->            
+                <div class="box-label level-slider-label">Level: {selectedClass.level}</div>          
             </div>
             <div class="features-list" slot='list'>
                 {#each selectedClass.features.filter(feature => feature.level <= selectedClass.level) as feature, index}
@@ -236,9 +236,8 @@
     }
 
     .level-slider-label {
-        font-size: 1em;
-        font-family: Quicksand;
-        text-transform: none;
+        font-size: 1em !important;
+        margin-top: -0.5em;
     }
 
     .class-resources { grid-area: class-resources;}

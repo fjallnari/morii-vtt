@@ -23,7 +23,7 @@
 </script>
 
 {#each Object.keys(character.ability_scores) as AS}
-    <div class="ability-score-container" style="{['WIS', 'INT'].includes(AS) ? 'padding-bottom: 2.2em;': ''}">
+    <div class="ability-score-container">
         <div class="ability-score-info">
             <box class="ability-score-modifier">
                 {$formatModifier($getASModifier(AS))}
@@ -153,9 +153,9 @@
         align-items: flex-start;
         text-align: center;
         width: inherit;
-        height: 7em;
+        height: 100%;
         font-family: Quicksand;
-        font-size: medium;
+        font-size: 1em;
         text-transform: capitalize;
     }
 
@@ -174,6 +174,7 @@
 
     .additional-skill-box {
         padding: 0.4em;
+        margin-right: -2em;
     }
 
     .additional-skill-box .box-main-text {

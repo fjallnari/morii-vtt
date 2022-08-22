@@ -90,7 +90,7 @@
         flex-direction: row;
         justify-content: space-around;
         padding-top: 1em;
-        height: 95vh;
+        height: calc(95vh - 2px);
         gap: 1em;
     }
 

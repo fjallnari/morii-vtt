@@ -139,7 +139,6 @@ import Resources from './Components/Resources.svelte';
         display: grid; 
         grid-template-columns: 1fr; 
         grid-template-rows: 0.05fr 1fr; 
-        gap: 0.5em 0.5em; 
         grid-template-areas: 
         "bonuses"
         "ability-scores";
@@ -155,9 +154,8 @@ import Resources from './Components/Resources.svelte';
     .ability-scores { grid-area: ability-scores; 
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding-top: 0.25em;
+        justify-content: center;
+        gap: 1.2vh;
     }
 
     .character-stats { grid-area: character-stats;

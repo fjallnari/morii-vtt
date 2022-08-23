@@ -59,15 +59,6 @@
     });
 
     /**
-     * Formats modifier to show plus signs if the modifier is positive
-     */
-    formatModifier.set((modifier: number, signDisplay: ("exceptZero" | "always" | "auto" | "never") = "exceptZero") => {
-        return new Intl.NumberFormat("en-US", {
-            signDisplay: signDisplay
-        }).format(modifier);
-    });
-
-    /**
      * 
      * @param AS - ability score tag, e.g. 'WIS', 'DEX', 'STR' ...
      */

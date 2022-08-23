@@ -10,6 +10,7 @@
     import StepDetailRace from "./StepDetailRace.svelte";
     import StepDetailClass from "./StepDetailClass.svelte";
     import StepDetailSpellcasting from "./StepDetailSpellcasting.svelte";
+    import StepDetailAbilityScores from "./StepDetailAbilityScores.svelte";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -22,10 +23,10 @@
         { name: 'Race', icon: 'account-supervisor', filled_in: false, component: StepDetailRace },
         { name: 'Class', icon: 'arrow-projectile-multiple', filled_in: false, component: StepDetailClass },
         { name: 'Spellcasting', icon: 'fire', filled_in: false, component: StepDetailSpellcasting },
-        { name: 'Ability Scores', icon: 'counter', filled_in: false },
+        { name: 'Ability Scores', icon: 'counter', filled_in: false, component: StepDetailAbilityScores },
         { name: 'Background', icon: 'sprout', filled_in: false },
         { name: 'Summary', icon: 'clipboard-text', filled_in: false },
-    ]
+    ];
 
     const closeDialog = () => {
         characterParts = {};
@@ -36,16 +37,20 @@
     // open is here just so the quick create fully resets for each open of the dialog
     // quick and dirty way to trigger the reactivity
     const loadQuickCreateData = async (open: boolean) => {
-        try {
-            const response = await axios.get('/api/quick-create-data');
-            const { characterSkeleton, ...quickCreateData } = response.data;
+        if (open) {
+            try {
+                const response = await axios.get('/api/quick-create-data');
+                const { characterSkeleton, ...quickCreateData } = response.data;
 
-            characterTemplate = characterSkeleton;
-            return quickCreateData as QuickCreateData;
-		}
-		catch (err) {
-            console.log(err); 
-		}
+                characterTemplate = characterSkeleton;
+                characterParts.ability_scores = quickCreateData.as_blank;
+                return quickCreateData as QuickCreateData;
+            }
+            catch (err) {
+                console.log(err); 
+            }
+        }
+        return {};
     }
 
     const assembleCharacterSheet = () => {
@@ -82,7 +87,7 @@
                             alt="step-icon"
                         >
                         {step.name}
-                        {#if characterParts[`${step.name.toLowerCase()}`]}
+                        {#if characterParts[`${step.name.toLowerCase()}`]} <!-- TODO -->
                             <Icon id="filled-in-icon" class="material-icons">done</Icon>
                         {/if}
                     </box>

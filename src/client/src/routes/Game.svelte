@@ -1,7 +1,7 @@
 <script lang="ts">
     import axios from "axios";
     import io from 'socket.io-client';
-    import { user, socket, ownerSocketID, userIDPairs } from '../stores';
+    import { user, socket, ownerSocketID, userIDPairs, formatModifier } from '../stores';
     import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
@@ -63,6 +63,15 @@
                 userIDPairs[userAckIDPair.userID] = userAckIDPair.socketID;
                 return userIDPairs;
         });
+    });
+
+    /**
+     * Formats modifier to show plus signs if the modifier is positive
+     */
+    formatModifier.set((modifier: number, signDisplay: ("exceptZero" | "always" | "auto" | "never") = "exceptZero") => {
+        return new Intl.NumberFormat("en-US", {
+            signDisplay: signDisplay
+        }).format(modifier);
     });
 
 </script>

@@ -112,7 +112,7 @@
         </BoxWithChips>
 
         <!-- HIT POINTS -->
-        <QCreateHitPoints bind:selectedClass={selectedClass}></QCreateHitPoints>
+        <QCreateHitPoints bind:selectedClass={selectedClass} abilityScores={characterParts.ability_scores}></QCreateHitPoints>
 
         <!-- OTHER PROFICIENCIES -->
         <BoxWithChips bind:chipsArray={selectedClass.other_prof} label='Other Proficiencies' let:index={index} gridArea='other-prof' blankChip={{name: '', type: 0}}>

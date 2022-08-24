@@ -1,18 +1,24 @@
 <script lang="ts">
     import type ClassData from "../../interfaces/ClassData";
+    import type { QCAbilityScores } from "../../interfaces/QCAbilityScores";
+import { formatModifier } from "../../stores";
+    import { getASModifier } from "../../util/util";
     import BoxWithHeaderToggle from '../BoxWithHeaderToggle.svelte';
     import InPlaceEdit from "../InPlaceEdit.svelte";
     import SimpleButton from "../SimpleButton.svelte";
 
     export let selectedClass: ClassData;
+    export let abilityScores: QCAbilityScores;
 
+
+    $: modCON = getASModifier(abilityScores, 'CON');
     $: averageHPPerLevel = ~~(selectedClass.hp.hit_die/2) + 1;
-    $: level1HP = selectedClass.hp.hit_die + 0;
+    $: level1HP = selectedClass.hp.hit_die + modCON;
 
     // TODO: replace the 0 with the actual CON modifier
     const getAverageHP = () => {
         // HP at first level + (average hp per level + CON mod) * (level - 1)
-        selectedClass.hp.current = (level1HP + (averageHPPerLevel + 0) * (selectedClass.level - 1)).toString();
+        selectedClass.hp.current = (level1HP + (averageHPPerLevel + modCON) * (selectedClass.level - 1)).toString();
     }
 
 </script>
@@ -31,7 +37,7 @@
         headerText='1d{selectedClass.hp.hit_die} (or {averageHPPerLevel}) + CON mod per {selectedClass.name} level after 1st'
         gridArea='hp-at-higher-levels'
     >
-        1d{selectedClass.hp.hit_die} (or {averageHPPerLevel}) + ???
+        1d{selectedClass.hp.hit_die} (or {averageHPPerLevel}) {$formatModifier(modCON).split('').join(' ')}
     </BoxWithHeaderToggle>
 
     <BoxWithHeaderToggle 
@@ -53,8 +59,8 @@
             </div>
         </box>
         <div class="roll-calc-hp">
-            <SimpleButton value='Roll' icon="casino" type='primary' onClickFn={() => {}}></SimpleButton>
-            <SimpleButton value='AVG' icon="calculate" type='default' onClickFn={() => getAverageHP()}></SimpleButton>
+            <SimpleButton value='Roll' icon="casino" type='primary' onClickFn={() => {}} disabled></SimpleButton>
+            <SimpleButton value='AVG' icon="calculate" type='primary' onClickFn={() => getAverageHP()}></SimpleButton>
         </div>
     </div>     
 </div>

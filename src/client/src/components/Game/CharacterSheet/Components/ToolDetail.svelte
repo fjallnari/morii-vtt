@@ -27,7 +27,7 @@
 
 <box>
     <div class="tool-summary">
-        <sendable class="tool-modifier" on:click={() => $sendSkillCheck(~~getToolFormula(), `${tool.name.toLowerCase()} (${tool.ability})`)}>
+        <sendable class="tool-modifier" on:click={() => $sendSkillCheck(~~getToolFormula(), `${tool.name.toLowerCase()} (${tool.ability})`, character.name)}>
             {getToolFormula(tool.ability, tool.proficiency, character.prof_bonus)}
         </sendable>
         <div class="tool-name">

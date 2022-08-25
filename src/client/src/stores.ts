@@ -17,7 +17,7 @@ export const ownerSocketID: Writable<string> = writable("");
 export const userIDPairs: Writable<Record<string, string>> = writable({});
 export const isMessagePublic: Writable<boolean> = writable(true);
 export const modifyCharacter: Writable<() => Promise<void>> = writable();
-export const sendSkillCheck: Writable<(modifier: number, skillName: string, dice_type?: string) => Promise<void>> = writable();
+export const sendSkillCheck: Writable<(modifier: number, skillName: string, charName?: string, diceType?: string, customID?: string) => Promise<void>> = writable();
 export const getASModifier: Writable<(AS: string) => number> = writable();
 export const formatModifier: Writable<(modifier: number, signDisplay?: ("exceptZero" | "always" | "auto" | "never")) => string> = writable();
 export const createNewAttack: Writable<(customName?: string, itemID?: string ) => string> = writable();

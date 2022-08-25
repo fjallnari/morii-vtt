@@ -41,23 +41,6 @@
         }
 	})
 
-    sendSkillCheck.set(async (modifier: number, skillName: string, dice_type = 'd20') => {
-        $socket.emit('chat-message', {
-            senderInfo: {
-                _id: $user._id, 
-                username: $user.username,
-                settings: $user.settings,
-            }, 
-            messageText: `/r ${dice_type}${$formatModifier(modifier, "always")}`,
-            skillCheckInfo: {
-                characterName: character.name,
-                skillName: skillName
-            },
-            gameID: $params.id,
-            isPublic: $isMessagePublic
-        });
-    });
-
     /**
      * 
      * @param AS - ability score tag, e.g. 'WIS', 'DEX', 'STR' ...

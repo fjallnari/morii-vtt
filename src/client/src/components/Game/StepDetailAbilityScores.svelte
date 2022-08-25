@@ -1,26 +1,32 @@
 <script lang="ts">
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../interfaces/QuickCreateData";
-    import { formatModifier } from "../../stores";
+    import { formatModifier, sendSkillCheck, socket } from "../../stores";
     import InPlaceEdit from "../InPlaceEdit.svelte";
     import { Icon } from '@smui/icon-button';
     import { getASModifier, getRandomIndex } from "../../util/util";
     import ChipsDndZone from "./ChipsDndZone.svelte";
+    import type MessageData from "../../interfaces/MessageData";
+    import { nanoid } from "nanoid/non-secure";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
 
     interface GenOption {
         name: string,
-        genFce: () => number[]
+        genFce: () => Promise<number[]>
     }
 
     let asFinalArray: number[] = [];
+    let rollArrayIds: string[] = [];
     let selectedGenOption: GenOption = undefined;
     let selectedAssignOption = undefined;
 
     const asGenOpts: GenOption[] = [
-        { name: 'Standard Array', genFce: () => [15, 14, 13, 12, 10, 8], }
+        { name: 'Standard Array', genFce: async () => [15, 14, 13, 12, 10, 8] },
+        { name: 'Roll 4d6kh3', genFce: async () => rollASArray('4d6kh3') },
+        { name: 'Roll 3d6', genFce: async () => rollASArray('3d6') },
+        { name: 'Roll 2d6+6', genFce: async () => rollASArray('2d6+6') },
     ];
 
     const asAssignOpts = [
@@ -37,7 +43,7 @@
         { id: 6, name: "CHA" },
     ];
 
-    const selectGenOption = (genOption: GenOption) => {
+    const selectGenOption = async (genOption: GenOption) => {
         if (selectedGenOption === genOption) {
             selectedGenOption = undefined;
             asFinalArray = [];
@@ -45,7 +51,7 @@
         }
 
         selectedGenOption = genOption;
-        asFinalArray = genOption.genFce();
+        asFinalArray = await genOption.genFce();
     }
 
     const selectAssignOption = (assignOption) => {
@@ -83,14 +89,58 @@
             return; 
         }
 
-        console.log(asFinalArray);
-
         const sortedValuesArr = asFinalArray.sort((a,b) => ~~b - ~~a);
         
         customAssignPrio.forEach((tag, index) => {
             abilityScores[tag.name].base = sortedValuesArr[index].toString();         
         });
     }
+
+    const rollASArray = async (formula: string = '4d6kh3') => {
+        asFinalArray = [];
+        rollArrayIds = [];
+
+        const checkRecursionLimit = 5;
+        let recursionLayer = 0;
+        let rollBatchID = nanoid(6);
+
+        for (let i = 0; i < 6; i++) {
+            const newCustomID = nanoid(16);
+            rollArrayIds = rollArrayIds.concat([newCustomID]);
+            $sendSkillCheck(0, `[${rollBatchID}] Roll stats ~ ${formula}`, 'TODO', formula, newCustomID);
+        }
+
+        /**
+         * Checks if the asFinalArray was filled, if not recursively calls itself
+         * If the limit is reached it resolves with blank array just so it doesn't loop till eternity
+         */
+        const circleCheck = async () => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    if (asFinalArray.length === 6) {
+                        resolve(asFinalArray);
+                    }
+                    else {
+                        if (recursionLayer < checkRecursionLimit) {
+                            recursionLayer += 1;
+                            circleCheck();
+                        }
+                        else {
+                            resolve([]);         
+                        }
+                    }
+                }, 200);
+            });
+        };
+
+        return await circleCheck() as number[];
+    }
+
+    $socket.on('chat-message', (incomingMessage: MessageData) => {
+        if (rollArrayIds.includes(incomingMessage.messageID)){
+            asFinalArray = asFinalArray.concat([incomingMessage.rollResult.total]);
+        }       
+    });
 
     $: abilityScores = characterParts.ability_scores;
 

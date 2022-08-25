@@ -43,7 +43,7 @@
 
     const sendHitDiceRoll = (d_type: string) => {
         character.hd_current[d_type] = (~~character.hd_current[d_type] - 1).toString(); 
-        $sendSkillCheck($getASModifier('CON'), `${d_type} hit dice`, d_type);
+        $sendSkillCheck($getASModifier('CON'), `${d_type} hit dice`, character.name, d_type);
         $modifyCharacter();
     }
 

@@ -49,7 +49,7 @@
                 <mod>
                     {$formatModifier(getSavingThrowModifier(AS))}
                 </mod>
-                <sendable on:click={() => { $sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`) }}>{AS} saving throws<br></sendable>
+                <sendable on:click={() => { $sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`, character.name) }}>{AS} saving throws<br></sendable>
             </div>
             {#each character.ability_scores[AS].skills as skill}
                 <div class="skill-field">
@@ -60,7 +60,7 @@
                         on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}
                     >
                     <mod>{$formatModifier(getSkillModifier(AS, skill))}</mod>
-                    <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name) }}>{skill.name}<br></sendable>
+                    <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name, character.name) }}>{skill.name}<br></sendable>
                 </div>
             {/each}
         </div>
@@ -83,7 +83,7 @@
                         {$formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
                     </div>
                     <div class="box-justify-filler"></div>
-                    <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`)}>
+                    <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`, character.name)}>
                         Initiative
                     </sendable>
                 </div>

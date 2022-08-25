@@ -129,10 +129,13 @@
 	$scheme-sea: #79B1A3, #5F9B8D, #417D71, #335E57, url('../static/bg/waves-sea.svg');
 	$scheme-viridian: #8BBBA7, #549C7E, #1C7C54, #21513F, url('../static/bg/waves-viridian.svg');
 	$scheme-cordovan: #C5A4A7,#AB797E, #904E55, #603F46, url('../static/bg/waves-cordovan.svg');
+	$scheme-rose: #CFA394, #C17C74, #BA6E65, #B35F56, url('../static/bg/waves-salmon-b.svg');
 	$scheme-auburn: #CE9391, #B8605D, #A22C29, #642929, url('../static/bg/waves-auburn.svg');
 	$scheme-forest: #A68A64, #936639, #7F4F24, #582F0E, url('../static/bg/waves-forest.svg');
+	
 
 	$scheme-bg-default: #1B1B1E, #212125, #252529, #303036, #F9F9F9;
+	$scheme-bg-rose: #141414, #1F1F1F, #272727, #333333, #ECE1D5;
 	$scheme-bg-sea: #041F1E, #0B2323, #112627, #1E2D2F, #FAF6EF;
 	$scheme-bg-forest: #1F2518, #333D29, #414833, #656D4A, #C2C5AA;
 

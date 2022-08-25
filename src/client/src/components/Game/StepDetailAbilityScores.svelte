@@ -1,13 +1,13 @@
 <script lang="ts">
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../interfaces/QuickCreateData";
-    import { formatModifier, sendSkillCheck, socket } from "../../stores";
+    import { formatModifier, isMessagePublic, sendSkillCheck, socket } from "../../stores";
     import InPlaceEdit from "../InPlaceEdit.svelte";
-    import { Icon } from '@smui/icon-button';
     import { getASModifier, getRandomIndex } from "../../util/util";
     import ChipsDndZone from "./ChipsDndZone.svelte";
     import type MessageData from "../../interfaces/MessageData";
     import { nanoid } from "nanoid/non-secure";
+    import IconButton, { Icon } from '@smui/icon-button';
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -21,12 +21,21 @@
     let rollArrayIds: string[] = [];
     let selectedGenOption: GenOption = undefined;
     let selectedAssignOption = undefined;
+    let customGenField: string = '';
 
     const asGenOpts: GenOption[] = [
         { name: 'Standard Array', genFce: async () => [15, 14, 13, 12, 10, 8] },
+        { name: 'Custom Array', genFce: async () => {
+            try {
+                return JSON.parse("[" + customGenField + "]");
+            }
+            catch {
+                return [];
+            }
+        }},
         { name: 'Roll 4d6kh3', genFce: async () => rollASArray('4d6kh3') },
         { name: 'Roll 3d6', genFce: async () => rollASArray('3d6') },
-        { name: 'Roll 2d6+6', genFce: async () => rollASArray('2d6+6') },
+        { name: 'Custom Roll', genFce: async () => rollASArray(customGenField) },
     ];
 
     const asAssignOpts = [
@@ -78,7 +87,7 @@
 
         Object.keys(abilityScores).forEach(AS => {
             const randomIndex = getRandomIndex(finalArrayCopy.length);
-            abilityScores[AS].base = finalArrayCopy[randomIndex].toString();
+            abilityScores[AS].base = finalArrayCopy[randomIndex]?.toString() ?? 'ERR';
             finalArrayCopy.splice(randomIndex, 1);    
         });
     };
@@ -92,11 +101,13 @@
         const sortedValuesArr = asFinalArray.sort((a,b) => ~~b - ~~a);
         
         customAssignPrio.forEach((tag, index) => {
-            abilityScores[tag.name].base = sortedValuesArr[index].toString();         
+            abilityScores[tag.name].base = sortedValuesArr[index]?.toString() ?? 'ERR';
         });
     }
 
     const rollASArray = async (formula: string = '4d6kh3') => {
+        if (!formula || formula.trim() === '') { return [] };
+
         asFinalArray = [];
         rollArrayIds = [];
 
@@ -225,6 +236,17 @@
                     <div class='option-name'>{genOption.name}</div>
                 </box>
             {/each}
+            <div class='custom-gen-field'>
+                <div>Custom: </div>
+                <InPlaceEdit bind:value={customGenField} editWidth="10rem" editHeight="1.5rem" on:submit={() => {}}/>
+            </div>
+            <div class='roll-visibility'>
+                <div>{$isMessagePublic ? 'Public roll': 'Secret roll'}</div>
+                <IconButton toggle bind:pressed={$isMessagePublic}>
+                    <Icon class="material-icons" style="font-size: xx-large;" on>visibility</Icon>
+                    <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
+                </IconButton>
+            </div>
         </box>
         <box class="as-array">
             <div class="box-main-text">
@@ -393,6 +415,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .custom-gen-field {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        gap: 0.5em;
+    }
+
+    .roll-visibility {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        gap: 0.25em;
     }
 
     .option-selected { grid-area: option-selected; }

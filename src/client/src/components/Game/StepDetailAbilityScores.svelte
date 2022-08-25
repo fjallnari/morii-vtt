@@ -4,7 +4,8 @@
     import { formatModifier } from "../../stores";
     import InPlaceEdit from "../InPlaceEdit.svelte";
     import { Icon } from '@smui/icon-button';
-    import { getASModifier } from "../../util/util";
+    import { getASModifier, getRandomIndex } from "../../util/util";
+    import ChipsDndZone from "./ChipsDndZone.svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -16,9 +17,24 @@
 
     let asFinalArray: number[] = [];
     let selectedGenOption: GenOption = undefined;
+    let selectedAssignOption = undefined;
 
     const asGenOpts: GenOption[] = [
         { name: 'Standard Array', genFce: () => [15, 14, 13, 12, 10, 8], }
+    ];
+
+    const asAssignOpts = [
+        { name: 'Assign randomly', assignFce: () => assignRandom() },
+        { name: 'Use custom priority', assignFce: () => assignCustomPrio() }, // TODO
+    ];
+
+    let customAssignPrio = [
+        { id: 1, name: "STR" },
+        { id: 2, name: "DEX" },
+        { id: 3, name: "CON" },
+        { id: 4, name: "INT" },
+        { id: 5, name: "WIS" },
+        { id: 6, name: "CHA" },
     ];
 
     const selectGenOption = (genOption: GenOption) => {
@@ -30,6 +46,50 @@
 
         selectedGenOption = genOption;
         asFinalArray = genOption.genFce();
+    }
+
+    const selectAssignOption = (assignOption) => {
+        if (selectedAssignOption === assignOption) {
+            selectedAssignOption = undefined;
+
+            Object.keys(abilityScores).forEach(AS => {
+                abilityScores[AS].base = '';
+            });
+
+            return;
+        }
+
+        selectedAssignOption = assignOption;
+        assignOption.assignFce();
+    }
+
+    const assignRandom = () => {
+        if (!asFinalArray || asFinalArray.length === 0) { 
+            return; 
+        }
+
+        let finalArrayCopy = [... asFinalArray];
+
+        Object.keys(abilityScores).forEach(AS => {
+            const randomIndex = getRandomIndex(finalArrayCopy.length);
+            abilityScores[AS].base = finalArrayCopy[randomIndex].toString();
+            finalArrayCopy.splice(randomIndex, 1);    
+        });
+    };
+
+    const assignCustomPrio = () => {
+        
+        if (!asFinalArray || asFinalArray.length === 0) { 
+            return; 
+        }
+
+        console.log(asFinalArray);
+
+        const sortedValuesArr = asFinalArray.sort((a,b) => ~~b - ~~a);
+        
+        customAssignPrio.forEach((tag, index) => {
+            abilityScores[tag.name].base = sortedValuesArr[index].toString();         
+        });
     }
 
     $: abilityScores = characterParts.ability_scores;
@@ -125,7 +185,25 @@
                 Base Values Array
             </div>
         </box>
-        <box class="assign-array"></box>
+        <box class="assign-array as-gen-opts">
+            {#each asAssignOpts as assignOpt}
+                <box class='gen-option' on:click={() => {selectAssignOption(assignOpt)}} style='background-color: {selectedAssignOption === assignOpt ? 'var(--clr-accent-dark)': ''}'>
+                    <div class="option-selected">
+                        <Icon class="material-icons">{selectedAssignOption === assignOpt ? 'keyboard_double_arrow_right': 'fork_right'}</Icon>
+                    </div>
+                    <div class='option-name'>{assignOpt.name}</div>
+                </box>
+            {/each}
+        </box>
+        <box class='custom-prio'>
+            <div class="custom-prio-chips box-main-text">
+                <ChipsDndZone bind:items={customAssignPrio} containerWidth='100%'></ChipsDndZone>
+            </div>
+            <div class="box-justify-filler"></div>
+            <div class="box-label">
+                Custom priority (High to low)
+            </div>
+        </box>
     </div>
     <box class="asi"></box>
 </qc-ability-scores>
@@ -229,15 +307,18 @@
             "as-gen-opts as-gen-opts as-array as-array"
             "as-gen-opts as-gen-opts assign-array assign-array"
             "as-gen-opts as-gen-opts assign-array assign-array"
-            "as-gen-opts as-gen-opts assign-array assign-array";
+            "as-gen-opts as-gen-opts custom-prio custom-prio";
     }
 
     .as-gen-opts { grid-area: as-gen-opts; 
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: flex-start;
         align-items: center;
-        gap: 0.5em;
+        gap: 0.4em;
+        padding-top: 0.5em;
+        overflow-y: auto;
+        font-family: Athiti;
     }
 
     .as-gen-opts > .gen-option {
@@ -272,7 +353,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
     }
 
     .as-array .box-main-text {
@@ -280,6 +360,20 @@
     }
 
     .assign-array { grid-area: assign-array; }
+
+    .custom-prio { grid-area: custom-prio; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom-prio > .custom-prio-chips {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
 
     .asi { grid-area: asi; }
 

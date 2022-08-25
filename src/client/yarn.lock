@@ -3134,6 +3134,11 @@ svelte-copy-to-clipboard@^0.2.5:
   resolved "https://registry.yarnpkg.com/svelte-copy-to-clipboard/-/svelte-copy-to-clipboard-0.2.5.tgz#4fd5c89a6415b7f6a4e153a9896b50b2dee12611"
   integrity sha512-EAULxib4pRa59nyz25dDKITgSAVkrNVojRZVCSO8MIFd5GJljghJaCTIe/7R+O3GxKYIwJ3XHDNoY1hfjJeyEg==
 
+svelte-dnd-action@^0.9.19:
+  version "0.9.19"
+  resolved "https://registry.yarnpkg.com/svelte-dnd-action/-/svelte-dnd-action-0.9.19.tgz#9fdde68a1d44ce323ff4b35bb10f1a24f7d46c03"
+  integrity sha512-1Jsym2HN0TJVUl09wLGASkHg937+ZecnnekPiwC0J6K7mCzOxCuIQSVnIxoQLLeiXv74joNVNpVofX9Z0jM4Vw==
+
 svelte-markdown@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/svelte-markdown/-/svelte-markdown-0.2.2.tgz#fa5d3c0fe6050021747f411842ae10119d231106"

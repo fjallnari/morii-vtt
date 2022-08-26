@@ -10,7 +10,25 @@ export default class GetQuickCreateDataController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
         try {
-            return this.res.status(200).send({ characterSkeleton: CHARACTER_SKELETON, races: RACES, classes: CLASSES, spells: SPELLS, as_blank: QC_AS_BLANK });
+            return this.res.status(200).send({ 
+                characterSkeleton: CHARACTER_SKELETON, 
+                races: RACES, 
+                classes: CLASSES, 
+                spells: SPELLS, 
+                asBlank: QC_AS_BLANK, 
+                asGenInfo: { 
+                    baseArray: [], 
+                    customAssignPrio: [
+                        { id: 1, name: "STR" },
+                        { id: 2, name: "DEX" },
+                        { id: 3, name: "CON" },
+                        { id: 4, name: "INT" },
+                        { id: 5, name: "WIS" },
+                        { id: 6, name: "CHA" },
+                    ], 
+                    customField: ''
+                } 
+            });
         }
         catch (error) {
             return this.res.status(500).end();

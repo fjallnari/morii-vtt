@@ -17,17 +17,18 @@
         genFce: () => Promise<number[]>
     }
 
-    let asFinalArray: number[] = [];
     let rollArrayIds: string[] = [];
     let selectedGenOption: GenOption = undefined;
     let selectedAssignOption = undefined;
-    let customGenField: string = '';
+
+    $: abilityScores = characterParts.ability_scores;
+    $: genInfo = characterParts.as_gen_info;
 
     const asGenOpts: GenOption[] = [
         { name: 'Standard Array', genFce: async () => [15, 14, 13, 12, 10, 8] },
         { name: 'Custom Array', genFce: async () => {
             try {
-                return JSON.parse("[" + customGenField + "]");
+                return JSON.parse("[" + genInfo.customField + "]");
             }
             catch {
                 return [];
@@ -35,7 +36,7 @@
         }},
         { name: 'Roll 4d6kh3', genFce: async () => rollASArray('4d6kh3') },
         { name: 'Roll 3d6', genFce: async () => rollASArray('3d6') },
-        { name: 'Custom Roll', genFce: async () => rollASArray(customGenField) },
+        { name: 'Custom Roll', genFce: async () => rollASArray(genInfo.customField) },
     ];
 
     const asAssignOpts = [
@@ -43,24 +44,15 @@
         { name: 'Use custom priority', assignFce: () => assignCustomPrio() }, // TODO
     ];
 
-    let customAssignPrio = [
-        { id: 1, name: "STR" },
-        { id: 2, name: "DEX" },
-        { id: 3, name: "CON" },
-        { id: 4, name: "INT" },
-        { id: 5, name: "WIS" },
-        { id: 6, name: "CHA" },
-    ];
-
     const selectGenOption = async (genOption: GenOption) => {
         if (selectedGenOption === genOption) {
             selectedGenOption = undefined;
-            asFinalArray = [];
+            genInfo.baseArray = [];
             return;
         }
 
         selectedGenOption = genOption;
-        asFinalArray = await genOption.genFce();
+        genInfo.baseArray = await genOption.genFce();
     }
 
     const selectAssignOption = (assignOption) => {
@@ -79,11 +71,11 @@
     }
 
     const assignRandom = () => {
-        if (!asFinalArray || asFinalArray.length === 0) { 
+        if (!genInfo.baseArray || genInfo.baseArray.length === 0) { 
             return; 
         }
 
-        let finalArrayCopy = [... asFinalArray];
+        let finalArrayCopy = [... genInfo.baseArray];
 
         Object.keys(abilityScores).forEach(AS => {
             const randomIndex = getRandomIndex(finalArrayCopy.length);
@@ -94,13 +86,13 @@
 
     const assignCustomPrio = () => {
         
-        if (!asFinalArray || asFinalArray.length === 0) { 
+        if (!genInfo.baseArray || genInfo.baseArray.length === 0) { 
             return; 
         }
 
-        const sortedValuesArr = asFinalArray.sort((a,b) => ~~b - ~~a);
+        const sortedValuesArr = genInfo.baseArray.sort((a,b) => ~~b - ~~a);
         
-        customAssignPrio.forEach((tag, index) => {
+        genInfo.customAssignPrio.forEach((tag, index) => {
             abilityScores[tag.name].base = sortedValuesArr[index]?.toString() ?? 'ERR';
         });
     }
@@ -108,7 +100,7 @@
     const rollASArray = async (formula: string = '4d6kh3') => {
         if (!formula || formula.trim() === '') { return [] };
 
-        asFinalArray = [];
+        genInfo.baseArray = [];
         rollArrayIds = [];
 
         const checkRecursionLimit = 5;
@@ -128,8 +120,8 @@
         const circleCheck = async () => {
             return new Promise((resolve) => {
                 setTimeout(() => {
-                    if (asFinalArray.length === 6) {
-                        resolve(asFinalArray);
+                    if (genInfo.baseArray.length === 6) {
+                        resolve(genInfo.baseArray);
                     }
                     else {
                         if (recursionLayer < checkRecursionLimit) {
@@ -149,11 +141,9 @@
 
     $socket.on('chat-message', (incomingMessage: MessageData) => {
         if (rollArrayIds.includes(incomingMessage.messageID)){
-            asFinalArray = asFinalArray.concat([incomingMessage.rollResult.total]);
+            genInfo.baseArray = genInfo.baseArray.concat([incomingMessage.rollResult.total]);
         }       
-    });
-
-    $: abilityScores = characterParts.ability_scores;
+    });    
 
     $: Object.keys(abilityScores).forEach(AS => {
         let charASObj = abilityScores[AS];
@@ -238,7 +228,7 @@
             {/each}
             <div class='custom-gen-field'>
                 <div>Custom: </div>
-                <InPlaceEdit bind:value={customGenField} editWidth="10rem" editHeight="1.5rem" on:submit={() => {}}/>
+                <InPlaceEdit bind:value={genInfo.customField} editWidth="10rem" editHeight="1.5rem" on:submit={() => {}}/>
             </div>
             <div class='roll-visibility'>
                 <div>{$isMessagePublic ? 'Public roll': 'Secret roll'}</div>
@@ -250,7 +240,7 @@
         </box>
         <box class="as-array">
             <div class="box-main-text">
-                {`[ ${asFinalArray.sort((a,b) => ~~b - ~~a).join(', ')} ]`}
+                {`[ ${genInfo.baseArray.sort((a,b) => ~~b - ~~a).join(', ')} ]`}
             </div>
             <div class="box-justify-filler"></div>
             <div class="box-label">
@@ -269,7 +259,7 @@
         </box>
         <box class='custom-prio'>
             <div class="custom-prio-chips box-main-text">
-                <ChipsDndZone bind:items={customAssignPrio} containerWidth='100%'></ChipsDndZone>
+                <ChipsDndZone bind:items={genInfo.customAssignPrio} containerWidth='100%'></ChipsDndZone>
             </div>
             <div class="box-justify-filler"></div>
             <div class="box-label">

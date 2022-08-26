@@ -43,7 +43,8 @@
                 const { characterSkeleton, ...quickCreateData } = response.data;
 
                 characterTemplate = characterSkeleton;
-                characterParts.ability_scores = quickCreateData.as_blank;
+                characterParts.ability_scores = quickCreateData.asBlank;
+                characterParts.as_gen_info = quickCreateData.asGenInfo;
                 return quickCreateData as QuickCreateData;
             }
             catch (err) {

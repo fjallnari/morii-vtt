@@ -9,11 +9,12 @@ const WEAPONS_SIMPLE_ALL = WEAPONS.SIMPLE.MELEE.concat(WEAPONS.SIMPLE.RANGED);
 const WEAPONS_MARTIAL_ALL = WEAPONS.MARTIAL.MELEE.concat(WEAPONS.MARTIAL.RANGED);
 
 const ASI_CONTENT_STANDARD = 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can’t increase an ability score above 20 using this feature.';
-const ASI_VARIANTS = {
-    8: { name: 'x2' },
-    12: { name: 'x3' },
-    16: { name: 'x4' },
-    19: { name: 'x5' }
+const ASI_LEVELS_STANDARD = {
+    4: '1',
+    8: '2',
+    12: '3',
+    16: '4',
+    19: '5'
 };
 
 const SPELLSLOTS_STANDARD = [
@@ -316,7 +317,6 @@ Once you have raged the number of times shown for your barbarian level in the Ra
                 name: 'Ability Score Improvement',
                 level: 4,
                 content: ASI_CONTENT_STANDARD,
-                variants: ASI_VARIANTS
             },
             {
                 name: 'Extra Attack',
@@ -365,6 +365,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                 content: `At 20th level, you embody the power of the wilds. Your Strength and Constitution scores increase by 4. Your maximum for those scores is now 24.`
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [
             {
                 name: 'Rages',
@@ -390,7 +391,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                     9: '+3',
                     16: '+4',  
                 }
-            }
+            },
         ]
     },
     {
@@ -650,6 +651,7 @@ You learn two additional spells from any class at 14th level and again at 18th l
                 content: 'At 20th level, when you roll initiative and have no uses of Bardic Inspiration left, you regain one use.'
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [
             {
                 name: 'Bardic Inspiration',
@@ -949,6 +951,7 @@ If your deity intervenes, you can’t use this feature again for 7 days. Otherwi
 At 20th level, your call for intervention succeeds automatically, no roll required.`,
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [
             {
                 name: 'Channel Divinity',
@@ -1244,6 +1247,7 @@ While you are transformed, the following rules apply:
                 content: `At 20th level, you can use your Wild Shape an unlimited number of times.\n\nAdditionally, you can ignore the verbal and somatic components of your druid spells, as well as any material components that lack a cost and aren’t consumed by a spell. You gain this benefit in both your normal shape and your beast shape from Wild Shape.`
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [],
         spellcasting: {
             ability: 'WIS',
@@ -1501,6 +1505,14 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
                 content: 'Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can’t use this feature again until you finish a long rest.\n\nYou can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.'
             },
         ],
+        asi: {
+            4: '1',
+            6: '2',
+            8: '3',
+            12: '4',
+            16: '5',
+            19: '6'
+        },
         resources: [
             {
                 name: 'Action Surge',
@@ -1693,7 +1705,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
             {
                 name: 'Ability Score Improvement',
                 level: 4,
-                content: 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can’t increase an ability score above 20 using this feature.'
+                content: ASI_CONTENT_STANDARD
             },
             {
                 name: 'Slow Fall',
@@ -1757,6 +1769,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                 content: 'At 20th level, when you roll for initiative and have no ki points remaining, you regain 4 ki points.'
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [
             {
                 name: 'Martial Arts',
@@ -2099,6 +2112,7 @@ At 18th level, the range of this aura increases to 30 feet.`
 You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain expended uses when you finish a long rest.`
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [],
         spellcasting: {
             ability: 'CHA',
@@ -2385,6 +2399,7 @@ You are also aware of the location of any invisible creature within 30 feet of y
                 content: `At 20th level, you become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied.`
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [],
         spellcasting: {
             ability: 'WIS',
@@ -2663,6 +2678,14 @@ In addition, you understand a set of secret signs and symbols used to convey sho
 Once you use this feature, you can’t use it again until you finish a short or long rest.`
             },
         ],
+        asi: {
+            4: '1',
+            8: '2',
+            10: '3',
+            12: '4',
+            16: '5',
+            19: '6'
+        },
         resources: [
             {
                 name: 'Sneak Attack',
@@ -2950,6 +2973,7 @@ To be eligible, a spell must be incapable of targeting more than one creature at
                 }
             }
         ],
+        asi: ASI_LEVELS_STANDARD,
         spellcasting: {
             ability: 'CHA',
             ability_info: `Charisma is your spellcasting ability for your sorcerer spells, since the power of your magic relies on your ability to project your will into the world. You use your Charisma whenever a spell refers to your spellcasting ability. 
@@ -3274,6 +3298,7 @@ At higher levels, you gain more warlock spells of your choice that can be cast i
                 content: `At 20th level, you can draw on your inner reserve of mystical power while entreating your patron to regain expended spell slots. You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.`
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [
             {
                 name: 'Mystic Arcanum',
@@ -3682,6 +3707,7 @@ Each time you gain a wizard level, you can add two wizard spells of your choice 
 \nIf you want to cast either spell at a higher level, you must expend a spell slot as normal.`
             },
         ],
+        asi: ASI_LEVELS_STANDARD,
         resources: [],
         spellcasting: {
             ability: 'INT',

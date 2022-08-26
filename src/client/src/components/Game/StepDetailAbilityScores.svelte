@@ -3,11 +3,15 @@
     import type QuickCreateData from "../../interfaces/QuickCreateData";
     import { formatModifier, isMessagePublic, sendSkillCheck, socket } from "../../stores";
     import InPlaceEdit from "../InPlaceEdit.svelte";
-    import { getASModifier, getRandomIndex } from "../../util/util";
+    import { findHighestPossibleValue, getASModifier, getRandomIndex } from "../../util/util";
     import ChipsDndZone from "./ChipsDndZone.svelte";
     import type MessageData from "../../interfaces/MessageData";
     import { nanoid } from "nanoid/non-secure";
     import IconButton, { Icon } from '@smui/icon-button';
+import BoxWithList from "../BoxWithList.svelte";
+import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
+import MarkdownBoxText from "./MarkdownBoxText.svelte";
+import type { QCAbilityScores } from "../../interfaces/QCAbilityScores";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -150,6 +154,19 @@
         charASObj.value = (~~charASObj.base + ~~characterParts.race?.as_increase[AS] + ~~charASObj.asi_bonus + ~~charASObj.other_bonus).toString();
     });
 
+    const addFeat = () => {
+        genInfo.feats = genInfo.feats.concat([{ name: '', content: '' }]); 
+    }
+
+    const deleteFeat = (feat) => {
+        genInfo.feats = genInfo.feats.filter((featIter) => featIter !== feat);
+    }
+
+    // _ is there for reactivity
+    const changeASIBonus = (_: QCAbilityScores, tag: string, delta: number) => {
+        abilityScores[tag].asi_bonus = (~~abilityScores[tag].asi_bonus + delta).toString();
+    }
+
 </script>
 
 
@@ -194,6 +211,14 @@
                 </box>
                 <operand>+</operand>
                 <box class="asi-bonus as-bonus-box">
+                    <div class='asi-bonus-buttons'>
+                        <sendable on:click={changeASIBonus(abilityScores, AS, 1)}>
+                            <Icon class="material-icons">keyboard_double_arrow_up</Icon>
+                        </sendable>
+                        <sendable on:click={changeASIBonus(abilityScores, AS, -1)}>
+                            <Icon class="material-icons">keyboard_double_arrow_down</Icon> 
+                        </sendable>
+                    </div>
                     <div class="box-main-text">
                         <InPlaceEdit bind:value={abilityScores[AS].asi_bonus} editWidth="60%" editHeight="60%" on:submit={() => {}}/>
                     </div>
@@ -267,7 +292,37 @@
             </div>
         </box>
     </div>
-    <box class="asi"></box>
+    <div class="asi">
+        <div class="asi-available row-box-with-label">
+            <box class="row-box-value">
+                {characterParts.class ? findHighestPossibleValue(characterParts.class.asi, characterParts.class.level, '0') : 'X'}
+            </box>
+            <box class="row-box-label">
+                ASI Available  
+            </box>
+        </div>
+
+        <box class="asi-info">
+            <MarkdownBoxText text={genInfo.asiInfo}></MarkdownBoxText>
+            <div class="box-label auto-margin">
+                Ability Score Improvement
+            </div>
+        </box>
+
+        <BoxWithList label='Feats' inlineStyle='grid-area: feats;' addNewListItem={addFeat} isModifyDisabled>
+            <div class="feats-list" slot='list'>
+                {#each genInfo.feats as feat, index}
+                    <SimpleAccordionDetail 
+                        bind:value={feat.name} 
+                        bind:content={feat.content}
+                        icon='arm-flex'
+                        editWidth='12rem'
+                        deleteItem={() => deleteFeat(feat)}>
+                    </SimpleAccordionDetail>
+                {/each}
+            </div>
+        </BoxWithList>
+    </div>
 </qc-ability-scores>
 
 <style>
@@ -407,6 +462,20 @@
         align-items: center;
     }
 
+    .asi-bonus {
+        position: relative;
+    }
+
+    .asi-bonus-buttons {
+        position: absolute;
+        top: calc(100%/2 - 28px);
+        right: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     .custom-gen-field {
         display: flex;
         flex-direction: row;
@@ -455,6 +524,71 @@
         align-items: center;
     }
 
-    .asi { grid-area: asi; }
+    .asi { grid-area: asi;
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; 
+        gap: 0.5em 0.5em; 
+        grid-template-areas: 
+            "asi-available asi-available asi-available asi-available feats feats feats feats"
+            "asi-info asi-info asi-info asi-info feats feats feats feats"
+            "asi-info asi-info asi-info asi-info feats feats feats feats"
+            "asi-info asi-info asi-info asi-info feats feats feats feats"
+            "asi-info asi-info asi-info asi-info feats feats feats feats"
+            "asi-info asi-info asi-info asi-info feats feats feats feats"; 
+    }
+
+    .feats-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25em;
+    }
+
+    .asi-available { grid-area: asi-available; }
+
+    .row-box-with-label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .row-box-value {
+        display: flex;
+        width: 2em;
+        height: 2em;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        font-weight: var(--semi-bold);
+        font-family: Quicksand;
+        z-index: 2;
+    }
+
+    .row-box-label {
+        padding: 0.5em;
+        text-transform: uppercase;
+        font-family: Athiti;
+        margin-left: -5px;
+        z-index: 1;
+        padding-left: 15px;
+        padding-right: 0.75em;
+    }
+
+    .asi-info { grid-area: asi-info; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        width: 100%;    
+    }
+
+    .box-label.auto-margin {
+        margin-top: auto;
+    }
 
 </style>

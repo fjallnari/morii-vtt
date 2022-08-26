@@ -13,6 +13,7 @@
     export let isSelected: boolean = false;
     export let editable: boolean = true;
     export let textareaHeight: string = '10em';
+    export let editWidth: string = '18rem';
     export let deleteItem: () => void = () => {};
     export let toggleItem: () => void = () => {};
 
@@ -37,7 +38,7 @@
         {/if}
         <div class="feature-name {selectable ? 'selectable': ''}" on:click={toggleItem}>
             {#if editable}
-                <InPlaceEdit bind:value editWidth='18rem' editHeight='1.5rem' on:submit={() => {}}/>
+                <InPlaceEdit bind:value editWidth={editWidth} editHeight='1.5rem' on:submit={() => {}}/>
             {:else}
                 {value}
             {/if}

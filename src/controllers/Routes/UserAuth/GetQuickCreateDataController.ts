@@ -5,6 +5,7 @@ import { CHARACTER_SKELETON } from "../../../enum/CHARACTER_SKELETON";
 import { CLASSES } from "../../../enum/srd/CLASSES";
 import { SPELLS } from "../../../enum/srd/SPELLS";
 import { QC_AS_BLANK } from "../../../enum/QC_AS_BLANK";
+import { ASI } from "../../../enum/srd/ASI";
 
 export default class GetQuickCreateDataController extends RouteController {
 
@@ -26,7 +27,9 @@ export default class GetQuickCreateDataController extends RouteController {
                         { id: 5, name: "WIS" },
                         { id: 6, name: "CHA" },
                     ], 
-                    customField: ''
+                    customField: '',
+                    asiInfo: ASI,
+                    feats: []
                 } 
             });
         }

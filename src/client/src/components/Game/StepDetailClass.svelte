@@ -39,10 +39,9 @@
     const addFeature = () => {
         selectedClass.features = selectedClass.features.concat([ {name: '', level: 1, content: ''} ]); 
     }
-
-    // not optimal, custom feature names dont have to be unique
-    const deleteFeature = (name: string) => {
-        selectedClass.features = selectedClass.features.filter((feature) => feature.name !== name);
+    
+    const deleteFeature = (feature) => {
+        selectedClass.features = selectedClass.features.filter((featureIter) => featureIter !== feature);
     }
 
 </script>
@@ -75,7 +74,7 @@
                         bind:value={feature.name} 
                         bind:content={feature.content}
                         icon='arrow-projectile-multiple' 
-                        deleteItem={() => deleteFeature(feature.name)}
+                        deleteItem={() => deleteFeature(feature)}
                         textareaHeight='15em'>
                     </SimpleAccordionDetail>
                 {/each}

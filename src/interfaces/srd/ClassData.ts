@@ -1,6 +1,7 @@
 import { OTHER_PROF } from "../../enum/OTHER_PROF";
 import { Spell } from "../Character";
 
+type LevelsRecord = Record<number, string>;
 
 interface ClassHitPoints {
     hit_die: number, // e.g. '12', {level}d12
@@ -18,12 +19,10 @@ interface ClassTool {
     choose_list?: string[]
 }
 
-
 interface ClassOtherProf {
     type: OTHER_PROF.ARMOR | OTHER_PROF.WEAPON,
     name: string
 }
-
 
 interface ClassSkills {
     final: string[],
@@ -52,7 +51,6 @@ interface ClassFeature {
     name: string,
     level?: number, // level on which the feature first appears
     content: string,
-    variants?: Record<number, Partial<ClassFeature>> // level ~ variant
 }
 
 interface ClassResource {
@@ -60,7 +58,7 @@ interface ClassResource {
     total: string,
     current: string,
     type: 'simple' | 'complex',
-    levels?: Record<number, string> // total per level
+    levels?: LevelsRecord // total per level
 }
 
 interface ClassSpellsByLevel {
@@ -74,7 +72,7 @@ type SpellsKnown = Record<number, number>;
 interface UniqueSpellcastingInfo {
     label: string,
     type: 'simple' | 'select-features',
-    levels?: Record<number, string>,
+    levels?: LevelsRecord,
     content?: string,
     final?: ClassFeature[],
     options?: ClassFeature[]    
@@ -103,6 +101,7 @@ export default interface ClassData {
     skills: ClassSkills,
     equipment: ClassEquipment,
     features: ClassFeature[],
+    asi: LevelsRecord,
     resources: ClassResource[],
     spellcasting?: ClassSpellcasting
 }

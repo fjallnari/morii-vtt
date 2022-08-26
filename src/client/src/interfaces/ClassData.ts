@@ -1,5 +1,7 @@
 import type { Spell } from "./Character"
 
+type LevelsRecord = Record<number, string>;
+
 interface ClassHitPoints {
     hit_die: number, // e.g. '12', {level}d12
     current?: string,
@@ -16,12 +18,10 @@ interface ClassTool {
     choose_list?: string[]
 }
 
-
 interface ClassOtherProf {
     type: 1 | 2, // ARMOR | WEAPON
     name: string
 }
-
 
 interface ClassSkills {
     final: string[],
@@ -58,7 +58,7 @@ export interface ClassResource {
     type: 'simple' | 'complex',
     total: string,
     current: string,
-    levels?: Record<number, string>
+    levels?: LevelsRecord
 }
 
 interface ClassSpellsByLevel {
@@ -72,7 +72,7 @@ type SpellsKnown = Record<number, number>;
 interface UniqueSpellcastingInfo {
     label: string,
     type: 'simple' | 'select-features',
-    levels?: Record<number, string>,
+    levels?: LevelsRecord,
     content?: string,
     final?: ClassFeature[],
     options?: ClassFeature[]    
@@ -102,6 +102,7 @@ export default interface ClassData {
     skills: ClassSkills,
     equipment: ClassEquipment,
     features: ClassFeature[],
+    asi: LevelsRecord,
     resources: ClassResource[],
     spellcasting?: ClassSpellcasting
 }

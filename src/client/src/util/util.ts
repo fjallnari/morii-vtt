@@ -29,8 +29,8 @@ export const randomChoice = <T>(array: T[]) => {
  * looks through the record of levels ( level: total) to find the highest one under or equal to current class level
  * this way we don't have to have all the levels saved, only the ones where the value change
  */
-export const findHighestPossibleValue = <T>(record: Record<number, T>, classLevel: number) => {
-    if ( !record ) { return '' }
+export const findHighestPossibleValue = <T>(record: Record<number, T>, classLevel: number, placeholder: string = '') => {
+    if ( !record ) { return placeholder }
 
     for (var iterLevel = classLevel; iterLevel >= 1; iterLevel--) {
         if (record[iterLevel]) {
@@ -38,5 +38,5 @@ export const findHighestPossibleValue = <T>(record: Record<number, T>, classLeve
         }
     }
 
-    return '';
+    return placeholder;
 }

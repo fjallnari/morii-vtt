@@ -8,10 +8,10 @@
     import type MessageData from "../../interfaces/MessageData";
     import { nanoid } from "nanoid/non-secure";
     import IconButton, { Icon } from '@smui/icon-button';
-import BoxWithList from "../BoxWithList.svelte";
-import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
-import MarkdownBoxText from "./MarkdownBoxText.svelte";
-import type { QCAbilityScores } from "../../interfaces/QCAbilityScores";
+    import BoxWithList from "../BoxWithList.svelte";
+    import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
+    import MarkdownBoxText from "./MarkdownBoxText.svelte";
+    import type { QCAbilityScores } from "../../interfaces/QCAbilityScores";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

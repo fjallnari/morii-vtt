@@ -121,6 +121,8 @@
         font-size: 1em;
         padding: 0.4em;
         background-color: var(--clr-box-bg-light);
+        flex-wrap: wrap;
+        max-width: 90%;
     }
 
     .chip.selectable {

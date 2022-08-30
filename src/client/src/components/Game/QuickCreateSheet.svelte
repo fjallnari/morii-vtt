@@ -11,6 +11,7 @@
     import StepDetailClass from "./StepDetailClass.svelte";
     import StepDetailSpellcasting from "./StepDetailSpellcasting.svelte";
     import StepDetailAbilityScores from "./StepDetailAbilityScores.svelte";
+    import StepDetailBackground from "./StepDetailBackground.svelte";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -24,7 +25,7 @@
         { name: 'Class', icon: 'arrow-projectile-multiple', filled_in: false, component: StepDetailClass },
         { name: 'Spellcasting', icon: 'fire', filled_in: false, component: StepDetailSpellcasting },
         { name: 'Ability Scores', icon: 'counter', filled_in: false, component: StepDetailAbilityScores },
-        { name: 'Background', icon: 'sprout', filled_in: false },
+        { name: 'Background', icon: 'sprout', filled_in: false, component: StepDetailBackground },
         { name: 'Summary', icon: 'clipboard-text', filled_in: false },
     ];
 
@@ -45,6 +46,7 @@
                 characterTemplate = characterSkeleton;
                 characterParts.ability_scores = quickCreateData.asBlank;
                 characterParts.as_gen_info = quickCreateData.asGenInfo;
+                characterParts.bio = quickCreateData.bio;
                 return quickCreateData as QuickCreateData;
             }
             catch (err) {

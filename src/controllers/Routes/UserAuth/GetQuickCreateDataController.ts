@@ -6,6 +6,7 @@ import { CLASSES } from "../../../enum/srd/CLASSES";
 import { SPELLS } from "../../../enum/srd/SPELLS";
 import { QC_AS_BLANK } from "../../../enum/QC_AS_BLANK";
 import { ASI } from "../../../enum/srd/ASI";
+import { QC_BIO_BLANK } from "../../../enum/QC_BIO_BLANK";
 
 export default class GetQuickCreateDataController extends RouteController {
 
@@ -30,7 +31,8 @@ export default class GetQuickCreateDataController extends RouteController {
                     customField: '',
                     asiInfo: ASI,
                     feats: []
-                } 
+                },
+                bio: QC_BIO_BLANK
             });
         }
         catch (error) {

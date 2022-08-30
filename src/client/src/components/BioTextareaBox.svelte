@@ -2,13 +2,15 @@
     import { modifyCharacter } from "../stores";
 
     export let charAttribute: string;
-    export let styleClass: string;
+    export let styleClass: string = "";
+    export let inlineStyle: string = "";
     export let label: string = styleClass;
+    export let socketModifyEnabled = true;
 
 </script>
 
-<box class="{styleClass} box-with-label">
-    <textarea on:change={() => $modifyCharacter()} bind:value={charAttribute}></textarea>
+<box class="{styleClass} box-with-label" style={inlineStyle}>
+    <textarea on:change={() => socketModifyEnabled ? $modifyCharacter() : {}} bind:value={charAttribute}></textarea>
     <div class="box-justify-filler"></div>
     <div class="box-label">
         { label ? label : styleClass }

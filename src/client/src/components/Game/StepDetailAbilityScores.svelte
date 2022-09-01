@@ -316,7 +316,7 @@
                         bind:value={feat.name} 
                         bind:content={feat.content}
                         icon='arm-flex'
-                        editWidth='12rem'
+                        editWidth='8rem'
                         deleteItem={() => deleteFeat(feat)}>
                     </SimpleAccordionDetail>
                 {/each}

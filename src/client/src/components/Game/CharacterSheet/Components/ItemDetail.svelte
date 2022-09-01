@@ -71,6 +71,7 @@
     }
 
     $: item.is_equipped = item.is_equipped && ~~item.amount !== 0;
+    $: item.amount = item.amount === '' ? '0' : item.amount;
 
 </script>
 

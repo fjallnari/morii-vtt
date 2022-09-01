@@ -10,7 +10,7 @@
 </script>
 
 <box class="{styleClass} box-with-label" style={inlineStyle}>
-    <textarea on:change={() => socketModifyEnabled ? $modifyCharacter() : {}} bind:value={charAttribute}></textarea>
+    <textarea class='{charAttribute ? '' : 'placeholder'}' on:change={() => socketModifyEnabled ? $modifyCharacter() : {}} bind:value={charAttribute}></textarea>
     <div class="box-justify-filler"></div>
     <div class="box-label">
         { label ? label : styleClass }
@@ -28,6 +28,14 @@
         outline: none !important;
         border: 2px solid var(--clr-accent-normal);
         caret-color: var(--clr-accent-normal);
+        background-image: none !important;
+    }
+
+    textarea.placeholder {
+        background-image: url('../static/pencil.svg');
+        background-size: 10%;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .box-with-label {

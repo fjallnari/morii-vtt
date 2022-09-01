@@ -9,6 +9,7 @@
     export let content: string = '';
     export let source: string = '';
     export let icon: string = '';
+    export let amount: string = undefined;
     export let selectable: boolean = false;
     export let isSelected: boolean = false;
     export let editable: boolean = true;
@@ -18,17 +19,24 @@
     export let toggleItem: () => void = () => {};
 
     let isOpen: boolean = false;
+
+    $: amount = amount === '' ? '0' : amount;
     
 </script>
 
 <box class="feature-main-container" transition:fade|local style='background-color: {isSelected ? 'var(--clr-accent-dark)' : 'var(--clr-box-bg-light)'};'>
-    <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable ? 'type' : 'name'} feature-name feature-menu";`}>
+    <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable || typeof amount != 'undefined' ? 'type' : 'name'} feature-name feature-menu";`}>
         {#if icon}
             <div class="feature-type">
                 <img class="feature-type-icon" 
                     src="../static/{icon}.svg" 
                     alt="feature-type-icon"
                 >
+            </div>
+        {/if}
+        {#if typeof amount != 'undefined'}
+            <div class="feature-type feature-amount">
+                <InPlaceEdit bind:value={amount} editWidth='1.5em' editHeight='1.5em' on:submit={() => {}}/>x
             </div>
         {/if}
         {#if selectable && isSelected}
@@ -83,16 +91,27 @@
 
     .feature-summary {
         display: grid; 
-        grid-template-columns: 1fr 8fr 1fr; 
+        grid-template-columns: 1fr 20fr 1fr; 
         grid-template-rows: 2fr; 
         gap: 0.5em;
         padding: 0.5em 0em;
     }
 
-    .feature-type { grid-area: feature-type; }
+    .feature-type { grid-area: feature-type; 
+        margin-left: 0.5em;
+    }
 
     .feature-type.selected {
         padding-left: 0.25em;
+    }
+
+    .feature-amount {
+        font-weight: var(--semi-bold);
+        width: 2em;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .feature-name { grid-area: feature-name; 
@@ -105,7 +124,9 @@
         cursor: pointer;
     }
 
-    .feature-menu { grid-area: feature-menu; }
+    .feature-menu { grid-area: feature-menu; 
+        margin-right: 0.5em;
+    }
 
     .feature-summary > div, .feature-summary > sendable {
         display: flex;

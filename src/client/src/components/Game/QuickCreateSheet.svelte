@@ -21,12 +21,12 @@
     let characterParts: Partial<QuickCreateCharacterParts> = {};
 
     let creationSteps = [
-        { name: 'Race', icon: 'account-supervisor', filled_in: false, component: StepDetailRace },
-        { name: 'Class', icon: 'arrow-projectile-multiple', filled_in: false, component: StepDetailClass },
-        { name: 'Spellcasting', icon: 'fire', filled_in: false, component: StepDetailSpellcasting },
-        { name: 'Ability Scores', icon: 'counter', filled_in: false, component: StepDetailAbilityScores },
-        { name: 'Background', icon: 'sprout', filled_in: false, component: StepDetailBackground },
-        { name: 'Summary', icon: 'clipboard-text', filled_in: false },
+        { name: 'Race', icon: 'account-supervisor', isCompleted: false, component: StepDetailRace },
+        { name: 'Class', icon: 'arrow-projectile-multiple', isCompleted: false, component: StepDetailClass },
+        { name: 'Spellcasting', icon: 'fire', isCompleted: false, component: StepDetailSpellcasting },
+        { name: 'Ability Scores', icon: 'counter', isCompleted: false, component: StepDetailAbilityScores },
+        { name: 'Background', icon: 'sprout', isCompleted: false, component: StepDetailBackground },
+        { name: 'Summary', icon: 'clipboard-text', isCompleted: false },
     ];
 
     const closeDialog = () => {
@@ -63,8 +63,6 @@
         createCharacter(characterTemplate);
     }
 
-    $ : characterParts.spellcasting = characterParts.class && typeof characterParts.class.spellcasting !== 'undefined';
-
 </script>
 
 <SimpleButton value='Quick-Create' icon="electric_bolt" type="primary" onClickFn={() => open = true}></SimpleButton>
@@ -90,7 +88,7 @@
                             alt="step-icon"
                         >
                         {step.name}
-                        {#if characterParts[`${step.name.toLowerCase()}`]} <!-- TODO -->
+                        {#if step.isCompleted} <!-- TODO -->
                             <Icon id="filled-in-icon" class="material-icons">done</Icon>
                         {/if}
                     </box>
@@ -101,6 +99,7 @@
                 this={creationSteps[selectedStepIndex].component}
                 quickCreateData={quickCreateData}
                 bind:characterParts={characterParts}
+                bind:isCompleted={creationSteps[selectedStepIndex].isCompleted}
             />
 
             <dialog-buttons class="quick-create-buttons">

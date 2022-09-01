@@ -17,11 +17,18 @@
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
+    export let isCompleted: boolean;
 
     let selectedClass: ClassData | undefined = characterParts.class;
     
     // fires up on every change of selected class
     $ : characterParts.class = selectedClass;
+    $ : isCompleted = selectedClass 
+        && selectedClass !== undefined
+        && selectedClass.hp.current !== ''
+        && selectedClass.equipment.every(line => line.final.length !== 0)
+        && selectedClass.tool_prof.tools.every(tool => tool.name !== '')
+        && selectedClass.skills.final.length === selectedClass.skills.choose_n;
 
     const placeholderBoxes = [
         { label: 'Class Resources', gridArea: 'class-resources' },

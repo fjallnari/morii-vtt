@@ -11,6 +11,16 @@
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
+    export let isCompleted: boolean;
+
+    $ : isCompleted = characterParts.bio
+        && characterParts.bio !== undefined
+        && characterParts.bio.personality !== ''
+        && characterParts.bio.ideals !== ''
+        && characterParts.bio.bonds !== ''
+        && characterParts.bio.flaws !== ''
+        && characterParts.bio.skills.every(skill => skill !== '')
+        && characterParts.bio.tools.length + characterParts.bio.languages.length === 2;
 
     const addFeature = () => {
         characterParts.bio.features = characterParts.bio.features.concat([{ name: '', content: '' }]); 

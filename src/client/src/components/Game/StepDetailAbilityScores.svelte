@@ -15,6 +15,7 @@
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
+    export let isCompleted: boolean;
 
     interface GenOption {
         name: string,
@@ -27,6 +28,10 @@
 
     $: abilityScores = characterParts.ability_scores;
     $: genInfo = characterParts.as_gen_info;
+
+    $ : isCompleted = abilityScores 
+        && abilityScores !== undefined
+        && Object.keys(abilityScores).every(AS => abilityScores[AS].base !== '');
 
     const asGenOpts: GenOption[] = [
         { name: 'Standard Array', genFce: async () => [15, 14, 13, 12, 10, 8] },

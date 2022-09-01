@@ -15,12 +15,14 @@
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
+    export let isCompleted: boolean;
 
     let selectedRace: RaceData | undefined = characterParts.race;
     let chosenTool: string = '';
 
     // fires up on every change of selected race
     $ : characterParts.race = selectedRace;
+    $ : isCompleted = selectedRace && selectedRace !== undefined;
 
     const addTrait = () => {
         selectedRace.features = selectedRace.features.concat([ {name: '', content: ''} ]); 
@@ -62,6 +64,8 @@
                 <div slot='value'>
                     {#if selectedRace && selectedRace.as_increase}
                         <InPlaceEdit bind:value={selectedRace.as_increase[`${abilityTag}`]} editWidth="2em" editHeight="2em" on:submit={() => {}}/>
+                    {:else}
+                        <div>X</div>
                     {/if}
                 </div>
             </RowBoxWithLabel>

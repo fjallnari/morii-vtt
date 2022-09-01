@@ -14,13 +14,19 @@
     import { SPELLS_BY_LEVEL_BLANK } from "../../enum/SpellsByLevelBlank";
     import SimpleButton from "../SimpleButton.svelte";
     import InPlaceEdit from "../InPlaceEdit.svelte";
-    import BoxWithChips from "../BoxWithChips.svelte";
     import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
  
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
+    export let isCompleted: boolean;
 
     let selectedClass: ClassData | undefined = characterParts.class;
+
+    $ : isCompleted = selectedClass 
+        && selectedClass !== undefined
+        && selectedClass.spellcasting
+        && selectedClass.spellcasting !== undefined
+        && selectedClass.spellcasting.ability !== '---';
 
     let currentFilter = 0;
     let newSpell = undefined;

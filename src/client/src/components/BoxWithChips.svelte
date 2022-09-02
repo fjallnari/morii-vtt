@@ -7,11 +7,9 @@
     export let gridArea: string = label.toLowerCase();
     export let maxHeight: string = '';
     export let headerText: string = '';
-    export let chipsType: 'crud' | 'select-n' = 'crud';
+    export let chipsType: 'crud' | 'select-n' | 'readonly' = 'crud';
     export let selectNFinalArray: any[] = [];
     export let selectNMaxChips: number = 0;
-    
-
 
     const addChip = () => {
         // just so BoxWithChips works with either object, arrays of strings or simple strings
@@ -35,6 +33,11 @@
         }        
     }
 
+    const isBlank = (chip: any) => {
+        const chipName = typeof chip === 'object' ? chip.name ?? (chip[0] && chip.length > 1 ? '' : chip[0]) ?? '' : chip;
+        return chipName === '' || chipName === '???' || chipName === '---';
+    }
+
 </script>
 
 
@@ -49,9 +52,9 @@
             </sendable>
         </div>
     {/if}
-    <div class="chips-array box-main-text">
+    <div class="chips-array box-main-text {chipsType === 'readonly' ? chipsType : ''}">
         {#each chipsArray as chip, index}
-            <box class="chip {chipsType === 'select-n' ? 'selectable' : ''} {selectNFinalArray.includes(chip) ? 'selected' : ''}" on:click={() => toggleChip(chip)}>
+            <box class="chip{isBlank(chip) ? ' error': ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" on:click={() => toggleChip(chip)}>
                 {#if chipsType === 'crud'}
                     <sendable class="delete-chip" on:click={() => { deleteChip(index)}}>
                         <Icon class="material-icons">{'clear'}</Icon>
@@ -88,6 +91,10 @@
         scrollbar-width: thin;
         margin-bottom: 0.2em;
         padding-bottom: 4px;
+    }
+
+    .chips-array.readonly {
+        margin-top: 0.5em;
     }
 
     .chip {

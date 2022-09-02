@@ -266,9 +266,13 @@
         animation: color-change 3s infinite;
     }
 
+	:global(.error) {
+        border: 2px dashed var(--clr-contrast-normal);
+    }
+
     @keyframes color-change {
         0% { color: var(--clr-text); }
-        50% { color: var(--clr-accent-light); }
+        50% { color: var(--clr-contrast-normal); }
         100% { color: var(--clr-text); }
     }
 

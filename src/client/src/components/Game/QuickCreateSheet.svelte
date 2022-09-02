@@ -12,6 +12,7 @@
     import StepDetailSpellcasting from "./StepDetailSpellcasting.svelte";
     import StepDetailAbilityScores from "./StepDetailAbilityScores.svelte";
     import StepDetailBackground from "./StepDetailBackground.svelte";
+    import StepDetailSummary from "./StepDetailSummary.svelte";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -26,7 +27,7 @@
         { name: 'Spellcasting', icon: 'fire', isCompleted: false, component: StepDetailSpellcasting },
         { name: 'Ability Scores', icon: 'counter', isCompleted: false, component: StepDetailAbilityScores },
         { name: 'Background', icon: 'sprout', isCompleted: false, component: StepDetailBackground },
-        { name: 'Summary', icon: 'clipboard-text', isCompleted: false },
+        { name: 'Summary', icon: 'clipboard-text', isCompleted: false, component: StepDetailSummary },
     ];
 
     const closeDialog = () => {

@@ -10,23 +10,36 @@ import SKILLS from "../../enum/Skills";
     export let isCompleted: boolean;
 
 
-    $: skillsFinal = [].concat(characterParts.race?.skill_prof ?? []).concat(characterParts.class?.skills.final ?? []).concat(characterParts.bio.skills);
+    $: skillsFinal = [].concat({ name: 'race', items: characterParts.race?.skill_prof ?? []})
+        .concat({name: 'class', items: characterParts.class?.skills.final ?? []})
+        .concat({name: 'background', items: characterParts.bio.skills});
+    
     $: languagesFinal = [].concat(characterParts.race?.languages ?? []).concat(characterParts.bio.languages);
+    $: toolsFinal = [].concat(characterParts.race?.tools_prof ?? []).concat(characterParts.class?.tool_prof.tools.map(tool => tool.name) ?? []).concat(characterParts.bio.tools);
+    $: otherProfFinal = [].concat(characterParts.race?.other_prof.map(prof => prof.name) ?? []).concat(characterParts.class?.other_prof.map(prof => prof.name) ?? []);
 
 </script>
  
 <summary-detail>
-    <BoxWithChips bind:chipsArray={skillsFinal} label='Skills' let:index={index} gridArea='skills' chipsType='readonly'>
-        {skillsFinal[index]}
-    </BoxWithChips>
+    <BoxWithChips bind:chipsArray={skillsFinal} label='Skills' gridArea='skills' chipsType='with-categories'></BoxWithChips>
 
     <BoxWithChips bind:chipsArray={languagesFinal} label='Languages' let:index={index} gridArea='languages' chipsType='readonly'>
         {languagesFinal[index]}
     </BoxWithChips>
 
-    <box class="tools"></box>
-    <box class="other-prof"></box>
-    <box class="bio"></box>
+    <BoxWithChips bind:chipsArray={toolsFinal} label='Tools' let:index={index} gridArea='tools' chipsType='readonly'>
+        {toolsFinal[index]}
+    </BoxWithChips>
+
+    <BoxWithChips bind:chipsArray={otherProfFinal} label='Other Proficiencies' let:index={index} gridArea='other-prof' chipsType='readonly'>
+        {otherProfFinal[index]}
+    </BoxWithChips>
+
+    <div class="bio">
+        <box class="details"></box>
+        <box class="error-log"></box>
+    </div>
+
     <box class="as"></box>
     <box class="equipment"></box>
     <box class="features"></box>
@@ -39,8 +52,8 @@ import SKILLS from "../../enum/Skills";
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         gap: 0.5em 0.5em; 
         grid-template-areas: 
-            "bio bio bio bio bio bio skills skills skills languages languages languages"
-            "bio bio bio bio bio bio skills skills skills languages languages languages"
+            "bio bio bio bio bio bio skills skills skills skills languages languages"
+            "bio bio bio bio bio bio skills skills skills skills languages languages"
             "bio bio bio bio bio bio tools tools tools other-prof other-prof other-prof"
             "bio bio bio bio bio bio tools tools tools other-prof other-prof other-prof"
             "as as as as equipment equipment equipment equipment features features features features"
@@ -48,10 +61,22 @@ import SKILLS from "../../enum/Skills";
             "as as as as equipment equipment equipment equipment features features features features"
             "as as as as equipment equipment equipment equipment features features features features"; 
     }
-    
-    .tools { grid-area: tools; }
-    .other-prof { grid-area: other-prof; }
-    .bio { grid-area: bio; }
+
+
+    .bio { grid-area: bio; 
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1fr 1fr 1fr; 
+        gap: 0.5em 0.5em; 
+        grid-template-areas: 
+            "details details error-log error-log"
+            "details details error-log error-log"
+            "details details error-log error-log";     
+    }
+
+    .details { grid-area: details; }
+    .error-log { grid-area: error-log; }
+
     .as { grid-area: as; }
     .equipment { grid-area: equipment; }
     .features { grid-area: features; }

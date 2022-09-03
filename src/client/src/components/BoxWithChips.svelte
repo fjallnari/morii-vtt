@@ -7,7 +7,7 @@
     export let gridArea: string = label.toLowerCase();
     export let maxHeight: string = '';
     export let headerText: string = '';
-    export let chipsType: 'crud' | 'select-n' | 'readonly' = 'crud';
+    export let chipsType: 'crud' | 'select-n' | 'readonly' | 'with-categories' = 'crud';
     export let selectNFinalArray: any[] = [];
     export let selectNMaxChips: number = 0;
 
@@ -52,19 +52,36 @@
             </sendable>
         </div>
     {/if}
-    <div class="chips-array box-main-text {chipsType === 'readonly' ? chipsType : ''}">
-        {#each chipsArray as chip, index}
-            <box class="chip{isBlank(chip) ? ' error': ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" on:click={() => toggleChip(chip)}>
-                {#if chipsType === 'crud'}
-                    <sendable class="delete-chip" on:click={() => { deleteChip(index)}}>
-                        <Icon class="material-icons">{'clear'}</Icon>
-                    </sendable>
-                {:else if selectNFinalArray.includes(chip)}
-                    <Icon class="material-icons">{'check'}</Icon>
+    <div class="chips-array box-main-text {chipsType === 'readonly' || chipsType === 'with-categories' ? 'top-margin' : ''}">
+        {#if chipsArray.length === 0}
+            <div>No {label.toLowerCase()}</div>
+        {:else if chipsType === 'with-categories'}
+            {#each chipsArray as category, catIndex}
+                {#if category.items.length !== 0}
+                    <div class="category">
+                        <div class='category-label box-label'>{category.name}</div>
+                        {#each category.items as chip, index}
+                            <box class="chip{isBlank(chip) ? ' error-pulse': ''}">
+                                {chip}
+                            </box>
+                        {/each}
+                    </div>
                 {/if}
-                <slot index={index}></slot>
-            </box>
-        {/each}         
+            {/each}
+        {:else}
+            {#each chipsArray as chip, index}
+                <box class="chip{isBlank(chip) ? ' error-pulse': ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" on:click={() => toggleChip(chip)}>
+                    {#if chipsType === 'crud'}
+                        <sendable class="delete-chip" on:click={() => { deleteChip(index)}}>
+                            <Icon class="material-icons">{'clear'}</Icon>
+                        </sendable>
+                    {:else if selectNFinalArray.includes(chip)}
+                        <Icon class="material-icons">{'check'}</Icon>
+                    {/if}
+                    <slot index={index}></slot>
+                </box>
+            {/each}
+        {/if}      
     </div>
     <div class="box-justify-filler"></div>
     <div class="box-label">
@@ -93,7 +110,7 @@
         padding-bottom: 4px;
     }
 
-    .chips-array.readonly {
+    .chips-array.top-margin {
         margin-top: 0.5em;
     }
 
@@ -133,6 +150,26 @@
         justify-content: center;
         align-items: center;
         text-align: center;
+    }
+
+    /* TODO - for box with chips with categories */
+    .category {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5em;
+        border: var(--clr-text) 2px solid;
+        border-radius: 4px;
+        padding: 0.3em;
+        position: relative;
+        margin-bottom: 1em;
+        opacity: 0.8;
+    }
+
+    .category-label {
+        position: absolute;
+        bottom: 0%;
+        left: 50%;
+        transform: translate(-50%, 120%);
     }
 
 </style>

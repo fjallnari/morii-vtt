@@ -270,10 +270,22 @@
         border: 2px dashed var(--clr-contrast-normal);
     }
 
+	:global(.error-pulse) {
+		border: 2px dashed transparent;
+		border-radius: 4px;
+		animation: border-color-change 3s infinite;
+	}
+
     @keyframes color-change {
         0% { color: var(--clr-text); }
         50% { color: var(--clr-contrast-normal); }
         100% { color: var(--clr-text); }
+    }
+
+	@keyframes border-color-change {
+        0% { border-color: transparent; }
+        50% { border-color: var(--clr-contrast-normal); }
+        100% { border-color: transparent; }
     }
 
 	

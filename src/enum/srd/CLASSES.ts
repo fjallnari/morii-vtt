@@ -190,7 +190,7 @@ export const CLASSES: ClassData[] = [
             }
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'STR', 'CON' ],
@@ -759,7 +759,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
             },
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'WIS', 'CHA' ],
@@ -1303,7 +1303,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
             },
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'STR', 'CON' ],
@@ -1851,7 +1851,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
             },
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'WIS', 'CHA' ],
@@ -2164,7 +2164,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
             },
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'STR', 'DEX' ],
@@ -2732,7 +2732,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
             },
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'CON', 'CHA' ],
@@ -3089,7 +3089,7 @@ Additionally, when you gain a level in this class, you can choose one of the sor
             }
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'WIS', 'CHA' ],
@@ -3546,7 +3546,7 @@ You can communicate telepathically with your familiar and perceive through your 
             },
         ],
         tool_prof: {
-            label: 'None',
+            label: '',
             tools: []
         },
         saving_throws: [ 'INT', 'WIS' ],

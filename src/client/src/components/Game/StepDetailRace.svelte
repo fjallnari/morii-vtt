@@ -49,11 +49,12 @@
 
 <div class="race-detail">
     <div class="select-race">
-        <h4 class="{selectedRace ? '' : 'pulse'}">Select race:</h4>
+        <h4>Select race:</h4>
         <Svelecte 
             options={quickCreateData.races}
             valueAsObject
             placeholder='Races'
+            class="svelecte-control{selectedRace ? '' : ' error-pulse'}"
             bind:value={selectedRace}>
         </Svelecte>
     </div>

@@ -57,11 +57,12 @@
     <p class='subclass-disclaimer'>Subclass has to be filled in manually since most of them are not publicly available under the OGL license.</p>
 
     <div class="select-class">
-        <h4 class="{selectedClass ? '' : 'pulse'}">Select class:</h4>
+        <h4>Select class:</h4>
         <Svelecte 
             options={quickCreateData.classes}
             valueAsObject
             placeholder='Classes'
+            class="svelecte-control{selectedClass ? '' : ' error-pulse'}"
             bind:value={selectedClass}>
         </Svelecte>
         <box class="class-icon">

@@ -1,9 +1,11 @@
 <script lang="ts">
-import SKILLS from "../../enum/Skills";
-
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../interfaces/QuickCreateData";
+    import { formatModifier } from "../../stores";
+    import { getASModifier } from "../../util/util";
     import BoxWithChips from "../BoxWithChips.svelte";
+    import BoxWithList from "../BoxWithList.svelte";
+    import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -17,6 +19,13 @@ import SKILLS from "../../enum/Skills";
     $: languagesFinal = [].concat(characterParts.race?.languages ?? []).concat(characterParts.bio.languages);
     $: toolsFinal = [].concat(characterParts.race?.tools_prof ?? []).concat(characterParts.class?.tool_prof.tools.map(tool => tool.name) ?? []).concat(characterParts.bio.tools);
     $: otherProfFinal = [].concat(characterParts.race?.other_prof.map(prof => prof.name) ?? []).concat(characterParts.class?.other_prof.map(prof => prof.name) ?? []);
+
+    $: equipmentFinal = [].concat(characterParts.class?.equipment.flatMap(line => line.final) ?? []).concat(characterParts.bio.equipment);
+
+    $: featuresFinal = [].concat(characterParts.race?.features ?? [])
+        .concat(characterParts.class?.features.filter(feature => feature.level <= characterParts.class?.level ?? 1) ?? [])
+        .concat(characterParts.as_gen_info.feats)
+        .concat(characterParts.bio.features);
 
 </script>
  
@@ -40,9 +49,41 @@ import SKILLS from "../../enum/Skills";
         <box class="error-log"></box>
     </div>
 
-    <box class="as"></box>
-    <box class="equipment"></box>
-    <box class="features"></box>
+    <BoxWithList label='Equipment' inlineStyle='grid-area: equipment;' noCrud isModifyDisabled>
+        <div class="box-list" slot='list'>
+            {#if equipmentFinal.length === 0}
+                <div>No equipment</div>
+            {/if}
+            {#each equipmentFinal as item, index}
+                <SimpleAccordionDetail 
+                    bind:value={item.name} 
+                    bind:content={item.tooltip}
+                    bind:amount={item.amount}
+                    editable={false}
+                    editWidth='8rem'>
+                </SimpleAccordionDetail>
+            {/each}
+        </div>
+    </BoxWithList>
+
+    <BoxWithList 
+        label='Features' 
+        inlineStyle='grid-area: features;'
+        noCrud
+        isModifyDisabled
+    >
+        <div class="box-list" slot='list'>
+            <!-- first shows the features which are selected, then compares the names alphabetically -->
+            {#each featuresFinal as feature}
+                <SimpleAccordionDetail 
+                    bind:value={feature.name} 
+                    bind:content={feature.content}
+                    editable={false}
+                    textareaHeight='15em'>
+                </SimpleAccordionDetail>
+            {/each}
+        </div>
+    </BoxWithList>
 </summary-detail>
 
 <style>
@@ -56,12 +97,11 @@ import SKILLS from "../../enum/Skills";
             "bio bio bio bio bio bio skills skills skills skills languages languages"
             "bio bio bio bio bio bio tools tools tools other-prof other-prof other-prof"
             "bio bio bio bio bio bio tools tools tools other-prof other-prof other-prof"
-            "as as as as equipment equipment equipment equipment features features features features"
-            "as as as as equipment equipment equipment equipment features features features features"
-            "as as as as equipment equipment equipment equipment features features features features"
-            "as as as as equipment equipment equipment equipment features features features features"; 
+            ". . . . equipment equipment equipment equipment features features features features"
+            ". . . . equipment equipment equipment equipment features features features features"
+            ". . . . equipment equipment equipment equipment features features features features"
+            ". . . . equipment equipment equipment equipment features features features features"; 
     }
-
 
     .bio { grid-area: bio; 
         display: grid; 
@@ -77,8 +117,14 @@ import SKILLS from "../../enum/Skills";
     .details { grid-area: details; }
     .error-log { grid-area: error-log; }
 
-    .as { grid-area: as; }
-    .equipment { grid-area: equipment; }
-    .features { grid-area: features; }
+    .box-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25em;
+        padding-bottom: 4px;
+    }
 
 </style>

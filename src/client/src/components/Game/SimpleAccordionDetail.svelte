@@ -24,7 +24,10 @@
     
 </script>
 
-<box class="feature-main-container" transition:fade|local style='background-color: {isSelected ? 'var(--clr-accent-dark)' : 'var(--clr-box-bg-light)'};'>
+<box class="feature-main-container" 
+    style='background-color: {isSelected ? 'var(--clr-accent-dark)' : 'var(--clr-box-bg-light)'};' 
+    transition:fade|local
+>
     <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable || typeof amount != 'undefined' ? 'type' : 'name'} feature-name feature-menu";`}>
         {#if icon}
             <div class="feature-type">
@@ -36,7 +39,11 @@
         {/if}
         {#if typeof amount != 'undefined'}
             <div class="feature-type feature-amount">
-                <InPlaceEdit bind:value={amount} editWidth='1.5em' editHeight='1.5em' on:submit={() => {}}/>x
+                {#if editable}
+                    <InPlaceEdit bind:value={amount} editWidth='1.5em' editHeight='1.5em' on:submit={() => {}}/>x
+                {:else}
+                    {amount}x
+                {/if}
             </div>
         {/if}
         {#if selectable && isSelected}
@@ -51,10 +58,12 @@
                 {value}
             {/if}
         </div>
-
-        <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }}>
-            <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
-        </sendable>
+        
+        {#if content || editable}
+            <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }}>
+                <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
+            </sendable>
+        {/if}
     </div>
     {#if isOpen}
         {#if source}

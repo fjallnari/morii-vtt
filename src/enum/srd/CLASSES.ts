@@ -2520,7 +2520,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                         [
                             {
                                 name: 'Shortbow',
-                                amount: 2,
+                                amount: 1,
                                 tags: [
                                     'weapon',
                                 ]

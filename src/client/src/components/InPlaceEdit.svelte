@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte'
 
-    export let value: string = '', required = true, editWidth: string = 'inherit', editHeight: string = 'inherit', defaultValue:string = '---';
+    export let value: any = '', required = true, editWidth: string = 'inherit', editHeight: string = 'inherit', defaultValue:string = '---';
 
     const dispatch = createEventDispatcher();
     let editing = false, original: string;
@@ -34,6 +34,11 @@
     const focus = (element) => {
         element.focus();
     }
+
+    $: if (typeof value === 'number') {
+        value = value.toString();
+    }
+
 </script>
 
 {#if editing}

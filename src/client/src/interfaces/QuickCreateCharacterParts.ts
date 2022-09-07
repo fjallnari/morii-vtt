@@ -5,6 +5,7 @@ import type QCBioData from "./QCBioData";
 import type RaceData from "./RaceData";
 
 export default interface QuickCreateCharacterParts {
+    name?: string,
     race: RaceData,
     class: ClassData,
     spellcasting: boolean,

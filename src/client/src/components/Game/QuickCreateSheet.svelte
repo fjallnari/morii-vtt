@@ -48,6 +48,7 @@
                 characterParts.ability_scores = quickCreateData.asBlank;
                 characterParts.as_gen_info = quickCreateData.asGenInfo;
                 characterParts.bio = quickCreateData.bio;
+                characterParts.name = '';
                 return quickCreateData as QuickCreateData;
             }
             catch (err) {
@@ -63,6 +64,18 @@
                 
         createCharacter(characterTemplate);
     }
+
+    // $: skillsFinal = [].concat((characterParts.race?.skill_prof ?? []).map(skill => { return { name: skill, step: 0 }}))
+    //     .concat((characterParts.class?.skills.final ?? []).map(skill => { return { name: skill, step: 1 }}))
+    //     .concat((characterParts.bio?.skills ?? []).map(skill => { return { name: skill, step: 4 }}));
+
+    // $: skillConflicts = skillsFinal.reduce((acc, curr) => {
+    //     return acc[curr.name] ? acc[curr.name] = acc[curr.name].concat([curr.step]) : acc[curr.name] = [].concat([curr.step]), acc
+    // }, {});
+
+    // $: if (skillsFinal.length > 0 && skillConflicts) {
+                        
+    // }
 
 </script>
 

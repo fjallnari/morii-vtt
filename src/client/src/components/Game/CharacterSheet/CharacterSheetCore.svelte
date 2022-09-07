@@ -14,7 +14,7 @@
     import Speed from './Components/Speed.svelte';
     import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
     import Inventory from './Components/Inventory.svelte';
-import Resources from './Components/Resources.svelte';
+    import Resources from './Components/Resources.svelte';
 
     export let character: Character;
 

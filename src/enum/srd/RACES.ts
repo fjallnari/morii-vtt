@@ -216,7 +216,7 @@ export const RACES: RaceData[] = [
         other_prof: []
     },
     {
-        name: 'Gnome (Rock Gnome)',
+        name: 'Rock Gnome',
         as_increase: {
             'INT': '+2',
             'CON': '+1'

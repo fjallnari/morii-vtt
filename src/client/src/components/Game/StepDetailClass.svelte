@@ -7,7 +7,7 @@
     import SKILLS from '../../enum/Skills';
     import InPlaceEdit from '../InPlaceEdit.svelte';
     import QCreateHitPoints from './QCreateHitPoints.svelte';
-    import { validateClassName } from '../../util/util';
+    import { int2roman, validateClassName } from '../../util/util';
     import QCreateEquipment from './QCreateEquipment.svelte';
     import BoxWithList from '../BoxWithList.svelte';
     import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
@@ -74,7 +74,7 @@
         <BoxWithList label='Features' inlineStyle='grid-area: features;' addNewListItem={addFeature} isModifyDisabled>
             <div class='level-slider' slot='filter-menu'>
                 <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
-                <div class="box-label level-slider-label">Level: {selectedClass.level}</div>          
+                <div class="box-label level-slider-label">Level: {int2roman(selectedClass.level)}</div>          
             </div>
             <div class="features-list" slot='list'>
                 {#each selectedClass.features.filter(feature => feature.level <= selectedClass.level) as feature, index}

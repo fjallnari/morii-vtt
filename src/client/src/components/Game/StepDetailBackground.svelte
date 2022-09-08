@@ -6,7 +6,7 @@
     import BoxWithChips from "../BoxWithChips.svelte";
     import BoxWithList from "../BoxWithList.svelte";
     import InPlaceEdit from "../InPlaceEdit.svelte";
-import InPlaceEditBox from "../InPlaceEditBox.svelte";
+    import InPlaceEditBox from "../InPlaceEditBox.svelte";
     import MarkdownBoxText from "./MarkdownBoxText.svelte";
     import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
 
@@ -16,6 +16,7 @@ import InPlaceEditBox from "../InPlaceEditBox.svelte";
 
     $ : isCompleted = characterParts.bio
         && characterParts.bio !== undefined
+        && characterParts.bio.name !== ''
         && characterParts.bio.personality !== ''
         && characterParts.bio.ideals !== ''
         && characterParts.bio.bonds !== ''

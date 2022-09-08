@@ -2,7 +2,7 @@
     import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../interfaces/QuickCreateData";
     import { formatModifier } from "../../stores";
-    import { getASModifier, validateClassName } from "../../util/util";
+    import { getASModifier, int2roman, validateClassName } from "../../util/util";
     import BoxWithChips from "../BoxWithChips.svelte";
     import BoxWithIcon from "../BoxWithIcon.svelte";
     import BoxWithList from "../BoxWithList.svelte";
@@ -11,6 +11,7 @@
     import { Icon } from '@smui/icon-button';
     import { human, species } from 'fantastical';
     import Svelecte from "svelecte/src/Svelecte.svelte";
+    import BioTextareaBox from "../BioTextareaBox.svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -62,102 +63,118 @@
 </script>
  
 <summary-detail>
-    <div class="basics">
-        <div class="char-name">
-            <div class="name-edit">
-                <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" onSubmitFce={() => {}}></InPlaceEditBox>
-                <sendable class='random-name' on:click={() => generateName()}>
-                    <Icon class="material-icons">{'shuffle'}</Icon>
-                </sendable> 
-            </div>
-            <div class="name-gen">
-                <Svelecte 
-                    options={nameGenOpts}
-                    valueAsObject
-                    placeholder='Name-gen'
-                    class="svelecte-control{selectedNameGen ? '' : ' error-pulse'}"
-                    bind:value={selectedNameGen}>
-                </Svelecte>
-                <box class="gender-options">
-                    {#if selectedNameGen?.needsGender}
-                        <div class='box-main-text'>
-                            <sendable class='gender-icon {selectedGender === 'male' ? ' selected-gender': ''}' on:click={() => selectedGender = 'male'}>
-                                <Icon class="material-icons">{'male'}</Icon>
-                            </sendable> 
-                            <sendable class='gender-icon{selectedGender === 'female' ? ' selected-gender': ''}' on:click={() => selectedGender = 'female'}>
-                                <Icon class="material-icons">{'female'}</Icon>
-                            </sendable> 
-                        </div>
-                    {:else}
-                        <div class='box-main-text gender-icon'>
-                            <Icon class="material-icons">{'all_inclusive'}</Icon>
-                        </div> 
-                    {/if}
-                    <div class="box-justify-filler"></div>
-                    <div class="box-label">
-                        Gender options
-                    </div>
-                </box>
-            </div>
+    <div class="char-name">
+        <div class="name-edit">
+            <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" onSubmitFce={() => {}}></InPlaceEditBox>
+            <sendable class='random-name' on:click={() => generateName()}>
+                <Icon class="material-icons">{'shuffle'}</Icon>
+            </sendable> 
         </div>
-        <BoxWithIcon label='Race' value={characterParts.race?.name ?? '???'} icon={raceIcon}></BoxWithIcon>
-        <BoxWithIcon label='Class' value={characterParts.class?.name ?? '???'} icon={classIcon}></BoxWithIcon>
+        <div class="name-gen">
+            <Svelecte 
+                options={nameGenOpts}
+                valueAsObject
+                placeholder='Name-gen'
+                class="svelecte-control{selectedNameGen ? '' : ' error-pulse'}"
+                bind:value={selectedNameGen}>
+            </Svelecte>
+            <box class="gender-options">
+                {#if selectedNameGen?.needsGender}
+                    <div class='box-main-text'>
+                        <sendable class='gender-icon {selectedGender === 'male' ? ' selected-gender': ''}' on:click={() => selectedGender = 'male'}>
+                            <Icon class="material-icons">{'male'}</Icon>
+                        </sendable> 
+                        <sendable class='gender-icon{selectedGender === 'female' ? ' selected-gender': ''}' on:click={() => selectedGender = 'female'}>
+                            <Icon class="material-icons">{'female'}</Icon>
+                        </sendable> 
+                    </div>
+                {:else}
+                    <div class='box-main-text gender-icon'>
+                        <Icon class="material-icons">{'all_inclusive'}</Icon>
+                    </div> 
+                {/if}
+                <div class="box-justify-filler"></div>
+                <div class="box-label">
+                    Gender options
+                </div>
+            </box>
+        </div>
     </div>
-    <div class="error-log"></div>
+    <BoxWithIcon label='Race' value={characterParts.race?.name ?? 'None'} icon={raceIcon} gridClass='race'></BoxWithIcon>
+    <BoxWithIcon label='Class' value={characterParts.class?.name ?? 'None'} icon={classIcon} gridClass='class'></BoxWithIcon>
+    <box class="level">
+        <div class='box-main-text'>{int2roman(characterParts.class?.level ?? 0)}</div>
+        <div class="box-justify-filler"></div>
+        <div class="box-label">
+            Level
+        </div>
+    </box>
+    <BoxWithIcon label='Background' value={characterParts.bio?.name !== '' ? characterParts.bio?.name : 'None'} icon='sprout' gridClass='bkg'></BoxWithIcon>
+    <BoxWithIcon label='Spellcasting' value={characterParts.class?.spellcasting ? characterParts.class.spellcasting.isCustom ? 'Custom': 'Default' : 'None'} icon='fire' gridClass='spellcasting'></BoxWithIcon>
+
+    <BioTextareaBox 
+        bind:charAttribute={characterParts.bio.backstory} 
+        inlineStyle="grid-area: backstory;"
+        label="Backstory" 
+        socketModifyEnabled={false}>
+    </BioTextareaBox>
+
+    <BioTextareaBox 
+        bind:charAttribute={characterParts.bio.appearance} 
+        inlineStyle="grid-area: appearance;"
+        label="Appearance" 
+        socketModifyEnabled={false}>
+    </BioTextareaBox>
+
+    <div class="random-gen"></div>   
+
 </summary-detail>
 
 <style>
     summary-detail { grid-area: step-detail;
         display: grid; 
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        gap: 0.5em 0.5em;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+        gap: 0.5em 0.5em; 
         grid-template-areas: 
-            "basics basics basics basics basics basics basics basics basics basics"
-            "basics basics basics basics basics basics basics basics basics basics"
-            "basics basics basics basics basics basics basics basics basics basics"
-            "basics basics basics basics basics basics basics basics basics basics"
-            "error-log error-log error-log error-log error-log . . . . ."
-            "error-log error-log error-log error-log error-log . . . . ."
-            "error-log error-log error-log error-log error-log . . . . ."
-            "error-log error-log error-log error-log error-log . . . . .";
-        }
+            "char-name char-name char-name char-name char-name race race race class class class level"
+            "char-name char-name char-name char-name char-name race race race class class class level"
+            "bkg bkg bkg spellcasting spellcasting spellcasting appearance appearance appearance appearance appearance appearance"
+            "bkg bkg bkg spellcasting spellcasting spellcasting appearance appearance appearance appearance appearance appearance"
+            "random-gen random-gen random-gen random-gen random-gen random-gen appearance appearance appearance appearance appearance appearance"
+            "random-gen random-gen random-gen random-gen random-gen random-gen appearance appearance appearance appearance appearance appearance"
+            "random-gen random-gen random-gen random-gen random-gen random-gen backstory backstory backstory backstory backstory backstory"
+            "random-gen random-gen random-gen random-gen random-gen random-gen backstory backstory backstory backstory backstory backstory"
+            "random-gen random-gen random-gen random-gen random-gen random-gen backstory backstory backstory backstory backstory backstory"
+            "random-gen random-gen random-gen random-gen random-gen random-gen backstory backstory backstory backstory backstory backstory"; 
+    }
 
-    .error-log { grid-area: error-log; }
+    .random-gen { grid-area: random-gen; }
 
-    .basics { grid-area: basics; 
+    .level { grid-area: level; 
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        gap: 0.5em;      
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        font-weight: var(--semi-bold);
     }
 
-    :global(.basics > *) {
-        height: 30%;
-    }
-
-    :global(.basics .box-with-icon) {
-        flex: 2;
-    }
-
-    .char-name {
+    .char-name { grid-area: char-name;
         display: grid; 
-        grid-template-columns: 5fr 1fr; 
+        grid-template-columns: 5fr 1fr;
         grid-template-rows: 1fr 1fr; 
         gap: 0.5em; 
         grid-template-areas: 
             "name-edit name-gen"
             "name-edit name-gen";
-        flex: 5;  
     }
 
     .name-gen { grid-area: name-gen; 
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 0.2em;
+        gap: 0.5em;
         height: 100%;
     }
 
@@ -166,7 +183,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-size: 2em;
+        font-size: 2.2em;
         position: relative;
     }
 
@@ -182,7 +199,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 0.25em;
         height: inherit;
     }
 
@@ -190,7 +206,6 @@
         color: var(--clr-accent-light);
         border-bottom: 1px solid var(--clr-accent-light);
     }
-
 
 
 </style>

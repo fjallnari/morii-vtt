@@ -8,6 +8,8 @@ You can either use the equipment package from your background or spend coin on g
 Finally, choose two personality traits, one ideal, one bond, and one flaw. 
 If you can’t find a feature that matches your desired background, work with your GM to create one.`,
     name: '',
+    backstory: '',
+    appearance: '',
     skills: ['', ''],
     tools: [],
     languages: [],

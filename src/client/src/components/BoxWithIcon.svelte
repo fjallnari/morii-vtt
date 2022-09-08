@@ -3,12 +3,13 @@
     export let label: string;
     export let value: string = 'x';
     export let icon: string = '';
+    export let gridClass: string = '';
 
     const handleError = ev => ev.target.src = '../static/class-icons/no-class.svg';
 
 </script>
 
-<box class="box-with-icon">
+<box class="box-with-icon" style='grid-area: {gridClass};'>
     <div class="value">{value}</div>
     <div class="label">{label}</div>
     <div class="icon">
@@ -21,12 +22,13 @@
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
         grid-template-rows: 1fr 1fr 1fr; 
-        gap: 0em 0.5em; 
+        gap: 0em; 
         grid-template-areas: 
             "value value value icon icon"
             "value value value icon icon"
             "label label label icon icon";
-        padding: 0em 0.5em;   
+        width: 100%;
+        height: 100%;  
     }
 
     .box-with-icon > div {
@@ -51,12 +53,10 @@
     }
 
     .icon { grid-area: icon; 
-        height: 100%;
-        width: 100%;
     }
 
     #main-icon {
-        height: inherit;
+        height: 90%;
     }
 
 </style>

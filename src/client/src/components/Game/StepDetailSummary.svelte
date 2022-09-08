@@ -34,7 +34,7 @@
         .concat(characterParts.bio.features);
 
     $: classIcon = `class-icons/${validateClassName(characterParts.class ? characterParts.class.name.toLowerCase() : '')}`;
-    $: raceIcon = `${characterParts.race?.name ? `race-icons/${characterParts.race?.name.toLowerCase()}` : 'account-supervisor'}`
+    $: raceIcon = `${characterParts.race?.name ? `race-icons/${characterParts.race?.name.toLowerCase()}` : 'race'}`
 
     let selectedGender: 'male' | 'female' = 'male';
 
@@ -109,8 +109,14 @@
             Level
         </div>
     </box>
-    <BoxWithIcon label='Background' value={characterParts.bio?.name !== '' ? characterParts.bio?.name : 'None'} icon='sprout' gridClass='bkg'></BoxWithIcon>
-    <BoxWithIcon label='Spellcasting' value={characterParts.class?.spellcasting ? characterParts.class.spellcasting.isCustom ? 'Custom': 'Default' : 'None'} icon='fire' gridClass='spellcasting'></BoxWithIcon>
+    <BoxWithIcon label='Background' value={characterParts.bio?.name !== '' ? characterParts.bio?.name : 'None'} icon='background' gridClass='bkg'></BoxWithIcon>
+
+    <BoxWithIcon 
+        label='Spellcasting' 
+        value={characterParts.class?.spellcasting ? characterParts.class.spellcasting.isCustom ? 'Custom': 'Default' : 'None'} 
+        icon='spellcasting' 
+        gridClass='spellcasting'>
+    </BoxWithIcon>
 
     <BioTextareaBox 
         bind:charAttribute={characterParts.bio.backstory} 

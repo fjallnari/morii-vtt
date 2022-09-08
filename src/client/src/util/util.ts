@@ -1,7 +1,7 @@
 import CLASS_NAMES from "../enum/ClassNames";
 
 export const validateClassName = (className: string) => {
-    return CLASS_NAMES.includes(className) ? className : 'no-class';  
+    return CLASS_NAMES.includes(className) ? className : 'class-default';  
 }
 
 export const getClassIcon = (characterClasses: string) => {
@@ -43,7 +43,7 @@ export const findHighestPossibleValue = <T>(record: Record<number, T>, classLeve
 
 // from https://joshtronic.com/2020/02/17/converting-integers-to-roman-numerals-with-typescript/
 export const int2roman = (original: number): string => {
-    if (original === 0) { return '0' }
+    if (original === 0) { return '-' }
 
     if (original < 0 || original > 3999) {
       throw new Error('Error: Input integer limited to 0 through 3,999');

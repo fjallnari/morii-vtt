@@ -1,7 +1,10 @@
 <script lang="ts">
+import { nanoid } from "nanoid/non-secure";
+
     import type ClassData from "../../interfaces/ClassData";
+import type MessageData from "../../interfaces/MessageData";
     import type { QCAbilityScores } from "../../interfaces/QCAbilityScores";
-import { formatModifier } from "../../stores";
+    import { formatModifier, sendSkillCheck, socket } from "../../stores";
     import { getASModifier } from "../../util/util";
     import BoxWithHeaderToggle from '../BoxWithHeaderToggle.svelte';
     import InPlaceEdit from "../InPlaceEdit.svelte";
@@ -10,16 +13,36 @@ import { formatModifier } from "../../stores";
     export let selectedClass: ClassData;
     export let abilityScores: QCAbilityScores;
 
-
     $: modCON = getASModifier(abilityScores, 'CON');
     $: averageHPPerLevel = ~~(selectedClass.hp.hit_die/2) + 1;
     $: level1HP = selectedClass.hp.hit_die + modCON;
 
-    // TODO: replace the 0 with the actual CON modifier
+    let hpRollID = '---';
+    let lastHPRoll = undefined;
+
     const getAverageHP = () => {
         // HP at first level + (average hp per level + CON mod) * (level - 1)
         selectedClass.hp.current = (level1HP + (averageHPPerLevel + modCON) * (selectedClass.level - 1)).toString();
     }
+
+    const rollForHP = () => {
+        if (selectedClass.level === 1) {
+            selectedClass.hp.current = level1HP.toString();
+            return;
+        }
+
+        // HP at first level + (hit die per level + CON mod) * (level - 1)
+        const formula = `${level1HP}+${(selectedClass.level - 1)}d${selectedClass.hp.hit_die}+${(selectedClass.level - 1) * modCON}`
+
+        hpRollID = nanoid(16);
+        $sendSkillCheck(0, `Roll for HP ~ Level ${selectedClass.level} ${selectedClass.name} ~ ${formula}`, 'TODO', formula, hpRollID);
+    }
+
+    $socket.on('chat-message', (incomingMessage: MessageData) => {
+        if (incomingMessage.messageID === hpRollID){
+            selectedClass.hp.current = incomingMessage.rollResult.total.toString();
+        }
+    });
 
 </script>
 
@@ -59,7 +82,7 @@ import { formatModifier } from "../../stores";
             </div>
         </box>
         <div class="roll-calc-hp">
-            <SimpleButton value='Roll' icon="casino" type='primary' onClickFn={() => {}} disabled></SimpleButton>
+            <SimpleButton value='Roll' icon="casino" type='primary' onClickFn={() => rollForHP()}></SimpleButton>
             <SimpleButton value='AVG' icon="calculate" type='primary' onClickFn={() => getAverageHP()}></SimpleButton>
         </div>
     </div>     

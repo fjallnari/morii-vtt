@@ -34,7 +34,7 @@
         .concat(characterParts.bio.features);
 
     $: classIcon = `class-icons/${validateClassName(characterParts.class ? characterParts.class.name.toLowerCase() : '')}`;
-    $: raceIcon = `${characterParts.race?.name ? `race-icons/${characterParts.race?.name.toLowerCase()}` : 'race'}`
+    $: raceIcon = `${characterParts.race?.name ? `race-icons/variant/${characterParts.race?.name.toLowerCase()}` : 'race'}`
 
     let selectedGender: 'male' | 'female' = 'male';
 
@@ -100,8 +100,22 @@
             </box>
         </div>
     </div>
-    <BoxWithIcon label='Race' value={characterParts.race?.name ?? 'None'} icon={raceIcon} gridClass='race'></BoxWithIcon>
-    <BoxWithIcon label='Class' value={characterParts.class?.name ?? 'None'} icon={classIcon} gridClass='class'></BoxWithIcon>
+    <BoxWithIcon 
+        label='Race' 
+        value={characterParts.race?.name ?? 'None'} 
+        icon={raceIcon} 
+        isDisabled={!characterParts.race && true}
+        gridClass='race'>
+    </BoxWithIcon>
+    
+    <BoxWithIcon 
+        label='Class' 
+        value={characterParts.class?.name ?? 'None'} 
+        icon={classIcon} 
+        isDisabled={!characterParts.class && true} 
+        gridClass='class'>
+    </BoxWithIcon>
+
     <box class="level">
         <div class='box-main-text'>{int2roman(characterParts.class?.level ?? 0)}</div>
         <div class="box-justify-filler"></div>
@@ -109,12 +123,20 @@
             Level
         </div>
     </box>
-    <BoxWithIcon label='Background' value={characterParts.bio?.name !== '' ? characterParts.bio?.name : 'None'} icon='background' gridClass='bkg'></BoxWithIcon>
+
+    <BoxWithIcon 
+        label='Background' 
+        value={characterParts.bio?.name !== '' ? characterParts.bio?.name : 'None'} 
+        icon='background'
+        isDisabled={characterParts.bio?.name === ''}
+        gridClass='bkg'>
+    </BoxWithIcon>
 
     <BoxWithIcon 
         label='Spellcasting' 
-        value={characterParts.class?.spellcasting ? characterParts.class.spellcasting.isCustom ? 'Custom': 'Default' : 'None'} 
-        icon='spellcasting' 
+        value={characterParts.class?.spellcasting ? characterParts.class.spellcasting.isCustom ? 'Custom' : 'Default' : 'None'} 
+        icon='spellcasting'
+        isDisabled={typeof characterParts.class?.spellcasting === 'undefined'} 
         gridClass='spellcasting'>
     </BoxWithIcon>
 

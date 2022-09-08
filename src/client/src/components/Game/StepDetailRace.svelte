@@ -45,6 +45,8 @@
         { label: 'Racial Traits', gridArea: 'features' }
     ];
 
+    $: raceIcon = `${characterParts.race?.name ? `race-icons/variant/${characterParts.race?.name.toLowerCase()}` : 'race'}`
+
 </script>
 
 <div class="race-detail">
@@ -57,6 +59,9 @@
             class="svelecte-control{selectedRace ? '' : ' error-pulse'}"
             bind:value={selectedRace}>
         </Svelecte>
+        <box class="race-icon">
+            <img id="main-class" src="../static/{raceIcon}.svg" alt="class-icon">
+        </box>
     </div>
 
     <div class="ability-score-increase">
@@ -177,6 +182,18 @@
         font-size: large;
         --sv-min-height: 3em !important;
         max-width: 15em;
+    }
+
+    .race-icon {
+        height: 100%;
+        width: 100%;
+        max-width: 5em;
+        max-height: 5em;
+    }
+
+    #main-class {
+        width: inherit;
+        height: inherit;
     }
 
     .ability-score-increase { grid-area: ability-score-increase; 

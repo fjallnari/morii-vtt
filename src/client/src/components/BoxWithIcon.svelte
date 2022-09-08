@@ -3,6 +3,7 @@
     export let label: string;
     export let value: string = 'x';
     export let icon: string = '';
+    export let isDisabled: boolean = false;
     export let gridClass: string = '';
 
     const handleError = ev => ev.target.src = '../static/class-icons/no-class.svg';
@@ -12,7 +13,7 @@
 <box class="box-with-icon" style='grid-area: {gridClass};'>
     <div class="value">{value}</div>
     <div class="label">{label}</div>
-    <div class="icon">
+    <div class="icon{isDisabled ? ' disabled' : ''}">
         <img id="main-icon" src="../static/{icon}.svg" alt="icon" on:error={handleError}>
     </div>
 </box>
@@ -52,7 +53,10 @@
         font-weight: var(--semi-bold);
     }
 
-    .icon { grid-area: icon; 
+    .icon { grid-area: icon; }
+
+    .disabled {
+        filter: brightness(0) saturate(100%) invert(77%) sepia(0%) saturate(136%) hue-rotate(185deg) brightness(88%) contrast(92%);
     }
 
     #main-icon {

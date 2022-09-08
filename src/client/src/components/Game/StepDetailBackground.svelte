@@ -6,6 +6,7 @@
     import BoxWithChips from "../BoxWithChips.svelte";
     import BoxWithList from "../BoxWithList.svelte";
     import InPlaceEdit from "../InPlaceEdit.svelte";
+import InPlaceEditBox from "../InPlaceEditBox.svelte";
     import MarkdownBoxText from "./MarkdownBoxText.svelte";
     import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
 
@@ -42,7 +43,9 @@
 
 <background-detail>
     <p class='disclaimer'>Background has to be filled in manually as well, under the OGL license there are only custom background rules.</p>
-    <box class="bkg-info"></box>
+    <div class="bkg-name">
+        <InPlaceEditBox bind:value={characterParts.bio.name} characterLimit={40} boxLabel="Background Name" onSubmitFce={() => {}}></InPlaceEditBox>
+    </div>
 
     <box class="bkg-info">
         <MarkdownBoxText text={characterParts.bio.info}></MarkdownBoxText>
@@ -134,7 +137,7 @@
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         gap: 0.5em 0.5em; 
         grid-template-areas: 
-            "bkg-info bkg-info bkg-skills bkg-skills bkg-tools bkg-tools bkg-languages bkg-languages"
+            "bkg-name bkg-name bkg-skills bkg-skills bkg-tools bkg-tools bkg-languages bkg-languages"
             "bkg-info bkg-info bkg-skills bkg-skills bkg-tools bkg-tools bkg-languages bkg-languages"
             "bkg-info bkg-info bkg-skills bkg-skills bkg-tools bkg-tools bkg-languages bkg-languages"
             "bkg-info bkg-info bkg-equipment bkg-equipment bkg-personality bkg-personality bkg-ideals bkg-ideals"
@@ -151,6 +154,14 @@
         align-items: center;
         height: 100%;
         width: 100%;        
+    }
+
+    .bkg-name {grid-area: bkg-name;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 1.2em;
     }
     
     .bkg-info { grid-area: bkg-info; }

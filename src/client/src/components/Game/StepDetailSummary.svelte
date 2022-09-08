@@ -64,6 +64,12 @@
 <summary-detail>
     <div class="basics">
         <div class="char-name">
+            <div class="name-edit">
+                <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" onSubmitFce={() => {}}></InPlaceEditBox>
+                <sendable class='random-name' on:click={() => generateName()}>
+                    <Icon class="material-icons">{'shuffle'}</Icon>
+                </sendable> 
+            </div>
             <div class="name-gen">
                 <Svelecte 
                     options={nameGenOpts}
@@ -92,12 +98,6 @@
                         Gender options
                     </div>
                 </box>
-            </div>
-            <div class="name-edit">
-                <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" onSubmitFce={() => {}}></InPlaceEditBox>
-                <sendable class='random-name' on:click={() => generateName()}>
-                    <Icon class="material-icons">{'shuffle'}</Icon>
-                </sendable> 
             </div>
         </div>
         <BoxWithIcon label='Race' value={characterParts.race?.name ?? '???'} icon={raceIcon}></BoxWithIcon>

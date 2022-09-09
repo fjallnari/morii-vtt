@@ -1,3 +1,4 @@
+import type { Attack } from "./Character";
 import type ClassData from "./ClassData";
 import type { QCAbilityScores } from "./QCAbilityScores";
 import type { QCAsGenInfo } from "./QCAsGenInfo";
@@ -11,5 +12,6 @@ export default interface QuickCreateCharacterParts {
     spellcasting: boolean,
     ability_scores: QCAbilityScores,
     as_gen_info: QCAsGenInfo,
-    bio: QCBioData
+    bio: QCBioData,
+    weapons: Record<string, Partial<Attack>>
 }

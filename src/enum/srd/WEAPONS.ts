@@ -13,7 +13,7 @@ export const WEAPONS = {
             "Spear"
         ],
         RANGED: [
-            "Light Crossbow",
+            "Light crossbow",
             "Dart",
             "Shortbow",
             "Sling"
@@ -42,8 +42,8 @@ export const WEAPONS = {
         ],
         RANGED: [
             "Blowgun",
-            "Hand Crossbow",
-            "Heavy Crossbow",
+            "Hand crossbow",
+            "Heavy crossbow",
             "Longbow",
             "Net"
         ],

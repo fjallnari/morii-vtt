@@ -15,6 +15,7 @@
     import SimpleButton from "../SimpleButton.svelte";
     import InPlaceEdit from "../InPlaceEdit.svelte";
     import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
+    import { nanoid } from "nanoid/non-secure";
  
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -45,7 +46,8 @@
     }) : [];
 
     const addNewSpell = (spellLevel: number = 0, spellTemplate: object = {}) => {
-        const spellSkeleton: Partial<Spell> = {
+        const spellSkeleton: Spell = {
+            id: nanoid(16),
             name: '',
             level: spellLevel,
             is_prepared: false,

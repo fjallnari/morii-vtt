@@ -50,6 +50,8 @@
                 characterParts.as_gen_info = quickCreateData.asGenInfo;
                 characterParts.bio = quickCreateData.bio;
                 characterParts.name = '';
+                characterParts.weapons = quickCreateData.weapons;
+
                 return quickCreateData as QuickCreateData;
             }
             catch (err) {
@@ -122,26 +124,51 @@
                     name: prof.name,
                     type: prof.type ?? 0,
                     content: ''
-                }
+                } 
             });
         
         // RESOURCES && RESOURCES && ATTACKS
 
         let resources = (characterParts.class?.resources ?? []).map(resource => Object.assign(resource, { id: nanoid(16), item_id: '', type: resource.type }));
+        let attacks = [];
 
+        const attackSkeleton = {
+            atk_ability: '', // e.g. STR
+            atk_bonus: '',
+            atk_proficiency: false,
+            range: '',
+            dmg_die: '', // e.g. 1d6
+            dmg_ability: '', // e.g. STR
+            dmg_bonus: '',
+            dmg_type: '', // e.g. Slashing
+            versatile_die: '',
+            versatile_active: false,
+        }
+
+        // EQUIPMENT
         const equipment = [].concat(characterParts.class?.equipment.flatMap(line => line.final) ?? []).concat(characterParts.bio.equipment)
             .map(item => {
                 const itemID = nanoid(16);
                 let resourceID = undefined;
+                let attackID = undefined;
                 
                 const isResource = item.tags?.includes('resource') && true;
+                const hasAttack = item.tags?.includes('weapon') && true;
 
                 if (isResource) {
                     resourceID = nanoid(16);
-                    resources = resources.concat([{ id: resourceID, item_id: itemID, name: item.name, total: item.amount, current: item.amount, type: 'complex'}]);
+                    resources = resources.concat([{ id: resourceID, item_id: itemID, name: item.name, total: item.amount, current: item.amount, type: 'complex' }]);
                 }
 
-                // TODO - add attack linking
+                if (hasAttack) {
+                    attackID = nanoid(16);
+                    attacks = attacks.concat([Object.assign({}, { ... attackSkeleton, ... characterParts.weapons[item.name] ?? {},
+                        id: nanoid(16), 
+                        name: item.name, 
+                        item_id: itemID,
+                        atk_proficiency: otherProf.some(prof => prof.name === item.name) // TODO
+                    })])
+                }
 
                 return {
                     id: itemID,
@@ -149,13 +176,21 @@
                     is_equipped: true,
                     amount: item.amount,
                     has_weight: false,
-                    has_attack: false,
+                    has_attack: hasAttack,
+                    attack_id: attackID ?? '',
                     want_tooltip: false,
                     tooltip: item.description ?? item.tooltip ?? '',
                     use_as_resource: isResource,
                     resource_id: resourceID ?? ''
                 } as Item;
             })
+        
+        // SPELLCASTING
+        const spellsFinal = characterParts.class?.spellcasting?.spells_by_level ?? characterTemplate.spells_by_level;
+
+        Object.keys(spellsFinal).forEach(level => {
+            spellsFinal[level].slots_total = spellsFinal[level].slots_current = characterParts.class?.spellcasting?.spell_slots[characterParts.class?.level - 1][~~level - 1] ?? '';
+        })
 
         Object.assign(characterTemplate, {
             name: characterParts.name ?? '',
@@ -173,6 +208,7 @@
             other_profs: otherProf.concat(languages),
             tools: toolsProf,
             resources: resources,
+            attacks: attacks,
             features: featuresFinal,
 
             // BIO TAB
@@ -186,8 +222,8 @@
             flaws: characterParts.bio.flaws ?? '',
 
             // SPELLS
-            spell_ability: characterParts.class?.spellcasting?.ability ?? ''
-            // TODO
+            spell_ability: characterParts.class?.spellcasting?.ability ?? '',
+            spells_by_level: spellsFinal
         });
                 
         createCharacter(characterTemplate);

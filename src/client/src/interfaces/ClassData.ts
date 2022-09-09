@@ -1,4 +1,4 @@
-import type { Spell } from "./Character"
+import type { Attack, Spell } from "./Character"
 
 type LevelsRecord = Record<number, string>;
 
@@ -36,7 +36,7 @@ interface EquipmentItem {
     tags: string[], // weapon, resource
     description?: string,
     placeholder?: string,
-    options?: string[]
+    options?: string[],
 }
 
 interface EquipmentSingleLine {

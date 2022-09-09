@@ -2,6 +2,7 @@ import ClassData from "../../interfaces/srd/ClassData";
 import { OTHER_PROF } from "../OTHER_PROF";
 import { TOOLS } from "./TOOLS";
 import { WEAPONS } from "./WEAPONS";
+import { WEAPON_STATS } from "./WEAPON_STATS";
 
 const ARTISAN_TOOLS = TOOLS['ARTISAN'].map(tool => tool.name);
 const MUSICAL_INSTRUMENTS = TOOLS['MUSIC'].map(tool => tool.name);
@@ -838,9 +839,11 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                     // (a)
                     [
                         {
-                            name: "Light Crossbow",
+                            name: "Light crossbow",
                             amount: 1,
-                            tags: [],
+                            tags: [
+                                'weapon'
+                            ],
                         },
                         {
                             name: "Bolts",
@@ -855,7 +858,9 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                         {
                             name: '',
                             amount: 1,
-                            tags: [],
+                            tags: [
+                                'weapon'
+                            ],
                             placeholder: 'any simple ⚔️',
                             options: WEAPONS_SIMPLE_ALL
                         }
@@ -1335,9 +1340,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
                         {
                             name: 'Leather armor',
                             amount: 1,
-                            tags: [
-                                'weapon'
-                            ]
+                            tags: []
                         }
                     ],
                     // (c)
@@ -1368,7 +1371,9 @@ You prepare the list of druid spells that are available for you to cast, choosin
                         {
                             name: '',
                             amount: 1,
-                            tags: [],
+                            tags: [
+                                'weapon'
+                            ],
                             placeholder: 'any martial ⚔️',
                             options: WEAPONS_MARTIAL_ALL
                         },
@@ -1384,14 +1389,18 @@ You prepare the list of druid spells that are available for you to cast, choosin
                         {
                             name: '',
                             amount: 1,
-                            tags: [],
+                            tags: [
+                                'weapon'
+                            ],
                             placeholder: 'any martial ⚔️',
                             options: WEAPONS_MARTIAL_ALL
                         },
                         {
                             name: '',
                             amount: 1,
-                            tags: [],
+                            tags: [
+                                'weapon'
+                            ],
                             placeholder: 'any martial ⚔️',
                             options: WEAPONS_MARTIAL_ALL
                         },

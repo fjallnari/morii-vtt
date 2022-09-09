@@ -1,5 +1,5 @@
 import { OTHER_PROF } from "../../enum/OTHER_PROF";
-import { Spell } from "../Character";
+import { Attack, Spell } from "../Character";
 
 type LevelsRecord = Record<number, string>;
 
@@ -37,7 +37,7 @@ interface EquipmentItem {
     tags: string[], // weapon, resource
     description?: string,
     placeholder?: string,
-    options?: string[]
+    options?: string[],
 }
 
 interface EquipmentSingleLine {

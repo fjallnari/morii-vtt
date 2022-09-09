@@ -392,7 +392,8 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                     16: '+4',  
                 }
             },
-        ]
+        ],
+        as_prio: ['STR', 'CON', 'DEX', 'WIS', 'CHA', 'INT']
     },
     {
         name: 'Bard',
@@ -732,7 +733,8 @@ Additionally, when you gain a level in this class, you can choose one of the bar
             },
             spell_slots: SPELLSLOTS_STANDARD,
             spells_by_level: SPELLS_BY_LEVEL_BLANK
-        }
+        },
+        as_prio: ['CHA', 'CON', 'DEX', 'WIS', 'STR', 'INT']
     },
     {
         name: 'Cleric',
@@ -1009,7 +1011,8 @@ You can change your list of prepared spells when you finish a long rest. Prepari
             },
             spell_slots: SPELLSLOTS_STANDARD,
             spells_by_level: SPELLS_BY_LEVEL_BLANK
-        }
+        },
+        as_prio: ['WIS', 'CON', 'DEX', 'STR', 'CHA', 'INT']
     },
     {
         name: 'Druid',
@@ -1276,7 +1279,8 @@ You prepare the list of druid spells that are available for you to cast, choosin
             },
             spell_slots: SPELLSLOTS_STANDARD,
             spells_by_level: SPELLS_BY_LEVEL_BLANK
-        }
+        },
+        as_prio: ['WIS', 'CON', 'DEX', 'STR', 'CHA', 'INT']
     },
     {
         name: 'Fighter',
@@ -1547,6 +1551,7 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
                 }
             },
         ],
+        as_prio: ['STR', 'CON', 'DEX', 'WIS', 'CHA', 'INT']
     },
     {
         name: 'Monk',
@@ -1825,6 +1830,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                 }
             },
         ],
+        as_prio: ['DEX', 'WIS', 'CON', 'STR', 'CHA', 'INT']
     },
     {
         name: 'Paladin',
@@ -2133,7 +2139,8 @@ For example, if you are a 5th-level paladin, you have four 1st-level and two 2nd
 You can change your list of prepared spells when you finish a long rest. Preparing a new list of paladin spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.`,
             spell_slots: SPELLSLOTS_HALFCASTER,
             spells_by_level: SPELLS_BY_LEVEL_BLANK
-        }
+        },
+        as_prio: ['STR', 'CON', 'CHA', 'DEX', 'WIS', 'INT']
     },
     {
         name: 'Ranger',
@@ -2436,7 +2443,8 @@ Additionally, when you gain a level in this class, you can choose one of the ran
             },
             spell_slots: SPELLSLOTS_HALFCASTER,
             spells_by_level: SPELLS_BY_LEVEL_BLANK
-        }
+        },
+        as_prio: ['DEX', 'CON', 'WIS', 'STR', 'CHA', 'INT']
     },
     {
         name: 'Rogue',
@@ -2706,6 +2714,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
                 }
             }
         ],
+        as_prio: ['DEX', 'CON', 'WIS', 'STR', 'CHA', 'INT']
     },
     {
         name: 'Sorcerer',
@@ -3070,7 +3079,8 @@ Additionally, when you gain a level in this class, you can choose one of the sor
                     },
                 ],
             }
-        }
+        },
+        as_prio: ['CHA', 'DEX', 'CON', 'INT', 'WIS', 'STR']
     },
     {
         name: 'Warlock',
@@ -3515,7 +3525,8 @@ You can communicate telepathically with your familiar and perceive through your 
                     },
                 ],
             }
-        }
+        },
+        as_prio: ['CHA', 'DEX', 'CON', 'WIS', 'INT', 'STR']
     },
     {
         name: 'Wizard',
@@ -3763,6 +3774,7 @@ If you lose your spellbook, you can use the same procedure to transcribe the spe
 
 ***The Book’s Appearance.*** Your spellbook is a unique compilation of spells, with its own decorative flourishes and margin notes. It might be a plain, functional leather volume that you received as a gift from your master, a finely bound gilt-edged tome you found in an ancient library, or even a loose collection of notes scrounged together after you lost your previous spellbook in a mishap.`
             }
-        }
-    }
+        },
+        as_prio: ['INT', 'DEX', 'CON', 'WIS', 'CHA', 'STR']
+    },
 ]

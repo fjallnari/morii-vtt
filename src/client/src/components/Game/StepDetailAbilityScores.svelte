@@ -50,7 +50,8 @@
 
     const asAssignOpts = [
         { name: 'Assign randomly', assignFce: () => assignRandom() },
-        { name: 'Use custom priority', assignFce: () => assignCustomPrio() }, // TODO
+        { name: 'Use custom priority', assignFce: () => assignCustomPrio() },
+        { name: 'Auto-assign', assignFce: () => assignAuto() },
     ];
 
     const selectGenOption = async (genOption: GenOption) => {
@@ -104,6 +105,18 @@
         genInfo.customAssignPrio.forEach((tag, index) => {
             abilityScores[tag.name].base = sortedValuesArr[index]?.toString() ?? 'ERR';
         });
+    }
+
+    const assignAuto = () => {
+        if (!genInfo.baseArray || genInfo.baseArray.length === 0 || !characterParts.class) { 
+            return; 
+        }
+
+        const sortedValuesArr = genInfo.baseArray.sort((a,b) => ~~b - ~~a);
+
+        characterParts.class.as_prio.forEach((tag, index) => {
+            abilityScores[tag].base = sortedValuesArr[index]?.toString() ?? 'ERR';
+        });        
     }
 
     const rollASArray = async (formula: string = '4d6kh3') => {

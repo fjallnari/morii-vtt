@@ -104,5 +104,6 @@ export default interface ClassData {
     features: ClassFeature[],
     asi: LevelsRecord,
     resources: ClassResource[],
-    spellcasting?: ClassSpellcasting
+    spellcasting?: ClassSpellcasting,
+    as_prio: string[]
 }

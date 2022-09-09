@@ -239,7 +239,7 @@
 
     .level-slider {
         position: relative;
-        /* z-index: 2; */
+        z-index: 2;
     }
 
     .level-slider-label {

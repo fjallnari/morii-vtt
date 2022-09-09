@@ -17,7 +17,7 @@
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
-    let open: boolean = true;
+    let open: boolean = false;
     let selectedStepIndex: number = 0;
     let characterTemplate: Partial<Character> = {};
     let characterParts: Partial<QuickCreateCharacterParts> = {};

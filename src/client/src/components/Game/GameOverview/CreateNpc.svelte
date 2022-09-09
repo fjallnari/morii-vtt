@@ -5,6 +5,7 @@
     import SimpleButton from "../../SimpleButton.svelte";
     import CopyExistingSheet from "../CopyExistingSheet.svelte";
     import ImportJsonSheet from "../ImportJsonSheet.svelte";
+    import QuickCreateSheet from "../QuickCreateSheet.svelte";
 
     export let gameData: GameData;
     export let createMenuEnabled: boolean;
@@ -28,7 +29,7 @@
 
 <div class="create-npc-container">
     <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createNPC}></SimpleButton>
-    <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton>
+    <QuickCreateSheet createCharacter={createNPC}></QuickCreateSheet>
 
     <CopyExistingSheet createCharacter={createNPC}></CopyExistingSheet>
     <ImportJsonSheet createCharacter={createNPC}></ImportJsonSheet>
@@ -45,7 +46,7 @@
         gap: 0.5em;
     }
 
-    :global(.create-npc-container simple-button) {
+    :global(.create-npc-container > simple-button) {
         font-size: 1.5em;
         padding: 0.5em 0.5em !important;
     }

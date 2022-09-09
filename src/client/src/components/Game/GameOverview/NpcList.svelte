@@ -76,7 +76,7 @@
         font-size: 1.2em;
     }
 
-    :global(.npcs .inside-box-content) {
+    :global(.npcs > .inside-box-content) {
         scrollbar-width: thin;
         overflow-y: auto;
         justify-content: flex-start;

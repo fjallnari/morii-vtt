@@ -71,6 +71,7 @@
     }
 
     $: item.is_equipped = item.is_equipped && ~~item.amount !== 0;
+    $: item.amount = item.amount === '' ? '0' : item.amount;
 
 </script>
 
@@ -164,12 +165,12 @@
         justify-content: center;
         gap: 0.5em;
         width: 97%;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     .item-summary {
         display: grid; 
-        grid-template-columns: 5fr 1fr; 
+        grid-template-columns: 5fr 1.5fr; 
         grid-template-rows: 1fr; 
         gap: 0em; 
         grid-template-areas: 
@@ -253,13 +254,13 @@
     }
     
     :global(.mdc-tooltip__surface) {
-        background-color: #212125;
+        background-color: var(--clr-box-bg-dark);
     }
 
     :global(.mdc-tooltip__content) {
         font-size: 1em;
         font-family: Athiti;
-        color: var(--primary-text-color);
+        color: var(--clr-text);
         width: 100%;
     }
 

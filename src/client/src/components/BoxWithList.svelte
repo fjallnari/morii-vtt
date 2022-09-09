@@ -4,18 +4,22 @@
 
     export let label: string;
     export let styleClass: string = '';
-    export let addNewListItem: () => void;
+    export let inlineStyle: string = '';
+    export let addNewListItem: () => void = () => {};
     export let isModifyDisabled: boolean = false;
+    export let noCrud: boolean = false;
 
 </script>
 
-<box class="inside-box-content {styleClass}">
+<box class="inside-box-content {styleClass}" style={inlineStyle}>
     <slot name="filter-menu"></slot>
     <div class="inside-box-list">
         <slot name="list"></slot>
-        <sendable class="add-new-item" on:click={() => { addNewListItem(); if (!isModifyDisabled) { $modifyCharacter()}}}>
-            <Icon class="material-icons">{'add'}</Icon>
-        </sendable>
+        {#if !noCrud}
+            <sendable class="add-new-item" on:click={() => { addNewListItem(); if (!isModifyDisabled) { $modifyCharacter()}}}>
+                <Icon class="material-icons">{'add'}</Icon>
+            </sendable>
+        {/if}
     </div>
     <div class="box-justify-filler"></div>
     <div class="box-label">
@@ -25,7 +29,6 @@
 
 
 <style>
-
     .inside-box-content {
         display: flex;
         flex-direction: column;
@@ -33,7 +36,6 @@
         height: 100%;
         width: 100%;
     }
-    
 
     .inside-box-list {
         display: flex;

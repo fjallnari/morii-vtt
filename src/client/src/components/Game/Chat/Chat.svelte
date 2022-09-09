@@ -59,14 +59,7 @@
         </div>
     </div>
     <div class="send-message-box">
-        <Textfield 
-            textarea 
-            style="width: 18em; height: 5em;" 
-            bind:value={messageText} 
-            on:focus={() => isMsgBoxFocused = true} 
-            on:blur={() => isMsgBoxFocused = false} 
-            variant="outlined">
-        </Textfield>
+        <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false}></textarea>
 
         <div class="send-options-box">
             <IconButton toggle bind:pressed={$isMessagePublic}>
@@ -88,7 +81,7 @@
         flex: 1;
         max-height: 85vh;
         width: 30em;
-        background-color:#212125;
+        background-color: var(--clr-box-bg-dark);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
     }
@@ -115,6 +108,12 @@
         width: 28em;
         height: 8em;
         gap: 1em;
+    }
+
+    .send-message-box textarea {
+        font-size: 1.1em;
+        width: 18rem; 
+        height: 5rem;
     }
 
     .send-options-box {

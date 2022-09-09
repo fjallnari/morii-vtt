@@ -84,7 +84,7 @@
                 <div class="box-label">
                     Source:
                 </div>
-                <InPlaceEdit bind:value={feature.source_name} editWidth='10rem' editHeight='1.5rem' on:submit={() => $modifyCharacter()}/>
+                <InPlaceEdit bind:value={feature.source} editWidth='10rem' editHeight='1.5rem' on:submit={() => $modifyCharacter()}/>
             </div>
             <textarea on:change={() => $modifyCharacter()} bind:value={feature.content}></textarea>
             <SimpleButton value='Delete' type="delete" onClickFn={deleteFeature}></SimpleButton>
@@ -100,7 +100,7 @@
         flex-direction: column;
         justify-content: center;
         width: 95%;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     img {

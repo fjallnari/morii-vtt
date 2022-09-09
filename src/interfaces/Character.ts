@@ -62,6 +62,7 @@ export interface Tool {
 export interface Resource {
     id: string,
     name: string,
+    type?: 'simple' | 'complex',
     total: string,
     current: string,
     item_id?: string
@@ -71,7 +72,7 @@ export interface Feature {
     id: string,
     name: string,
     type: number, // e.g. 0 ~ racial, 1 ~ class, 2 ~ feat, 3 ~ other
-    source_name: string, // e.g. Kalashtar
+    source: string, // e.g. Kalashtar
     content: string,
 }
 
@@ -87,19 +88,19 @@ export interface Spell {
     level: number,
     is_prepared: boolean,
     casting_time: string,
-    is_ritual: boolean,
+    ritual: boolean,
     range: string,
     school: string,
     components: {
         verbal: boolean,
         somatic: boolean,
         material: boolean,
-        material_content: string
+        materials_needed: string
     },
     duration: string,
     concentration: boolean,
     description: string,
-    at_higher_levels: string
+    higher_levels: string
 }
 
 export interface CharacterSettings {

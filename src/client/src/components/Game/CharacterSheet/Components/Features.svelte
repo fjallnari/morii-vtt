@@ -4,6 +4,7 @@
     import { Icon } from '@smui/icon-button';
     import { nanoid } from 'nanoid/non-secure'
     import FeatureDetail from "./FeatureDetail.svelte";
+    
     export let character: Character;
     let currentFilter = 0;
 
@@ -21,7 +22,7 @@
             id: nanoid(16),
             name: '',
             type: currentFilter === SOURCE_TYPES.ALL ? 0 : currentFilter - 1,
-            source_name: '',
+            source: '',
             content: ''
         }
 
@@ -38,7 +39,7 @@
     <div class="filter-menu">
         {#each ['all', 'racial', 'class', 'feat', 'background', 'other'] as featureType, index}
             <sendable class="filter-names"
-                style="{currentFilter === index ? 'border-bottom: 1px solid #EFA48B; padding-bottom: 0.2em;': ''}"
+                style="{currentFilter === index ? 'border-bottom: 1px solid var(--clr-accent-normal); padding-bottom: 0.2em;': ''}"
                 on:click={ () => { currentFilter = index;}}
             >
                 {featureType}

@@ -19,7 +19,7 @@
     const validateSpellSummary = () => {
         if (!fillSpellContent) {return null}
 
-        const regex = /^(?<name>[a-zA-Z ]+)\n\n.*\n\n(?:(?<level>[0-9]*)[a-z]*-level (?<school>[a-zA-Z ]*)(?<ritual>\(ritual\))*|(?:(?<school_b>[a-zA-Z]*) cantrip))\n\nCasting Time: (?<cast_time>[0-9a-zA-Z ]+)\nRange: (?<range>.+)\nComponents: (?<components>[VSM, ]+)(?:\((?<mat_comp>[a-zA-Z0-9 ]*)\))*\nDuration: (?<duration>[a-zA-Z0-9, ]*)\n\n(?<description>(.|\n)*)$/gm;
+        const regex = /^(?<name>[a-zA-Z ]+)\n\n.*\n\n(?:(?<level>[0-9]*)[a-z]*-level (?<school>[a-zA-Z ]*)(?<ritual>\(ritual\))*|(?:(?<school_b>[a-zA-Z]*) cantrip))\n\nCasting Time: (?<cast_time>[0-9a-zA-Z ]+)\nRange: (?<range>.+)\nComponents: (?<components>[VSM, ]+)(?:\((?<mat_comp>[a-zA-Z0-9 ,]*)\))*\nDuration: (?<duration>[a-zA-Z0-9, ]*)\n\n(?<description>(.|\n)*)$/gm;
 
         return regex.exec(fillSpellContent);
     }
@@ -40,19 +40,19 @@
             name: name,
             level: ~~level,
             casting_time: cast_time,
-            is_ritual: ritual === '(ritual)',
+            ritual: ritual === '(ritual)',
             range: range,
             school: school ? school.toLowerCase() : school_b ? school_b.toLowerCase() : '',
             components: {
                 verbal: components.includes('V'),
                 somatic: components.includes('S'),
                 material: components.includes('M'),
-                material_content: mat_comp ? mat_comp : ''
+                materials_needed: mat_comp ? mat_comp : ''
             },
             duration: needsConcentration ? duration.split('Concentration, ')[1] : duration,
             concentration: needsConcentration,
             description: splitDescription[0],
-            at_higher_levels: splitDescription.length == 2 ? splitDescription[1] : ''
+            higher_levels: splitDescription.length == 2 ? splitDescription[1] : ''
         }
         
         addNewSpell(~~level, spellTemplate);
@@ -92,7 +92,7 @@
             {spellAttackBonus}
         </div>    
         <div class="box-justify-filler"></div>
-        <sendable class="box-label" on:click={() => $sendSkillCheck(spellAttackBonus, 'spell attack')}>
+        <sendable class="box-label" on:click={() => $sendSkillCheck(spellAttackBonus, 'spell attack', character.name)}>
             Spell Attack Bonus
         </sendable>
     </box>
@@ -128,7 +128,7 @@
 <style>
     select {
         font-size: 1.5em;
-        background-color: var(--primary-box-background-color);
+        background-color: var(--clr-box-bg-normal);
     }
     .spellcasting-container {  display: grid;
         grid-template-columns: 1fr 1fr 1fr 0.5fr;

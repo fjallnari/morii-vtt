@@ -10,6 +10,7 @@ import ModifyCharacterController from '../controllers/Routes/UserAuth/ModifyChar
 import DeleteCharacterController from '../controllers/Routes/UserAuth/DeleteCharacterController';
 import ChangeUserSettingsController from '../controllers/Routes/UserAuth/ChangeUserSettingsController';
 import GetCharactersController from '../controllers/Routes/UserAuth/GetCharactersController';
+import GetQuickCreateDataController from '../controllers/Routes/UserAuth/GetQuickCreateDataController';
 
 const router = express.Router();
 
@@ -24,6 +25,10 @@ router.get("/api/game/:id", verifyToken, async (req, res) => {
 
 router.get('/api/characters', verifyToken, async (req, res, next) => {
     await new GetCharactersController(req, res).handleRequest();
+});
+
+router.get('/api/quick-create-data', verifyToken, async (req, res, next) => {
+    await new GetQuickCreateDataController(req, res).handleRequest();
 });
 
 router.post('/api/create-campaign', verifyToken, async (req, res, next) => {

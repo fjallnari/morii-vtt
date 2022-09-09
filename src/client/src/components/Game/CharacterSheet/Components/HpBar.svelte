@@ -26,7 +26,7 @@
 
         width: 8em;
         height: 2em;
-        border: #FCF7F8 0.15em solid;
+        border: var(--clr-text) 0.15em solid;
         border-radius: 4px;
         background-color: none;
 

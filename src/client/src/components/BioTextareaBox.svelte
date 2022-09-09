@@ -2,13 +2,15 @@
     import { modifyCharacter } from "../stores";
 
     export let charAttribute: string;
-    export let styleClass: string;
+    export let styleClass: string = "";
+    export let inlineStyle: string = "";
     export let label: string = styleClass;
+    export let socketModifyEnabled = true;
 
 </script>
 
-<box class="{styleClass} box-with-label">
-    <textarea on:change={() => $modifyCharacter()} bind:value={charAttribute}></textarea>
+<box class="{styleClass} box-with-label" style={inlineStyle}>
+    <textarea class='{charAttribute ? '' : 'placeholder'}' on:change={() => socketModifyEnabled ? $modifyCharacter() : {}} bind:value={charAttribute}></textarea>
     <div class="box-justify-filler"></div>
     <div class="box-label">
         { label ? label : styleClass }
@@ -24,8 +26,16 @@
 
     textarea:focus {
         outline: none !important;
-        border: 2px solid var(--primary-accent-color);
-        caret-color: var(--primary-accent-color);
+        border: 2px solid var(--clr-accent-normal);
+        caret-color: var(--clr-accent-normal);
+        background-image: none !important;
+    }
+
+    textarea.placeholder {
+        background-image: url('../static/pencil.svg');
+        background-size: 10%;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .box-with-label {

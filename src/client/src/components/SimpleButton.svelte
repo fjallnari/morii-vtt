@@ -1,28 +1,39 @@
 <script lang="ts">
     import { Icon } from '@smui/button';
 
+    type ButtonType = 'default' | 'primary' | 'green' | 'delete' | 'orange';
+    
+    interface ButtonColors {
+        bg_color: string,
+        active_bg_color: string,
+    }
+
     export let value: string;
     export let icon: string = '';
     export let disabled: boolean = false;
-    export let type: 'default' | 'primary' | 'green' | 'delete' = 'default';
+    export let type: ButtonType = 'default';
     export let onClickFn: () => void;    
 
-    const BUTTON_TYPES = {
+    const BUTTON_TYPES: Record<ButtonType, ButtonColors> = {
         'default': {
             bg_color: '#303036',
             active_bg_color: '#27272B'
         },
         'primary': {
+            bg_color: 'var(--clr-accent-dark)',
+            active_bg_color: 'var(--clr-accent-darker)'
+        },
+        'orange': {
             bg_color: '#E9805D',
             active_bg_color: '#E7724B'
         },
         'green': {
             bg_color: '#80A451',
-            active_bg_color: '#75964A'
+            active_bg_color: '#556D36'
         },
         'delete': {
-            bg_color: '#BC4B51',
-            active_bg_color: '#A43D42'
+            bg_color: 'var(--clr-contrast-normal)',
+            active_bg_color: 'var(--clr-contrast-dark)'
         }
     }
 
@@ -33,6 +44,7 @@
     style="--bg-color:{BUTTON_TYPES[type].bg_color}; --active-bg-color:{BUTTON_TYPES[type].active_bg_color};"
     {disabled}
     on:click={() => onClickFn()}
+    on:keydown={(event) => {if (event.key === 'Enter') {onClickFn();}}}
     tabindex="0"
 >
     {#if icon}
@@ -56,8 +68,7 @@
 
         cursor: pointer;
 
-        transition-duration: 200ms;
-        transition-property: color;
+        transition: all .2s ease-in-out;
 
         font-weight: var(--semi-bold);
         font-family: Athiti;
@@ -66,11 +77,11 @@
 
     simple-button:active {
         background-color: var(--active-bg-color);
-        transition-duration: 200ms;
-        transition-property: color;        
+        transition: all .2s ease-in-out;      
     }
 
     simple-button:hover {
+        transform: scale(1.048);
         filter: opacity(0.9);
     }
 

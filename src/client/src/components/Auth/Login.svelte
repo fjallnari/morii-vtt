@@ -12,6 +12,7 @@
     } from '@smui/snackbar';
     import IconButton from '@smui/icon-button';
     import { axiosPublic } from '../../axiosPublic';
+import SimpleButton from '../SimpleButton.svelte';
 
     let loginFailedSnackbar: SnackbarComponentDev;
 
@@ -45,7 +46,7 @@
 
 </script>
 
-<div class="background-box">
+<auth-simple-box>
     <h2>Sign in</h2>
 
     {#if !inProgress}
@@ -55,10 +56,8 @@
 
         <PasswordField bind:password={password} label="Password"></PasswordField>
 
-        <div style="padding-top: 2em; ">
-            <Button on:click={loginUser} variant="raised">
-                <Label>Sign In</Label>
-            </Button>
+        <div class="button-container">
+            <SimpleButton value='Sign In' type='green' onClickFn={loginUser}></SimpleButton>
         </div>
     {:else}
         <ProgressCircle></ProgressCircle>
@@ -70,29 +69,16 @@
           <IconButton class="material-icons" title="Dismiss">close</IconButton>
         </Actions>
     </Snackbar>
-</div>
-
-
+</auth-simple-box>
 
 <style>
-    h2 {
-        padding-top: 0.5em;
-        text-transform: none;
-    }
-
-    .background-box {
-        width: 25em;
-        height: 40em;
-        background-color:#212125;
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 1%;
-
+    .button-container {
         display: flex;
-		justify-content: flex-start;
-		align-items: center;
-        flex-direction: column;
-        gap: 2em;
+        padding-top: 2em; 
     }
 
-
+    :global(auth-simple-box .button-container simple-button) {
+        padding: 0.5em 1em !important;
+    }
+    
 </style>

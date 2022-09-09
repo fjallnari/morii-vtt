@@ -63,7 +63,7 @@
         </box>
 
         <box class="attack-bonus">
-            <sendable on:click={() => $sendSkillCheck(~~getAttackFormula(), `${attack.name.toLowerCase()} | to hit`)}>
+            <sendable on:click={() => $sendSkillCheck(~~getAttackFormula(), `${attack.name.toLowerCase()} | to hit`, character.name)}>
                 {$formatModifier(getUnbiasedModifier(attack.atk_ability) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus)}
             </sendable>
             {#if isOpen}
@@ -77,7 +77,8 @@
                 <sendable class="dmg-formula" 
                     on:click={() => $sendSkillCheck(
                         getDmgModifier(attack.dmg_ability), 
-                        `${attack.name.toLowerCase()} | damage${attack.versatile_die ? (attack.versatile_active ? ' | 2-handed': ' | 1-handed') : ''}`, 
+                        `${attack.name.toLowerCase()} | damage${attack.versatile_die ? (attack.versatile_active ? ' | 2-handed': ' | 1-handed') : ''}`,
+                        character.name,
                         getDmgDie()
                     )}
                 >
@@ -229,7 +230,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0em;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     div.details {
@@ -249,7 +250,7 @@
         align-items: center;
         gap: 0.1em;
         padding: 0.2em 0.5em;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     div.details > box line-div {

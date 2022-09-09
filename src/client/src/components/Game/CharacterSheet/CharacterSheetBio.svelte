@@ -67,7 +67,6 @@
         justify-content: space-between;
         align-items: center;
         text-align: center;
-        color: #FCF7F8;
         font-size: 1.5em;
         gap: 0.35em;
     }

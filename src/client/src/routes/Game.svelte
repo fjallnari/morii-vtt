@@ -1,7 +1,7 @@
 <script lang="ts">
     import axios from "axios";
     import io from 'socket.io-client';
-    import { user, socket, ownerSocketID, userIDPairs } from '../stores';
+    import { user, socket, ownerSocketID, userIDPairs, formatModifier, sendSkillCheck, isMessagePublic } from '../stores';
     import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
@@ -9,6 +9,7 @@
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import type UserIDPair from "../interfaces/UserIDPair";
     import GameOverview from "../components/Game/GameOverview/GameOverview.svelte";
+    import { nanoid } from "nanoid/non-secure";
 
     export let params: { id?: string } = {};
 
@@ -65,6 +66,33 @@
         });
     });
 
+    /**
+     * Formats modifier to show plus signs if the modifier is positive
+     */
+    formatModifier.set((modifier: number, signDisplay: ("exceptZero" | "always" | "auto" | "never") = "exceptZero") => {
+        return new Intl.NumberFormat("en-US", {
+            signDisplay: signDisplay
+        }).format(modifier);
+    });
+
+    sendSkillCheck.set(async (modifier: number, skillName: string, charName: string = '', diceType = 'd20', customID = nanoid(16)) => {
+        $socket.emit('chat-message', {
+            senderInfo: {
+                _id: $user._id, 
+                username: $user.username,
+                settings: $user.settings,
+            }, 
+            messageText: `/r ${diceType}${modifier !== 0 ? $formatModifier(modifier, "always"): ''}`,
+            messageID: customID, 
+            skillCheckInfo: {
+                characterName: charName,
+                skillName: skillName
+            },
+            gameID: params.id,
+            isPublic: $isMessagePublic
+        });
+    });
+
 </script>
 
 {#await loadGame()}
@@ -90,7 +118,7 @@
         flex-direction: row;
         justify-content: space-around;
         padding-top: 1em;
-        height: 95vh;
+        height: calc(95vh - 2px);
         gap: 1em;
     }
 
@@ -107,6 +135,20 @@
       justify-content: center;
       align-items: center;
       height: 95vh;
+    }
+
+    :global(::-webkit-scrollbar) {
+        width: 8px;
+    }
+    :global(::-webkit-scrollbar-track) {
+        background: #1d1d22;
+    }
+    :global(::-webkit-scrollbar-thumb) {
+        background-color: #757578;
+        border: transparent;
+    }
+    :global(::-webkit-scrollbar-thumb:hover) {
+        background-color: #404044;
     }
 
 

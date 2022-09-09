@@ -16,9 +16,9 @@
             {#each gameData.characters as character}
                 <li class="character-item" on:click={() => selectedCharacter.set(character)}>
                     <class-icon>
-                        <img id="main-class" src="../static/class-icons/{getClassIcon(character)[0]}.svg" alt="class-icon">
-                        {#if getClassIcon(character).length > 2}
-                            <img id="multi-class" src="../static/class-icons/{getClassIcon(character)[2]}.svg" alt="class-icon">
+                        <img id="main-class" src="../static/class-icons/{getClassIcon(character.classes)[0]}.svg" alt="class-icon">
+                        {#if getClassIcon(character.classes).length > 2}
+                            <img id="multi-class" src="../static/class-icons/{getClassIcon(character.classes)[2]}.svg" alt="class-icon">
                         {/if}
                     </class-icon>
                     <div class="character-name">
@@ -65,7 +65,7 @@
         height: 10em;
         cursor: pointer;
 
-        background-color:#252529;
+        background-color:var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
     }

@@ -54,13 +54,13 @@
                     {#each characters as character}
                         <box class="character-tag" 
                             on:click={() => selectedCharacter = character} 
-                            style="{selectedCharacter === character ? 'background-color: #303036;' : ''}"
+                            style="{selectedCharacter === character ? 'background-color: var(--clr-box-bg-light);' : ''}"
                             tabindex='0'
                         >
                             <class-icon>
-                                <img id="main-class" src="../static/class-icons/{getClassIcon(character)[0]}.svg" alt="class-icon">
-                                {#if getClassIcon(character).length > 2}
-                                    <img id="multi-class" src="../static/class-icons/{getClassIcon(character)[2]}.svg" alt="class-icon">
+                                <img id="main-class" src="../static/class-icons/{getClassIcon(character.classes)[0]}.svg" alt="class-icon">
+                                {#if getClassIcon(character.classes).length > 2}
+                                    <img id="multi-class" src="../static/class-icons/{getClassIcon(character.classes)[2]}.svg" alt="class-icon">
                                 {/if}
                             </class-icon>
                             <div class="character-tag-name">
@@ -77,8 +77,8 @@
                 {/if}                
             {/await}
         </characters-list>
-        <dialog-buttons>
-            <SimpleButton value='' icon="close" onClickFn={() => open = false}></SimpleButton>
+        <dialog-buttons class="copy-existing">
+            <SimpleButton value='Cancel' icon="close" onClickFn={() => open = false}></SimpleButton>
             <SimpleButton value='Copy & Load' icon='file_copy' type='green' onClickFn={() => copyCharacterSheet()}></SimpleButton>
         </dialog-buttons>
     </dialog-content>
@@ -87,7 +87,6 @@
 
 <style>
     #simple-title {
-        color: #FCF7F8;
         font-size: 1.5em;
         font-family: Montserrat;
         text-transform: uppercase;
@@ -121,6 +120,11 @@
         display: flex;
         justify-content: center;
         gap: 0.5em;
+    }
+
+    :global(dialog-buttons.copy-existing > simple-button) {
+        font-size: 1.5em;
+        padding: 0.5em 0.5em !important;
     }
 
     h4 {

@@ -14,7 +14,7 @@
     import Speed from './Components/Speed.svelte';
     import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
     import Inventory from './Components/Inventory.svelte';
-import Resources from './Components/Resources.svelte';
+    import Resources from './Components/Resources.svelte';
 
     export let character: Character;
 
@@ -118,7 +118,6 @@ import Resources from './Components/Resources.svelte';
         align-items: center;
         justify-content: center;
         text-align: center;
-        color: #FCF7F8;
         font-size: 2em;
         margin: 0.4em 0em 0em 0.4em;
         width: inherit;
@@ -130,7 +129,6 @@ import Resources from './Components/Resources.svelte';
         justify-content: space-between;
         align-items: center;
         text-align: center;
-        color: #FCF7F8;
         font-size: 1.5em;
         gap: 0.35em;
     }
@@ -141,7 +139,6 @@ import Resources from './Components/Resources.svelte';
         display: grid; 
         grid-template-columns: 1fr; 
         grid-template-rows: 0.05fr 1fr; 
-        gap: 0.5em 0.5em; 
         grid-template-areas: 
         "bonuses"
         "ability-scores";
@@ -157,9 +154,8 @@ import Resources from './Components/Resources.svelte';
     .ability-scores { grid-area: ability-scores; 
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding-top: 0.25em;
+        justify-content: center;
+        gap: 1.2vh;
     }
 
     .character-stats { grid-area: character-stats;

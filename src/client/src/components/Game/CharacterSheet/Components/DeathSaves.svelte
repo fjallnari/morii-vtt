@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="box-justify-filler"></div>
-    <sendable class="box-label" on:click={() => $sendSkillCheck(0, 'death save')}>
+    <sendable class="box-label" on:click={() => $sendSkillCheck(0, 'death save', character.name)}>
         Death Saves
     </sendable>
 </box>

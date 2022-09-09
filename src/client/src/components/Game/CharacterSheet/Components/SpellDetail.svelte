@@ -7,11 +7,15 @@
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
 
-    export let spell: Spell;
-    export let character: Character;
+    export let spell: Partial<Spell>;
+    export let character: Character = undefined;
+    export let deleteSpellFce: () => void;
+
     let isOpen: boolean = false;
 
     const MAGIC_SCHOOLS = [ 'abjuration', 'conjuration', 'divination', 'enchantment', 'evocation', 'illusion', 'necromancy', 'transmutation'];
+
+    $: modifyCharacterFce = character ? $modifyCharacter : () => {};
 
     // from https://gist.github.com/jlbruno/1535691/db35b4f3af3dcbb42babc01541410f291a8e8fac
     const numToOrdinal = (num: number) => {
@@ -20,23 +24,18 @@
         return num + ( s[(v-20) % 10] || s[v] || s[0]);
     }
 
-    const deleteSpell = () => {
-        character.spells_by_level[spell.level].spells = character.spells_by_level[spell.level].spells.filter(obj => obj.id !== spell.id);
-        $modifyCharacter();
-    }
-
     const getMarkdownSpell = () => {
         const spellSubtitle = spell.level === 0 ? `${spell.school} cantrip` : `${numToOrdinal(spell.level)}-level ${spell.school.toLowerCase()}`;
         // yeah, might want to use better system for storing components honestly
         const componentsStr = [spell.components.verbal, spell.components.somatic, spell.components.material].map( 
             (comp, index) => comp ? ['V', 'S', 'M'][index] : '').filter( e => e !== '').join(', ');
         
-        const higherLevelsStr = spell.at_higher_levels !== '' ? `\n\n**At Higher Levels.** ${spell.at_higher_levels}` : '';
+        const higherLevelsStr = spell.higher_levels !== '' ? `\n\n**At Higher Levels.** ${spell.higher_levels}` : '';
 
-        return `#### ${spell.name}\n*${spellSubtitle}${spell.is_ritual ? ' (ritual)': ''}*
+        return `#### ${spell.name}\n*${spellSubtitle}${spell.ritual ? ' (ritual)': ''}*
             \n**Casting time:** ${spell.casting_time}  
             **Range:** ${spell.range}  
-            **Components:** ${componentsStr} ${spell.components.material ? `(${spell.components.material_content})` : ''}  
+            **Components:** ${componentsStr} ${spell.components.material ? `(${spell.components.materials_needed})` : ''}  
             **Duration:** ${spell.concentration ? 'Concentration, up to ': ''} ${spell.duration}  
             \n\n${spell.description}
             ${higherLevelsStr}
@@ -63,24 +62,26 @@
 </script>
 
 <box class="spell-main-container">
-    <div class="spell-summary" style='grid-template-areas: "{spell.level === 0 ? 'spell-name': 'spell-prepared'} spell-name spell-send spell-menu"'>
+    <div class="spell-summary" style='grid-template-areas: "{spell.level === 0 ? 'spell-name': 'spell-prepared'} spell-name {character ? 'spell-send' : 'spell-name'} spell-menu"'>
         {#if spell.level != 0}
             <div class="spell-prepared">
                 <img
                     src="../static/rhombus{spell.is_prepared ? '' : '-outline'}.svg" 
                     alt="rhombus"
-                    on:click={() => { spell.is_prepared = !spell.is_prepared; $modifyCharacter() }}
+                    on:click={() => { spell.is_prepared = !spell.is_prepared; modifyCharacterFce() }}
                 >
             </div>
         {/if}
 
         <div class="spell-name">
-            <InPlaceEdit bind:value={spell.name} editWidth='15rem' editHeight='1.3rem' on:submit={() => $modifyCharacter()}/>
+            <InPlaceEdit bind:value={spell.name} editWidth='15rem' editHeight='1.3rem' on:submit={() => modifyCharacterFce()}/>
         </div>
-        
-        <sendable class="spell-send" on:click={() => sendSpell()}>
-            <Icon class="material-icons" style="font-size: 1.4em;">{'send'}</Icon>
-        </sendable>
+
+        {#if character}        
+            <sendable class="spell-send" on:click={() => sendSpell()}>
+                <Icon class="material-icons" style="font-size: 1.4em;">{'send'}</Icon>
+            </sendable>
+        {/if}
 
         <sendable class="spell-menu" on:click={() => { isOpen = !isOpen }}>
             <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
@@ -92,27 +93,27 @@
                 <div class="box-label">
                     Casting Time:
                 </div>
-                <InPlaceEdit bind:value={spell.casting_time} editWidth='5rem' editHeight='1.3rem' on:submit={() => $modifyCharacter()}/>
+                <InPlaceEdit bind:value={spell.casting_time} editWidth='5rem' editHeight='1.3rem' on:submit={() => modifyCharacterFce()}/>
                 |
                 <div class="box-label">
                     Ritual:
                 </div>
                 <img class="is-equipped-icon" 
-                    src="../static/{spell.is_ritual ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
+                    src="../static/{spell.ritual ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
                     alt="atk-prof"
-                    on:click={() => { spell.is_ritual = !spell.is_ritual; $modifyCharacter(); }}
+                    on:click={() => { spell.ritual = !spell.ritual; modifyCharacterFce(); }}
                 >         
             </div>
             <div class="single-detail-line">
                 <div class="box-label">
                     Range:
                 </div>
-                <InPlaceEdit bind:value={spell.range} editWidth='5rem' editHeight='1.3rem' on:submit={() => $modifyCharacter()}/>
+                <InPlaceEdit bind:value={spell.range} editWidth='5rem' editHeight='1.3rem' on:submit={() => modifyCharacterFce()}/>
                 |
                 <div class="box-label">
                     School:
                 </div>
-                <select bind:value={spell.school} on:change={() => $modifyCharacter()}>
+                <select bind:value={spell.school} on:change={() => modifyCharacterFce()}>
                     <option value="" selected disabled hidden>---</option>
                     {#each MAGIC_SCHOOLS as school}
                         <option value={school}>
@@ -122,7 +123,7 @@
                 </select>
             </div>
             <!-- can be switched on and off in settings -->
-            {#if character.settings.use_spell_components}
+            {#if !character || (character && character.settings.use_spell_components)}
                 <div class="single-detail-line">
                     <div class="box-label">
                         Components:
@@ -131,7 +132,7 @@
                         <img class="is-equipped-icon" 
                             src="../static/{spell.components.verbal ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
                             alt="atk-prof"
-                            on:click={() => { spell.components.verbal = !spell.components.verbal; $modifyCharacter(); }}
+                            on:click={() => { spell.components.verbal = !spell.components.verbal; modifyCharacterFce(); }}
                         >
                         V
                     </div>
@@ -139,7 +140,7 @@
                         <img class="is-equipped-icon" 
                             src="../static/{spell.components.somatic ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
                             alt="atk-prof"
-                            on:click={() => { spell.components.somatic = !spell.components.somatic; $modifyCharacter(); }}
+                            on:click={() => { spell.components.somatic = !spell.components.somatic; modifyCharacterFce(); }}
                         >
                         S
                     </div>
@@ -147,7 +148,7 @@
                         <img class="is-equipped-icon" 
                             src="../static/{spell.components.material ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
                             alt="atk-prof"
-                            on:click={() => { spell.components.material = !spell.components.material; $modifyCharacter(); }}
+                            on:click={() => { spell.components.material = !spell.components.material; modifyCharacterFce(); }}
                         >
                         M
                     </div>
@@ -157,7 +158,7 @@
                         <div class="box-label">
                             Material:
                         </div>
-                        <InPlaceEdit bind:value={spell.components.material_content} editWidth='10rem' editHeight='1.3rem' on:submit={() => $modifyCharacter()}/> 
+                        <InPlaceEdit bind:value={spell.components.materials_needed} editWidth='10rem' editHeight='1.3rem' on:submit={() => modifyCharacterFce()}/> 
                     </div>
                 {/if}
             {/if}
@@ -165,7 +166,7 @@
                 <div class="box-label">
                     Duration:
                 </div>
-                <InPlaceEdit bind:value={spell.duration} editWidth='5rem' editHeight='1.3rem' on:submit={() => $modifyCharacter()}/>
+                <InPlaceEdit bind:value={spell.duration} editWidth='5rem' editHeight='1.3rem' on:submit={() => modifyCharacterFce()}/>
                 |
                 <div class="box-label">
                     Concentration:
@@ -173,17 +174,17 @@
                 <img class="is-equipped-icon" 
                     src="../static/{spell.concentration ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
                     alt="atk-prof"
-                    on:click={() => { spell.concentration = !spell.concentration; $modifyCharacter(); }}
+                    on:click={() => { spell.concentration = !spell.concentration; modifyCharacterFce(); }}
                 >           
             </div>
-            <textarea on:change={() => $modifyCharacter()} bind:value={spell.description}></textarea>
+            <textarea on:change={() => modifyCharacterFce()} bind:value={spell.description}></textarea>
             <div class="single-detail-line">
                 <div class="box-label">
                     At higher levels:
                 </div>
             </div>
-            <textarea style="height: 5em;" on:change={() => $modifyCharacter()} bind:value={spell.at_higher_levels}></textarea>
-            <SimpleButton value='Delete' type="delete" onClickFn={deleteSpell}></SimpleButton>
+            <textarea style="height: 7em;" on:change={() => modifyCharacterFce()} bind:value={spell.higher_levels}></textarea>
+            <SimpleButton value='Delete' type="delete" onClickFn={deleteSpellFce}></SimpleButton>
         </div>
     {/if}
 </box>
@@ -193,7 +194,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background-color: var(--secondary-box-background-color);
+        background-color: var(--clr-box-bg-light);
     }
 
     img {
@@ -203,7 +204,7 @@
     }
 
     textarea {
-        height: 7em;
+        height: 10em;
     }
 
     .spell-summary {

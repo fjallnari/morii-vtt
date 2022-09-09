@@ -23,11 +23,15 @@
         );
     }
 
+    const sendToolCheck = () => {
+        $sendSkillCheck(~~getToolFormula(), `${tool.name.toLowerCase()} [${tool.ability === '' ? '?': tool.ability}]`, character.name);
+    }
+
 </script>
 
 <box>
     <div class="tool-summary">
-        <sendable class="tool-modifier" on:click={() => $sendSkillCheck(~~getToolFormula(), `${tool.name.toLowerCase()} (${tool.ability})`, character.name)}>
+        <sendable class="tool-modifier" on:click={() => sendToolCheck()}>
             {getToolFormula(tool.ability, tool.proficiency, character.prof_bonus)}
         </sendable>
         <div class="tool-name">

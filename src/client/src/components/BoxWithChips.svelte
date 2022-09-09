@@ -36,7 +36,7 @@
     }
 
     const isBlank = (chip: any) => {
-        const chipName = typeof chip === 'object' ? chip.name ?? (chip[0] && chip.length > 1 ? '' : chip[0]) ?? '' : chip;
+        const chipName = typeof chip === 'object' ? chip.name ?? '' : chip;
         return chipName === '' || chipName === '???' || chipName === '---';
     }
 

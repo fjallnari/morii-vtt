@@ -38,7 +38,7 @@
 </script>
 
 <div class="resources-main-container" style="{character.resources.length === 0 ? 'flex-direction: column;' : ''}">
-    <div class="resources-list {character.resources.length !== 0 && character.resources.length !== 4 ? ' off-center' : ''}">
+    <div class="resources-list {character.resources.length !== 0 && character.resources.length < 4 ? ' off-center' : ''}">
         {#each character.resources as resource}
             <ResourceDetail bind:resource={resource} bind:character={character} deleteFce={deleteResource}></ResourceDetail>
         {/each}

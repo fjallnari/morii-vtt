@@ -72,7 +72,7 @@ export interface Feature {
     id: string,
     name: string,
     type: number, // e.g. 0 ~ racial, 1 ~ class, 2 ~ feat, 3 ~ other
-    source_name: string, // e.g. Kalashtar
+    source: string, // e.g. Kalashtar
     content: string,
 }
 

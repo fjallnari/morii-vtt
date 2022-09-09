@@ -9,6 +9,11 @@ interface SimpleOtherProf {
     type: number,
 }
 
+interface SimpleTool {
+    name: string,
+    options?: string[]
+}
+
 export default interface RaceData {
     name: string,
     as_increase: Record<string, string>
@@ -23,6 +28,6 @@ export default interface RaceData {
     languages: string[],
     features: SimpleFeature[],
     skill_prof: string[],
-    tools_prof: string[][],
+    tools_prof: SimpleTool[],
     other_prof: SimpleOtherProf[]
 }

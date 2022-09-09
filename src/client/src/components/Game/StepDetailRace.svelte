@@ -33,7 +33,8 @@
     }
 
     $: if (chosenTool) {
-        selectedRace.tools_prof = selectedRace.tools_prof.slice(1).concat([[chosenTool]]);
+        console.log(chosenTool)
+        selectedRace.tools_prof = selectedRace.tools_prof.slice(1).concat([{ name: chosenTool }]);
         chosenTool = undefined;
     }
 
@@ -98,17 +99,17 @@
             </div>
         </BoxWithList>
 
-        <BoxWithChips bind:chipsArray={selectedRace.tools_prof} label='Tool Proficiencies' let:index={index} gridArea='tools-prof' blankChip={['']}>
+        <BoxWithChips bind:chipsArray={selectedRace.tools_prof} label='Tool Proficiencies' let:index={index} gridArea='tools-prof' blankChip={{ name: '' }}>
             <div class="chip">
-                {#if selectedRace.tools_prof[index].length < 2}
-                    <InPlaceEdit bind:value={selectedRace.tools_prof[index][0]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
-                {:else}
-                    <SegmentedButton segments={selectedRace.tools_prof[index]} let:segment singleSelect bind:selected={chosenTool}>
+                {#if selectedRace.tools_prof[index].options}
+                    <SegmentedButton segments={selectedRace.tools_prof[index].options} let:segment singleSelect bind:selected={chosenTool}>
                         <!-- Note: the `segment` property is required! -->
                         <Segment {segment}>
                             <Label>{segment}</Label>
                         </Segment>
                     </SegmentedButton>
+                {:else}
+                    <InPlaceEdit bind:value={selectedRace.tools_prof[index].name} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
                 {/if}
             </div>
         </BoxWithChips>

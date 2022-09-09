@@ -145,7 +145,7 @@ export class CharacterVTTESConverter {
                     id: nanoid(16),
                     name: '',
                     type: 0,
-                    source_name: '',
+                    source: '',
                     content: ''
                 }
             }
@@ -161,7 +161,7 @@ export class CharacterVTTESConverter {
                     featureMap[featureNameArr[1]].type = ['Racial', 'Class', 'Feat', 'Background', 'Other'].indexOf(itemShard.current.toString());
                     break;
                 case 'source_type':
-                    featureMap[featureNameArr[1]].source_name = itemShard.current.toString();
+                    featureMap[featureNameArr[1]].source = itemShard.current.toString();
                     break;
             }
         });

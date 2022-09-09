@@ -22,7 +22,7 @@
             id: nanoid(16),
             name: '',
             type: currentFilter === SOURCE_TYPES.ALL ? 0 : currentFilter - 1,
-            source_name: '',
+            source: '',
             content: ''
         }
 

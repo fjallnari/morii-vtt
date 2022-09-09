@@ -356,7 +356,7 @@
         "name": {
           "type": "string"
         },
-        "source_name": {
+        "source": {
           "type": "string"
         },
         "type": {
@@ -367,7 +367,7 @@
         "id",
         "name",
         "type",
-        "source_name",
+        "source",
         "content"
       ],
       "type": "object"

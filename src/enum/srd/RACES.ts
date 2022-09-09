@@ -56,7 +56,12 @@ export const RACES: RaceData[] = [
             }
         ],
         skill_prof: [],
-        tools_prof: [[ 'smith’s 🛠', 'mason’s 🛠', 'brewer’s supplies' ]],
+        tools_prof: [
+            {
+                name: '',
+                options: [ 'smith’s 🛠', 'mason’s 🛠', 'brewer’s supplies' ]
+            }
+        ],
         other_prof: [
             {
                 name: 'Battleaxe',

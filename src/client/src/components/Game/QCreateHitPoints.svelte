@@ -1,8 +1,7 @@
 <script lang="ts">
-import { nanoid } from "nanoid/non-secure";
-
+    import { nanoid } from "nanoid/non-secure";
     import type ClassData from "../../interfaces/ClassData";
-import type MessageData from "../../interfaces/MessageData";
+    import type MessageData from "../../interfaces/MessageData";
     import type { QCAbilityScores } from "../../interfaces/QCAbilityScores";
     import { formatModifier, sendSkillCheck, socket } from "../../stores";
     import { getASModifier } from "../../util/util";
@@ -18,7 +17,6 @@ import type MessageData from "../../interfaces/MessageData";
     $: level1HP = selectedClass.hp.hit_die + modCON;
 
     let hpRollID = '---';
-    let lastHPRoll = undefined;
 
     const getAverageHP = () => {
         // HP at first level + (average hp per level + CON mod) * (level - 1)

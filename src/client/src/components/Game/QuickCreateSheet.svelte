@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Character } from "../../interfaces/Character";
+    import type { Character, Feature, Item } from "../../interfaces/Character";
     import SimpleButton from "../SimpleButton.svelte";
     import Dialog from '@smui/dialog';
     import CircularProgress from '@smui/circular-progress';
@@ -13,6 +13,7 @@
     import StepDetailAbilityScores from "./StepDetailAbilityScores.svelte";
     import StepDetailBackground from "./StepDetailBackground.svelte";
     import StepDetailSummary from "./StepDetailSummary.svelte";
+    import { nanoid } from "nanoid/non-secure";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -59,8 +60,135 @@
     }
 
     const assembleCharacterSheet = () => {
-        // TODO: process character sheet
-        console.log(characterParts);
+        const currentHP = characterParts.class?.hp.current ?? '';
+
+        // ABILITY SCORES & SKILLS
+        const skillsFinal = [].concat((characterParts.race?.skill_prof ?? [])).concat((characterParts.class?.skills.final ?? [])).concat((characterParts.bio?.skills ?? []));
+        
+        Object.keys(characterTemplate.ability_scores).forEach( tag => {
+            let AS = characterTemplate.ability_scores[tag];
+            AS.value = characterParts.ability_scores[tag].value ?? '';
+            AS.saving_throw = characterParts.class?.saving_throws.includes(tag) ?? false;
+            AS.skills = AS.skills.map(skill => { return { name: skill.name, proficiency: skillsFinal.some(skillIter => skillIter.toLowerCase() === skill.name.toLowerCase()) ? 1 : 0 }});
+        });
+
+        // FEATURES
+        const racialTraits = (characterParts.race?.features ?? [])
+            .map(trait => Object.assign(trait, { id: nanoid(16), type: 0, source: trait.source === '' ? characterParts.race?.name : trait.source ?? '' }));
+        
+        const classFeatures = (characterParts.class?.features.filter(feature => feature.level <= characterParts.class?.level ?? 0) ?? [])
+            .map(feature => {  return { id: nanoid(16), name: feature.name, content: feature.content, type: 1, source: characterParts.class?.name ?? ''}});
+        
+        const feats = (characterParts.as_gen_info?.feats ?? []).map(feat => Object.assign(feat, { id: nanoid(16), type: 2, source: feat.source ?? '' }));
+
+        const bkgFeatures = (characterParts.bio?.features ?? [])
+            .map(feature => Object.assign(feature, { id: nanoid(16), type: 3, source: !feature.source || feature.source === '' ? characterParts.bio?.name : feature.source }));
+
+        const featuresFinal = [].concat(racialTraits).concat(classFeatures).concat(feats).concat(bkgFeatures);
+
+        // PROF BONUS
+        const proficiencyBonus = characterParts.class ? Math.floor((characterParts.class.level - 1) / 4) + 2 : 0;
+
+        // TOOLS
+        const toolsProf = [].concat(characterParts.race?.tools_prof.map(tool => tool.name) ?? [])
+            .concat(characterParts.class?.tool_prof.tools.map(tool => tool.name) ?? [])
+            .concat(characterParts.bio.tools)
+            .filter(tool => typeof tool === 'string' && tool !== '')
+            .map(tool => { 
+                return { 
+                    id: nanoid(16),
+                    name: tool,
+                    ability: '',
+                    proficiency: 1
+                }
+            });
+
+        // OTHER PROF
+        const languages = [].concat(characterParts.race?.languages ?? []).concat(characterParts.bio.languages)
+            .map(language => {
+                return {
+                    id: nanoid(16),
+                    name: language,
+                    type: 3,
+                    content: ''
+                }
+            });
+        
+        const otherProf = [].concat(characterParts.race?.other_prof ?? [])
+            .concat(characterParts.class?.other_prof ?? [])
+            .map(prof => { 
+                return { 
+                    id: nanoid(16),
+                    name: prof.name,
+                    type: prof.type ?? 0,
+                    content: ''
+                }
+            });
+        
+        // RESOURCES && RESOURCES && ATTACKS
+
+        let resources = (characterParts.class?.resources ?? []).map(resource => Object.assign(resource, { id: nanoid(16), item_id: '', type: resource.type }));
+
+        const equipment = [].concat(characterParts.class?.equipment.flatMap(line => line.final) ?? []).concat(characterParts.bio.equipment)
+            .map(item => {
+                const itemID = nanoid(16);
+                let resourceID = undefined;
+                
+                const isResource = item.tags?.includes('resource') && true;
+
+                if (isResource) {
+                    resourceID = nanoid(16);
+                    resources = resources.concat([{ id: resourceID, item_id: itemID, name: item.name, total: item.amount, current: item.amount, type: 'complex'}]);
+                }
+
+                // TODO - add attack linking
+
+                return {
+                    id: itemID,
+                    name: item.name,
+                    is_equipped: true,
+                    amount: item.amount,
+                    has_weight: false,
+                    has_attack: false,
+                    want_tooltip: false,
+                    tooltip: item.description ?? item.tooltip ?? '',
+                    use_as_resource: isResource,
+                    resource_id: resourceID ?? ''
+                } as Item;
+            })
+
+        Object.assign(characterTemplate, {
+            name: characterParts.name ?? '',
+            classes: `${characterParts.class?.name ?? ''} ${characterParts.class?.level ?? ''}`,
+            race: characterParts.race?.name ?? '',
+            background: characterParts.bio?.name ?? '',
+            prof_bonus: new Intl.NumberFormat("en-US", { signDisplay: 'exceptZero' }).format(proficiencyBonus + 0),
+            speed_max: characterParts.race?.speed ?? '',
+            hp_max: currentHP,
+            hp_current: currentHP,
+            hd_total: `${characterParts.class?.level ?? 0}d${characterParts.class?.hp.hit_die}`,
+            hd_current: { [`d${characterParts.class?.hp.hit_die}`] : characterParts.class?.level ?? 0},
+
+            inventory: equipment,
+            other_profs: otherProf.concat(languages),
+            tools: toolsProf,
+            resources: resources,
+            features: featuresFinal,
+
+            // BIO TAB
+            age: characterParts.race?.age ?? '',
+            alignment: characterParts.race?.alignment ?? '',
+            appearance: characterParts.bio.appearance ?? '',
+            backstory: characterParts.bio.backstory ?? '',
+            person_traits: characterParts.bio.personality ?? '',
+            ideals: characterParts.bio.ideals ?? '',
+            bonds: characterParts.bio.bonds ?? '',
+            flaws: characterParts.bio.flaws ?? '',
+
+            // SPELLS
+            spell_ability: characterParts.class?.spellcasting?.ability ?? ''
+            // TODO
+        });
                 
         createCharacter(characterTemplate);
     }

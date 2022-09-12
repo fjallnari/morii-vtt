@@ -24,6 +24,8 @@
         && characterParts.bio.skills.every(skill => skill !== '')
         && characterParts.bio.tools.length + characterParts.bio.languages.length === 2;
 
+    const coin_types = Object.keys(characterParts.bio.coins);
+
     const addFeature = () => {
         characterParts.bio.features = characterParts.bio.features.concat([{ name: '', content: '' }]); 
     }
@@ -73,6 +75,15 @@
     <BoxWithChips bind:chipsArray={characterParts.bio.languages} label='Languages' let:index={index} gridArea=bkg-languages>
         <InPlaceEdit bind:value={characterParts.bio.languages[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
     </BoxWithChips>
+
+    <div class='bkg-coins'>
+        {#each coin_types as coin_type, index}
+            <InPlaceEditBox bind:value={characterParts.bio.coins[coin_type]} boxLabel={coin_type}
+                onSubmitFce={() => {}}
+                editWidth="1.5em" editHeight="1.5em">
+            </InPlaceEditBox>
+        {/each}
+    </div>
 
     <BoxWithList label='Equipment' inlineStyle='grid-area: bkg-equipment;' addNewListItem={addItem} isModifyDisabled>
         <div class="box-list" slot='list'>
@@ -141,7 +152,7 @@
             "bkg-name bkg-name bkg-skills bkg-skills bkg-tools bkg-tools bkg-languages bkg-languages"
             "bkg-info bkg-info bkg-skills bkg-skills bkg-tools bkg-tools bkg-languages bkg-languages"
             "bkg-info bkg-info bkg-skills bkg-skills bkg-tools bkg-tools bkg-languages bkg-languages"
-            "bkg-info bkg-info bkg-equipment bkg-equipment bkg-personality bkg-personality bkg-ideals bkg-ideals"
+            "bkg-info bkg-info bkg-coins bkg-coins bkg-personality bkg-personality bkg-ideals bkg-ideals"
             "bkg-info bkg-info bkg-equipment bkg-equipment bkg-personality bkg-personality bkg-ideals bkg-ideals"
             "bkg-features bkg-features bkg-equipment bkg-equipment bkg-personality bkg-personality bkg-ideals bkg-ideals"
             "bkg-features bkg-features bkg-equipment bkg-equipment bkg-bonds bkg-bonds bkg-flaws bkg-flaws"
@@ -166,6 +177,17 @@
     }
     
     .bkg-info { grid-area: bkg-info; }
+
+    .bkg-coins { grid-area: bkg-coins; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    :global(.bkg-coins box) {
+        position: relative;
+    }
 
     p.disclaimer {
         position: absolute;

@@ -9,6 +9,7 @@
     import InPlaceEditBox from "../InPlaceEditBox.svelte";
     import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
     import { Icon } from '@smui/icon-button';
+    //@ts-ignore
     import { human, species } from 'fantastical';
     import Svelecte from "svelecte/src/Svelecte.svelte";
     import BioTextareaBox from "../BioTextareaBox.svelte";

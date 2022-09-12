@@ -14,4 +14,5 @@ export default interface QCBioData {
     ideals: string,
     bonds: string,
     flaws: string,
+    coins: Record<string, string>
 }

@@ -210,6 +210,7 @@
             resources: resources,
             attacks: attacks,
             features: featuresFinal,
+            coins: characterParts.bio.coins,
 
             // BIO TAB
             age: characterParts.race?.age ?? '',

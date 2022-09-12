@@ -19,4 +19,10 @@ If you can’t find a feature that matches your desired background, work with yo
     ideals: "",
     bonds: "",
     flaws: "",
+    coins: {
+        cp: '',
+        sp: '',
+        gp: '',
+        pp: ''
+    },
 }

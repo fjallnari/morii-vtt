@@ -7,7 +7,7 @@
     import CharacterSheetRouter from "./CharacterSheet/CharacterSheetRouter.svelte";
     import ImportJsonSheet from "./ImportJsonSheet.svelte";
     import CopyExistingSheet from "./CopyExistingSheet.svelte";
-    import QuickCreateSheet from "./QuickCreateSheet.svelte";
+    import QuickCreateSheet from "./QCreate/QuickCreateSheet.svelte";
 
     export let gameData: GameData;
 

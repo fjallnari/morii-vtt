@@ -1,20 +1,20 @@
 <script lang="ts">
-    import ABILITY_TAGS from "../../enum/AbilityTags";
-    import type ClassData from "../../interfaces/ClassData";
-    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../interfaces/QuickCreateData";
-    import MarkdownBoxText from "./MarkdownBoxText.svelte";
+    import ABILITY_TAGS from "../../../enum/AbilityTags";
+    import type ClassData from "../../../interfaces/ClassData";
+    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import MarkdownBoxText from ".././MarkdownBoxText.svelte";
     import Slider from '@smui/slider';
-    import { findHighestPossibleValue, validateClassName } from "../../util/util";
-    import BoxWithList from "../BoxWithList.svelte";
-    import type { Spell } from "../../interfaces/Character";
-    import SpellDetail from "./CharacterSheet/Components/SpellDetail.svelte";
+    import { findHighestPossibleValue, validateClassName } from "../../../util/util";
+    import BoxWithList from "../../BoxWithList.svelte";
+    import type { Spell } from "../../../interfaces/Character";
+    import SpellDetail from ".././CharacterSheet/Components/SpellDetail.svelte";
     import Svelecte from 'svelecte/src/Svelecte.svelte';
-    import type { ClassSpellcasting } from "../../interfaces/ClassData";
-    import { SPELLS_BY_LEVEL_BLANK } from "../../enum/SpellsByLevelBlank";
-    import SimpleButton from "../SimpleButton.svelte";
-    import InPlaceEdit from "../InPlaceEdit.svelte";
-    import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
+    import type { ClassSpellcasting } from "../../../interfaces/ClassData";
+    import { SPELLS_BY_LEVEL_BLANK } from "../../../enum/SpellsByLevelBlank";
+    import SimpleButton from "../../SimpleButton.svelte";
+    import InPlaceEdit from "../../InPlaceEdit.svelte";
+    import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
     import { nanoid } from "nanoid/non-secure";
  
     export let characterParts: QuickCreateCharacterParts;

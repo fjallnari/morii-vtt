@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type ClassData from "../../interfaces/ClassData";
-    import ResourceDetail from './CharacterSheet/Components/ResourceDetail.svelte';
     import { Icon } from '@smui/icon-button';
-    import type { ClassResource } from "../../interfaces/ClassData";
-    import { findHighestPossibleValue } from "../../util/util";
+    import type { ClassResource } from '../../../interfaces/ClassData';
+    import type ClassData from '../../../interfaces/ClassData';
+    import { findHighestPossibleValue } from '../../../util/util';
+    import ResourceDetail from '../CharacterSheet/Components/ResourceDetail.svelte';
 
     export let selectedClass: ClassData;
 

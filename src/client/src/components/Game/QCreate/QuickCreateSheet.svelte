@@ -1,12 +1,8 @@
 <script lang="ts">
-    import type { Character, Feature, Item } from "../../interfaces/Character";
-    import SimpleButton from "../SimpleButton.svelte";
     import Dialog from '@smui/dialog';
     import CircularProgress from '@smui/circular-progress';
     import axios from "axios";
-    import type QuickCreateData from "../../interfaces/QuickCreateData";
     import { Icon } from '@smui/button';
-    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
     import StepDetailRace from "./StepDetailRace.svelte";
     import StepDetailClass from "./StepDetailClass.svelte";
     import StepDetailSpellcasting from "./StepDetailSpellcasting.svelte";
@@ -14,6 +10,10 @@
     import StepDetailBackground from "./StepDetailBackground.svelte";
     import StepDetailSummary from "./StepDetailSummary.svelte";
     import { nanoid } from "nanoid/non-secure";
+import type { Character, Item } from '../../../interfaces/Character';
+import type QuickCreateCharacterParts from '../../../interfaces/QuickCreateCharacterParts';
+import type QuickCreateData from '../../../interfaces/QuickCreateData';
+import SimpleButton from '../../SimpleButton.svelte';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -267,7 +267,7 @@
                             alt="step-icon"
                         >
                         {step.name}
-                        {#if step.isCompleted} <!-- TODO -->
+                        {#if step.isCompleted}
                             <Icon id="filled-in-icon" class="material-icons">done</Icon>
                         {/if}
                     </box>

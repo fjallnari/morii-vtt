@@ -1,14 +1,14 @@
 <script lang="ts">
-    import SKILLS from "../../enum/Skills";
-    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../interfaces/QuickCreateData";
-    import BioTextareaBox from "../BioTextareaBox.svelte";
-    import BoxWithChips from "../BoxWithChips.svelte";
-    import BoxWithList from "../BoxWithList.svelte";
-    import InPlaceEdit from "../InPlaceEdit.svelte";
-    import InPlaceEditBox from "../InPlaceEditBox.svelte";
-    import MarkdownBoxText from "./MarkdownBoxText.svelte";
-    import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
+    import SKILLS from "../../../enum/Skills";
+    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import BioTextareaBox from "../../BioTextareaBox.svelte";
+    import BoxWithChips from "../../BoxWithChips.svelte";
+    import BoxWithList from "../../BoxWithList.svelte";
+    import InPlaceEdit from "../../InPlaceEdit.svelte";
+    import InPlaceEditBox from "../../InPlaceEditBox.svelte";
+    import MarkdownBoxText from ".././MarkdownBoxText.svelte";
+    import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

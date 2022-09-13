@@ -1,17 +1,17 @@
 <script lang="ts">
-    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../interfaces/QuickCreateData";
-    import { formatModifier, isMessagePublic, sendSkillCheck, socket } from "../../stores";
-    import InPlaceEdit from "../InPlaceEdit.svelte";
-    import { findHighestPossibleValue, getASModifier, getRandomIndex } from "../../util/util";
-    import ChipsDndZone from "./ChipsDndZone.svelte";
-    import type MessageData from "../../interfaces/MessageData";
+    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import { formatModifier, isMessagePublic, sendSkillCheck, socket } from "../../../stores";
+    import InPlaceEdit from "../../InPlaceEdit.svelte";
+    import { findHighestPossibleValue, getASModifier, getRandomIndex } from "../../../util/util";
+    import ChipsDndZone from ".././ChipsDndZone.svelte";
+    import type MessageData from "../../../interfaces/MessageData";
     import { nanoid } from "nanoid/non-secure";
     import IconButton, { Icon } from '@smui/icon-button';
-    import BoxWithList from "../BoxWithList.svelte";
-    import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
-    import MarkdownBoxText from "./MarkdownBoxText.svelte";
-    import type { QCAbilityScores } from "../../interfaces/QCAbilityScores";
+    import BoxWithList from "../../BoxWithList.svelte";
+    import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
+    import MarkdownBoxText from ".././MarkdownBoxText.svelte";
+    import type { QCAbilityScores } from "../../../interfaces/QCAbilityScores";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -119,14 +119,35 @@
         });        
     }
 
+    /**
+     * Checks if the asFinalArray was filled, if not recursively calls itself
+     * If the limit is reached it resolves with blank array just so it doesn't loop till eternity
+     */
+    const circleCheck = async (recursionLayer = 0, checkRecursionLimit = 5) => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                if (genInfo.baseArray.length === 6) {
+                    resolve(genInfo.baseArray);
+                }
+                else {
+                    if (recursionLayer < checkRecursionLimit) {
+                        recursionLayer += 1;
+                        circleCheck();
+                    }
+                    else {
+                        resolve([]);         
+                    }
+                }
+            }, 200);
+        });
+    };
+
     const rollASArray = async (formula: string = '4d6kh3') => {
         if (!formula || formula.trim() === '') { return [] };
 
         genInfo.baseArray = [];
         rollArrayIds = [];
 
-        const checkRecursionLimit = 5;
-        let recursionLayer = 0;
         let rollBatchID = nanoid(6);
 
         for (let i = 0; i < 6; i++) {
@@ -134,29 +155,6 @@
             rollArrayIds = rollArrayIds.concat([newCustomID]);
             $sendSkillCheck(0, `[${rollBatchID}] Roll stats ~ ${formula}`, !characterParts.name || characterParts.name === '' ? 'Q-Create' : characterParts.name, formula, newCustomID);
         }
-
-        /**
-         * Checks if the asFinalArray was filled, if not recursively calls itself
-         * If the limit is reached it resolves with blank array just so it doesn't loop till eternity
-         */
-        const circleCheck = async () => {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    if (genInfo.baseArray.length === 6) {
-                        resolve(genInfo.baseArray);
-                    }
-                    else {
-                        if (recursionLayer < checkRecursionLimit) {
-                            recursionLayer += 1;
-                            circleCheck();
-                        }
-                        else {
-                            resolve([]);         
-                        }
-                    }
-                }, 200);
-            });
-        };
 
         return await circleCheck() as number[];
     }

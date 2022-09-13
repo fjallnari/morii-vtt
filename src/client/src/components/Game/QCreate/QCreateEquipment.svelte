@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type ClassData from "../../interfaces/ClassData";
     import { Icon } from '@smui/icon-button';
+    import type ClassData from '../../../interfaces/ClassData';
 
     export let selectedClass: ClassData;
 

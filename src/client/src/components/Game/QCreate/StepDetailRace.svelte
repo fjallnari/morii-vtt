@@ -1,15 +1,15 @@
 <script lang="ts">
-    import type RaceData from "../../interfaces/RaceData";
-    import type QuickCreateData from "../../interfaces/QuickCreateData";
-    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
-    import BoxWithInfo from '../BoxWithInfo.svelte';
-    import RowBoxWithLabel from '../RowBoxWithLabel.svelte';
-    import InPlaceEdit from '../InPlaceEdit.svelte';
-    import ABILITY_TAGS from '../../enum/AbilityTags';
-    import BoxWithList from '../BoxWithList.svelte';
-    import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
-    import BoxWithChips from '../BoxWithChips.svelte';
-    import SKILLS from '../../enum/Skills';
+    import type RaceData from "../../../interfaces/RaceData";
+    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
+    import BoxWithInfo from '../../BoxWithInfo.svelte';
+    import RowBoxWithLabel from '../../RowBoxWithLabel.svelte';
+    import InPlaceEdit from '../../InPlaceEdit.svelte';
+    import ABILITY_TAGS from '../../../enum/AbilityTags';
+    import BoxWithList from '../../BoxWithList.svelte';
+    import SimpleAccordionDetail from '.././SimpleAccordionDetail.svelte';
+    import BoxWithChips from '../../BoxWithChips.svelte';
+    import SKILLS from '../../../enum/Skills';
     import SegmentedButton, { Label, Segment } from '@smui/segmented-button';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
 

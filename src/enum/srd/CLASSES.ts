@@ -1,8 +1,8 @@
 import ClassData from "../../interfaces/srd/ClassData";
 import { OTHER_PROF } from "../OTHER_PROF";
+import { PACKS } from "./PACKS";
 import { TOOLS } from "./TOOLS";
 import { WEAPONS } from "./WEAPONS";
-import { WEAPON_STATS } from "./WEAPON_STATS";
 
 const ARTISAN_TOOLS = TOOLS['ARTISAN'].map(tool => tool.name);
 const MUSICAL_INSTRUMENTS = TOOLS['MUSIC'].map(tool => tool.name);
@@ -265,7 +265,7 @@ export const CLASSES: ClassData[] = [
                         name: 'Explorer’s pack',
                         amount: 1,
                         tags: [],
-                        description: '', // TODO -- add equipment pack description lookup
+                        description: PACKS['EXPLORER']
                     },
                     {
                         name: 'Javelin',
@@ -500,7 +500,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                             name: "Diplomat's pack",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['DIPLOMAT']
                         }
                     ],
                     // (b)
@@ -509,7 +509,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                             name: "Entertainer’s pack",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['ENTERTAINER']
                         }
                     ],
                 ]
@@ -545,7 +545,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                         name: 'Explorer’s pack',
                         amount: 1,
                         tags: [],
-                        description: '', // TODO -- add equipment pack description lookup
+                        description: PACKS['EXPLORER']
                     },
                     {
                         name: 'Javelin',
@@ -877,7 +877,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                             name: 'Priest’s pack',
                             amount: 1,
                             tags: [],
-                            description: '', // TODO -- add equipment pack description lookup
+                            description: PACKS['PRIEST']
                         }
                     ],
                     // (b)
@@ -886,7 +886,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                             name: 'Explorer’s pack',
                             amount: 1,
                             tags: [],
-                            description: '', // TODO -- add equipment pack description lookup
+                            description: PACKS['EXPLORER']
                         }
                     ],
                 ]
@@ -1161,7 +1161,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                         name: 'Explorer’s pack',
                         amount: 1,
                         tags: [],
-                        description: '' // TODO
+                        description: PACKS['EXPLORER']
                     },
                     {
                         name: 'Druidic focus',
@@ -1449,7 +1449,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
                             name: 'Dungeoneer’s pack',
                             amount: 1,
                             tags: [],
-                            description: '', // TODO -- add equipment pack description lookup
+                            description: PACKS['DUNGEONEER']
                         },
                     ],
                     [
@@ -1457,7 +1457,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
                             name: 'Explorer’s pack',
                             amount: 1,
                             tags: [],
-                            description: '', // TODO -- add equipment pack description lookup
+                            description: PACKS['EXPLORER']
                         },
                     ]
                 ]
@@ -1636,7 +1636,7 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
                             name: 'Dungeoneer’s pack',
                             amount: 1,
                             tags: [],
-                            description: '', // TODO -- add equipment pack description lookup
+                            description: PACKS['DUNGEONEER']
                         },
                     ],
                     [
@@ -1644,7 +1644,7 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
                             name: 'Explorer’s pack',
                             amount: 1,
                             tags: [],
-                            description: '', // TODO -- add equipment pack description lookup
+                            description: PACKS['EXPLORER']
                         },
                     ]
                 ]
@@ -1960,7 +1960,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                                 name: "Priest’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: '' // TODO
+                                description: PACKS['PRIEST']
                             }
                         ],
                         // (b)
@@ -1969,7 +1969,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                                 name: "Explorer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: '' // TODO
+                                description: PACKS['EXPLORER']
                             }
                         ],
                     ]
@@ -2260,7 +2260,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                                 name: "Dungeoneer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: '' // TODO
+                                description: PACKS['DUNGEONEER']
                             }
                         ],
                         // (b)
@@ -2269,7 +2269,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                                 name: "Explorer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: '' // TODO
+                                description: PACKS['EXPLORER']
                             }
                         ],
                     ]
@@ -2572,7 +2572,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                                 name: "Burglar’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: '' // TODO
+                                description: PACKS['BURGLAR']
                             }
                         ],
                         // (b)
@@ -2581,7 +2581,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                                 name: "Dungeoneer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: '' // TODO
+                                description: PACKS['DUNGEONEER']
                             }
                         ],
                         // (c)
@@ -2590,7 +2590,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                                 name: "Explorer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: '' // TODO
+                                description: PACKS['EXPLORER']
                             }
                         ],
                     ]
@@ -2828,7 +2828,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
                             name: "Dungeoneer’s pack",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['DUNGEONEER']
                         }
                     ],
                     // (b)
@@ -2838,7 +2838,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
                             name: "Explorer’s pack",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['EXPLORER']
                         }
                     ],
                 ]
@@ -3186,7 +3186,7 @@ Additionally, when you gain a level in this class, you can choose one of the sor
                             name: 'Scholar’s pack',
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['SCHOLAR']
                         }
                     ],
                     // (b)
@@ -3195,7 +3195,7 @@ Additionally, when you gain a level in this class, you can choose one of the sor
                             name: "Dungeoneer’s pack",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['DUNGEONEER']
                         }
                     ],
                 ]
@@ -3635,7 +3635,7 @@ You can communicate telepathically with your familiar and perceive through your 
                             name: "Scholar’s pack",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['SCHOLAR']
                         }
                     ],
                     // (b)
@@ -3645,7 +3645,7 @@ You can communicate telepathically with your familiar and perceive through your 
                             name: "Explorer’s pack",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: PACKS['EXPLORER']
                         }
                     ],
                 ]

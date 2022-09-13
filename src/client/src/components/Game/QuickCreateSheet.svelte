@@ -178,7 +178,7 @@
                     has_weight: false,
                     has_attack: hasAttack,
                     attack_id: attackID ?? '',
-                    want_tooltip: false,
+                    want_tooltip: item.name?.includes('pack'),
                     tooltip: item.description ?? item.tooltip ?? '',
                     use_as_resource: isResource,
                     resource_id: resourceID ?? ''

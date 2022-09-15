@@ -1,37 +1,34 @@
 <script lang="ts">
-    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../interfaces/QuickCreateData";
-    import { formatModifier } from "../../stores";
-    import { getASModifier, int2roman, validateClassName } from "../../util/util";
-    import BoxWithChips from "../BoxWithChips.svelte";
-    import BoxWithIcon from "../BoxWithIcon.svelte";
-    import BoxWithList from "../BoxWithList.svelte";
-    import InPlaceEditBox from "../InPlaceEditBox.svelte";
-    import SimpleAccordionDetail from "./SimpleAccordionDetail.svelte";
+    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import { int2roman, validateClassName } from "../../../util/util";
+    import BoxWithIcon from "../../BoxWithIcon.svelte";
+    import InPlaceEditBox from "../../InPlaceEditBox.svelte";
     import { Icon } from '@smui/icon-button';
+    //@ts-ignore
     import { human, species } from 'fantastical';
     import Svelecte from "svelecte/src/Svelecte.svelte";
-    import BioTextareaBox from "../BioTextareaBox.svelte";
+    import BioTextareaBox from "../../BioTextareaBox.svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
     export let isCompleted: boolean;
 
 
-    $: skillsFinal = [].concat({ name: 'race', items: characterParts.race?.skill_prof ?? []})
-        .concat({name: 'class', items: characterParts.class?.skills.final ?? []})
-        .concat({name: 'background', items: characterParts.bio.skills});
+    // $: skillsFinal = [].concat({ name: 'race', items: characterParts.race?.skill_prof ?? []})
+    //     .concat({name: 'class', items: characterParts.class?.skills.final ?? []})
+    //     .concat({name: 'background', items: characterParts.bio.skills});
     
-    $: languagesFinal = [].concat(characterParts.race?.languages ?? []).concat(characterParts.bio.languages);
-    $: toolsFinal = [].concat(characterParts.race?.tools_prof ?? []).concat(characterParts.class?.tool_prof.tools.map(tool => tool.name) ?? []).concat(characterParts.bio.tools);
-    $: otherProfFinal = [].concat(characterParts.race?.other_prof.map(prof => prof.name) ?? []).concat(characterParts.class?.other_prof.map(prof => prof.name) ?? []);
+    // $: languagesFinal = [].concat(characterParts.race?.languages ?? []).concat(characterParts.bio.languages);
+    // $: toolsFinal = [].concat(characterParts.race?.tools_prof ?? []).concat(characterParts.class?.tool_prof.tools.map(tool => tool.name) ?? []).concat(characterParts.bio.tools);
+    // $: otherProfFinal = [].concat(characterParts.race?.other_prof.map(prof => prof.name) ?? []).concat(characterParts.class?.other_prof.map(prof => prof.name) ?? []);
 
-    $: equipmentFinal = [].concat(characterParts.class?.equipment.flatMap(line => line.final) ?? []).concat(characterParts.bio.equipment);
+    // $: equipmentFinal = [].concat(characterParts.class?.equipment.flatMap(line => line.final) ?? []).concat(characterParts.bio.equipment);
 
-    $: featuresFinal = [].concat(characterParts.race?.features ?? [])
-        .concat(characterParts.class?.features.filter(feature => feature.level <= characterParts.class?.level ?? 1) ?? [])
-        .concat(characterParts.as_gen_info.feats)
-        .concat(characterParts.bio.features);
+    // $: featuresFinal = [].concat(characterParts.race?.features ?? [])
+    //     .concat(characterParts.class?.features.filter(feature => feature.level <= characterParts.class?.level ?? 1) ?? [])
+    //     .concat(characterParts.as_gen_info.feats)
+    //     .concat(characterParts.bio.features);
 
     $: classIcon = `class-icons/${validateClassName(characterParts.class ? characterParts.class.name.toLowerCase() : '')}`;
     $: raceIcon = `${characterParts.race?.name ? `race-icons/variant/${characterParts.race?.name.toLowerCase()}` : 'race'}`

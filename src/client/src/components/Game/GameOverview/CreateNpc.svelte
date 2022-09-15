@@ -5,7 +5,7 @@
     import SimpleButton from "../../SimpleButton.svelte";
     import CopyExistingSheet from "../CopyExistingSheet.svelte";
     import ImportJsonSheet from "../ImportJsonSheet.svelte";
-    import QuickCreateSheet from "../QuickCreateSheet.svelte";
+    import QuickCreateSheet from "../QCreate/QuickCreateSheet.svelte";
 
     export let gameData: GameData;
     export let createMenuEnabled: boolean;

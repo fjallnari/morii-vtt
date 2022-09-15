@@ -20,6 +20,7 @@
     
     $: weight_of_items = character.inventory.filter(item => item.has_weight).reduce((sum, item) => sum + ~~item.weight, 0);
     $: carrying_capacity = ~~character.ability_scores['STR'].value * 15;
+    $: passive_perception = 10 + getSkillModifier('WIS', character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception'));
 </script>
 
 {#each Object.keys(character.ability_scores) as AS}
@@ -68,7 +69,7 @@
             <box class="additional-skill-box">
                 <div class="box-with-label">
                     <div class="box-main-text">
-                        {10 + getSkillModifier('WIS', character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception'))}
+                        {passive_perception}
                     </div>
                     <div class="box-justify-filler"></div>
                     <div class="box-label">

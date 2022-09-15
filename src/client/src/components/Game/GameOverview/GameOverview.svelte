@@ -2,6 +2,8 @@
     import type { Character } from "../../../interfaces/Character";
     import type GameData from "../../../interfaces/GameData";
     import { selectedCharacter, socket, user } from "../../../stores";
+    import { getASModifier } from "../../../util/util";
+    import RowBoxWithLabel from "../../RowBoxWithLabel.svelte";
     import CharacterSheetRouter from "../CharacterSheet/CharacterSheetRouter.svelte";
     import CharactersList from "./CharactersList.svelte";
     import CreateNpc from "./CreateNpc.svelte";
@@ -34,6 +36,10 @@
         selectedCharacter.set(undefined);
     });
 
+    const getPassivePerception = (character: Character) => {
+        return 10 + getASModifier(character.ability_scores, 'WIS') + (character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception').proficiency * ~~character.prof_bonus);
+    }
+
 </script>
 
 
@@ -50,6 +56,34 @@
                 <NpcList gameData={gameData} bind:createMenuEnabled={createMenuEnabled}></NpcList>
             {/if}
         </div>
+        <div class='passive-perception'>
+            <h3>Passive Perception</h3>
+            <box class='stats-chip-list'>
+                {#if gameData.characters.length > 0}
+                    {#each gameData.characters.sort((a, b) => getPassivePerception(a) < getPassivePerception(b) ? 1 : -1) as character}
+                        <RowBoxWithLabel label={character.name} boxColor='light' labelClass='overview-label'>
+                            {getPassivePerception(character)}
+                        </RowBoxWithLabel>
+                    {/each}
+                {:else}
+                    <h3>No characters</h3>
+                {/if}
+            </box>
+        </div>
+        <div class='armor-class'>
+            <h3>Armor Class</h3>
+            <box class='stats-chip-list'>
+                {#if gameData.characters.length > 0}
+                    {#each gameData.characters.sort((a, b) => a.armor_class < b.armor_class ? 1 : -1) as character}
+                        <RowBoxWithLabel label={character.name} boxColor='light' valueWidth='1.5em' labelClass='overview-label' valueBoxStyle='ac'>
+                            {!character.armor_class || character.armor_class === '' ? '??': character.armor_class}
+                        </RowBoxWithLabel>
+                    {/each}
+                {:else}
+                    <h3>No characters</h3>
+                {/if}
+            </box>
+        </div>
     </div>
 {/if}
 
@@ -61,28 +95,53 @@
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
         display: grid; 
-        grid-template-columns: 0.2fr 1fr 1fr 1fr 0.2fr; 
-        grid-template-rows: 1fr 1fr 1fr; 
-        gap: 0.5em; 
+        grid-template-columns: 0.2fr 1fr 0.5fr 0.5fr 1fr 0.2fr; 
+        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); 
+        gap: 0.75em; 
         grid-template-areas: 
-            "characters-list characters-list characters-list characters-list characters-list"
-            ". npcs . . ."
-            ". npcs . . ."; 
+            "characters-list characters-list characters-list characters-list characters-list characters-list"
+            ". npcs passive-perception passive-perception . ."
+            ". npcs armor-class armor-class . .";
     }
 
-    .npcs { grid-area: npcs; 
+    h3 {
+        font-family: Quicksand;
+        font-weight: 100;
+        text-transform: uppercase;
+    }
+
+    .dashboard-container > div {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        margin: 0em 0em 0.75em 0em;
     }
 
     .dashboard-container > div > h3 {
         font-size: 1.5em;
-        font-family: Quicksand;
-        font-weight: 100;
-        text-transform: uppercase;
+    }
+
+    .npcs { grid-area: npcs; 
+        margin: 0em 0em 0.75em 0em;
+    }
+
+    .passive-perception { grid-area: passive-perception; }
+
+    .stats-chip-list { 
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5em;
+        width: 100%;
+        padding: 0.5em 0em;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    .armor-class { grid-area: armor-class; 
+        margin: 0em 0em 0.75em 0em;
     }
 
 </style>

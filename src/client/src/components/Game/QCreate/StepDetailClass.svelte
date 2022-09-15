@@ -1,19 +1,19 @@
 <script lang="ts">
-    import type ClassData from "../../interfaces/ClassData";
-    import type QuickCreateCharacterParts from "../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../interfaces/QuickCreateData";
+    import type ClassData from "../../../interfaces/ClassData";
+    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/QuickCreateData";
     import Slider from '@smui/slider';
-    import BoxWithChips from '../BoxWithChips.svelte';
-    import SKILLS from '../../enum/Skills';
-    import InPlaceEdit from '../InPlaceEdit.svelte';
+    import BoxWithChips from '../../BoxWithChips.svelte';
+    import SKILLS from '../../../enum/Skills';
+    import InPlaceEdit from '../../InPlaceEdit.svelte';
     import QCreateHitPoints from './QCreateHitPoints.svelte';
-    import { int2roman, validateClassName } from '../../util/util';
+    import { int2roman, validateClassName } from '../../../util/util';
     import QCreateEquipment from './QCreateEquipment.svelte';
-    import BoxWithList from '../BoxWithList.svelte';
-    import SimpleAccordionDetail from './SimpleAccordionDetail.svelte';
     import QCreateResources from './QCreateResources.svelte';
-    import ABILITY_TAGS from '../../enum/AbilityTags';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
+import BoxWithList from "../../BoxWithList.svelte";
+import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
+import ABILITY_TAGS from "../../../enum/AbilityTags";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

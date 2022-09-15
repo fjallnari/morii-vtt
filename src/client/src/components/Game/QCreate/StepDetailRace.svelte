@@ -68,13 +68,11 @@
     <div class="ability-score-increase">
         {#each ABILITY_TAGS.slice(1) as abilityTag}
             <RowBoxWithLabel label={abilityTag} valueWidth='4rem' valueHeight='100%' valueFontSize='1.5em' labelFontSize='large'>
-                <div slot='value'>
-                    {#if selectedRace && selectedRace.as_increase}
-                        <InPlaceEdit bind:value={selectedRace.as_increase[`${abilityTag}`]} editWidth="2em" editHeight="2em" on:submit={() => {}}/>
-                    {:else}
-                        <div>X</div>
-                    {/if}
-                </div>
+                {#if selectedRace && selectedRace.as_increase}
+                    <InPlaceEdit bind:value={selectedRace.as_increase[`${abilityTag}`]} editWidth="2em" editHeight="2em" on:submit={() => {}}/>
+                {:else}
+                    <div>X</div>
+                {/if}
             </RowBoxWithLabel>
         {/each}
     </div>

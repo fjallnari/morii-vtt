@@ -11,9 +11,9 @@
     import QCreateEquipment from './QCreateEquipment.svelte';
     import QCreateResources from './QCreateResources.svelte';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
-import BoxWithList from "../../BoxWithList.svelte";
-import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
-import ABILITY_TAGS from "../../../enum/AbilityTags";
+    import BoxWithList from "../../BoxWithList.svelte";
+    import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
+    import ABILITY_TAGS from "../../../enum/AbilityTags";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

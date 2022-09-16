@@ -141,27 +141,36 @@ const SPELLS_BY_LEVEL_BLANK = {
 }
 
 export const CLASSES: ClassData[] = [
-    // {
-    //     name: 'Custom',
-    //     level: 1,
-    //     hp: {
-    //         hit_die: 0
-    //     },
-    //     other_prof: [],
-    //     tool_prof: {
-    //         label: '',
-    //         tools: []
-    //     },
-    //     saving_throws: [ '', '' ],
-    //     skills: {
-    //         final: [],
-    //         choose_n: 0,
-    //         type: 'any'
-    //     },
-    //     equipment: [],
-    //     features: [],
-    //     resources: [],
-    // },
+    {
+        name: 'Custom',
+        level: 1,
+        hp: {
+            hit_die: 0
+        },
+        other_prof: [],
+        tool_prof: {
+            label: '',
+            tools: []
+        },
+        saving_throws: [],
+        skills: {
+            final: [],
+            choose_n: 0,
+            type: 'any',
+        },
+        equipment: [],
+        features: [],
+        asi: {
+            4: '1',
+            8: '2',
+            10: '3',
+            12: '4',
+            16: '5',
+            19: '6'
+        },
+        resources: [],
+        as_prio: ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
+    },
     {
         name: 'Barbarian',
         level: 1,

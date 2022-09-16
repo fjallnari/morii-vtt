@@ -73,6 +73,9 @@
     .box-main-text {
         font-weight: var(--semi-bold);
         font-size: 1.2em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .box-main-text.toggle-on {

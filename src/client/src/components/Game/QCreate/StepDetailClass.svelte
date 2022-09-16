@@ -11,12 +11,12 @@
     import QCreateEquipment from './QCreateEquipment.svelte';
     import QCreateResources from './QCreateResources.svelte';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
-import BoxWithList from "../../BoxWithList.svelte";
-import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
-import ABILITY_TAGS from "../../../enum/AbilityTags";
+    import BoxWithList from "../../BoxWithList.svelte";
+    import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
+    import ABILITY_TAGS from "../../../enum/AbilityTags";
 
-    export let characterParts: QuickCreateCharacterParts;
-    export let quickCreateData: QuickCreateData;
+    export let characterParts: Partial<QuickCreateCharacterParts>;
+    export let quickCreateData: Partial<QuickCreateData>;
     export let isCompleted: boolean;
 
     let selectedClass: ClassData | undefined = characterParts.class;
@@ -49,6 +49,19 @@ import ABILITY_TAGS from "../../../enum/AbilityTags";
     
     const deleteFeature = (feature) => {
         selectedClass.features = selectedClass.features.filter((featureIter) => featureIter !== feature);
+    }
+
+    const addItem = () => {
+        characterParts.class.equipment[0].final = characterParts.class.equipment[0].final.concat([{
+            name: '',
+            amount: 1,
+            tags: [],
+            description: ''
+        }]);
+    }
+
+    const deleteItem = (item) => {
+        characterParts.class.equipment[0].final = characterParts.class.equipment[0].final.filter(itemIter => itemIter !== item);
     }
 
 </script>
@@ -93,7 +106,23 @@ import ABILITY_TAGS from "../../../enum/AbilityTags";
         <QCreateResources bind:selectedClass={selectedClass}></QCreateResources>
 
         <!-- EQUIPMENT -->
-        <QCreateEquipment bind:selectedClass={selectedClass}></QCreateEquipment>
+        {#if selectedClass.name !== 'Custom'}
+            <QCreateEquipment bind:selectedClass={selectedClass}></QCreateEquipment>
+        {:else}
+            <BoxWithList label='Equipment' inlineStyle='grid-area: equipment;' addNewListItem={addItem} isModifyDisabled>
+                <div class="box-list" slot='list'>
+                    {#each characterParts.class.equipment[0].final as item, index}
+                        <SimpleAccordionDetail 
+                            bind:value={item.name} 
+                            bind:content={item.description}
+                            bind:amount={item.amount}
+                            editWidth='15rem'
+                            deleteItem={() => deleteItem(item)}>
+                        </SimpleAccordionDetail>
+                    {/each}
+                </div>
+            </BoxWithList>
+        {/if}
 
         <!-- TOOLS -->
         <BoxWithChips 
@@ -253,6 +282,15 @@ import ABILITY_TAGS from "../../../enum/AbilityTags";
     .saving-throws { grid-area: saving-throws; }
     .skills { grid-area: skills; }
     .equipment { grid-area: equipment; }
+
+    .box-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25em;
+    }
 
     .class-nav { grid-area: class-nav; 
         display: flex;

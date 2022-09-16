@@ -3,7 +3,7 @@ import type { Attack, Spell } from "./Character"
 type LevelsRecord = Record<number, string>;
 
 interface ClassHitPoints {
-    hit_die: number, // e.g. '12', {level}d12
+    hit_die: string, // e.g. '12', {level}d12
     current?: string,
 }
 

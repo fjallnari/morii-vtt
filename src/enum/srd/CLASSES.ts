@@ -141,32 +141,45 @@ const SPELLS_BY_LEVEL_BLANK = {
 }
 
 export const CLASSES: ClassData[] = [
-    // {
-    //     name: 'Custom',
-    //     level: 1,
-    //     hp: {
-    //         hit_die: 0
-    //     },
-    //     other_prof: [],
-    //     tool_prof: {
-    //         label: '',
-    //         tools: []
-    //     },
-    //     saving_throws: [ '', '' ],
-    //     skills: {
-    //         final: [],
-    //         choose_n: 0,
-    //         type: 'any'
-    //     },
-    //     equipment: [],
-    //     features: [],
-    //     resources: [],
-    // },
+    {
+        name: 'Custom',
+        level: 1,
+        hp: {
+            hit_die: '?'
+        },
+        other_prof: [],
+        tool_prof: {
+            label: '',
+            tools: []
+        },
+        saving_throws: [],
+        skills: {
+            final: [],
+            choose_n: 0,
+            type: 'any',
+        },
+        equipment: [
+            {
+                final: []
+            }
+        ],
+        features: [],
+        asi: {
+            4: '1',
+            8: '2',
+            10: '3',
+            12: '4',
+            16: '5',
+            19: '6'
+        },
+        resources: [],
+        as_prio: ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
+    },
     {
         name: 'Barbarian',
         level: 1,
         hp: {
-            hit_die: 12
+            hit_die: '12'
         },
         other_prof: [
             {
@@ -400,7 +413,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
         name: 'Bard',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -741,7 +754,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
         name: 'Cleric',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -911,7 +924,32 @@ Additionally, when you gain a level in this class, you can choose one of the bar
             {
                 name: 'Spellcasting',
                 level: 1,
-                content: '',
+                content: `As a conduit for divine power, you can cast cleric spells.
+#### Cantrips
+
+At 1st level, you know three cantrips of your choice from the cleric spell list. You learn additional cleric cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Cleric table.
+
+#### Preparing and Casting Spells
+The Cleric table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.
+
+You prepare the list of cleric spells that are available for you to cast, choosing from the cleric spell list. When you do so, choose a number of cleric spells equal to your Wisdom modifier + your cleric level (minimum of one spell). The spells must be of a level for which you have spell slots.
+
+For example, if you are a 3rd-level cleric, you have four 1st-level and two 2nd-level spell slots. With a Wisdom of 16, your list of prepared spells can include six spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell cure wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the spell doesn’t remove it from your list of prepared spells.
+
+You can change your list of prepared spells when you finish a long rest. Preparing a new list of cleric spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.
+
+#### Spellcasting Ability
+Wisdom is your spellcasting ability for your cleric spells. The power of your spells comes from your devotion to your deity. You use your Wisdom whenever a cleric spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a cleric spell you cast and when making an attack roll with one.
+
+**Spell save DC** = 8 + your proficiency bonus + your Wisdom modifier
+
+**Spell attack modifier** = your proficiency bonus + your Wisdom modifier
+
+#### Ritual Casting
+You can cast a cleric spell as a ritual if that spell has the ritual tag and you have the spell prepared.
+
+#### Spellcasting Focus
+You can use a holy symbol (see chapter 5, “Equipment”) as a spellcasting focus for your cleric spells.`,
             },
             {
                 name: 'Divine Domain ~ Subclass',
@@ -1023,7 +1061,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
         name: 'Druid',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -1291,7 +1329,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
         name: 'Fighter',
         level: 1,
         hp: {
-            hit_die: 10
+            hit_die: '10'
         },
         other_prof: [
             {
@@ -1566,7 +1604,7 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
         name: 'Monk',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -1845,7 +1883,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
         name: 'Paladin',
         level: 1,
         hp: {
-            hit_die: 10
+            hit_die: '10'
         },
         other_prof: [
             {
@@ -2155,7 +2193,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
         name: 'Ranger',
         level: 1,
         hp: {
-            hit_die: 10
+            hit_die: '10'
         },
         other_prof: [
             {
@@ -2459,7 +2497,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
         name: 'Rogue',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -2729,7 +2767,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
         name: 'Sorcerer',
         level: 1,
         hp: {
-            hit_die: 6
+            hit_die: '6'
         },
         other_prof: [
             {
@@ -3095,7 +3133,7 @@ Additionally, when you gain a level in this class, you can choose one of the sor
         name: 'Warlock',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -3541,7 +3579,7 @@ You can communicate telepathically with your familiar and perceive through your 
         name: 'Wizard',
         level: 1,
         hp: {
-            hit_die: 6
+            hit_die: '6'
         },
         other_prof: [
             {

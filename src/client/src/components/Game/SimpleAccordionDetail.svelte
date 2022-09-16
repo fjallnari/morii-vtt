@@ -9,7 +9,7 @@
     export let content: string = '';
     export let source: string = '';
     export let icon: string = '';
-    export let amount: string = undefined;
+    export let amount: string | number = undefined;
     export let selectable: boolean = false;
     export let isSelected: boolean = false;
     export let editable: boolean = true;

@@ -10,10 +10,10 @@
     import StepDetailBackground from "./StepDetailBackground.svelte";
     import StepDetailSummary from "./StepDetailSummary.svelte";
     import { nanoid } from "nanoid/non-secure";
-import type { Character, Item } from '../../../interfaces/Character';
-import type QuickCreateCharacterParts from '../../../interfaces/QuickCreateCharacterParts';
-import type QuickCreateData from '../../../interfaces/QuickCreateData';
-import SimpleButton from '../../SimpleButton.svelte';
+    import type { Character, Item } from '../../../interfaces/Character';
+    import type QuickCreateCharacterParts from '../../../interfaces/QuickCreateCharacterParts';
+    import type QuickCreateData from '../../../interfaces/QuickCreateData';
+    import SimpleButton from '../../SimpleButton.svelte';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     

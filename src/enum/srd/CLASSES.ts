@@ -145,7 +145,7 @@ export const CLASSES: ClassData[] = [
         name: 'Custom',
         level: 1,
         hp: {
-            hit_die: 0
+            hit_die: '?'
         },
         other_prof: [],
         tool_prof: {
@@ -158,7 +158,11 @@ export const CLASSES: ClassData[] = [
             choose_n: 0,
             type: 'any',
         },
-        equipment: [],
+        equipment: [
+            {
+                final: []
+            }
+        ],
         features: [],
         asi: {
             4: '1',
@@ -175,7 +179,7 @@ export const CLASSES: ClassData[] = [
         name: 'Barbarian',
         level: 1,
         hp: {
-            hit_die: 12
+            hit_die: '12'
         },
         other_prof: [
             {
@@ -409,7 +413,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
         name: 'Bard',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -750,7 +754,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
         name: 'Cleric',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -1057,7 +1061,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
         name: 'Druid',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -1325,7 +1329,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
         name: 'Fighter',
         level: 1,
         hp: {
-            hit_die: 10
+            hit_die: '10'
         },
         other_prof: [
             {
@@ -1600,7 +1604,7 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
         name: 'Monk',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -1879,7 +1883,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
         name: 'Paladin',
         level: 1,
         hp: {
-            hit_die: 10
+            hit_die: '10'
         },
         other_prof: [
             {
@@ -2189,7 +2193,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
         name: 'Ranger',
         level: 1,
         hp: {
-            hit_die: 10
+            hit_die: '10'
         },
         other_prof: [
             {
@@ -2493,7 +2497,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
         name: 'Rogue',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -2763,7 +2767,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
         name: 'Sorcerer',
         level: 1,
         hp: {
-            hit_die: 6
+            hit_die: '6'
         },
         other_prof: [
             {
@@ -3129,7 +3133,7 @@ Additionally, when you gain a level in this class, you can choose one of the sor
         name: 'Warlock',
         level: 1,
         hp: {
-            hit_die: 8
+            hit_die: '8'
         },
         other_prof: [
             {
@@ -3575,7 +3579,7 @@ You can communicate telepathically with your familiar and perceive through your 
         name: 'Wizard',
         level: 1,
         hp: {
-            hit_die: 6
+            hit_die: '6'
         },
         other_prof: [
             {

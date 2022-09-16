@@ -13,8 +13,8 @@
     export let abilityScores: QCAbilityScores;
 
     $: modCON = getASModifier(abilityScores, 'CON');
-    $: averageHPPerLevel = ~~(selectedClass.hp.hit_die/2) + 1;
-    $: level1HP = selectedClass.hp.hit_die + modCON;
+    $: averageHPPerLevel = ~~(~~selectedClass.hp.hit_die/2) + 1;
+    $: level1HP = ~~selectedClass.hp.hit_die + modCON;
 
     let hpRollID = '---';
 
@@ -50,7 +50,7 @@
         headerText='1d{selectedClass.hp.hit_die} per {selectedClass.name} level'
         gridArea='hit-dice'
     >
-        {selectedClass.level}d{selectedClass.hp.hit_die}
+        {selectedClass.level}d<InPlaceEdit bind:value={selectedClass.hp.hit_die} editWidth="2rem" editHeight="2rem"/>
     </BoxWithHeaderToggle>
 
     <BoxWithHeaderToggle 

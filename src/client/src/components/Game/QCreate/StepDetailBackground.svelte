@@ -10,8 +10,8 @@
     import MarkdownBoxText from ".././MarkdownBoxText.svelte";
     import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
 
-    export let characterParts: QuickCreateCharacterParts;
-    export let quickCreateData: QuickCreateData;
+    export let characterParts: Partial<QuickCreateCharacterParts>;
+    export let quickCreateData: Partial<QuickCreateData>;
     export let isCompleted: boolean;
 
     $ : isCompleted = characterParts.bio

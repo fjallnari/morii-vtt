@@ -81,12 +81,15 @@
         const classFeatures = (characterParts.class?.features.filter(feature => feature.level <= characterParts.class?.level ?? 0) ?? [])
             .map(feature => {  return { id: nanoid(16), name: feature.name, content: feature.content, type: 1, source: characterParts.class?.name ?? ''}});
         
+        const uniqSpellFeats = (characterParts.class?.spellcasting?.unique_info?.final ?? [])
+            .map(feat => Object.assign(feat, {id: nanoid(16), type: 1, source: characterParts.class?.spellcasting?.unique_info.label ?? ''}));
+        
         const feats = (characterParts.as_gen_info?.feats ?? []).map(feat => Object.assign(feat, { id: nanoid(16), type: 2, source: feat.source ?? '' }));
 
         const bkgFeatures = (characterParts.bio?.features ?? [])
             .map(feature => Object.assign(feature, { id: nanoid(16), type: 3, source: !feature.source || feature.source === '' ? characterParts.bio?.name : feature.source }));
 
-        const featuresFinal = [].concat(racialTraits).concat(classFeatures).concat(feats).concat(bkgFeatures);
+        const featuresFinal = [].concat(racialTraits).concat(classFeatures).concat(uniqSpellFeats).concat(feats).concat(bkgFeatures);
 
         // PROF BONUS
         const proficiencyBonus = characterParts.class ? Math.floor((characterParts.class.level - 1) / 4) + 2 : 0;

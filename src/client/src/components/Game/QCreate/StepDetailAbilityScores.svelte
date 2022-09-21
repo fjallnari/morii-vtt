@@ -123,7 +123,7 @@
      * Checks if the asFinalArray was filled, if not recursively calls itself
      * If the limit is reached it resolves with blank array just so it doesn't loop till eternity
      */
-    const circleCheck = async (recursionLayer = 0, checkRecursionLimit = 5) => {
+    const circleCheck = async (recursionLayer = 0, checkRecursionLimit = 20) => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 if (genInfo.baseArray.length === 6) {

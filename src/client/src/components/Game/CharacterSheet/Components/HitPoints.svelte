@@ -38,7 +38,6 @@
         display: grid; 
         grid-template-columns: 1fr; 
         grid-template-rows: 1fr 1fr; 
-        gap: 0.5em 0px; 
         grid-template-areas: 
             "hp-bar"
             "current-hp-text"
@@ -46,6 +45,8 @@
         
         margin-left: -2em;
         height: 100%;
+        width: 100%;
+        position: relative;
     }
 
     .hp-main-box .current-hp-text {

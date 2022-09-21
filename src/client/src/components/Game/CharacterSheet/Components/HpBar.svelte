@@ -22,27 +22,27 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: flex-start;
-
-        width: 8em;
-        height: 2em;
+        width: 80%;
+        height: 50%;
         border: var(--clr-text) 0.15em solid;
         border-radius: 4px;
-        background-color: none;
-
         margin-top: auto;
-        margin-left: 1.25em;
-        margin-right: 1.25em;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        top: 30%;
     }
 
     .hp-bar-indicator {
         background-color: transparent;
         position: absolute;
-        margin-left: 3em;
         color: #fff;
         text-align: center;
         font-family: Montserrat;
         font-weight: var(--semi-bold);
+        font-weight: var(--semi-bold);
+        left: 50%;
+        transform: translate(-50%, 0);
     }
 
     .hp-bar-fill {

@@ -12,7 +12,7 @@ import SocketsController from "./controllers/SocketsIO/SocketsController";
 dotenv.config();
 setUpDB();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 
 const main = async () => {
@@ -67,7 +67,7 @@ const main = async () => {
         res.json({ error: err });
     });
 
-    httpServer.listen(3000, () => {
+    httpServer.listen(5000, () => {
         console.log(`Server started on http://localhost:${port}/?#`);
     });
 }

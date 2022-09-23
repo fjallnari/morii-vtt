@@ -8,6 +8,6 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 5000
 
 CMD yarn run-prod

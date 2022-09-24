@@ -12,7 +12,7 @@ x-node-env: &node-env
     environment:
         TZ: "Europe/Prague"
     networks:
-        - moonsparrow-network
+        - morii-network
 
 services:
     node-env:
@@ -28,7 +28,7 @@ services:
             "
 
 networks:
-    moonsparrow-network:
+    morii-network:
         driver: bridge
 
 volumes:

@@ -1,5 +1,5 @@
 {
-  "name": "moonsparrow-vtt",
+  "name": "morii-vtt",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ashmogh/moonsparrow-vtt"
+    "url": "git+https://github.com/Ashmogh/morii-vtt"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ashmogh/moonsparrow-vtt/issues"
+    "url": "https://github.com/Ashmogh/morii-vtt/issues"
   },
-  "homepage": "https://github.com/Ashmogh/moonsparrow-vtt#readme",
+  "homepage": "https://github.com/Ashmogh/morii-vtt#readme",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.2",

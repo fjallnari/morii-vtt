@@ -44,7 +44,7 @@
 
     const exportToJSON = () => {
         const characterNoIDs = (({ _id, playerID, ...other }) => other)(character);
-        downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? character.name : 'untitled'}-msvtt.json`);
+        downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? character.name : 'untitled'}-mvtt.json`);
     }
     
 

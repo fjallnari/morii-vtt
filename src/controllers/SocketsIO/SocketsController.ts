@@ -12,15 +12,18 @@ import DeleteCharacterEmit from "../../interfaces/emits/DeleteCharacterEmit";
 import ACKUserJoinEmit from "../../interfaces/emits/ACKUserJoinEmit";
 import ACKOwnerJoinEmit from "../../interfaces/emits/ACKOwnerJoinEmit";
 import DiceHandler from "../../services/DiceHandler";
+import LangModule from "../../services/LangModule";
 
 
 export default class SocketsController {
     private io: SocketIO;
     private diceHandler: DiceHandler;
+    private langModule: LangModule;
 
     constructor(io: SocketIO) {
         this.io = io;
         this.diceHandler = new DiceHandler();
+        this.langModule = new LangModule();
     }
 
     private async getOwnerID(gameID: string) {
@@ -70,7 +73,12 @@ export default class SocketsController {
         if (/^\/roll\040|^\/r\040/.test(messageData.messageText)) {
             Object.assign(messageData, { rollResult: this.diceHandler.rollDice(messageData.messageText)});
         }
-        
+
+        // fantasy "language" module, replaces the text with gibberish
+        if (/^\/lang\040|^\/l\040/.test(messageData.messageText)) {
+            Object.assign(messageData, {...this.langModule.composeMessage(messageData.messageText)});
+        }
+
         // format looks like e.g. 'Mar 14, 18:41'
         const timestamp = DateTime.now().toLocaleString({
             month: 'short', 

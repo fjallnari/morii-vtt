@@ -5,6 +5,7 @@
     import type MessageData from '../../../interfaces/MessageData';
     import ANIMALS from '../../../enum/Animals';
     import PrettyRollResult from './PrettyRollResult.svelte';
+    import LangMessage from './LangMessage.svelte';
 
     export let message: MessageData;
 
@@ -18,6 +19,7 @@
 <div class="message-content">
     <div class="sender-info">
         {message.senderInfo.username}{message.skillCheckInfo ? ` (${message.skillCheckInfo.characterName})` : ''}
+        <div class='message-lang'>{message.langData?.name ? `in ${message.langData?.name}` : ''}</div>
     </div>
 
     <div class="message-timestamp">
@@ -41,6 +43,8 @@
     <div class="message-text" style="background: { message.isPublic ? 'var(--clr-box-bg-normal);' : 'var(--clr-box-bg-light);' }">
         {#if message.rollResult && ! message.rollResult.error}
             <PrettyRollResult message={message}></PrettyRollResult>
+        {:else if message.langData}
+            <LangMessage message={message}></LangMessage>
         {:else}
             <SvelteMarkdown source={message.rollResult && message.rollResult.error ? getCleanErrorMessage(message.rollResult.error, message.messageText) : message.messageText} />
         {/if}
@@ -63,6 +67,11 @@
         display: flex;
         justify-content: flex-start;
         font-family: Montserrat;
+        gap: 0.5em;
+    }
+
+    .message-lang {
+        color: darkgrey;
     }
 
     .message-timestamp { grid-area: message-timestamp;
@@ -84,6 +93,8 @@
         font-family: Quicksand;
         overflow-wrap: anywhere;
         padding: 0.5em;
+        display: flex;
+        align-items: center;
     }
     .sender-pfp img {
         border-radius: 25%;

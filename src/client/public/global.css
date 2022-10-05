@@ -1,4 +1,19 @@
-﻿html,
+﻿@font-face {
+    font-family: 'Midjungards';
+    src: url('./static/fonts/Midjungards.woff') format('woff'), /* Pretty Modern Browsers */
+}
+
+@font-face {
+    font-family: 'MOONRUNE';
+    src: url('./static/fonts/MOONRUNE.eot');
+    src: url('./static/fonts/MOONRUNE.eot') format('embedded-opentype'),
+         url('./static/fonts/MOONRUNE.woff2') format('woff2'),
+         url('./static/fonts/MOONRUNE.woff') format('woff'),
+         url('./static/fonts/MOONRUNE.ttf') format('truetype'), 
+         url('./static/fonts/MOONRUNE.svg#MOONRUNE') format('svg');
+}
+
+html,
 body {
     background-color: var(--clr-bg) !important;
     color: var(--clr-text) !important;

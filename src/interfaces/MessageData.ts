@@ -1,3 +1,4 @@
+import LangData from "./LangData";
 import { RollResultData } from "./RollResultData";
 import type UserSimple from "./UserSimple";
 
@@ -8,5 +9,6 @@ export default interface MessageData {
     gameID: string;
     timestamp?: string;
     isPublic: boolean;
-    rollResult?: RollResultData
+    rollResult?: RollResultData,
+    langData?: LangData
 }

@@ -6,7 +6,7 @@
     import InPlaceEditBox from "../../InPlaceEditBox.svelte";
     import BoxWithList from "../../BoxWithList.svelte";
     import SpellDetail from "./Components/SpellDetail.svelte";
-import { modifyCharacter } from "../../../stores";
+    import { modifyCharacter } from "../../../stores";
 
     export let character: Character;
 

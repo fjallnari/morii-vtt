@@ -1,3 +1,4 @@
+import type LangData from "./LangData";
 import type { RollResultData } from "./RollResultData";
 import type SkillCheckInfo from "./SkillCheckInfo";
 import type UserSimple from "./UserSimple";
@@ -11,4 +12,5 @@ export default interface MessageData {
     timestamp?: string;
     skillCheckInfo?: SkillCheckInfo;
     rollResult?: RollResultData;
+    langData: LangData;
 }

@@ -1,0 +1,24 @@
+MoonRune truetype font v1.0
+---------------------------
+
+This truetype-font was created in 1995 by Morten Bek.
+
+It is supposed to resemble the writings on the maps from The Hobbit, by
+J.R.R.Tolkien.
+
+If you have any comments, corrections, suggestions or questions, e-mail me at:
+bek@post3.tele.dk
+
+Note that this is _not_ the Cirth (Certhar) but the letters used on the cover
+of The Hobbit.
+
+To install in a windows environment, copy the file futhark.ttf to 
+\windows\system or \windows\fonts, depending on the Windows version you're
+running. Choose Install New Font under the Font options in your Control Panel
+(or confront your windows-manual if this is totally incromprehendible).
+
+Please keep this file with the font, whenever you copy it and spread it to
+your friends.
+
+More fonts are under way....
+				Morten

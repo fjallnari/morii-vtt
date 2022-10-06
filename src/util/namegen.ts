@@ -117,6 +117,7 @@
 	export let FANTASY_S_E = "(syth|sith|srr|sen|yth|ssen|then|fen|ssth|kel|syn|est|bess|inth|nen|tin|cor|sv|iss|ith|sen|slar|ssil|sthen|svis|s|ss|s|ss)(|(tys|eus|yn|of|es|en|ath|elth|al|ell|ka|ith|yrrl|is|isl|yr|ast|iy))(us|yn|en|ens|ra|rg|le|en|ith|ast|zon|in|yn|ys)";
 
     export let ELVISH = "<sv(en|ien|il|ad|arth|or|eth|ith|un|as|on|tha|in|and|mon|cil)>|<<v|V|uë>(ien|il|ad|arth|or|eth|ith|un|nië|tha|as|on|ûl|in|and|mon|cil)>";
+	export let DWARVISH = "<<sv|s|V|(tho)|(bor)|(nor)|(tha)|(thul)|(druk)|(dwar)|(fin)|(hurm)>(tok|lur|ver|rst|rin|rak|man|dar|gh|rogh|rgh|st|rorn|dal|kar|garn|ren|nar|var|lar|tel|hir|dur|rok|mli|harn)>|v(tok|lur|ver|rst|rin|rak|man|dar|gh|rogh|rgh|st|rorn|dal|kar|garn|ren|nar|var|lar|tel|hir|dur|rok|mli|harn)";
 
 	let symbolMap: any = {
 		s: ['ach', 'ack', 'ad', 'age', 'ald', 'ale', 'an', 'ang', 'ar', 'ard',

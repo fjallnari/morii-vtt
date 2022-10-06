@@ -8,11 +8,15 @@ export default class LangModule {
     constructor() {
         this.langGenMap = {
             'elvish': new NameGen.Generator(NameGen.ELVISH),
-            'dwarvish': new NameGen.Generator(NameGen.FANTASY_H_L),
+            'dwarvish': new NameGen.Generator(NameGen.DWARVISH),
         }
 
         this.fallBackGen = new NameGen.Generator(NameGen.FANTASY_S_E);
-        
+    }
+
+    private analyseSyllables(word: string) {
+        const syllableRegex = /[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi;
+        return word.match(syllableRegex);
     }
 
     private validateMessage(fullMessage: string) {
@@ -43,6 +47,7 @@ export default class LangModule {
                 if (!wordMap.get(word)) {
                     wordMap.set(word, generator.toString()); //word[0].toUpperCase() === word ? pseudoWord.charAt(0).toUpperCase() + pseudoWord.slice(1) :
                 }
+                // console.log(wordMap.get(word), this.analyseSyllables(wordMap.get(word) ?? ''));
                 return wordMap.get(word);
             }
 

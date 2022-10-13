@@ -118,6 +118,7 @@
 
     export let ELVISH = "<sv(en|ien|il|ad|arth|or|eth|ith|un|as|on|tha|in|and|mon|cil)>|<<v|V|uë>(ien|il|ad|arth|or|eth|ith|un|nië|tha|as|on|ûl|in|and|mon|cil)>";
 	export let DWARVISH = "<<sv|s|V|(tho)|(bor)|(nor)|(tha)|(thul)|(druk)|(dwar)|(fin)|(hurm)>(tok|lur|ver|rst|rin|rak|man|dar|gh|rogh|rgh|st|rorn|dal|kar|garn|ren|nar|var|lar|tel|hir|dur|rok|mli|harn)>|v(tok|lur|ver|rst|rin|rak|man|dar|gh|rogh|rgh|st|rorn|dal|kar|garn|ren|nar|var|lar|tel|hir|dur|rok|mli|harn)";
+	export let GNOMISH = "<s|sv><(this|thos|thren|thrin|thol|thri|nin|chor|math|moth|riol|dal|roth|rtha|itha|niol|glin|saith|wed|wen|nios|th|d|drin|dros|don|glest|osc|osg|brin|blios|wedri|lion|ien|gwast|mad|dri|gong|ling|)>";
 
 	let symbolMap: any = {
 		s: ['ach', 'ack', 'ad', 'age', 'ald', 'ale', 'an', 'ang', 'ar', 'ard',

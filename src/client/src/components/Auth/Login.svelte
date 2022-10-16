@@ -12,7 +12,8 @@
     } from '@smui/snackbar';
     import IconButton from '@smui/icon-button';
     import { axiosPublic } from '../../axiosPublic';
-import SimpleButton from '../SimpleButton.svelte';
+    import SimpleButton from '../SimpleButton.svelte';
+    import { querystring, replace } from 'svelte-spa-router';
 
     let loginFailedSnackbar: SnackbarComponentDev;
 
@@ -34,7 +35,8 @@ import SimpleButton from '../SimpleButton.svelte';
 
             if (response.status === 200) {
                 accessToken.set(response.data.accessToken);
-                location.href = '/?#/';
+                replace(`/${$querystring ? `?${$querystring}` : ''}`);
+                // location.href = '/?#/';
             }
         }
         catch (err) {

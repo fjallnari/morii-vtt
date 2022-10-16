@@ -11,6 +11,7 @@ import DeleteCharacterController from '../controllers/Routes/UserAuth/DeleteChar
 import ChangeUserSettingsController from '../controllers/Routes/UserAuth/ChangeUserSettingsController';
 import GetCharactersController from '../controllers/Routes/UserAuth/GetCharactersController';
 import GetQuickCreateDataController from '../controllers/Routes/UserAuth/GetQuickCreateDataController';
+import GetInviteController from '../controllers/Routes/UserAuth/GetInviteController';
 
 const router = express.Router();
 
@@ -57,6 +58,10 @@ router.post('/api/delete-character', verifyToken, async (req, res, next) => {
 
 router.post('/api/change-user-settings', verifyToken, async (req, res, next) => {
     await new ChangeUserSettingsController(req, res).handleRequest();
+});
+
+router.get("/api/invite-info/:inviteCode", verifyToken, async (req, res) => {
+    await new GetInviteController(req, res).handleRequest();
 });
 
 export default router;

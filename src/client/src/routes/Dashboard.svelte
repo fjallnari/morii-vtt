@@ -8,26 +8,38 @@
     import CampaignDetailPlayer from '../components/Campaign/CampaignDetailPlayer.svelte';
     import DashboardHeader from '../components/Campaign/DashboardHeader.svelte';
     import { onMount } from 'svelte';
-    import { querystring } from 'svelte-spa-router';
+    import { querystring, replace } from 'svelte-spa-router';
     import axios from 'axios';
     import Dialog, { Content, Actions } from '@smui/dialog';
     import SimpleButton from '../components/SimpleButton.svelte';
+    import CircularProgress from '@smui/circular-progress/src/CircularProgress.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
 
     let joinDialogOpen = false;
+    let joinInProgress = false;
     let inviteCode = undefined;
+    let inviteInfo = undefined;
+    
 
-    onMount (() => {
+    onMount (async () => {
         const searchParams = new URLSearchParams($querystring);
 		inviteCode = searchParams.get('invite');
         if (inviteCode) {
-            joinDialogOpen = true;
+            try {
+                const response = await axios.get(`api/invite-info/${inviteCode}`);
+                inviteInfo = response.data;
+                joinDialogOpen = true;
+            }
+            catch (err) {
+                
+            }
         }
     });
 
     const joinCampaign = async (inviteCode: string, password = '') => {
+        joinInProgress = true;
         if (! inviteCode) {
             return;
         }
@@ -50,8 +62,13 @@
         catch (err) {
 
         }
+        joinDialogOpen = false;
+        joinInProgress = false;
+    }
 
-        joinDialogOpen = false
+    const rejectJoin = () => {
+        joinDialogOpen = false;
+        replace('/');
     }
     
 </script>
@@ -79,14 +96,30 @@
     <Dialog
         bind:open={joinDialogOpen}
         aria-labelledby="simple-title"
-        surface$style="padding: 0.5em 1em;"
+        surface$style="padding: 1em;"
     >
         <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-        <h3 id="simple-title">invited to:</h3>
-        <Actions id="dialog-buttons">
-            <SimpleButton value='Reject' icon='close' type='default' onClickFn={() => joinDialogOpen = false}></SimpleButton>
-            <SimpleButton value='Accept' icon='close' type='green' onClickFn={() => joinCampaign(inviteCode)}></SimpleButton>
-        </Actions>
+        {#if !joinInProgress}
+            <div class="join-dialog">
+                <div class="header">
+                    <h3 class="join-title">Invited to</h3>
+                </div>
+                <div class="invite-info">
+                    <div class="campaign-name">{inviteInfo?.campaignName ?? '???'}</div>
+                    <div class="owner-name">{`by ${inviteInfo?.ownerName ?? '???'}`}</div>
+                </div>
+                <div class="reject-inv">
+                    <SimpleButton value='Reject' icon='close' type='default' onClickFn={() => rejectJoin()}></SimpleButton>
+                </div>
+                <div class="accept-inv">
+                    <SimpleButton value='Accept' icon='close' type='green' onClickFn={() => joinCampaign(inviteCode)}></SimpleButton>
+                </div>
+            </div>
+        {:else}
+            <div class="join-placeholder">
+                <CircularProgress style="height: 4em; width: 4em;" indeterminate />
+            </div>
+        {/if}
     </Dialog>
 </div>
 
@@ -131,4 +164,59 @@
     .dashboard-content .active {
         flex: auto;
     }
+
+    .join-dialog {  display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 2fr 0.5fr;
+        gap: 1em;
+        grid-auto-flow: row;
+        grid-template-areas:
+            "header header header header"
+            "invite-info invite-info invite-info invite-info "
+            "reject-inv reject-inv accept-inv accept-inv";
+    }
+
+    .accept-inv { grid-area: accept-inv; }
+
+    .reject-inv { grid-area: reject-inv; }
+
+    .header { grid-area: header; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .join-title {
+        font-family: Quicksand;
+        font-weight: 400;
+        font-size: 1.5em;
+        margin: unset;
+
+    }
+
+    .invite-info { grid-area: invite-info; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        font-family: Quicksand;
+        gap: 0.3em;    
+    }
+
+    .campaign-name {
+        color: var(--clr-accent-light);
+        font-weight: 400;
+    }
+
+    .owner-name {
+        text-transform: lowercase;
+        font-weight: 200;
+    }
+
+    .join-placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 </style>

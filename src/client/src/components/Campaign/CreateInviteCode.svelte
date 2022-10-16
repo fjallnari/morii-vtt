@@ -7,6 +7,7 @@
     import PasswordField from '../PasswordField.svelte';
     import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
+    import { location } from 'svelte-spa-router';
 
     let open = false;
     let codeWasCopied = false;

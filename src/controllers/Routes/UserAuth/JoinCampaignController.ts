@@ -6,6 +6,7 @@ import { getFullCampaignsInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import Campaign from "../../../interfaces/Campaign";
 
 export default class JoinCampaignController extends RouteController {
 
@@ -28,12 +29,18 @@ export default class JoinCampaignController extends RouteController {
             }
     
             // check if password matches if there's any
-            if (password !== "" && ! await bcrypt.compare(password, inviteObj.password)) {
+            if (inviteObj.password !== "" && ! await bcrypt.compare(password, inviteObj.password)) {
                 return this.res.status(401).send('Incorrect password');
             }
 
             // TODO: add check for if the player is in the campaign already or not (to prevent double-add)
             // ! fix the owner adds themselves again into the campaign edge case
+
+            const campaignObj = <Campaign> await campaignsCollection.findOne({_id: new ObjectId(inviteObj.campaign_id)});
+
+            if (campaignObj.players.map(id => id.playerID.toString()).includes(decodedToken.user._id) || campaignObj.owner.toString() === decodedToken.user._id) {
+                return this.res.status(401).send('Already in campaign');;
+            }
     
             await campaignsCollection.updateOne({_id: inviteObj.campaign_id}, {$addToSet: {players: { playerID: userID }}});
             

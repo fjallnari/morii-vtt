@@ -24,7 +24,7 @@ export default class GetInviteController extends RouteController {
             const campaignObj = <Campaign> await campaignsCollection.findOne({_id: inviteObj.campaign_id});
             const ownerObj = <UserDB> await usersCollection.findOne({_id: campaignObj.owner});
 
-            return this.res.status(200).send({ campaignName: campaignObj.name, ownerName: ownerObj.username});
+            return this.res.status(200).send({ campaignName: campaignObj.name, ownerName: ownerObj.username, needsPassword: inviteObj.password && inviteObj.password !== ''});
         }
         catch (error) {
             return this.res.status(500).end();

@@ -13,6 +13,7 @@
     import Dialog, { Content, Actions } from '@smui/dialog';
     import SimpleButton from '../components/SimpleButton.svelte';
     import CircularProgress from '@smui/circular-progress/src/CircularProgress.svelte';
+    import PasswordField from '../components/PasswordField.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
@@ -21,6 +22,7 @@
     let joinInProgress = false;
     let inviteCode = undefined;
     let inviteInfo = undefined;
+    let invitePassword = '';
     
 
     onMount (async () => {
@@ -105,14 +107,19 @@
                     <h3 class="join-title">Invited to</h3>
                 </div>
                 <div class="invite-info">
-                    <div class="campaign-name">{inviteInfo?.campaignName ?? '???'}</div>
-                    <div class="owner-name">{`by ${inviteInfo?.ownerName ?? '???'}`}</div>
+                    <div class="invite-info-main-line">
+                        <div class="campaign-name">{inviteInfo?.campaignName ?? '???'}</div>
+                        <div class="owner-name">{`by ${inviteInfo?.ownerName ?? '???'}`}</div>
+                    </div>
+                    {#if inviteInfo?.needsPassword}
+                        <PasswordField bind:password={invitePassword} label="Password"></PasswordField>
+                    {/if}
                 </div>
                 <div class="reject-inv">
                     <SimpleButton value='Reject' icon='close' type='default' onClickFn={() => rejectJoin()}></SimpleButton>
                 </div>
                 <div class="accept-inv">
-                    <SimpleButton value='Accept' icon='close' type='green' onClickFn={() => joinCampaign(inviteCode)}></SimpleButton>
+                    <SimpleButton value='Accept' icon='close' type='green' onClickFn={() => joinCampaign(inviteCode, invitePassword)}></SimpleButton>
                 </div>
             </div>
         {:else}
@@ -196,11 +203,19 @@
 
     .invite-info { grid-area: invite-info; 
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .invite-info-main-line {
+        display: flex;
         justify-content: center;
         align-items: center;
         font-size: 1.5em;
         font-family: Quicksand;
-        gap: 0.3em;    
+        gap: 0.3em;   
     }
 
     .campaign-name {

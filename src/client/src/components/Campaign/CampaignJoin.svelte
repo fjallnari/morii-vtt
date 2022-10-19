@@ -75,8 +75,6 @@
 </Snackbar>
 
 
-
-
 <style>
     .join-campaign-content {
         padding-top: 2em;

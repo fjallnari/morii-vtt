@@ -531,6 +531,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        width: 100%;
     }
 
     .custom-prio > .custom-prio-chips {
@@ -538,6 +539,7 @@
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
+        width: 100%;
     }
 
     .asi { grid-area: asi;

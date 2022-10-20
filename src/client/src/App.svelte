@@ -1,6 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
-	import Router, { location, replace } from "svelte-spa-router";
+	import Router, { location, replace, querystring } from "svelte-spa-router";
 	import { wrap } from 'svelte-spa-router/wrap';
 	import NotFound from "./routes/NotFound.svelte";
 	import Dashboard from "./routes/Dashboard.svelte";
@@ -99,7 +99,8 @@
 	}
 
 	const conditionsFailed = () => {
-		replace('/auth');
+		console.log($querystring);
+		replace(`/auth${$querystring ? `?${$querystring}` : ''}`);
 	}
 
 	const memoizedRefreshToken = mem(refreshAccessToken, { maxAge });

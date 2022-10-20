@@ -1,17 +1,26 @@
 <script lang="ts">
     import { accessToken, selectedCampaign } from '../../stores';
     import IconButton, { Icon } from '@smui/icon-button';
-    import Dialog, { Title, Content, Actions } from '@smui/dialog';
+    import Dialog, { Title, Content } from '@smui/dialog';
     import axios from 'axios';
     import CircularProgress from '@smui/circular-progress';
     import PasswordField from '../PasswordField.svelte';
     import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
+    import { location } from 'svelte-spa-router';
+    import Snackbar, {
+        Actions,
+        Label,
+        SnackbarComponentDev,
+    } from '@smui/snackbar';
+    import SimpleButton from '../SimpleButton.svelte';
 
     let open = false;
     let codeWasCopied = false;
     let password: string = "";
     let inProgress = false; 
+
+    let inviteSnackbar: SnackbarComponentDev;
 
     const createInviteCode = async () => {
         try {
@@ -52,9 +61,9 @@
         catch (err) {
             console.log(err);
         }
-
-
     }
+
+    $: inviteLink = `${new URL("/?#/", window.location.href)}?invite=${$selectedCampaign?.invite?.invite_code}`;
 
 </script>
 
@@ -94,12 +103,24 @@
                     </CopyToClipboard>
                     <IconButton class="material-icons" style="color: #ff6a60;" ripple={false} on:click={() => removeInviteCode()}>delete</IconButton>
                 </div>
+                <div class="invite-or">OR</div>
+                <div class="invite-link">
+                    <CopyToClipboard text={inviteLink} let:copy on:copy={() => (inviteSnackbar.open())}>
+                        <SimpleButton value="Get invite link" type="primary" onClickFn={() => copy()}></SimpleButton>
+                    </CopyToClipboard>
+                </div>
             {/if}
         </div>
         <div id="close-button">
             <IconButton class="material-icons" ripple={false} on:click={() => {open = false}}>close</IconButton>
         </div>
     </Dialog>
+    <Snackbar bind:this={inviteSnackbar}>
+        <Label>Copied {inviteLink} to clipboard.</Label>
+        <Actions>
+          <IconButton class="material-icons" title="Dismiss">close</IconButton>
+        </Actions>
+    </Snackbar>
 </div>
 
 <style>
@@ -110,6 +131,7 @@
         align-items: center;
         gap: 1em;
         margin: 1em;
+        font-family: Quicksand;
     }
 
     .invite-card {
@@ -134,6 +156,19 @@
         padding-right: 1em;
         font-size: 1em;
         font-family: Montserrat;
+    }
+
+    .invite-or {
+        font-weight: var(--semi-bold);
+        font-size: 1.2em;
+    }
+
+    .invite-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        font-size: 1.2em;
     }
 
     #simple-title {

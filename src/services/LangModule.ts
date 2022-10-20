@@ -9,6 +9,7 @@ export default class LangModule {
         this.langGenMap = {
             'elvish': new NameGen.Generator(NameGen.ELVISH),
             'dwarvish': new NameGen.Generator(NameGen.DWARVISH),
+            'gnomish': new NameGen.Generator(NameGen.GNOMISH)
         }
 
         this.fallBackGen = new NameGen.Generator(NameGen.FANTASY_S_E);

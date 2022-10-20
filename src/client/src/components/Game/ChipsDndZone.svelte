@@ -30,7 +30,10 @@
         display: flex;
         overflow-x: auto;
         gap: 0.25em;
-        padding: 4px;  
+        padding: 4px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
 	}
 
     .chip {
@@ -43,6 +46,7 @@
         font-size: 1em;
         padding: 0.3em;
         background-color: var(--clr-box-bg-light);
+        max-width: 10%;
     }
 
 </style>

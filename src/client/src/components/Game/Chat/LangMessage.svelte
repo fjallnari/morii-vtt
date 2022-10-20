@@ -75,7 +75,8 @@
 
     const langFonts = {
         'elvish': "Midjungards",
-        'dwarvish': "MOONRUNE"
+        'dwarvish': "MOONRUNE",
+        'gnomish': "MOONRUNE"
     }
 
     $: langFont = langFonts[message.langData.name.toLowerCase()] ?? 'Quicksand';

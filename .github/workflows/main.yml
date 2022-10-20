@@ -15,11 +15,8 @@ jobs:
       with:
           fetch-depth: 0
 
-    - id: deploy
-      name: Deploy to dokku
-      uses: idoberko2/dokku-deploy-github-action@v1
+    - name: Push to Dokku
+      uses: dokku/github-action@v1.3.0
       with:
           ssh-private-key: '${{ secrets.SSH_PRIVATE_KEY }}'
-          dokku-host: '${{ secrets.DOKKU_SERVER }}'
-          app-name: 'morii-vtt'
-          git-push-flags: '--force'
+          git_remote_url: '${{ secrets.DOKKU_REMOTE_URL }}'

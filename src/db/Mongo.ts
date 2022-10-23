@@ -1,4 +1,4 @@
-import { Collection, Db, FindCursor, FindOptions, IndexDescription, IndexInformationOptions, IndexSpecification, MongoClient, ObjectId } from "mongodb";
+import { Collection, Db, Document, FindCursor, FindOptions, IndexDescription, IndexInformationOptions, IndexSpecification, MongoClient, ObjectId } from "mongodb";
 
 let _client: MongoClient;
 
@@ -60,11 +60,11 @@ export async function dropCollectionIfExists(collectionName: string, database: D
  * it wouldn't even compile Typescript
  * praise the T, i guess
  */
-export async function insertOne<T>(document: T, targetCollection: Collection){
+export async function insertOne(document: Document, targetCollection: Collection){
     await targetCollection.insertOne(document);
 }
 
-export async function insertMany<T>(documents: T[], targetCollection: Collection): Promise<number> {
+export async function insertMany(documents: Document[], targetCollection: Collection): Promise<number> {
     const insertManyRes = await targetCollection.insertMany(documents);
     const inserted = insertManyRes.insertedCount;
     console.assert(inserted == documents.length);

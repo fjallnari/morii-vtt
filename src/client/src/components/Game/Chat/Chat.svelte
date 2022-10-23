@@ -1,19 +1,19 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import { user, socket, isMessagePublic } from '../../../stores';
+    import { user, socket, isMessagePublic, messages } from '../../../stores';
     import Textfield from '@smui/textfield';
     import IconButton, { Icon } from '@smui/icon-button';
     import type MessageData from "../../../interfaces/MessageData";
     import MessageGrid from "./MessageGrid.svelte";
 
     // export let socket;
-    let messages: MessageData[] = [];
+    // let messages: MessageData[] = [];
     let messageText: string = '';
     let isMsgBoxFocused = false;
     let lastKeypress: string;
     
     $socket.on('chat-message', (incomingMessage: MessageData) => {
-        messages = [incomingMessage, ...messages];
+        messages.set([incomingMessage, ...$messages]);
     })
 
     const sendMessage = () => {
@@ -51,7 +51,7 @@
 <svelte:window on:keydown={handleKeydown}/>
 <div class="chat-box">
     <div class="messages-box">
-        {#each messages as message}
+        {#each $messages as message}
             <MessageGrid message={message}></MessageGrid>
         {/each}
         <div class="help-message">

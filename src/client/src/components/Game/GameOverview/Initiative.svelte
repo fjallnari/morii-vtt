@@ -1,6 +1,5 @@
 <script lang="ts">
     import type GameData from "../../../interfaces/GameData";
-    import { messages } from "../../../stores";
     
     export let gameData: GameData;
 </script>

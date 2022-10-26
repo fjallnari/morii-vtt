@@ -2,6 +2,7 @@
     import type GameData from "../../../interfaces/GameData";
     import { Icon } from '@smui/icon-button';
     import type InitiativeData from "../../../interfaces/InitiativeData";
+    import { nanoid } from "nanoid/non-secure";
     
     export let gameData: GameData;
     export let initiative: InitiativeData;
@@ -12,11 +13,18 @@
     }
 
     const addNewInitEntity = () => {
+        const newInitEntity = {
+            id: nanoid(16),
+            name: 'NaN', // TO-DO add random fluffy names here
+            value: '0'
+        }
 
+        initiative.order = initiative.order.concat([newInitEntity]);
     }
 
     const clearInitOrder = () => {
-
+        initiative.order = [];
+        initiative.topID = undefined;
     }
 
     const passTurn = () => {
@@ -31,19 +39,19 @@
 <box class='initiative-container'>
     <div class='initiative-list'>
         {#each initiative.order as initEntity}
-            <box class='init-entity-tag{initEntity.id === initiative.topID ? ' top': ''}'>
+            <box class='init-entity-tag'>
+                {#if initEntity.id === initiative.topID}
+                    <Icon class="material-icons">{'hourglass_top'}</Icon>
+                {/if}
                 {`${initEntity.name} ~ ${initEntity.value}`}
             </box>
         {/each}
     </div>
     <box class='initiative-menu'>
-        <sendable class="init-menu-icon" on:click={() => {}}>
-            <Icon class="material-icons">{'delete'}</Icon>
+        <sendable class="init-menu-icon" on:click={() => clearInitOrder()}>
+            <Icon class="material-icons">{'restart_alt'}</Icon>
         </sendable>
-        <sendable class="init-menu-icon" on:click={() => {}}>
-            <Icon class="material-icons">{'redo'}</Icon>
-        </sendable>
-        <sendable class="init-menu-icon" on:click={() => {}}>
+        <sendable class="init-menu-icon" on:click={() => addNewInitEntity()}>
             <Icon class="material-icons">{'add'}</Icon>
         </sendable>
         <sendable class="init-menu-icon" on:click={() => sortInitOrder()}>
@@ -76,6 +84,10 @@
     }
 
     .init-entity-tag {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4em;
         width: 90%;
         background-color: var(--clr-box-bg-light);
         font-family: Quicksand;
@@ -83,7 +95,7 @@
         padding: 0.5em 0.25em;
     }
 
-    .init-entity-tag.top {
+    .init-entity-tag:first-child {
         background: linear-gradient(135deg, var(--clr-accent-normal) 20%, var(--clr-box-bg-light) 20%);
     }
 

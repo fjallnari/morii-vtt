@@ -51,8 +51,10 @@
                 value: messageData.rollResult?.total.toString()
             }
 
-            if(initiative.order.find(entity => entity.id === messageData.skillCheckInfo?.entityID)) {
+            let originalEntityObj = initiative.order.find(entity => entity.id === messageData.skillCheckInfo?.entityID);
 
+            if (originalEntityObj) {
+                originalEntityObj.value = initiativeEntityObj.value;              
             }
             else {
                 initiative.order = initiative.order.concat([initiativeEntityObj]);

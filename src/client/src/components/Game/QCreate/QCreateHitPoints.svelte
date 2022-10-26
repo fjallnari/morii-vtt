@@ -33,7 +33,7 @@
         const formula = `${level1HP}+${(selectedClass.level - 1)}d${selectedClass.hp.hit_die}+${(selectedClass.level - 1) * modCON}`
 
         hpRollID = nanoid(16);
-        $sendSkillCheck(0, `Roll for HP ~ Level ${selectedClass.level} ${selectedClass.name} ~ ${formula}`, 'Q-Create', formula, hpRollID);
+        $sendSkillCheck(0, `Roll for HP ~ Level ${selectedClass.level} ${selectedClass.name} ~ ${formula}`, 'Q-Create', '-', formula, hpRollID);
     }
 
     $socket.on('chat-message', (incomingMessage: MessageData) => {

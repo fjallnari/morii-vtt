@@ -1,6 +1,8 @@
 <script lang="ts">
     import type { Character } from "../../../interfaces/Character";
     import type GameData from "../../../interfaces/GameData";
+    import type InitiativeEntity from "../../../interfaces/InitiativeEntity";
+    import type MessageData from "../../../interfaces/MessageData";
     import { selectedCharacter, socket, user } from "../../../stores";
     import { getASModifier } from "../../../util/util";
     import RowBoxWithLabel from "../../RowBoxWithLabel.svelte";
@@ -12,6 +14,10 @@
 
     export let gameData: GameData;
     let createMenuEnabled: boolean = false;
+    let initiative = {
+        topID: '',
+        order: [] as InitiativeEntity[]
+    };
 
     $socket.on('change-character', (modifiedCharacter: Character) => {
         const index = gameData.characters.findIndex( char => char._id === modifiedCharacter._id);
@@ -35,6 +41,23 @@
             gameData.characters = gameData.characters.filter(character => character._id !== deletedCharacterID);
         }
         selectedCharacter.set(undefined);
+    });
+
+    $socket.on('chat-message', (messageData: MessageData) => {
+        if(messageData.skillCheckInfo?.skillName === 'initiative') {
+            const initiativeEntityObj = {
+                id: messageData.skillCheckInfo?.entityID,
+                name: messageData.skillCheckInfo?.characterName,
+                value: messageData.rollResult?.total.toString()
+            }
+
+            if(initiative.order.find(entity => entity.id === messageData.skillCheckInfo?.entityID)) {
+
+            }
+            else {
+                initiative.order = initiative.order.concat([initiativeEntityObj]);
+            }
+        }        
     });
 
     const getPassivePerception = (character: Character) => {
@@ -87,7 +110,7 @@
         </div>
         <div class='initiative'>
             <h3>Initiative</h3>
-            <Initiative gameData={gameData}></Initiative>   
+            <Initiative gameData={gameData} bind:initiative></Initiative>   
         </div>
     </div>
 {/if}

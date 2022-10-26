@@ -79,6 +79,7 @@
                         getDmgModifier(attack.dmg_ability), 
                         `${attack.name.toLowerCase()} | damage${attack.versatile_die ? (attack.versatile_active ? ' | 2-handed': ' | 1-handed') : ''}`,
                         character.name,
+                        '-',
                         getDmgDie()
                     )}
                 >

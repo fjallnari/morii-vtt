@@ -75,7 +75,7 @@
         }).format(modifier);
     });
 
-    sendSkillCheck.set(async (modifier: number, skillName: string, charName: string = '', diceType = 'd20', customID = nanoid(16)) => {
+    sendSkillCheck.set(async (modifier: number, skillName: string, charName: string = '', entityID: string = '', diceType = 'd20', customID = nanoid(16)) => {
         $socket.emit('chat-message', {
             senderInfo: {
                 _id: $user._id, 
@@ -86,7 +86,8 @@
             messageID: customID, 
             skillCheckInfo: {
                 characterName: charName,
-                skillName: skillName
+                skillName: skillName,
+                entityID: entityID
             },
             gameID: params.id,
             isPublic: $isMessagePublic

@@ -84,7 +84,7 @@
                         {$formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
                     </div>
                     <div class="box-justify-filler"></div>
-                    <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`, character.name)}>
+                    <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`, character.name, character._id)}>
                         Initiative
                     </sendable>
                 </div>

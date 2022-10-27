@@ -140,6 +140,7 @@
 <style>
     .initiative-container {
         height: 100%;
+        min-height: 0;
         width: 100%;
         position: relative;
     }
@@ -150,6 +151,7 @@
         justify-content: flex-start;
         align-items: center;
         gap: 0.5em;
+        padding-bottom: 4px;
         margin: 1em 0.5em;
         height: 85%;
         overflow-y: auto;

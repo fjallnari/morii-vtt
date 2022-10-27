@@ -62,7 +62,7 @@
 <summary-detail>
     <div class="char-name">
         <div class="name-edit">
-            <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" onSubmitFce={() => {}}></InPlaceEditBox>
+            <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" editWidth='5em' onSubmitFce={() => {}}></InPlaceEditBox>
             <sendable class='random-name' on:click={() => generateName()}>
                 <Icon class="material-icons">{'shuffle'}</Icon>
             </sendable> 

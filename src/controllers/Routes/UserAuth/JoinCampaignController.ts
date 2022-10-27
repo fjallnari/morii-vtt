@@ -33,13 +33,11 @@ export default class JoinCampaignController extends RouteController {
                 return this.res.status(401).send('Incorrect password');
             }
 
-            // TODO: add check for if the player is in the campaign already or not (to prevent double-add)
-            // ! fix the owner adds themselves again into the campaign edge case
-
             const campaignObj = <Campaign> await campaignsCollection.findOne({_id: new ObjectId(inviteObj.campaign_id)});
 
+            // prevents double-add and owner adding themselves
             if (campaignObj.players.map(id => id.playerID.toString()).includes(decodedToken.user._id) || campaignObj.owner.toString() === decodedToken.user._id) {
-                return this.res.status(401).send('Already in campaign');;
+                return this.res.status(401).send('Already in campaign');
             }
     
             await campaignsCollection.updateOne({_id: inviteObj.campaign_id}, {$addToSet: {players: { playerID: userID }}});

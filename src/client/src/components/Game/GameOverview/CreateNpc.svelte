@@ -44,6 +44,7 @@
         justify-content: flex-start;
         align-items: center;
         gap: 0.5em;
+        width: 95%;
     }
 
     :global(.create-npc-container > simple-button) {

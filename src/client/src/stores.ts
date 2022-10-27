@@ -3,6 +3,7 @@ import type { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { Writable, writable } from 'svelte/store';
 import type Campaign from './interfaces/Campaign';
 import type { Character } from './interfaces/Character';
+import type MessageData from './interfaces/MessageData';
 import type User from './interfaces/User';
 
 export const accessToken = writable("");
@@ -17,7 +18,7 @@ export const ownerSocketID: Writable<string> = writable("");
 export const userIDPairs: Writable<Record<string, string>> = writable({});
 export const isMessagePublic: Writable<boolean> = writable(true);
 export const modifyCharacter: Writable<() => Promise<void>> = writable();
-export const sendSkillCheck: Writable<(modifier: number, skillName: string, charName?: string, diceType?: string, customID?: string) => Promise<void>> = writable();
+export const sendSkillCheck: Writable<(modifier: number, skillName: string, charName?: string, entityID?: string, diceType?: string, customID?: string) => Promise<void>> = writable();
 export const getASModifier: Writable<(AS: string) => number> = writable();
 export const formatModifier: Writable<(modifier: number, signDisplay?: ("exceptZero" | "always" | "auto" | "never")) => string> = writable();
 export const createNewAttack: Writable<(customName?: string, itemID?: string ) => string> = writable();

@@ -153,7 +153,7 @@
         for (let i = 0; i < 6; i++) {
             const newCustomID = nanoid(16);
             rollArrayIds = rollArrayIds.concat([newCustomID]);
-            $sendSkillCheck(0, `[${rollBatchID}] Roll stats ~ ${formula}`, !characterParts.name || characterParts.name === '' ? 'Q-Create' : characterParts.name, formula, newCustomID);
+            $sendSkillCheck(0, `[${rollBatchID}] Roll stats ~ ${formula}`, !characterParts.name || characterParts.name === '' ? 'Q-Create' : characterParts.name, '-', formula, newCustomID);
         }
 
         return await circleCheck() as number[];

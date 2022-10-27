@@ -93,8 +93,6 @@
         font-family: Quicksand;
         overflow-wrap: anywhere;
         padding: 0.5em;
-        display: flex;
-        align-items: center;
     }
     .sender-pfp img {
         border-radius: 25%;

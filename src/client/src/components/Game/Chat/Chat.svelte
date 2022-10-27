@@ -13,7 +13,7 @@
     let lastKeypress: string;
     
     $socket.on('chat-message', (incomingMessage: MessageData) => {
-        messages = [incomingMessage, ...messages];
+        messages = ([incomingMessage, ...messages]);
     })
 
     const sendMessage = () => {

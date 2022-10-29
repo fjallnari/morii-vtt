@@ -112,7 +112,7 @@
         </div>
         <div class='initiative'>
             <h3>Initiative</h3>
-            <Initiative gameData={gameData} bind:initiative></Initiative>   
+            <Initiative bind:initiative></Initiative>   
         </div>
     </div>
 {/if}

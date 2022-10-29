@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type GameData from "../../../interfaces/GameData";
     import { Icon } from '@smui/icon-button';
     import type InitiativeData from "../../../interfaces/InitiativeData";
     import { nanoid } from "nanoid/non-secure";
@@ -7,8 +6,8 @@
 	import { flip } from 'svelte/animate';
     import DeleteInitEntity from "./DeleteInitEntity.svelte";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
+    import { tooltip } from "@svelte-plugins/tooltips";
     
-    export let gameData: GameData;
     export let initiative: InitiativeData;
 
     const flipDurationMs = 200;
@@ -29,7 +28,7 @@
     const addNewInitEntity = () => {
         const newInitEntity = {
             id: nanoid(16),
-            name: 'NaN', // TO-DO add random fluffy names here
+            name: 'NaN',
             value: '0'
         }
 
@@ -114,16 +113,16 @@
     </section>
     <box class='initiative-menu{!dragDisabled ? ' delete-mode': ''}'>
         {#if dragDisabled}
-            <sendable class="init-menu-icon" on:click={() => clearInitOrder()}>
+            <sendable use:tooltip={{content: 'Clear', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => clearInitOrder()}>
                 <Icon class="material-icons">{'restart_alt'}</Icon>
             </sendable>
-            <sendable class="init-menu-icon" on:click={() => addNewInitEntity()}>
+            <sendable use:tooltip={{content: 'Add new', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => addNewInitEntity()}>
                 <Icon class="material-icons">{'add'}</Icon>
             </sendable>
-            <sendable class="init-menu-icon" on:click={() => sortInitOrder()}>
+            <sendable use:tooltip={{content: 'Sort', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => sortInitOrder()}>
                 <Icon class="material-icons">{'sort'}</Icon>
             </sendable>
-            <sendable class="init-menu-icon" on:click={() => passTurn()}>
+            <sendable use:tooltip={{content: 'Next', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => passTurn()}>
                 <Icon class="material-icons">{'forward'}</Icon>
             </sendable>
         {:else}
@@ -228,6 +227,15 @@
 
     :global(.init-menu-icon > .material-icons) {
         font-size: 2em;
+    }
+
+    :global(.tooltip.dark-tooltip) {
+        --tooltip-background-color: var(--clr-box-bg-dark);
+        --tooltip-border-radius: 4px;
+        --tooltip-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        --tooltip-font-family: Quicksand;
+        --tooltip-line-height: 1em;
+        --tooltip-padding: 12px;
     }
 
 </style>

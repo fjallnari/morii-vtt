@@ -146,6 +146,7 @@
             dmg_type: '', // e.g. Slashing
             versatile_die: '',
             versatile_active: false,
+            tags: []
         }
 
         // EQUIPMENT
@@ -165,11 +166,18 @@
 
                 if (hasAttack) {
                     attackID = nanoid(16);
+                    const weaponProficiency = otherProf.some(prof => {
+                        const profName = prof.name.toLowerCase();
+                        const itemName = item.name.toLowerCase();
+                        // slice is there to catch proficiency in e.g. longsword-s
+                        return profName === itemName || (profName?.slice(0,-1) ?? '' === itemName) || profName === characterParts.weapons[item.name].weapon_type;
+                    });
+
                     attacks = attacks.concat([Object.assign({}, { ... attackSkeleton, ... characterParts.weapons[item.name] ?? {},
                         id: nanoid(16), 
                         name: item.name, 
                         item_id: itemID,
-                        atk_proficiency: otherProf.some(prof => prof.name === item.name) // TODO
+                        atk_proficiency: weaponProficiency  // TODO
                     })])
                 }
 

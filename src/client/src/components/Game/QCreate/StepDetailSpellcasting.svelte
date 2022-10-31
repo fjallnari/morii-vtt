@@ -37,7 +37,11 @@
     $: proficiencyBonusPretty = new Intl.NumberFormat("en-US", { signDisplay: 'exceptZero' }).format(proficiencyBonus + 0);
     
     $: if (newSpell) {
-        addNewSpell(~~newSpell.level, Object.assign(newSpell, { level: ~~newSpell.level, concentration: newSpell.duration.includes('Concentration')}));
+        addNewSpell(~~newSpell.level, Object.assign(newSpell, { 
+            level: ~~newSpell.level, 
+            concentration: newSpell.duration.includes('Concentration'),
+            components: Object.assign(newSpell.components, { materials_needed: newSpell.components.material ? newSpell.components.materials_needed.toString() : '' })
+        }));
         newSpell = undefined;
     }
 

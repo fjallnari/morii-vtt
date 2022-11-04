@@ -12,5 +12,4 @@ export default interface MessageData {
     rollResult?: RollResultData,
     langData?: LangData,
     ownerSocketID: string,
-    whisperGM?: boolean
 }

@@ -13,5 +13,4 @@ export default interface MessageData {
     skillCheckInfo?: SkillCheckInfo;
     rollResult?: RollResultData;
     langData: LangData;
-    whisperGM?: boolean;
 }

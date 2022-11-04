@@ -11,12 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Cloning repo
+      uses: actions/checkout@v3
       with:
           fetch-depth: 0
 
     - name: Push to Dokku
-      uses: dokku/github-action@v1.3.0
+      uses: dokku/github-action@master
       with:
           ssh_private_key: '${{ secrets.SSH_PRIVATE_KEY }}'
           git_remote_url: '${{ secrets.DOKKU_REMOTE_URL }}'

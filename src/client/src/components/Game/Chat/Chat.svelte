@@ -1,7 +1,6 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import { user, socket, isMessagePublic } from '../../../stores';
-    import Textfield from '@smui/textfield';
+    import { user, socket, isMessagePublic, ownerSocketID } from '../../../stores';
     import IconButton, { Icon } from '@smui/icon-button';
     import type MessageData from "../../../interfaces/MessageData";
     import MessageGrid from "./MessageGrid.svelte";
@@ -30,6 +29,7 @@
             }, 
             messageText: messageText, 
             gameID: $params.id,
+            ownerSocketID: $ownerSocketID,
             isPublic: $isMessagePublic
         });
         messageText = '';

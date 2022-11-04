@@ -19,7 +19,7 @@
 <div class="message-content">
     <div class="sender-info">
         {message.senderInfo.username}{message.skillCheckInfo ? ` (${message.skillCheckInfo.characterName})` : ''}
-        <div class='message-lang'>{message.langData?.name ? `in ${message.langData?.name}` : ''}</div>
+        <div class='message-lang'>{message.langData?.name ? `in ${message.langData?.name}` : ''}{message.whisperGM ? 'to DM' : ''}</div>
     </div>
 
     <div class="message-timestamp">
@@ -40,7 +40,7 @@
         </div>
     {/if}
 
-    <div class="message-text" style="background: { message.isPublic ? 'var(--clr-box-bg-normal);' : 'var(--clr-box-bg-light);' }">
+    <div class="message-text" style="background-color: { message.isPublic ? 'var(--clr-box-bg-normal);' : 'var(--clr-box-bg-light);' }">
         {#if message.rollResult && ! message.rollResult.error}
             <PrettyRollResult message={message}></PrettyRollResult>
         {:else if message.langData}
@@ -87,7 +87,7 @@
     }
 
     .message-text { grid-area: message-text;
-        background-color:var(--clr-box-bg-normal);
+        background-color: var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 1%;
         font-family: Quicksand;

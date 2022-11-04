@@ -90,6 +90,13 @@ export default class SocketsController {
 
         Object.assign(messageData, { timestamp: timestamp });
 
+        // send messages to gm only
+        if (/^\/gm\040/.test(messageData.messageText)) {
+            Object.assign(messageData, { messageText: messageData.messageText.slice(3), whisperGM: true });
+            this.io.to([senderSocket.id, messageData.ownerSocketID]).emit('chat-message', messageData);
+            return;
+        }
+
         // sends message to either the whole room or only back to the sender
         this.io.to(messageData.isPublic ? messageData.gameID : senderSocket.id).emit('chat-message', messageData);
     }

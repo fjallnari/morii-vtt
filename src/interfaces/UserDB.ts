@@ -1,9 +1,5 @@
 import { ObjectId } from "mongodb";
-
-interface UserSettings {
-    pfpID: number;
-    pfpColor: string;
-}
+import UserSettings from "./UserSettings";
 
 export default interface UserDB {
     _id: ObjectId,

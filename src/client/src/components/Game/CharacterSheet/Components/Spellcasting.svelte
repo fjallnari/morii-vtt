@@ -106,10 +106,10 @@
         <Dialog
             bind:open={isFillSpellDialogOpen}
             aria-labelledby="simple-title"
-            surface$style="padding: 0.5em 1em; height: 30em; width: 30em;"
+            surface$style="padding: 1em 2em; height: 30em; width: 30em;"
         >
             <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-            <h3 id="simple-title">Create spell from text summary</h3>
+            <h3 id="simple-title">Add spell from summary</h3>
             <textarea style="height: 100%;" on:change={() => {isSummaryValid = true}} bind:value={fillSpellContent}></textarea>
             <Actions id="dialog-buttons">
                 <SimpleButton value='' icon='close' type='default' onClickFn={() => isFillSpellDialogOpen = false}></SimpleButton>
@@ -165,11 +165,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 0.5em;
+        gap: 1em;
+        margin-top: 1em;
     }
 
     :global(#dialog-buttons simple-button) {
-        width: 45% !important;
+        padding: 0.4rem 0em;
+        max-width: 45%;
     }
 
 

@@ -1,7 +1,7 @@
 <script lang="ts">
     import axios from "axios";
     import io from 'socket.io-client';
-    import { user, socket, ownerSocketID, userIDPairs, formatModifier, sendSkillCheck, isMessagePublic } from '../stores';
+    import { user, socket, ownerSocketID, userIDPairs, formatModifier, sendSkillCheck, messageMode } from '../stores';
     import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
@@ -90,7 +90,7 @@
                 entityID: entityID
             },
             gameID: params.id,
-            isPublic: $isMessagePublic
+            messageMode: $messageMode
         });
     });
 

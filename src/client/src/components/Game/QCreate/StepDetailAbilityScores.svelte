@@ -1,7 +1,7 @@
 <script lang="ts">
     import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../../interfaces/QuickCreateData";
-    import { formatModifier, isMessagePublic, sendSkillCheck, socket } from "../../../stores";
+    import { formatModifier, messageMode, sendSkillCheck, socket } from "../../../stores";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import { findHighestPossibleValue, getASModifier, getRandomIndex } from "../../../util/util";
     import ChipsDndZone from ".././ChipsDndZone.svelte";
@@ -272,11 +272,12 @@
                 <InPlaceEdit bind:value={genInfo.customField} editWidth="10rem" editHeight="1.5rem" on:submit={() => {}}/>
             </div>
             <div class='roll-visibility'>
-                <div>{$isMessagePublic ? 'Public roll': 'Secret roll'}</div>
-                <IconButton toggle bind:pressed={$isMessagePublic}>
-                    <Icon class="material-icons" style="font-size: xx-large;" on>visibility</Icon>
-                    <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
-                </IconButton>
+                <div>{['Public roll', 'Secret roll', 'GM Only'][$messageMode]}</div>
+                <img class="message-mode" 
+                    src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
+                    alt="message-mode"
+                    on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}
+                >
             </div>
         </box>
         <box class="as-array">

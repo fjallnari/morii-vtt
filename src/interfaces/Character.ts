@@ -26,7 +26,8 @@ export interface Attack {
     dmg_type: string, // e.g. Slashing
     versatile_die: string,
     versatile_active: boolean,
-    item_id?: string
+    item_id?: string,
+    weapon_type?: string // 'Simple weapons || Martial weapons
     //// properties: number[] // only property ids are saved, e.g. 0 ~ Ammunition
 }
 

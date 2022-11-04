@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { formatModifier, getASModifier, isMessagePublic, modifyCharacter, ownerSocketID, selectedCharacter, selectedCharacterTab, sendSkillCheck, socket, user, userIDPairs } from "../../../stores";
+    import { formatModifier, getASModifier, modifyCharacter, ownerSocketID, selectedCharacter, selectedCharacterTab, sendSkillCheck, socket, user, userIDPairs } from "../../../stores";
     import CharacterSheetBio from "./CharacterSheetBio.svelte";
     import CharacterSheetCore from "./CharacterSheetCore.svelte";
     import CharacterSheetSettings from "./CharacterSheetSettings.svelte";

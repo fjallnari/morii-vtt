@@ -8,7 +8,9 @@ export default interface MessageData {
     messageID?: string;
     gameID: string;
     timestamp?: string;
-    isPublic: boolean;
+    messageMode: number;
     rollResult?: RollResultData,
-    langData?: LangData
+    langData?: LangData,
+    ownerSocketID: string,
+    whisperGM?: boolean
 }

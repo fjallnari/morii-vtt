@@ -1517,6 +1517,11 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.0.0.tgz#8863915676f837d9dad7b76f50cb500c1e9422e9"
   integrity sha512-2pTGuibAXJswAPJjaKisthqS/NOK5ypG4LYT6tEAV0S/mxW0zOIvYvGK0V8w8+SHxAm6vRMSjqSalFXeBAqs+Q==
 
+"@svelte-plugins/tooltips@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@svelte-plugins/tooltips/-/tooltips-0.1.6.tgz#e286302d473c17e92d1a79756285390f9583b232"
+  integrity sha512-UiQfOyU0mssIf8ABhXU8Er55hiHZeY7Axu8KTIiGR73dC/pwdK54GdtXavZN2cJPN/n09Uh/Fg2PfWfRxJ+hWw==
+
 "@tsconfig/svelte@^2.0.0", "@tsconfig/svelte@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-2.0.1.tgz#0e8d7caa693e9b2afce5e622c0475bb0fd89c12c"

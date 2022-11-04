@@ -1,7 +1,6 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import { user, socket, isMessagePublic } from '../../../stores';
-    import Textfield from '@smui/textfield';
+    import { user, socket, ownerSocketID, messageMode } from '../../../stores';
     import IconButton, { Icon } from '@smui/icon-button';
     import type MessageData from "../../../interfaces/MessageData";
     import MessageGrid from "./MessageGrid.svelte";
@@ -30,7 +29,8 @@
             }, 
             messageText: messageText, 
             gameID: $params.id,
-            isPublic: $isMessagePublic
+            ownerSocketID: $ownerSocketID,
+            messageMode: $messageMode
         });
         messageText = '';
     }
@@ -62,10 +62,11 @@
         <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false}></textarea>
 
         <div class="send-options-box">
-            <IconButton toggle bind:pressed={$isMessagePublic}>
-                <Icon class="material-icons" style="font-size: xx-large;" on>visibility</Icon>
-                <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
-            </IconButton>
+            <img class="message-mode" 
+                src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
+                alt="message-mode"
+                on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}
+            >
             <IconButton class="material-icons" style="font-size: xx-large;" on:click={() => sendMessage()}>send</IconButton>
         </div>
     </div>
@@ -129,6 +130,12 @@
     .help-message {
         font-family: Quicksand;
         font-size: large;
+    }
+
+    .message-mode {
+        width: 2em;
+        height: 2em;
+        cursor: pointer;
     }
 
     ::-webkit-scrollbar {

@@ -112,7 +112,7 @@
         </div>
         <div class='initiative'>
             <h3>Initiative</h3>
-            <Initiative gameData={gameData} bind:initiative></Initiative>   
+            <Initiative bind:initiative></Initiative>   
         </div>
     </div>
 {/if}
@@ -126,12 +126,13 @@
         border-radius: 4px;
         display: grid; 
         grid-template-columns: 0.05fr 1fr 0.5fr 0.5fr 1fr 0.05fr; 
-        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); 
+        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.2fr); 
         gap: 1em; 
         grid-template-areas: 
             "characters-list characters-list characters-list characters-list characters-list characters-list"
+            ". npcs armor-class armor-class initiative ."
             ". npcs passive-perception passive-perception initiative ."
-            ". npcs armor-class armor-class initiative .";
+            ". npcs . . initiative .";
     }
 
     h3 {

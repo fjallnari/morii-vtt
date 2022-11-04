@@ -27,6 +27,7 @@
     "@smui/snackbar": "^6.0.0-beta.14",
     "@smui/textfield": "^6.0.0-beta.14",
     "@smui/tooltip": "^6.0.0-beta.14",
+    "@svelte-plugins/tooltips": "^0.1.6",
     "@tsconfig/svelte": "^2.0.0",
     "postcss": "^8.4.5",
     "rollup": "^2.3.4",

@@ -180,8 +180,8 @@
             </box>
 
             <box class="versatile">
-                <div class="consistent-in-place-edit" style="width: 5em;">
-                    <InPlaceEdit bind:value={attack.versatile_die} editWidth='5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                <div class="consistent-in-place-edit">
+                    <InPlaceEdit bind:value={attack.versatile_die} editWidth='4em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
                 </div>
                 <div class="box-label">
                     Versatile
@@ -260,6 +260,10 @@
         justify-content: center;
         align-items: center;
         gap: 0.5em;
+    }
+
+    div.details > box.versatile {
+        padding: 0.2em 0em;
     }
 
     .attack-damage line-div {

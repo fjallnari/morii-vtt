@@ -25,7 +25,7 @@
 <div class="message-content">
     <div class="sender-info">
         {message.senderInfo.username}{message.skillCheckInfo ? ` (${message.skillCheckInfo.characterName})` : ''}
-        {#if message.senderInfo._id === $user.gameData.owner}
+        {#if message.senderInfo._id === $user.gameData?.owner}
             <div class='owner-icon'>
                 <img src="../static/crown.svg" alt="gm">                
             </div>

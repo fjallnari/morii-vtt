@@ -13,6 +13,7 @@ import ACKUserJoinEmit from "../../interfaces/emits/ACKUserJoinEmit";
 import ACKOwnerJoinEmit from "../../interfaces/emits/ACKOwnerJoinEmit";
 import DiceHandler from "../../services/DiceHandler";
 import LangModule from "../../services/LangModule";
+import MESSAGE_MODES from "../../enum/MESSAGE_MODES";
 
 
 export default class SocketsController {
@@ -90,15 +91,9 @@ export default class SocketsController {
 
         Object.assign(messageData, { timestamp: timestamp });
 
-        // send messages to gm only
-        if (/^\/gm\040/.test(messageData.messageText)) {
-            Object.assign(messageData, { messageText: messageData.messageText.slice(3), whisperGM: true });
-            this.io.to([senderSocket.id, messageData.ownerSocketID]).emit('chat-message', messageData);
-            return;
-        }
-
-        // sends message to either the whole room or only back to the sender
-        this.io.to(messageData.isPublic ? messageData.gameID : senderSocket.id).emit('chat-message', messageData);
+        // sends the message to either the whole room, only back to the sender or as a whisper to the GM
+        const receiverGroup = [messageData.gameID, senderSocket.id, [messageData.ownerSocketID, senderSocket.id]][messageData.messageMode ?? MESSAGE_MODES.PUBLIC];
+        this.io.to(receiverGroup).emit('chat-message', messageData);
     }
     
 }

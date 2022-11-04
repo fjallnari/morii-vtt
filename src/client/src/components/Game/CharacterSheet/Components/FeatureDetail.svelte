@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { isMessagePublic, modifyCharacter, socket, user } from '../../../../stores';
+    import { messageMode, modifyCharacter, socket, user } from '../../../../stores';
     import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import { params } from "svelte-spa-router";
@@ -37,7 +37,7 @@
                 skillName: ''
             },
             gameID: $params.id,
-            isPublic: $isMessagePublic
+            messageMode: $messageMode
         });
     }
 

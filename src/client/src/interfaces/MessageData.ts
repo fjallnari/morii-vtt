@@ -8,7 +8,7 @@ export default interface MessageData {
     messageText: string;
     messageID?: string;
     gameID: string;
-    isPublic: boolean;
+    messageMode: number;
     timestamp?: string;
     skillCheckInfo?: SkillCheckInfo;
     rollResult?: RollResultData;

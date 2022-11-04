@@ -9,6 +9,12 @@
 
     export let message: MessageData;
 
+    enum MESSAGE_MODES {
+        PUBLIC,
+        SECRET,
+        GM
+    }
+
     const getCleanErrorMessage = (errorMessage: string, messageText: string) => {
         const cleanError = errorMessage.startsWith('Expected') ? `Invalid dice notation: ${messageText}.` : errorMessage;
         return `ERROR: ${cleanError}`;
@@ -19,28 +25,27 @@
 <div class="message-content">
     <div class="sender-info">
         {message.senderInfo.username}{message.skillCheckInfo ? ` (${message.skillCheckInfo.characterName})` : ''}
-        <div class='message-lang'>{message.langData?.name ? `in ${message.langData?.name}` : ''}{message.whisperGM ? 'to DM' : ''}</div>
+        {#if message.senderInfo._id === $user.gameData.owner}
+            <div class='owner-icon'>
+                <img src="../static/crown.svg" alt="gm">                
+            </div>
+        {/if}
+        <div class='message-ext-info'>{message.langData?.name ? `in ${message.langData?.name} ` : ''}{message.messageMode === MESSAGE_MODES.GM ? 'to GM' : ''}</div>
     </div>
 
     <div class="message-timestamp">
         {message.timestamp}
     </div>
+    
+    <div class="sender-pfp">
+        {#if message && message.messageMode === MESSAGE_MODES.PUBLIC}
+            <img class='user-icon' style="background-color: #{message.senderInfo.settings.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.settings.pfpID]}.svg" alt="pfp">
+        {:else}
+            <img class='mode-icon' src="../static/{message.messageMode === MESSAGE_MODES.SECRET ? 'eye-off': 'message-text-lock'}.svg" alt="msg-mode">
+        {/if}
+    </div>
 
-    {#if message && message.isPublic}
-        <div class="sender-pfp">
-            {#if $user.gameData && message.senderInfo._id === $user.gameData.owner}
-                <img src="../static/crown.svg" alt="gm">
-            {:else}
-                <img style="background-color: #{message.senderInfo.settings.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.settings.pfpID]}.svg" alt="pfp">
-            {/if}
-        </div>
-    {:else}
-        <div class="sender-pfp">
-            <Icon class="material-icons" style="font-size: xx-large;">visibility_off</Icon>
-        </div>
-    {/if}
-
-    <div class="message-text" style="background-color: { message.isPublic ? 'var(--clr-box-bg-normal);' : 'var(--clr-box-bg-light);' }">
+    <div class="message-text{message.messageMode !== MESSAGE_MODES.PUBLIC ? ' non-public': ''}">
         {#if message.rollResult && ! message.rollResult.error}
             <PrettyRollResult message={message}></PrettyRollResult>
         {:else if message.langData}
@@ -70,7 +75,7 @@
         gap: 0.5em;
     }
 
-    .message-lang {
+    .message-ext-info {
         color: darkgrey;
     }
 
@@ -82,24 +87,46 @@
         font-family: Montserrat;    
     }
 
-    .sender-pfp { grid-area: sender-pfp;
-        display: flex;   
-    }
-
     .message-text { grid-area: message-text;
         background-color: var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 1%;
+        border-radius: 4px;
         font-family: Quicksand;
         overflow-wrap: anywhere;
         padding: 0.5em;
     }
-    .sender-pfp img {
-        border-radius: 25%;
+
+    .message-text.non-public {
+        background-color: var(--clr-box-bg-light);
+    }
+
+    .sender-pfp { grid-area: sender-pfp;
+        display: flex;
+        justify-content: center;
         width: 2.5em;
-        height: 2.5em;
+        height: 2.5em; 
+    }
+
+    .sender-pfp > img {
+        border-radius: 25%;
+    }
+
+    .sender-pfp img.user-icon {
         background-color: var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .sender-pfp img.mode-icon {
+        width: 2.25em;
+        height: 2.25em;
+    }
+
+    .owner-icon {
+        width: 1em;
+        height: 1em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     /** MARKDOWN 'CORRECTIONS' */

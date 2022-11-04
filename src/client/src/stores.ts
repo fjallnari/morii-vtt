@@ -16,7 +16,7 @@ export const selectedCharacterTab: Writable<number> = writable(0);
 export const socket: Writable<Socket<DefaultEventsMap, DefaultEventsMap>> = writable();
 export const ownerSocketID: Writable<string> = writable("");
 export const userIDPairs: Writable<Record<string, string>> = writable({});
-export const isMessagePublic: Writable<boolean> = writable(true);
+export const messageMode: Writable<number> = writable(0);
 export const modifyCharacter: Writable<() => Promise<void>> = writable();
 export const sendSkillCheck: Writable<(modifier: number, skillName: string, charName?: string, entityID?: string, diceType?: string, customID?: string) => Promise<void>> = writable();
 export const getASModifier: Writable<(AS: string) => number> = writable();

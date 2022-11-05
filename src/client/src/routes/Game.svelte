@@ -90,6 +90,7 @@
                 entityID: entityID
             },
             gameID: params.id,
+            ownerSocketID: $ownerSocketID,
             messageMode: $messageMode
         });
     });

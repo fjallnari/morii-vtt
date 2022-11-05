@@ -62,12 +62,20 @@
         <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false}></textarea>
 
         <div class="send-options-box">
-            <img class="message-mode" 
-                src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
-                alt="message-mode"
-                on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}
-            >
-            <IconButton class="material-icons" style="font-size: xx-large;" on:click={() => sendMessage()}>send</IconButton>
+            <div class='icon-wrapper ripple'>
+                <img class="icon" 
+                    src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
+                    alt="message-mode"
+                    on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}
+                >
+            </div>
+            <div class='icon-wrapper ripple'>
+                <img class="icon" 
+                    src="../static/send.svg" 
+                    alt="send"
+                    on:click={() => sendMessage()}
+                >
+            </div>
         </div>
     </div>
 </div>
@@ -132,10 +140,32 @@
         font-size: large;
     }
 
-    .message-mode {
+    .icon-wrapper {
+        width: 3em;
+        height: 3em;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon {
         width: 2em;
         height: 2em;
         cursor: pointer;
+    }
+
+    /* Ripple effect */
+    .ripple {
+        background-position: center;
+        transition: background 0.8s;
+    }
+    .ripple:hover {
+        background: #404044aa;
+    }
+    .ripple:active {
+        background-color: #5a5a5fca;
+        transition: background 0s;
     }
 
     ::-webkit-scrollbar {

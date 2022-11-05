@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
-    import { messageMode, modifyCharacter, socket, user } from '../../../../stores';
+    import { messageMode, modifyCharacter, ownerSocketID, socket, user } from '../../../../stores';
     import { params } from "svelte-spa-router";
     import type { Character, Spell } from '../../../../interfaces/Character';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
@@ -55,6 +55,7 @@
                 skillName: ''
             },
             gameID: $params.id,
+            ownerSocketID: $ownerSocketID,
             messageMode: $messageMode
         });
     }

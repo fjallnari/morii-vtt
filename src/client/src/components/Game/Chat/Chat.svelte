@@ -62,14 +62,14 @@
         <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false}></textarea>
 
         <div class="send-options-box">
-            <div class='icon-wrapper ripple'>
+            <div class='icon-wrapper icon-ripple'>
                 <img class="icon" 
                     src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
                     alt="message-mode"
                     on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}
                 >
             </div>
-            <div class='icon-wrapper ripple'>
+            <div class='icon-wrapper icon-ripple'>
                 <img class="icon" 
                     src="../static/send.svg" 
                     alt="send"
@@ -153,19 +153,6 @@
         width: 2em;
         height: 2em;
         cursor: pointer;
-    }
-
-    /* Ripple effect */
-    .ripple {
-        background-position: center;
-        transition: background 0.8s;
-    }
-    .ripple:hover {
-        background: #404044aa;
-    }
-    .ripple:active {
-        background-color: #5a5a5fca;
-        transition: background 0s;
     }
 
     ::-webkit-scrollbar {

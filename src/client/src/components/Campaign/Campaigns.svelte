@@ -31,7 +31,7 @@
         twoLine
         singleSelection
     >
-        {#each $user.campaigns as campaign}
+        {#each $user?.campaigns ?? [] as campaign}
             <div class="campaign-item">
                 <Item
                     style="margin-bottom: 1em; border-radius: 1%;"
@@ -44,15 +44,7 @@
                     </Text>
                     <Meta>
                         <div class="role-image">
-                            <Wrapper>
-                                {#if campaign.owner._id === $user._id}
-                                    <img id="crown" src="../static/crown.svg" alt="crown">
-                                    <Tooltip>GM</Tooltip>
-                                {:else}
-                                    <img id="dice" src="../static/dice.svg" alt="dice">
-                                    <Tooltip>Player</Tooltip>
-                                {/if}
-                            </Wrapper>
+                            <img id="role-icon" src="../static/{campaign?.owner?._id === $user?._id ? 'crown': 'dice'}.svg" alt="role">
                         </div>
                     </Meta>
                 </Item>

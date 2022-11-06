@@ -276,6 +276,21 @@
 		animation: border-color-change 3s infinite;
 	}
 
+	/* Icon Ripple effect */
+	:global(.icon-ripple) {
+        background-position: center;
+        transition: background 0.8s;
+    }
+
+    :global(.icon-ripple:hover) {
+        background: #404044aa;
+    }
+
+    :global(.icon-ripple:active) {
+        background-color: #5a5a5fca;
+        transition: background 0s;
+    }
+
     @keyframes color-change {
         0% { color: var(--clr-text); }
         50% { color: var(--clr-contrast-normal); }
@@ -287,6 +302,8 @@
         50% { border-color: var(--clr-contrast-normal); }
         100% { border-color: transparent; }
     }
+
+	
 
 	
 	:global(.svelecte-control) {

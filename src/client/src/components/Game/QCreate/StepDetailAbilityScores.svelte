@@ -273,11 +273,13 @@
             </div>
             <div class='roll-visibility'>
                 <div>{['Public roll', 'Secret roll', 'GM Only'][$messageMode]}</div>
-                <img class="message-mode" 
-                    src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
-                    alt="message-mode"
-                    on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}
-                >
+                <div class='icon-wrapper icon-ripple'>
+                    <img class="message-mode" 
+                        src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
+                        alt="message-mode"
+                        on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}
+                    >
+                </div>
             </div>
         </box>
         <box class="as-array">
@@ -508,7 +510,23 @@
         justify-content: center;
         align-items: center;
         font-size: 1.2em;
-        gap: 0.25em;
+        gap: 0.5em;
+        width: 100%;
+    }
+
+    .icon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 1.75em;
+        height: 1.75em;
+        cursor: pointer;
+    }
+
+    .message-mode {
+        width: 1.5em;
+        height: 1.5em;
     }
 
     .option-selected { grid-area: option-selected; }

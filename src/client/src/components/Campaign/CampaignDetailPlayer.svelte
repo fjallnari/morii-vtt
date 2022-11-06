@@ -51,6 +51,12 @@
         justify-content: flex-start;
         width: 85%;
         gap: 1em;
+        min-height: 0;
+    }
+
+    .players-list {
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     :global(.players-list ul) {

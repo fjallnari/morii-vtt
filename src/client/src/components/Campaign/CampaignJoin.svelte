@@ -12,6 +12,7 @@
         SnackbarComponentDev,
     } from '@smui/snackbar';
     import Button, { Label } from "@smui/button";
+    import SimpleIconButton from '../SimpleIconButton.svelte';
 
     let inviteCode: string = "";
     let password: string = "";
@@ -64,7 +65,7 @@
 {/if}
 
 <div id="cancel-button">
-    <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>close</IconButton>
+    <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignNewActive.set(!$campaignNewActive)}></SimpleIconButton>
 </div>
 
 <Snackbar bind:this={invalidInviteSnackbar}>

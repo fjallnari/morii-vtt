@@ -1,9 +1,9 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button';
     import Dialog, { Title, Content, Actions } from '@smui/dialog';
     import Button, { Label } from '@smui/button';
     import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
     import axios from 'axios';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
 
     let open = false;
 
@@ -32,8 +32,12 @@
 
 
 <div class="campaign-delete-content">
-    <IconButton class="material-icons" style="color: #EFA48B" ripple={false} on:click={() => open = true}>logout</IconButton>
-
+    <SimpleIconButton 
+        icon="mdi:logout" 
+        onClickFn={() => open = true}
+        color='#EFA48B'
+    >
+    </SimpleIconButton>
     <Dialog
         bind:open
         aria-labelledby="simple-title"

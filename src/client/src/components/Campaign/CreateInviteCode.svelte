@@ -1,19 +1,20 @@
 <script lang="ts">
     import { accessToken, selectedCampaign } from '../../stores';
-    import IconButton, { Icon } from '@smui/icon-button';
+    import IconButton from '@smui/icon-button';
     import Dialog, { Title, Content } from '@smui/dialog';
     import axios from 'axios';
     import CircularProgress from '@smui/circular-progress';
     import PasswordField from '../PasswordField.svelte';
     import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
-    import { location } from 'svelte-spa-router';
     import Snackbar, {
         Actions,
         Label,
         SnackbarComponentDev,
     } from '@smui/snackbar';
     import SimpleButton from '../SimpleButton.svelte';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
+    import Icon from '@iconify/svelte';
 
     let open = false;
     let codeWasCopied = false;
@@ -68,60 +69,60 @@
 </script>
 
 
-<div>
-    <IconButton ripple={false} on:click={() => {codeWasCopied = false; open = true}}>
-        <img id="invite-image" src="../static/invite.svg" alt="invite">
-    </IconButton>
-    <Dialog
-        bind:open
-        aria-labelledby="simple-title"
-        aria-describedby="simple-content"
-        surface$style="width: 30em; max-width: calc(100vw - 32px);"
-    >
-        <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-        <h3 id="simple-title">Invite Players to {$selectedCampaign.name}</h3>
-        <div class="dialog-content">
-            {#if inProgress}
-                <CircularProgress style="height: 2em; width: 2em;" indeterminate></CircularProgress>
-            {:else if ! $selectedCampaign.invite}
-                <div id="generate-code-div">
-                    <PasswordField bind:password={password} label="Password"></PasswordField>
+<SimpleIconButton 
+    icon="mdi:invite"
+    onClickFn={() => {codeWasCopied = false; open = true}}
+    color='#DBD8B3'
+>
+</SimpleIconButton>
 
-                    <IconButton ripple={false} on:click={() => createInviteCode()}>
-                        <img id="invite" src="../static/invite.svg" alt="invite">
-                    </IconButton>
-                </div>
-                <p id="invite-tooltip">Generates new invite code. Password is optional.</p>
-            {:else}
-                <div class="invite-card">
-                    <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
-                        <div class="invite-code" use:Ripple={{ surface: true }} on:click={copy}>
-                            <Icon class="material-icons">{codeWasCopied ? "check" : "content_copy"}</Icon>
-                            <p>{$selectedCampaign.invite.invite_code}</p>
-                            <Icon class="material-icons">{$selectedCampaign.invite.has_password ? "password" : "no_encryption"}</Icon>
-                        </div>
-                    </CopyToClipboard>
-                    <IconButton class="material-icons" style="color: #ff6a60;" ripple={false} on:click={() => removeInviteCode()}>delete</IconButton>
-                </div>
-                <div class="invite-or">OR</div>
-                <div class="invite-link">
-                    <CopyToClipboard text={inviteLink} let:copy on:copy={() => (inviteSnackbar.open())}>
-                        <SimpleButton value="Get invite link" type="primary" onClickFn={() => copy()}></SimpleButton>
-                    </CopyToClipboard>
-                </div>
-            {/if}
-        </div>
-        <div id="close-button">
-            <IconButton class="material-icons" ripple={false} on:click={() => {open = false}}>close</IconButton>
-        </div>
-    </Dialog>
-    <Snackbar bind:this={inviteSnackbar}>
-        <Label>Copied {inviteLink} to clipboard.</Label>
-        <Actions>
-          <IconButton class="material-icons" title="Dismiss">close</IconButton>
-        </Actions>
-    </Snackbar>
-</div>
+<Dialog
+    bind:open
+    aria-labelledby="simple-title"
+    aria-describedby="simple-content"
+    surface$style="width: 30em; max-width: calc(100vw - 32px);"
+>
+    <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+    <h3 id="simple-title">Invite Players to {$selectedCampaign.name}</h3>
+    <div class="dialog-content">
+        {#if inProgress}
+            <CircularProgress style="height: 2em; width: 2em;" indeterminate></CircularProgress>
+        {:else if ! $selectedCampaign.invite}
+            <div id="generate-code-div">
+                <PasswordField bind:password={password} label="Password"></PasswordField>
+                <SimpleIconButton icon="mdi:invite" color="#DBD8B3" onClickFn={() => createInviteCode()}></SimpleIconButton>
+            </div>
+            <p id="invite-tooltip">Generates new invite code. Password is optional.</p>
+        {:else}
+            <div class="invite-card">
+                <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
+                    <div class="invite-code" use:Ripple={{ surface: true }} on:click={copy}>
+                        <Icon class="big-icon" icon={`mdi:${codeWasCopied ? "check" : "content-copy"}`} />
+                        <p>{$selectedCampaign.invite.invite_code}</p>
+                        <Icon class="big-icon" icon={`material-symbols:${$selectedCampaign.invite.has_password ? "password" : "no-encryption"}`} />
+                    </div>
+                </CopyToClipboard>
+                <SimpleIconButton icon="mdi:delete" color="#FF6A60" width="1.5em" onClickFn={() => removeInviteCode()}></SimpleIconButton>
+            </div>
+            <div class="invite-or">OR</div>
+            <div class="invite-link">
+                <CopyToClipboard text={inviteLink} let:copy on:copy={() => (inviteSnackbar.open())}>
+                    <SimpleButton value="Get invite link" type="primary" onClickFn={() => copy()}></SimpleButton>
+                </CopyToClipboard>
+            </div>
+        {/if}
+    </div>
+    <div id="close-button">
+        <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => open = false }></SimpleIconButton>
+    </div>
+</Dialog>
+
+<Snackbar bind:this={inviteSnackbar}>
+    <Label>Copied {inviteLink} to clipboard.</Label>
+    <Actions>
+        <IconButton class="material-icons" title="Dismiss">close</IconButton>
+    </Actions>
+</Snackbar>
 
 <style>
     .dialog-content {
@@ -193,6 +194,7 @@
     #close-button {
         margin-top: auto;
         padding-bottom: 1.5em;
+        align-self: center;
     }
 
 </style>

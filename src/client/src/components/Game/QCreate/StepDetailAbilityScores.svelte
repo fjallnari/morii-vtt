@@ -7,11 +7,11 @@
     import ChipsDndZone from ".././ChipsDndZone.svelte";
     import type MessageData from "../../../interfaces/MessageData";
     import { nanoid } from "nanoid/non-secure";
-    import IconButton, { Icon } from '@smui/icon-button';
     import BoxWithList from "../../BoxWithList.svelte";
     import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
     import MarkdownBoxText from ".././MarkdownBoxText.svelte";
     import type { QCAbilityScores } from "../../../interfaces/QCAbilityScores";
+    import Icon from "@iconify/svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -229,10 +229,10 @@
                 <box class="asi-bonus as-bonus-box">
                     <div class='asi-bonus-buttons'>
                         <sendable on:click={changeASIBonus(abilityScores, AS, 1)}>
-                            <Icon class="material-icons">keyboard_double_arrow_up</Icon>
+                            <Icon class="big-icon" icon='material-symbols:keyboard-double-arrow-up-rounded' />                            
                         </sendable>
                         <sendable on:click={changeASIBonus(abilityScores, AS, -1)}>
-                            <Icon class="material-icons">keyboard_double_arrow_down</Icon> 
+                            <Icon class="big-icon" icon='material-symbols:keyboard-double-arrow-down-rounded' />
                         </sendable>
                     </div>
                     <div class="box-main-text">
@@ -262,7 +262,7 @@
             {#each asGenOpts as genOption}
                 <box class='gen-option' on:click={() => {selectGenOption(genOption)}} style='background-color: {selectedGenOption === genOption ? 'var(--clr-accent-dark)': ''}'>
                     <div class="option-selected">
-                        <Icon class="material-icons">{selectedGenOption === genOption ? 'keyboard_double_arrow_right': 'fork_right'}</Icon>
+                        <Icon icon='material-symbols:{selectedGenOption === genOption ? 'keyboard-double-arrow-right-rounded': 'fork-right'}' />
                     </div>
                     <div class='option-name'>{genOption.name}</div>
                 </box>
@@ -295,7 +295,7 @@
             {#each asAssignOpts as assignOpt}
                 <box class='gen-option' on:click={() => {selectAssignOption(assignOpt)}} style='background-color: {selectedAssignOption === assignOpt ? 'var(--clr-accent-dark)': ''}'>
                     <div class="option-selected">
-                        <Icon class="material-icons">{selectedAssignOption === assignOpt ? 'keyboard_double_arrow_right': 'fork_right'}</Icon>
+                        <Icon icon='material-symbols:{selectedAssignOption === assignOpt ? 'keyboard-double-arrow-right-rounded': 'fork-right'}' />
                     </div>
                     <div class='option-name'>{assignOpt.name}</div>
                 </box>
@@ -529,7 +529,9 @@
         height: 1.5em;
     }
 
-    .option-selected { grid-area: option-selected; }
+    .option-selected { grid-area: option-selected; 
+        font-size: 1.25em;
+    }
     .option-name { grid-area: option-name;}
 
     .as-array { grid-area: as-array; 

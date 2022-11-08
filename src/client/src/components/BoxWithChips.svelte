@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
 
     export let chipsArray: any[];
     export let blankChip: any = '';
@@ -52,11 +52,9 @@
         <p class="header-text">{headerText}</p>
     {/if}
     {#if chipsType === 'crud'}
-        <div class="add-new-item">
-            <sendable on:click={() => { addChip()}}>
-                <Icon class="material-icons">{'add'}</Icon>
-            </sendable>
-        </div>
+        <sendable class="add-new-item" on:click={() => { addChip()}}>
+            <Icon class="big-icon" icon="mdi:add" />
+        </sendable>
     {/if}
     <div class="chips-array box-main-text {chipsType === 'readonly' || chipsType === 'with-categories' ? 'top-margin' : ''}">
         {#if chipsArray.length === 0}
@@ -90,10 +88,10 @@
                 <box class="chip{isBlank(chip) ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" on:click={() => toggleChip(chip)}>
                     {#if chipsType === 'crud'}
                         <sendable class="delete-chip" on:click={() => { deleteChip(index)}}>
-                            <Icon class="material-icons">{'clear'}</Icon>
+                            <Icon class="big-icon" icon="mdi:close" />
                         </sendable>
                     {:else if selectNFinalArray.includes(chip)}
-                        <Icon class="material-icons">{'check'}</Icon>
+                        <Icon class="big-icon" icon="mdi:check" />
                     {/if}
                     <slot index={index}></slot>
                 </box>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
     import { user } from "../../../stores";
     import SvelteMarkdown from 'svelte-markdown';
     import type MessageData from '../../../interfaces/MessageData';

@@ -1,14 +1,13 @@
 <script lang="ts">
     import axios from 'axios';
-    import IconButton from '@smui/icon-button';
-    import Button, { Label } from '@smui/button';
     import Textfield from '@smui/textfield';
     import Select, { Option } from '@smui/select';
 
     import { campaignNewActive, user, accessToken } from '../../stores';
     import type Campaign from '../../interfaces/Campaign';
     import ProgressCircle from '../ProgressCircle.svelte';
-import SimpleButton from '../SimpleButton.svelte';
+    import SimpleButton from '../SimpleButton.svelte';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
 
     const gameSystems = ["D&D 5E"];
     let campaignName: string = "";
@@ -59,9 +58,9 @@ import SimpleButton from '../SimpleButton.svelte';
         <Textfield style="width: 17em;" bind:value={campaignName} label="Name" required variant="outlined"></Textfield>
         <div>
             <Select style="width: 17em;" variant="outlined" bind:gameSystem label="Game System" disabled>
-            {#each gameSystems as system}
-                <Option gameSystem={system}>{system}</Option>
-            {/each}
+                {#each gameSystems as system}
+                    <Option gameSystem={system}>{system}</Option>
+                {/each}
             </Select>
         </div>
         <SimpleButton value="Create!" type="green" onClickFn={createCampaign}></SimpleButton>
@@ -73,7 +72,7 @@ import SimpleButton from '../SimpleButton.svelte';
 {/if}
 
 <div id="cancel-button">
-    <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>close</IconButton>
+    <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignNewActive.set(! $campaignNewActive)}></SimpleIconButton>
 </div>
 
 

@@ -83,9 +83,9 @@
             </user-tag>
         </div>
         <div class="settings-buttons">
-            <SimpleButton value='Logout' icon='logout' type='delete' onClickFn={logoutUser}></SimpleButton>
-            <SimpleButton value='' icon='close' type='default' onClickFn={() => closeSettings()}></SimpleButton>
-            <SimpleButton value='Save' icon='save' type='green' onClickFn={() => saveSettings()}></SimpleButton>
+            <SimpleButton value='Logout' icon='mdi:logout' type='delete' onClickFn={() => logoutUser()}></SimpleButton>
+            <SimpleButton value='' icon='mdi:close' type='default' onClickFn={() => closeSettings()}></SimpleButton>
+            <SimpleButton value='Save' icon='mdi:content-save-cog' type='green' onClickFn={() => saveSettings()}></SimpleButton>
         </div>
     </settings-content>
 </Dialog>

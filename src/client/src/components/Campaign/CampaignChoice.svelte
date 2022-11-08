@@ -1,7 +1,7 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button';
     import { campaignNewActive } from '../../stores';
     import SimpleButton from '../SimpleButton.svelte';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
     import CampaignJoin from './CampaignJoin.svelte';
     import CampaignNew from './CampaignNew.svelte';
 
@@ -22,7 +22,7 @@
         <SimpleButton value="Join" type="primary" onClickFn={() => { decided = true; wantsToJoin = true; } }></SimpleButton>
         
         <div id="cancel-button">
-            <IconButton class="material-icons" on:click={ () => campaignNewActive.set(! $campaignNewActive) }>close</IconButton>
+            <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignNewActive.set(! $campaignNewActive)}></SimpleIconButton>
         </div>
     {/if}
 </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
     import type InitiativeData from "../../../interfaces/InitiativeData";
     import { nanoid } from "nanoid/non-secure";
     import { dndzone, SOURCES, TRIGGERS	 } from 'svelte-dnd-action';
@@ -7,6 +6,7 @@
     import DeleteInitEntity from "./DeleteInitEntity.svelte";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import { tooltip } from "@svelte-plugins/tooltips";
+    import Icon from "@iconify/svelte";
     
     export let initiative: InitiativeData;
 
@@ -88,7 +88,7 @@
             <box class='init-entity-tag' animate:flip="{{ duration: flipDurationMs }}">
                 <span class="entity-icon">
                     {#if initEntity.id === initiative.topID}
-                        <Icon class="material-icons">{'hourglass_top'}</Icon>
+                        <Icon icon="ic:round-hourglass-top" />
                     {/if}
                 </span>
                 <span class='entity-name'>
@@ -98,15 +98,15 @@
                 <span class="entity-value">
                     <InPlaceEdit bind:value={initEntity.value} editWidth={'1.75em'} editHeight={'1em'}/>
                 </span>
-                <span class="entity-drag-handle">
-                    <Icon class="material-icons handle"
-                            tabindex={dragDisabled? 0 : -1} 
-                            aria-label="drag-handle"
-                            style={dragDisabled ? 'cursor: grab' : 'cursor: grabbing'}
-                            on:mousedown={startDrag} 
-                            on:touchstart={startDrag}
-                            on:keydown={handleKeyDown}
-                    >{'drag_indicator'}</Icon>
+                <span class="entity-drag-handle handle"
+                    tabindex={dragDisabled? 0 : -1} 
+                    aria-label="drag-handle"
+                    style={dragDisabled ? 'cursor: grab' : 'cursor: grabbing'}
+                    on:mousedown={startDrag} 
+                    on:touchstart={startDrag}
+                    on:keydown={handleKeyDown}
+                >
+                    <Icon class="big-icon" icon="material-symbols:drag-indicator" />
                 </span>
             </box>
         {/each}
@@ -114,21 +114,21 @@
     <box class='initiative-menu{!dragDisabled ? ' delete-mode': ''}'>
         {#if dragDisabled}
             <sendable use:tooltip={{content: 'Clear', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => clearInitOrder()}>
-                <Icon class="material-icons">{'restart_alt'}</Icon>
+                <Icon class="big-icon" icon="material-symbols:restart-alt" />
             </sendable>
             <sendable use:tooltip={{content: 'Add new', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => addNewInitEntity()}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="material-symbols:add" />
             </sendable>
             <sendable use:tooltip={{content: 'Sort', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => sortInitOrder()}>
-                <Icon class="material-icons">{'sort'}</Icon>
+                <Icon class="big-icon" icon="material-symbols:sort" />
             </sendable>
             <sendable use:tooltip={{content: 'Next', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => passTurn()}>
-                <Icon class="material-icons">{'forward'}</Icon>
+                <Icon class="big-icon" icon="mdi:arrow-right-bold" />
             </sendable>
         {:else}
             <DeleteInitEntity bind:items={deletedEntities}>
                 <div class="delete-item init-menu-icon">
-                    <Icon class="material-icons">{'delete_outline'}</Icon>
+                    <Icon class="big-icon" icon="mdi:delete-outline" />
                 </div>
             </DeleteInitEntity>
         {/if}
@@ -192,7 +192,9 @@
         font-weight: var(--semi-bold);
     }
 
-    .entity-icon { grid-area: entity-icon; }
+    .entity-icon { grid-area: entity-icon; 
+        font-size: 1.25em;
+    }
     .entity-drag-handle { grid-area: entity-drag-handle; }
 
     .initiative-menu {
@@ -223,10 +225,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    :global(.init-menu-icon > .material-icons) {
-        font-size: 2em;
+        font-size: 1.4em;
     }
 
     :global(.tooltip.dark-tooltip) {

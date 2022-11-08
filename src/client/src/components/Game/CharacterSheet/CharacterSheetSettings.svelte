@@ -1,7 +1,6 @@
 <script lang="ts">
     import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
     import { modifyCharacter, selectedCharacter, user, socket, ownerSocketID, userIDPairs } from "../../../stores";
-    import Button, { Label } from '@smui/button';
     import Dialog, { Content, Actions } from '@smui/dialog';
     import { params, replace } from "svelte-spa-router";
     import type { Character } from "../../../interfaces/Character";

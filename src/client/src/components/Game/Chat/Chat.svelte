@@ -1,9 +1,9 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
     import { user, socket, ownerSocketID, messageMode } from '../../../stores';
-    import IconButton, { Icon } from '@smui/icon-button';
     import type MessageData from "../../../interfaces/MessageData";
     import MessageGrid from "./MessageGrid.svelte";
+    import SimpleIconButton from "../../SimpleIconButton.svelte";
 
     // export let socket;
     let messages: MessageData[] = [];
@@ -62,20 +62,11 @@
         <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false}></textarea>
 
         <div class="send-options-box">
-            <div class='icon-wrapper icon-ripple'>
-                <img class="icon" 
-                    src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
-                    alt="message-mode"
-                    on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}
-                >
-            </div>
-            <div class='icon-wrapper icon-ripple'>
-                <img class="icon" 
-                    src="../static/send.svg" 
-                    alt="send"
-                    on:click={() => sendMessage()}
-                >
-            </div>
+            <SimpleIconButton 
+                icon={`mdi:${['earth', 'eye-off', 'crown'][$messageMode]}`} 
+                onClickFn={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}>
+            </SimpleIconButton>
+            <SimpleIconButton icon='material-symbols:send-rounded' onClickFn={sendMessage}></SimpleIconButton>
         </div>
     </div>
 </div>
@@ -138,21 +129,6 @@
     .help-message {
         font-family: Quicksand;
         font-size: large;
-    }
-
-    .icon-wrapper {
-        width: 3em;
-        height: 3em;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .icon {
-        width: 2em;
-        height: 2em;
-        cursor: pointer;
     }
 
     ::-webkit-scrollbar {

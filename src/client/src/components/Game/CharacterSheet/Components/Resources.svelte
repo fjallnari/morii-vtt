@@ -1,9 +1,9 @@
 <script lang="ts">
     import type { Character, Resource } from "../../../../interfaces/Character";
     import { addNewResource, modifyCharacter } from '../../../../stores';
-    import { Icon } from '@smui/icon-button';
     import { nanoid } from "nanoid/non-secure";
     import ResourceDetail from "./ResourceDetail.svelte";
+    import Icon from "@iconify/svelte";
 
     export let character: Character;
 
@@ -44,7 +44,7 @@
         {/each}
         {#if character.resources.length < 4}
             <sendable class="add-new-item" on:click={() => { $addNewResource(); $modifyCharacter() }}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         {/if}
     </div>

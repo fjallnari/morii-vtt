@@ -1,5 +1,7 @@
 <script lang="ts">
-    import { Icon } from '@smui/button';
+    import Icon from "@iconify/svelte";
+
+
 
     type ButtonType = 'default' | 'primary' | 'green' | 'delete' | 'orange';
     
@@ -48,7 +50,7 @@
     tabindex="0"
 >
     {#if icon}
-        <Icon class="material-icons">{icon}</Icon>
+        <Icon class='big-icon' icon={icon} />
     {/if}
     {value}
 </simple-button>

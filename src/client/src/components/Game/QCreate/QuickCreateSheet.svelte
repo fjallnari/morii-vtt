@@ -2,7 +2,6 @@
     import Dialog from '@smui/dialog';
     import CircularProgress from '@smui/circular-progress';
     import axios from "axios";
-    import { Icon } from '@smui/button';
     import StepDetailRace from "./StepDetailRace.svelte";
     import StepDetailClass from "./StepDetailClass.svelte";
     import StepDetailSpellcasting from "./StepDetailSpellcasting.svelte";
@@ -14,6 +13,7 @@
     import type QuickCreateCharacterParts from '../../../interfaces/QuickCreateCharacterParts';
     import type QuickCreateData from '../../../interfaces/QuickCreateData';
     import SimpleButton from '../../SimpleButton.svelte';
+    import Icon from '@iconify/svelte';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -279,7 +279,7 @@
                         >
                         {step.name}
                         {#if step.isCompleted}
-                            <Icon id="filled-in-icon" class="material-icons">done</Icon>
+                            <Icon width='1.25em' height='1.25em' icon='mdi:check' />
                         {/if}
                     </box>
                 {/each}

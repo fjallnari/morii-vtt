@@ -1,5 +1,4 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button';
     import List, {
         Item,
         Separator,
@@ -10,6 +9,7 @@
     import { push, replace } from 'svelte-spa-router';
     import type UserSimple from '../../interfaces/UserSimple';
     import { campaignDetailActive, selectedCampaign } from '../../stores';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
     import CampaignDelete from './CampaignDelete.svelte';
     import CreateInviteCode from './CreateInviteCode.svelte';
 
@@ -37,7 +37,14 @@
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
-        <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => {push(`/game/${$selectedCampaign._id}`)}}>play_arrow</IconButton>
+        <SimpleIconButton 
+            icon="mdi:play" 
+            onClickFn={() => {replace(`/game/${$selectedCampaign._id}`)}}
+            color='#A7C284'
+            width="2.5em"
+            wrapperPadding="0.5em"
+        >
+        </SimpleIconButton>
         <CreateInviteCode></CreateInviteCode>
         <CampaignDelete></CampaignDelete>       
     </div>
@@ -58,7 +65,12 @@
                         {player.username}
                     </Text>
                     <Meta>
-                        <IconButton class="material-icons" style="color: #ff6a60" ripple={false} on:click={() => kickPlayer(player)}>close</IconButton> 
+                        <SimpleIconButton 
+                            icon="mdi:close" 
+                            onClickFn={() => kickPlayer(player)}
+                            color='#FF6A60'
+                        >
+                        </SimpleIconButton>
                     </Meta>
                 </Item>
             </div>
@@ -68,7 +80,7 @@
 </div>
 
 <div id="close-campaign-detail">
-    <IconButton class="material-icons" on:click={() => campaignDetailActive.set(false)}>close</IconButton>
+    <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignDetailActive.set(false)}></SimpleIconButton>
 </div>
 
 <style>

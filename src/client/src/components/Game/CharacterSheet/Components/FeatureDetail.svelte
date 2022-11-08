@@ -1,6 +1,6 @@
 <script lang="ts">
     import { messageMode, modifyCharacter, ownerSocketID, socket, user } from '../../../../stores';
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import { slide, fade } from 'svelte/transition';
     import { params } from "svelte-spa-router";
     import type { Character, Feature } from '../../../../interfaces/Character';
@@ -59,11 +59,11 @@
         </div>
         
         <sendable class="feature-send" on:click={() => sendFeature()}>
-            <Icon class="material-icons" style="font-size: 1.4em;">{'send'}</Icon>
+            <Icon class="big-icon" icon="material-symbols:send-rounded" />
         </sendable>
 
         <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }}>
-            <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
+            <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
     {#if isOpen}

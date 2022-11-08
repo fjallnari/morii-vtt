@@ -1,6 +1,6 @@
 <script lang="ts">
     import { modifyCharacter } from "../../../../stores";
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import ItemDetail from "./ItemDetail.svelte";
     import type { Character, Item } from "../../../../interfaces/Character";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
@@ -41,7 +41,7 @@
     {#if character.inventory.length === 0}
         <div class="box-main-text">
             <sendable on:click={() => { addNewItem(); $modifyCharacter() }}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
     {:else}
@@ -50,7 +50,7 @@
                 <ItemDetail bind:item={item} bind:character={character}></ItemDetail>
             {/each}
             <sendable class="add-new-item" on:click={() => { addNewItem(); $modifyCharacter() }}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
     {/if}

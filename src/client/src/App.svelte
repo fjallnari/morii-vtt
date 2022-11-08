@@ -99,7 +99,6 @@
 	}
 
 	const conditionsFailed = () => {
-		console.log($querystring);
 		replace(`/auth${$querystring ? `?${$querystring}` : ''}`);
 	}
 
@@ -235,6 +234,10 @@
         cursor: pointer;
         border-radius: 4px;
     }
+
+	:global(svg.big-icon) {
+       font-size: 1.5em;
+   	}
 
     :global(.box-with-label) {
         flex-grow: 1;

@@ -6,9 +6,8 @@
         PrimaryText,
         SecondaryText,
     } from '@smui/list';
-    import IconButton from '@smui/icon-button/src/IconButton.svelte';
-    import Tooltip, { Wrapper } from '@smui/tooltip';
     import { campaignDetailActive, campaignNewActive, selectedCampaign, user } from '../../stores';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
 
     let selection = '';
 
@@ -54,7 +53,7 @@
 </div>
 
 <div id="create-campaign-button">
-    <IconButton class="material-icons" on:click={ () => switchToCampaignCreation() }>add</IconButton>
+    <SimpleIconButton icon="mdi:add" width="1.5em" onClickFn={() => switchToCampaignCreation() }></SimpleIconButton>
 </div>
 
 <style>

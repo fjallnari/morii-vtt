@@ -1,10 +1,10 @@
 <script lang="ts">
     import type { Character, OtherProf, Tool } from "../../../../interfaces/Character";
     import { modifyCharacter } from '../../../../stores';
-    import { Icon } from '@smui/icon-button';
     import OtherProfDetail from "./OtherProfDetail.svelte";
     import { nanoid } from 'nanoid/non-secure';
     import ToolDetail from "./ToolDetail.svelte";
+    import Icon from "@iconify/svelte";
 
     export let character: Character;
     let currentFilter = 0;
@@ -45,7 +45,7 @@
                 <ToolDetail bind:tool={tool} bind:character={character}></ToolDetail>
             {/each}
             <sendable class="add-new-item" on:click={() => { addNewTool(); $modifyCharacter() }}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
         <div class="box-justify-filler"></div>
@@ -70,7 +70,7 @@
                 <OtherProfDetail bind:other_prof={other_prof} bind:character={character}></OtherProfDetail>
             {/each}
             <sendable class="add-new-item" on:click={() => { addNewProf(); $modifyCharacter() }}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
         <div class="box-justify-filler"></div>

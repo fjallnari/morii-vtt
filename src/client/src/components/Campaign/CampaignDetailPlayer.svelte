@@ -1,5 +1,4 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button';
     import List, {
         Item,
         Separator,
@@ -8,13 +7,21 @@
     import { push, replace } from 'svelte-spa-router';
 
     import { campaignDetailActive, selectedCampaign } from '../../stores';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
     import CampaignLeave from './CampaignLeave.svelte';
 
 </script>
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
-        <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => {push(`/game/${$selectedCampaign._id}`)}}>play_arrow</IconButton>
+        <SimpleIconButton 
+            icon="mdi:play" 
+            onClickFn={() => {replace(`/game/${$selectedCampaign._id}`)}}
+            color='#A7C284'
+            width="2.5em"
+            wrapperPadding="0.5em"
+        >
+        </SimpleIconButton>
         <CampaignLeave></CampaignLeave>
     </div>
     <div class="players-list">
@@ -41,7 +48,7 @@
 </div>
 
 <div id="close-campaign-detail">
-    <IconButton class="material-icons" on:click={() => campaignDetailActive.set(false)}>close</IconButton>
+    <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignDetailActive.set(false)}></SimpleIconButton>
 </div>
 
 <style>

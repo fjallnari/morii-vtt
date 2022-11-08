@@ -2,7 +2,7 @@
     import type { Character } from "../../../../interfaces/Character";
     import { modifyCharacter } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
 
     export let character: Character;
 
@@ -19,7 +19,7 @@
 <div class="row-box-with-label">
     <!-- inverts inspiration value on click -->
     <box class="row-box-value" style="cursor: pointer;" on:click={() => { character.inspiration = !character.inspiration; $modifyCharacter() }}>
-        <Icon class="material-icons">{character.inspiration ? 'auto_awesome': ''}</Icon>
+        <Icon icon="{character.inspiration ? 'mdi:auto-awesome': ''}" />
     </box>
     <box class="row-box-label">
         Inspiration    

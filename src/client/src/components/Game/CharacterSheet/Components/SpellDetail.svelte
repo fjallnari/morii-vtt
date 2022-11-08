@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import { messageMode, modifyCharacter, ownerSocketID, socket, user } from '../../../../stores';
     import { params } from "svelte-spa-router";
     import type { Character, Spell } from '../../../../interfaces/Character';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
+    import Icon from '@iconify/svelte';
 
     export let spell: Partial<Spell>;
     export let character: Character = undefined;
@@ -80,12 +80,12 @@
 
         {#if character}        
             <sendable class="spell-send" on:click={() => sendSpell()}>
-                <Icon class="material-icons" style="font-size: 1.4em;">{'send'}</Icon>
+                <Icon class="big-icon" icon="material-symbols:send-rounded" />
             </sendable>
         {/if}
 
         <sendable class="spell-menu" on:click={() => { isOpen = !isOpen }}>
-            <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
+            <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
     {#if isOpen}

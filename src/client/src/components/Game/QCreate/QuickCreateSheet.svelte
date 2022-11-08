@@ -23,12 +23,12 @@
     let characterParts: Partial<QuickCreateCharacterParts> = {};
 
     let creationSteps = [
-        { name: 'Race', icon: 'account-supervisor', isCompleted: false, component: StepDetailRace },
-        { name: 'Class', icon: 'arrow-projectile-multiple', isCompleted: false, component: StepDetailClass },
-        { name: 'Spellcasting', icon: 'fire', isCompleted: false, component: StepDetailSpellcasting },
-        { name: 'Ability Scores', icon: 'counter', isCompleted: false, component: StepDetailAbilityScores },
-        { name: 'Background', icon: 'sprout', isCompleted: false, component: StepDetailBackground },
-        { name: 'Summary', icon: 'clipboard-text', isCompleted: false, component: StepDetailSummary },
+        { name: 'Race', icon: 'mdi:account-supervisor', isCompleted: false, component: StepDetailRace },
+        { name: 'Class', icon: 'mdi:arrow-projectile-multiple', isCompleted: false, component: StepDetailClass },
+        { name: 'Spellcasting', icon: 'mdi:fire', isCompleted: false, component: StepDetailSpellcasting },
+        { name: 'Ability Scores', icon: 'mdi:counter', isCompleted: false, component: StepDetailAbilityScores },
+        { name: 'Background', icon: 'mdi:sprout', isCompleted: false, component: StepDetailBackground },
+        { name: 'Summary', icon: 'mdi:clipboard-text', isCompleted: false, component: StepDetailSummary },
     ];
 
     const closeDialog = () => {
@@ -273,10 +273,7 @@
             <div class="creation-steps-list">
                 {#each creationSteps as step, index}
                     <box class="creation-step-item {index === selectedStepIndex ? 'selected': ''}" on:click={() => {selectedStepIndex = index}} tabindex='0'>
-                        <img class="step-icon"  
-                            src="../static/{step.icon}.svg" 
-                            alt="step-icon"
-                        >
+                        <Icon icon={step.icon}/>
                         {step.name}
                         {#if step.isCompleted}
                             <Icon width='1.25em' height='1.25em' icon='mdi:check' />
@@ -361,11 +358,6 @@
     .selected {
         transform: scale(1.04) !important;
         background-color: var(--clr-accent-dark) !important;
-    }
-
-    .creation-step-item img {
-        height: 1em;
-        width: 1em;
     }
 
 </style>

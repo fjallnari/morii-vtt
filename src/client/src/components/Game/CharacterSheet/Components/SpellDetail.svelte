@@ -66,11 +66,9 @@
     <div class="spell-summary" style='grid-template-areas: "{spell.level === 0 ? 'spell-name': 'spell-prepared'} spell-name {character ? 'spell-send' : 'spell-name'} spell-menu"'>
         {#if spell.level != 0}
             <div class="spell-prepared">
-                <img
-                    src="../static/rhombus{spell.is_prepared ? '' : '-outline'}.svg" 
-                    alt="rhombus"
-                    on:click={() => { spell.is_prepared = !spell.is_prepared; modifyCharacterFce() }}
-                >
+                <sendable on:click={() => { spell.is_prepared = !spell.is_prepared; modifyCharacterFce(); }}>
+                    <Icon class="big-icon" icon="mdi:{spell.is_prepared ? 'rhombus': 'rhombus-outline'}"/>
+                </sendable>
             </div>
         {/if}
 
@@ -99,11 +97,9 @@
                 <div class="box-label">
                     Ritual:
                 </div>
-                <img class="is-equipped-icon" 
-                    src="../static/{spell.ritual ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                    alt="atk-prof"
-                    on:click={() => { spell.ritual = !spell.ritual; modifyCharacterFce(); }}
-                >         
+                <sendable on:click={() => { spell.ritual = !spell.ritual; modifyCharacterFce(); }}>
+                    <Icon class="big-icon" icon="mdi:{spell.ritual ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
+                </sendable> 
             </div>
             <div class="single-detail-line">
                 <div class="box-label">
@@ -130,27 +126,21 @@
                         Components:
                     </div>
                     <div class="spell-component">
-                        <img class="is-equipped-icon" 
-                            src="../static/{spell.components.verbal ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                            alt="atk-prof"
-                            on:click={() => { spell.components.verbal = !spell.components.verbal; modifyCharacterFce(); }}
-                        >
+                        <sendable on:click={() => { spell.components.verbal = !spell.components.verbal; modifyCharacterFce(); }}>
+                            <Icon class="big-icon" icon="mdi:{spell.components.verbal ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
+                        </sendable>
                         V
                     </div>
                     <div class="spell-component">
-                        <img class="is-equipped-icon" 
-                            src="../static/{spell.components.somatic ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                            alt="atk-prof"
-                            on:click={() => { spell.components.somatic = !spell.components.somatic; modifyCharacterFce(); }}
-                        >
+                        <sendable on:click={() => { spell.components.somatic = !spell.components.somatic; modifyCharacterFce(); }}>
+                            <Icon class="big-icon" icon="mdi:{spell.components.somatic ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
+                        </sendable>
                         S
                     </div>
                     <div class="spell-component">
-                        <img class="is-equipped-icon" 
-                            src="../static/{spell.components.material ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                            alt="atk-prof"
-                            on:click={() => { spell.components.material = !spell.components.material; modifyCharacterFce(); }}
-                        >
+                        <sendable on:click={() => { spell.components.material = !spell.components.material; modifyCharacterFce(); }}>
+                            <Icon class="big-icon" icon="mdi:{spell.components.material ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
+                        </sendable>
                         M
                     </div>
                 </div>
@@ -172,11 +162,9 @@
                 <div class="box-label">
                     Concentration:
                 </div>
-                <img class="is-equipped-icon" 
-                    src="../static/{spell.concentration ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                    alt="atk-prof"
-                    on:click={() => { spell.concentration = !spell.concentration; modifyCharacterFce(); }}
-                >           
+                <sendable on:click={() => { spell.concentration = !spell.concentration; modifyCharacterFce(); }}>
+                    <Icon class="big-icon" icon="mdi:{spell.concentration ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
+                </sendable>
             </div>
             <textarea on:change={() => modifyCharacterFce()} bind:value={spell.description}></textarea>
             <div class="single-detail-line">
@@ -196,12 +184,6 @@
         flex-direction: column;
         justify-content: center;
         background-color: var(--clr-box-bg-light);
-    }
-
-    img {
-        cursor: pointer; 
-        height: 1.5em;
-        width: 1.5em;
     }
 
     textarea {

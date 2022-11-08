@@ -117,7 +117,7 @@
                 <Icon class="big-icon" icon="material-symbols:restart-alt" />
             </sendable>
             <sendable use:tooltip={{content: 'Add new', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => addNewInitEntity()}>
-                <Icon class="big-icon" icon="material-symbols:add" />
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
             <sendable use:tooltip={{content: 'Sort', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => sortInitOrder()}>
                 <Icon class="big-icon" icon="material-symbols:sort" />

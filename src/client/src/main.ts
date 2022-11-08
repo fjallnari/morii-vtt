@@ -1,6 +1,7 @@
 import Ajv, { JSONSchemaType } from "ajv";
 import * as characterSchema from '../src/schemas/Character.json';
 import * as characterVTTESSchema from '../src/schemas/CharacterVTTES.json';
+import './icons-bundle.js';
 import App from './App.svelte';
 
 const app = new App({

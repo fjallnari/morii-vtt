@@ -105,8 +105,6 @@
         justify-content: center;
         align-items: center;
         margin: 1em;
-        width: 28em;
-        height: 8em;
         gap: 1em;
     }
 

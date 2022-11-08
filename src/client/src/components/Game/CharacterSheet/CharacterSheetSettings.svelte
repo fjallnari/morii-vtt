@@ -8,6 +8,7 @@
     import SimpleButton from "../../SimpleButton.svelte";
     import ANIMALS from "../../../enum/Animals";
     import axios from "axios";
+    import Icon from "@iconify/svelte";
 
     export let character: Character;
 
@@ -66,19 +67,15 @@
 
             <line-div>
                 <div>Show Encumbrance</div>
-                <img class="use-encumbrance-icon" 
-                    src="../static/{character.settings.use_encumbrance ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                    alt="checkbox-icon"
-                    on:click={() => { character.settings.use_encumbrance = !character.settings.use_encumbrance; $modifyCharacter(); }}
-                >
+                <sendable on:click={() => { character.settings.use_encumbrance = !character.settings.use_encumbrance; $modifyCharacter(); }}>
+                    <Icon class="big-icon" icon="mdi:{character.settings.use_encumbrance ? 'checkbox-marked': 'checkbox-blank-outline'}" />
+                </sendable>
             </line-div>
             <line-div>
                 <div>Show Spell Components</div>
-                <img class="use-encumbrance-icon" 
-                    src="../static/{character.settings.use_spell_components ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                    alt="checkbox-icon"
-                    on:click={() => { character.settings.use_spell_components = !character.settings.use_spell_components; $modifyCharacter(); }}
-                >
+                <sendable on:click={() => { character.settings.use_spell_components = !character.settings.use_spell_components; $modifyCharacter(); }}>
+                    <Icon class="big-icon" icon="mdi:{character.settings.use_spell_components ? 'checkbox-marked': 'checkbox-blank-outline'}" />
+                </sendable>
             </line-div>
         </div>
         <div class="settings-tab">
@@ -152,12 +149,6 @@
         font-family: Athiti;
         text-transform: uppercase;
         font-size: 1.2em;
-    }
-
-    line-div > img {
-        cursor: pointer; 
-        height: 1.5rem;
-        width: 1.5rem;
     }
 
     h4 {

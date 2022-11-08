@@ -1,0 +1,13 @@
+mdi:information
+mdi:information-outline
+mdi:checkbox-marked
+mdi:checkbox-blank-outline
+mdi:crown
+mdi:dice-multiple
+mdi:rhombus
+mdi:rhombus-outline
+mdi:flare
+mdi:shield-sword
+mdi:shield-sword-outline
+mdi:tooltip-text
+mdi:tooltip-text-outline

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Icon from '@iconify/svelte';
     import List, {
         Item,
         Separator,
@@ -27,19 +28,19 @@
     <div class="players-list">
         <List>
         <Item style="font-family: Montserrat">
-            <img class="player-role-image" src="../static/crown.svg" alt="crown">
-            <Text>
+            <Icon class="big-icon" icon="mdi:crown" color="var(--clr-icon-owner)" />
+            <span class="username">
                 {$selectedCampaign.owner.username}
-            </Text>
+            </span>
         </Item>
         <Separator />
         {#each $selectedCampaign.players as player}
             <div class="campaign-item">
                 <Item>
-                    <img class="player-role-image" src="../static/dice.svg" alt="dice">
-                    <Text>
+                    <Icon class="big-icon" icon="mdi:dice-multiple" color="var(--clr-icon-player)" />
+                    <span class="username">
                         {player.username}
-                    </Text>
+                    </span>
                 </Item>
             </div>
         {/each}
@@ -86,8 +87,8 @@
         font-family: Montserrat;
     }
 
-    .player-role-image {
-        margin-right: 1em;
+    .username {
+        margin-left: 0.75em;
     }
 
     #close-campaign-detail {

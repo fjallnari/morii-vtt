@@ -122,11 +122,11 @@
                     </div>
                     +
                     <div class="atk-proficiency">
-                        <img class="versatile-icon" 
-                            src="../static/{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                            alt="atk-prof"
-                            on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}
-                        >
+                        <sendable on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}>
+                            <Icon class="big-icon" 
+                                icon="mdi:{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}"
+                            />
+                        </sendable>
                         <div class="box-label">
                             Proficient
                         </div>
@@ -303,10 +303,6 @@
         align-items: center;
         justify-content: center;
         gap: 0.2em;
-    }
-
-    .atk-proficiency img {
-        cursor: pointer;
     }
 
     .consistent-in-place-edit {

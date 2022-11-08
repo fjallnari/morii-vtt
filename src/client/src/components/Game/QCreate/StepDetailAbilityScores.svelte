@@ -262,7 +262,7 @@
             {#each asGenOpts as genOption}
                 <box class='gen-option' on:click={() => {selectGenOption(genOption)}} style='background-color: {selectedGenOption === genOption ? 'var(--clr-accent-dark)': ''}'>
                     <div class="option-selected">
-                        <Icon icon='material-symbols:{selectedGenOption === genOption ? 'keyboard-double-arrow-right-rounded': 'fork-right'}' />
+                        <Icon icon='material-symbols:{selectedGenOption === genOption ? 'keyboard-double-arrow-right-rounded': 'alt-route'}' />
                     </div>
                     <div class='option-name'>{genOption.name}</div>
                 </box>
@@ -273,13 +273,9 @@
             </div>
             <div class='roll-visibility'>
                 <div>{['Public roll', 'Secret roll', 'GM Only'][$messageMode]}</div>
-                <div class='icon-wrapper icon-ripple'>
-                    <img class="message-mode" 
-                        src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
-                        alt="message-mode"
-                        on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}
-                    >
-                </div>
+                <sendable on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}>
+                    <Icon class="big-icon" icon={['mdi:earth', 'mdi:eye-off', 'mdi:crown'][$messageMode]}/>
+                </sendable>
             </div>
         </box>
         <box class="as-array">
@@ -295,7 +291,7 @@
             {#each asAssignOpts as assignOpt}
                 <box class='gen-option' on:click={() => {selectAssignOption(assignOpt)}} style='background-color: {selectedAssignOption === assignOpt ? 'var(--clr-accent-dark)': ''}'>
                     <div class="option-selected">
-                        <Icon icon='material-symbols:{selectedAssignOption === assignOpt ? 'keyboard-double-arrow-right-rounded': 'fork-right'}' />
+                        <Icon icon='material-symbols:{selectedAssignOption === assignOpt ? 'keyboard-double-arrow-right-rounded': 'alt-route'}' />
                     </div>
                     <div class='option-name'>{assignOpt.name}</div>
                 </box>
@@ -470,7 +466,7 @@
         justify-content: center;
         align-items: center; */
 
-        padding: 0.2em 0em;
+        padding: 0.2em;
         font-size: 1.2em;
         cursor: pointer;
     }
@@ -512,21 +508,6 @@
         font-size: 1.2em;
         gap: 0.5em;
         width: 100%;
-    }
-
-    .icon-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        width: 1.75em;
-        height: 1.75em;
-        cursor: pointer;
-    }
-
-    .message-mode {
-        width: 1.5em;
-        height: 1.5em;
     }
 
     .option-selected { grid-area: option-selected; 

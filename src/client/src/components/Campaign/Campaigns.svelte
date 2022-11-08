@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Icon from '@iconify/svelte';
     import List, {
         Item,
         Meta,
@@ -42,9 +43,10 @@
                         <SecondaryText>{campaign.system}</SecondaryText>
                     </Text>
                     <Meta>
-                        <div class="role-image">
-                            <img id="role-icon" src="../static/{campaign?.owner?._id === $user?._id ? 'crown': 'dice'}.svg" alt="role">
-                        </div>
+                        <Icon class="bigger-icon" 
+                            icon="mdi:{campaign?.owner?._id === $user?._id ? 'crown': 'dice-multiple'}" 
+                            color="var(--clr-icon-{campaign?.owner?._id === $user?._id ? 'owner' : 'player'})"
+                        />
                     </Meta>
                 </Item>
             </div>
@@ -77,10 +79,6 @@
         justify-content: flex-start;
         width: 100%;
         text-align: left; 
-    }
-
-    .role-image {
-        margin-right: 2em;
     }
 
     .campaign-item:hover {

@@ -145,6 +145,8 @@
 		--clr-accent-darker: #{$accent-darker};
 		--clr-contrast-normal: #BC4B51;
 		--clr-contrast-dark: #A43D42;
+		--clr-icon-owner: #E2C044;
+		--clr-icon-player: #6CD4FF; 
 		--bg-waves: #{$bg-image};
 	}
 
@@ -192,6 +194,8 @@
         cursor: pointer;
         transition-duration: 200ms;
         transition-property: color;
+		display: inline-grid;
+		align-self: center;
     }
 
     :global(sendable:active) {
@@ -235,8 +239,16 @@
         border-radius: 4px;
     }
 
+	:global(svg.medi-icon) {
+       font-size: 1.25em;
+   	}
+
 	:global(svg.big-icon) {
        font-size: 1.5em;
+   	}
+
+	:global(svg.bigger-icon) {
+       font-size: 2em;
    	}
 
     :global(.box-with-label) {

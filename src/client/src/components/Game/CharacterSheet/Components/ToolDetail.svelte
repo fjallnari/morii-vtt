@@ -44,10 +44,7 @@
     {#if isOpen}
         <div class="details" transition:slide|local>
             <sendable class="simple-detail-line" on:click={() => { tool.proficiency += 1 + (tool.proficiency === 2 ? -3 : 0); $modifyCharacter(); }}>
-                <img class="prof-type-icon" 
-                    src="../static/{['hammer-screwdriver','checkbox-marked','flare'][tool.proficiency]}.svg" 
-                    alt="tool-prof-icon"
-                >
+                <Icon class="medi-icon" icon="mdi:{['hammer-screwdriver','checkbox-marked','flare'][tool.proficiency]}" />
                 <div class="select-ability-label box-label">
                     {['jack of all trades', 'proficient', 'expertise'][tool.proficiency]}
                 </div>
@@ -96,12 +93,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    img {
-        cursor: pointer; 
-        height: 1.25em;
-        width: 1.25em;
     }
 
     .tool-name { grid-area: tool-name; }

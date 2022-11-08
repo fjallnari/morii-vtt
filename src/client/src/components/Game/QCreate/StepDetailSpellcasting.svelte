@@ -120,7 +120,7 @@
         {#if selectedClass}
             <p>{`${selectedClass.name} does not have spellcasting.`}<br>Do you want to add it?</p>
             <div class='add-spellcasting'>
-                <SimpleButton value='Add spellcasting' icon="local_fire_department" type='primary' onClickFn={() => addCustomSpellcasting()}></SimpleButton>
+                <SimpleButton value='Add spellcasting' icon="mdi:fire" iconClass="big-icon" type='primary' onClickFn={() => addCustomSpellcasting()}></SimpleButton>
             </div>
         {:else}
             <p>You don't have any class selected.</p>

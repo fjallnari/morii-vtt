@@ -28,13 +28,12 @@
 </script>
 
 <div class="create-npc-container">
-    <SimpleButton value='Create New' type="green" icon="note_add" onClickFn={createNPC}></SimpleButton>
+    <SimpleButton value='Create New' type="green" icon="material-symbols:note-add" onClickFn={createNPC}></SimpleButton>
     <QuickCreateSheet createCharacter={createNPC}></QuickCreateSheet>
-
     <CopyExistingSheet createCharacter={createNPC}></CopyExistingSheet>
     <ImportJsonSheet createCharacter={createNPC}></ImportJsonSheet>
-    
-    <SimpleButton value='' icon="close" onClickFn={() => {createMenuEnabled = false}}></SimpleButton>
+
+    <SimpleButton value='' icon="mdi:close" onClickFn={() => {createMenuEnabled = false}}></SimpleButton>
 </div>
 
 <style>

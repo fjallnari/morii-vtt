@@ -99,7 +99,8 @@
     <div class="fill-spell-button">
         <SimpleButton 
             value='' 
-            icon='content_paste_go' 
+            icon='material-symbols:content-paste-go' 
+            iconClass="big-icon"
             type='default' 
             onClickFn={() => { fillSpellContent = ''; isSummaryValid = true; isFillSpellDialogOpen = true } }>
         </SimpleButton>
@@ -112,10 +113,11 @@
             <h3 id="simple-title">Add spell from summary</h3>
             <textarea style="height: 100%;" on:change={() => {isSummaryValid = true}} bind:value={fillSpellContent}></textarea>
             <Actions id="dialog-buttons">
-                <SimpleButton value='' icon='close' type='default' onClickFn={() => isFillSpellDialogOpen = false}></SimpleButton>
+                <SimpleButton value='' icon='mdi:close' iconClass="big-icon" type='default' onClickFn={() => isFillSpellDialogOpen = false}></SimpleButton>
                 <SimpleButton 
                     value='{isSummaryValid ? 'Create' : 'Invalid format'}' 
-                    icon='create' 
+                    icon='mdi:create'
+                    iconClass="big-icon"
                     type='{isSummaryValid ? 'green' : 'delete'}'  
                     onClickFn={() => createSpellFromSummary()} 
                     disabled={! isSummaryValid}>

@@ -14,7 +14,10 @@
     export let icon: string = '';
     export let disabled: boolean = false;
     export let type: ButtonType = 'default';
-    export let onClickFn: () => void;    
+    export let onClickFn: () => void;
+    export let iconClass: string = '';
+    export let iconWidth: string = '';
+    export let iconHeight: string = iconWidth;
 
     const BUTTON_TYPES: Record<ButtonType, ButtonColors> = {
         'default': {
@@ -50,7 +53,7 @@
     tabindex="0"
 >
     {#if icon}
-        <Icon class='big-icon' icon={icon} />
+        <Icon class={iconClass} icon={icon} width={iconWidth} height={iconHeight} />
     {/if}
     {value}
 </simple-button>
@@ -74,6 +77,7 @@
 
         font-weight: var(--semi-bold);
         font-family: Athiti;
+        font-size: inherit;
         text-transform: uppercase;
     }
 

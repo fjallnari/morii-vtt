@@ -255,7 +255,7 @@
 
 </script>
 
-<SimpleButton value='Quick-Create' icon="electric_bolt" type="primary" onClickFn={() => open = true}></SimpleButton>
+<SimpleButton value='Quick-Create' icon="material-symbols:electric-bolt" type="primary" onClickFn={() => open = true}></SimpleButton>
 <Dialog
     bind:open
     fullscreen
@@ -293,8 +293,8 @@
             />
 
             <dialog-buttons class="quick-create-buttons">
-                <SimpleButton value='Cancel' icon="close" onClickFn={() => closeDialog()}></SimpleButton>
-                <SimpleButton value='Create' icon='create' type='green' onClickFn={() => assembleCharacterSheet()}></SimpleButton>
+                <SimpleButton value='Cancel' icon="mdi:close" onClickFn={() => closeDialog()}></SimpleButton>
+                <SimpleButton value='Create' icon='mdi:create' type='green' onClickFn={() => assembleCharacterSheet()}></SimpleButton>
             </dialog-buttons>
         </dialog-content>
     {/await}

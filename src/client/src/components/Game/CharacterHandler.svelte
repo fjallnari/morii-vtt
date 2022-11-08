@@ -42,10 +42,8 @@
     <div class="no-character-panel">
         <h3>You don't have any character assigned to this campaign.</h3>
         <div class="new-character-options">
-            <SimpleButton value='Create New' type="green" icon="mdi:note-plus" onClickFn={createCharacter}></SimpleButton>
+            <SimpleButton value='Create New' type="green" icon="material-symbols:note-add" onClickFn={createCharacter}></SimpleButton>
             <QuickCreateSheet createCharacter={createCharacter}></QuickCreateSheet>
-            <!-- <SimpleButton value='Create With A Guide' icon="quiz" onClickFn={() => {}} disabled></SimpleButton> !-->
-
             <CopyExistingSheet createCharacter={createCharacter}></CopyExistingSheet>
             <ImportJsonSheet createCharacter={createCharacter}></ImportJsonSheet>
         </div>

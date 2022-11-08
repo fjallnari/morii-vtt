@@ -107,7 +107,7 @@
             <div class="invite-or">OR</div>
             <div class="invite-link">
                 <CopyToClipboard text={inviteLink} let:copy on:copy={() => (inviteSnackbar.open())}>
-                    <SimpleButton value="Get invite link" type="primary" onClickFn={() => copy()}></SimpleButton>
+                    <SimpleButton value="Get invite link" icon="mdi:link" iconClass="big-icon" type="primary" onClickFn={() => copy()}></SimpleButton>
                 </CopyToClipboard>
             </div>
         {/if}

@@ -80,8 +80,8 @@
             </div>
         </box>
         <div class="roll-calc-hp">
-            <SimpleButton value='Roll' icon="casino" type='primary' onClickFn={() => rollForHP()}></SimpleButton>
-            <SimpleButton value='AVG' icon="calculate" type='primary' onClickFn={() => getAverageHP()}></SimpleButton>
+            <SimpleButton value='Roll' icon="mdi:dice-5" iconClass="big-icon" type='primary' onClickFn={() => rollForHP()}></SimpleButton>
+            <SimpleButton value='AVG' icon="mdi:calculator-variant" iconClass="big-icon" type='primary' onClickFn={() => getAverageHP()}></SimpleButton>
         </div>
     </div>     
 </div>

@@ -33,9 +33,9 @@
 </script>
 
 
-<SimpleButton value='Import from Morii JSON' icon="upload_file" onClickFn={() => { fileInput.click() }}></SimpleButton>
+<SimpleButton value='Import from Morii JSON' icon="mdi:code-json" iconClass='' onClickFn={() => { fileInput.click() }}></SimpleButton>
 <input style="display:none" type="file" accept=".json" on:change={ (event) => importFromJSON(event)} bind:this={fileInput}>
 
-<SimpleButton value='Import from roll20 JSON' icon="upload_file" onClickFn={() => { fileInputVTTES.click() }}></SimpleButton>
+<SimpleButton value='Import from roll20 JSON' icon="mdi:file-import" iconClass='' onClickFn={() => { fileInputVTTES.click() }}></SimpleButton>
 <input style="display:none" type="file" accept=".json" on:change={ (event) => importFromJSON(event, true)} bind:this={fileInputVTTES}>
 

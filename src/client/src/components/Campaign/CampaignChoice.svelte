@@ -18,8 +18,8 @@
     {:else if decided}
         <CampaignNew></CampaignNew>
     {:else}
-        <SimpleButton value="Create" type="green" onClickFn={() => { decided = true; wantsToJoin = false; } }></SimpleButton>
-        <SimpleButton value="Join" type="primary" onClickFn={() => { decided = true; wantsToJoin = true; } }></SimpleButton>
+        <SimpleButton value="Create" icon="mdi:folder-plus" iconClass='big-icon' type="green" onClickFn={() => { decided = true; wantsToJoin = false; } }></SimpleButton>
+        <SimpleButton value="Join" icon="mdi:folder-arrow-right" iconClass='big-icon' type="primary" onClickFn={() => { decided = true; wantsToJoin = true; } }></SimpleButton>
         
         <div id="cancel-button">
             <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignNewActive.set(! $campaignNewActive)}></SimpleIconButton>

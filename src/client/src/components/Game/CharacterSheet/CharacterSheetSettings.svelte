@@ -83,8 +83,13 @@
         </div>
         <div class="settings-tab">
             <h4>CRUD Settings</h4>
-            <SimpleButton value='Export sheet to JSON' icon="data_object" onClickFn={exportToJSON}></SimpleButton>
-            <SimpleButton value='Delete Character' icon="delete_sweep" type="delete" onClickFn={() => isDeleteCharDialogOpen = true}></SimpleButton>
+            <SimpleButton value='Export sheet to JSON' icon="mdi:code-json" onClickFn={exportToJSON}></SimpleButton>
+            <SimpleButton value='Delete Character' 
+                icon="material-symbols:delete-sweep" 
+                iconWidth='1.25em' 
+                type="delete" 
+                onClickFn={() => isDeleteCharDialogOpen = true}>
+            </SimpleButton>
         </div>
     </div>
     <CharacterSheetMenu></CharacterSheetMenu>

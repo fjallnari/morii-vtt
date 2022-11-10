@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import type { ClassResource } from '../../../interfaces/ClassData';
     import type ClassData from '../../../interfaces/ClassData';
     import { findHighestPossibleValue } from '../../../util/util';
@@ -41,7 +41,7 @@
         {/each}
         {#if selectedClass.resources.length < 4}
             <sendable class="add-new-item" on:click={() => addResource()}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon='mdi:add' />
             </sendable>
         {/if}
     </div>

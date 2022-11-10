@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import type { AbilitySkill, Character } from "../../../../interfaces/Character";
     import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from "../../../../stores";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
@@ -42,11 +43,9 @@
 
         <div class="skills">
             <div class="skill-field">
-                <img class="skill-prof-icon" 
-                    src="../static/rhombus{character.ability_scores[AS].saving_throw ? '' : '-outline'}.svg" 
-                    alt="rhombus"
-                    on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; $modifyCharacter() }}
-                >
+                <sendable class="skill-prof-icon" on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; $modifyCharacter() }}>
+                    <Icon icon="mdi:rhombus{character.ability_scores[AS].saving_throw ? '' : '-outline'}" />
+                </sendable>
                 <mod>
                     {$formatModifier(getSavingThrowModifier(AS))}
                 </mod>
@@ -55,11 +54,9 @@
             {#each character.ability_scores[AS].skills as skill}
                 <div class="skill-field">
                     <!-- cycles through proficiency values 0, 1 and 2 -->
-                    <img class="skill-prof-icon" 
-                        src="../static/{['checkbox-blank-outline', 'checkbox-marked', 'flare'][skill.proficiency]}.svg" 
-                        alt="checkbox"
-                        on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}
-                    >
+                    <sendable class="skill-prof-icon" on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}>
+                        <Icon icon="mdi:{['checkbox-blank-outline', 'checkbox-marked', 'flare'][skill.proficiency]}" />
+                    </sendable>
                     <mod>{$formatModifier(getSkillModifier(AS, skill))}</mod>
                     <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name, character.name) }}>{skill.name}<br></sendable>
                 </div>
@@ -168,9 +165,7 @@
     }
 
     .skill-prof-icon {
-        cursor: pointer; 
-        height: 1.4em; 
-        width: 1.4em;
+        font-size: 1.4em;
     }
 
     .additional-skill-box {

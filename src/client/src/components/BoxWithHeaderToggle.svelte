@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
 
     export let label: string = '';
     export let headerText: string = ''
@@ -11,11 +12,9 @@
 <box class="box-with-header-main-container" style="grid-area: {gridArea};">
     <box-header>
         <header-text class='{isHeaderToggled ? 'toggle-on' : 'toggle-off'}' >{headerText}</header-text>
-        <img class="tooltip-toggle-icon" 
-            src="../static/info-variant{isHeaderToggled ? '-toggle-on' : ''}.svg" 
-            alt="info-toggle"
-            on:click={() => {isHeaderToggled = !isHeaderToggled}}
-        >
+        <sendable class="tooltip-toggle-icon" on:click={() => isHeaderToggled = !isHeaderToggled}>
+            <Icon class="big-icon" icon="{isHeaderToggled ? 'mdi:information' : 'mdi:information-outline'}" />
+        </sendable>
     </box-header>
 
     <div class="box-main-text {isHeaderToggled ? 'toggle-on' : 'toggle-off'}">

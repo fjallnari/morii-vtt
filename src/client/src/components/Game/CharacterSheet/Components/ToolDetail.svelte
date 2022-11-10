@@ -1,11 +1,11 @@
 <script lang="ts">
     import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
-    import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import type { Character, Tool } from '../../../../interfaces/Character';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
     import ABILITY_TAGS from '../../../../enum/AbilityTags';
+    import Icon from '@iconify/svelte';
 
     export let tool: Tool;
     export let character: Character;
@@ -38,16 +38,13 @@
             <InPlaceEdit bind:value={tool.name} editWidth='7em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
         <sendable class="tool-menu" on:click={() => { isOpen = !isOpen }}>
-            <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
+            <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
     {#if isOpen}
         <div class="details" transition:slide|local>
             <sendable class="simple-detail-line" on:click={() => { tool.proficiency += 1 + (tool.proficiency === 2 ? -3 : 0); $modifyCharacter(); }}>
-                <img class="prof-type-icon" 
-                    src="../static/{['hammer-screwdriver','checkbox-marked','flare'][tool.proficiency]}.svg" 
-                    alt="tool-prof-icon"
-                >
+                <Icon class="medi-icon" icon="mdi:{['hammer-screwdriver','checkbox-marked','flare'][tool.proficiency]}" />
                 <div class="select-ability-label box-label">
                     {['jack of all trades', 'proficient', 'expertise'][tool.proficiency]}
                 </div>
@@ -96,12 +93,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    img {
-        cursor: pointer; 
-        height: 1.25em;
-        width: 1.25em;
     }
 
     .tool-name { grid-area: tool-name; }

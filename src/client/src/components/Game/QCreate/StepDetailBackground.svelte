@@ -105,7 +105,7 @@
                 <SimpleAccordionDetail 
                     bind:value={feature.name} 
                     bind:content={feature.content}
-                    icon='sprout'
+                    icon='mdi:sprout'
                     editWidth='8rem'
                     deleteItem={() => deleteFeature(feature)}>
                 </SimpleAccordionDetail>

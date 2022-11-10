@@ -116,10 +116,20 @@
                     {/if}
                 </div>
                 <div class="reject-inv">
-                    <SimpleButton value='Reject' icon='close' type='default' onClickFn={() => rejectJoin()}></SimpleButton>
+                    <SimpleButton value='Reject' 
+                        icon='mdi:close' 
+                        iconClass='big-icon' 
+                        type='default' 
+                        onClickFn={() => rejectJoin()}>
+                    </SimpleButton>
                 </div>
                 <div class="accept-inv">
-                    <SimpleButton value='Accept' icon='close' type='green' onClickFn={() => joinCampaign(inviteCode, invitePassword)}></SimpleButton>
+                    <SimpleButton value='Accept' 
+                        icon='mdi:check' 
+                        iconClass='big-icon' 
+                        type='green' 
+                        onClickFn={() => joinCampaign(inviteCode, invitePassword)}>
+                    </SimpleButton>
                 </div>
             </div>
         {:else}

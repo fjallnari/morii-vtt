@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
     import { user } from "../../../stores";
     import SvelteMarkdown from 'svelte-markdown';
     import type MessageData from '../../../interfaces/MessageData';
     import ANIMALS from '../../../enum/Animals';
     import PrettyRollResult from './PrettyRollResult.svelte';
     import LangMessage from './LangMessage.svelte';
+    import Icon from "@iconify/svelte";
 
     export let message: MessageData;
 
@@ -26,9 +26,7 @@
     <div class="sender-info">
         {message.senderInfo.username}{message.skillCheckInfo ? ` (${message.skillCheckInfo.characterName})` : ''}
         {#if message.senderInfo._id === $user.gameData?.owner}
-            <div class='owner-icon'>
-                <img src="../static/crown.svg" alt="gm">                
-            </div>
+            <Icon class="big-icon" icon="mdi:crown" color="var(--clr-icon-owner)" />    
         {/if}
         <div class='message-ext-info'>{message.langData?.name ? `in ${message.langData?.name} ` : ''}{message.messageMode === MESSAGE_MODES.GM ? 'to GM' : ''}</div>
     </div>
@@ -71,6 +69,7 @@
     .sender-info { grid-area: sender-info;
         display: flex;
         justify-content: flex-start;
+        align-items: center;
         font-family: Montserrat;
         gap: 0.5em;
     }
@@ -119,14 +118,6 @@
     .sender-pfp img.mode-icon {
         width: 2.25em;
         height: 2.25em;
-    }
-
-    .owner-icon {
-        width: 1em;
-        height: 1em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     /** MARKDOWN 'CORRECTIONS' */

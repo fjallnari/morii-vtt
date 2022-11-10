@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
     import { slide, fade } from 'svelte/transition';
     import type { Attack, Character } from '../../../../interfaces/Character';
@@ -101,7 +101,7 @@
             {/if}
         </box>
         <sendable class="attack-menu" on:click={() => { isOpen = !isOpen }}>
-            <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
+            <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
     {#if isOpen}
@@ -122,11 +122,11 @@
                     </div>
                     +
                     <div class="atk-proficiency">
-                        <img class="versatile-icon" 
-                            src="../static/{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                            alt="atk-prof"
-                            on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}
-                        >
+                        <sendable on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}>
+                            <Icon class="big-icon" 
+                                icon="mdi:{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}"
+                            />
+                        </sendable>
                         <div class="box-label">
                             Proficient
                         </div>
@@ -303,10 +303,6 @@
         align-items: center;
         justify-content: center;
         gap: 0.2em;
-    }
-
-    .atk-proficiency img {
-        cursor: pointer;
     }
 
     .consistent-in-place-edit {

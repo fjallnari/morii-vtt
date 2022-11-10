@@ -1,8 +1,8 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import type { Character, Resource } from "../../../../interfaces/Character";
     import { modifyCharacter } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
-    import { Icon } from '@smui/icon-button';
     import SimpleButton from "../../../SimpleButton.svelte";
 
     export let resource: Partial<Resource>;
@@ -50,22 +50,19 @@
             <InPlaceEdit bind:value={resource.name} editWidth="5rem" editHeight="2rem" on:submit={modifyCharacterFce}></InPlaceEdit>  
         </div>
         <sendable class="flip-card-icon" on:click={() => { isFlipped = true}}>
-            <Icon class="material-icons">arrow_left</Icon>
+            <Icon class="big-icon" icon="material-symbols:arrow-left-rounded" />
         </sendable>
     </div>
     <div class="back">
         <sendable class="change-resource-type" on:click={changeResourceType}>
-            <img class="resource-type-icon" 
-                src="../static/resource{resource.type && resource.type === 'simple' ? '-simple' : '-complex'}.svg" 
-                alt="resource type icon"
-            >
+            <Icon class="resource-type-icon big-icon" icon="{resource.type && resource.type === 'simple' ? 'mdi:alpha-a' : 'mdi:ab-testing'}" />
             <div class="change-resource-type-label box-label">
                 {resource.type ?? 'complex'}
             </div>
         </sendable>
         <SimpleButton value='Delete' type="delete" onClickFn={() => deleteFce(resource)}></SimpleButton>
         <sendable class="flip-card-icon" on:click={() => { isFlipped = false}}>
-            <Icon class="material-icons">arrow_left</Icon>
+            <Icon class="big-icon" icon="material-symbols:arrow-left-rounded" />
         </sendable>
     </div>
 </box>
@@ -100,8 +97,11 @@
 
     .flip-card-icon {
         position: absolute;
-        top: calc(50% - 12px);
-        left: 0px;
+        font-size: 1.5em;
+        left: 12%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 1.5em;
     }
 
     .card {
@@ -148,12 +148,7 @@
         justify-content: center;
         align-items: center;
         gap: 0.2em;
-    }
-
-    .change-resource-type img {
         cursor: pointer; 
-        height: 1.5em;
-        width: 1.5em;
     }
 
     .change-resource-type-label {

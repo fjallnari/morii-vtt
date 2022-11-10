@@ -7,11 +7,11 @@
     import ChipsDndZone from ".././ChipsDndZone.svelte";
     import type MessageData from "../../../interfaces/MessageData";
     import { nanoid } from "nanoid/non-secure";
-    import IconButton, { Icon } from '@smui/icon-button';
     import BoxWithList from "../../BoxWithList.svelte";
     import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
     import MarkdownBoxText from ".././MarkdownBoxText.svelte";
     import type { QCAbilityScores } from "../../../interfaces/QCAbilityScores";
+    import Icon from "@iconify/svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -229,10 +229,10 @@
                 <box class="asi-bonus as-bonus-box">
                     <div class='asi-bonus-buttons'>
                         <sendable on:click={changeASIBonus(abilityScores, AS, 1)}>
-                            <Icon class="material-icons">keyboard_double_arrow_up</Icon>
+                            <Icon class="big-icon" icon='material-symbols:keyboard-double-arrow-up-rounded' />                            
                         </sendable>
                         <sendable on:click={changeASIBonus(abilityScores, AS, -1)}>
-                            <Icon class="material-icons">keyboard_double_arrow_down</Icon> 
+                            <Icon class="big-icon" icon='material-symbols:keyboard-double-arrow-down-rounded' />
                         </sendable>
                     </div>
                     <div class="box-main-text">
@@ -262,7 +262,7 @@
             {#each asGenOpts as genOption}
                 <box class='gen-option' on:click={() => {selectGenOption(genOption)}} style='background-color: {selectedGenOption === genOption ? 'var(--clr-accent-dark)': ''}'>
                     <div class="option-selected">
-                        <Icon class="material-icons">{selectedGenOption === genOption ? 'keyboard_double_arrow_right': 'fork_right'}</Icon>
+                        <Icon icon='material-symbols:{selectedGenOption === genOption ? 'keyboard-double-arrow-right-rounded': 'alt-route'}' />
                     </div>
                     <div class='option-name'>{genOption.name}</div>
                 </box>
@@ -273,13 +273,9 @@
             </div>
             <div class='roll-visibility'>
                 <div>{['Public roll', 'Secret roll', 'GM Only'][$messageMode]}</div>
-                <div class='icon-wrapper icon-ripple'>
-                    <img class="message-mode" 
-                        src="../static/{['earth', 'eye-off', 'crown'][$messageMode]}.svg" 
-                        alt="message-mode"
-                        on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}
-                    >
-                </div>
+                <sendable on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}>
+                    <Icon class="big-icon" icon={['mdi:earth', 'mdi:eye-off', 'mdi:crown'][$messageMode]}/>
+                </sendable>
             </div>
         </box>
         <box class="as-array">
@@ -295,7 +291,7 @@
             {#each asAssignOpts as assignOpt}
                 <box class='gen-option' on:click={() => {selectAssignOption(assignOpt)}} style='background-color: {selectedAssignOption === assignOpt ? 'var(--clr-accent-dark)': ''}'>
                     <div class="option-selected">
-                        <Icon class="material-icons">{selectedAssignOption === assignOpt ? 'keyboard_double_arrow_right': 'fork_right'}</Icon>
+                        <Icon icon='material-symbols:{selectedAssignOption === assignOpt ? 'keyboard-double-arrow-right-rounded': 'alt-route'}' />
                     </div>
                     <div class='option-name'>{assignOpt.name}</div>
                 </box>
@@ -334,7 +330,7 @@
                     <SimpleAccordionDetail 
                         bind:value={feat.name} 
                         bind:content={feat.content}
-                        icon='arm-flex'
+                        icon='mdi:arm-flex'
                         editWidth='8rem'
                         deleteItem={() => deleteFeat(feat)}>
                     </SimpleAccordionDetail>
@@ -470,7 +466,7 @@
         justify-content: center;
         align-items: center; */
 
-        padding: 0.2em 0em;
+        padding: 0.2em;
         font-size: 1.2em;
         cursor: pointer;
     }
@@ -514,22 +510,9 @@
         width: 100%;
     }
 
-    .icon-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        width: 1.75em;
-        height: 1.75em;
-        cursor: pointer;
+    .option-selected { grid-area: option-selected; 
+        font-size: 1.25em;
     }
-
-    .message-mode {
-        width: 1.5em;
-        height: 1.5em;
-    }
-
-    .option-selected { grid-area: option-selected; }
     .option-name { grid-area: option-name;}
 
     .as-array { grid-area: as-array; 

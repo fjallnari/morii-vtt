@@ -19,7 +19,7 @@
             <div class="box-label">
                 Failures
             </div>
-            <TripleCheckBox bind:value={character.death_save_failure} fullBoxLast={'skull-scan'}></TripleCheckBox>
+            <TripleCheckBox bind:value={character.death_save_failure} fullBoxLast={'mdi:skull-scan'}></TripleCheckBox>
         </div>
     </div>
     <div class="box-justify-filler"></div>

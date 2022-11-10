@@ -1,13 +1,11 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import { nanoid } from 'nanoid/non-secure'
     import type { Attack, Character } from '../../../../interfaces/Character';
     import { createNewAttack, modifyCharacter } from '../../../../stores';
     import AttackDetail from "./AttackDetail.svelte";
 
-
     export let character: Character;
-    
 
     createNewAttack.set((customName: string = '', itemID: string = '') => {
         const attackObjSkeleton: Attack = {
@@ -39,7 +37,7 @@
     <box class="box-with-label">
         <div class="box-main-text">
             <sendable on:click={() => { $createNewAttack(); $modifyCharacter() }}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
         <div class="box-justify-filler"></div>
@@ -52,8 +50,8 @@
         {#each character.attacks as attack}
             <AttackDetail bind:attack={attack} bind:character={character}></AttackDetail>
         {/each}
-        <sendable style="cursor: auto;">
-            <Icon style="cursor: pointer;" on:click={() => { $createNewAttack(); $modifyCharacter() }} class="material-icons">{'add'}</Icon>
+        <sendable style="cursor: pointer;" on:click={() => { $createNewAttack(); $modifyCharacter() }}>
+            <Icon class="big-icon" icon="mdi:add" />
         </sendable>
     </div>
     <div class="box-label">

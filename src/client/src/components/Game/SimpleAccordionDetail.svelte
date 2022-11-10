@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import InPlaceEdit from '../InPlaceEdit.svelte';
     import SimpleButton from '../SimpleButton.svelte';
     import { fade, slide } from 'svelte/transition';
@@ -31,10 +31,7 @@
     <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable || typeof amount != 'undefined' ? 'type' : 'name'} feature-name feature-menu";`}>
         {#if icon}
             <div class="feature-type">
-                <img class="feature-type-icon" 
-                    src="../static/{icon}.svg" 
-                    alt="feature-type-icon"
-                >
+                <Icon class="medi-icon" icon={icon} />
             </div>
         {/if}
         {#if typeof amount != 'undefined'}
@@ -48,7 +45,7 @@
         {/if}
         {#if selectable && isSelected}
             <div class="feature-type selected">
-                <Icon class="material-icons">{'check'}</Icon>
+                <Icon class="big-icon" icon="mdi:check" />
             </div>
         {/if}
         <div class="feature-name {selectable ? 'selectable': ''}" on:click={toggleItem}>
@@ -61,7 +58,7 @@
         
         {#if content || editable}
             <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }}>
-                <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
+                <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
             </sendable>
         {/if}
     </div>
@@ -91,11 +88,6 @@
         flex-direction: column;
         justify-content: center;
         width: 95%;
-    }
-
-    img {
-        height: 1.25em;
-        width: 1.25em;
     }
 
     .feature-summary {

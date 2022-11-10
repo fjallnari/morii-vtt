@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import type ClassData from '../../../interfaces/ClassData';
 
     export let selectedClass: ClassData;
@@ -12,42 +12,18 @@
         {#each selectedClass.equipment as equipmentLine}
             {#if equipmentLine.line_options}
                 <single-line>
-                    <Icon class="material-icons">{equipmentLine.final.length !== 0 ? 'check' : 'alt_route'}</Icon>
-                        {#each equipmentLine.line_options as itemOptions, lineOptionIndex}
-                            {#if lineOptionIndex !== 0}
-                                <div class="or-sign">
-                                    {'OR'}
-                                </div>
-                            {/if}
-                            
-                            <box class='chip selectable {equipmentLine.final === itemOptions ? 'selected': ''}' on:click={() => {equipmentLine.final = itemOptions}}>
-                                {#each itemOptions as item, index}
-                                    {#if index !== 0}
-                                        <Icon class="material-icons">{'add'}</Icon>
-                                    {/if}
-                                    {#if item.options}
-                                        <select bind:value={item.name}>
-                                            <option value="" selected disabled hidden>{item.placeholder ?? '???'}</option>
-                                            {#each item.options as itemOption}
-                                                <option value={itemOption}>
-                                                    {itemOption}
-                                                </option>
-                                            {/each}
-                                        </select>
-                                    {:else}
-                                        {`${item.amount !== 1 ? `${item.amount}x` : ''} ${item.name}`}
-                                    {/if}
-                                {/each}
-                            </box>
-                        {/each}
-                </single-line>                
-            {:else}
-                <single-line>
-                    <Icon class="material-icons">{'keyboard_double_arrow_right'}</Icon>
-                        <box class='chip selected'>
-                            {#each equipmentLine.final as item, index}
+                    <Icon class="big-icon" icon={equipmentLine.final.length !== 0 ? 'mdi:check' : 'material-symbols:alt-route'} />
+                    {#each equipmentLine.line_options as itemOptions, lineOptionIndex}
+                        {#if lineOptionIndex !== 0}
+                            <div class="or-sign">
+                                {'OR'}
+                            </div>
+                        {/if}
+                        
+                        <box class='chip selectable {equipmentLine.final === itemOptions ? 'selected': ''}' on:click={() => {equipmentLine.final = itemOptions}}>
+                            {#each itemOptions as item, index}
                                 {#if index !== 0}
-                                    <Icon class="material-icons">{'add'}</Icon>
+                                    <Icon class="big-icon" icon='mdi:add' />
                                 {/if}
                                 {#if item.options}
                                     <select bind:value={item.name}>
@@ -63,6 +39,30 @@
                                 {/if}
                             {/each}
                         </box>
+                    {/each}
+                </single-line>                
+            {:else}
+                <single-line>
+                    <Icon class="big-icon" icon='mdi:chevron-double-right' />
+                    <box class='chip selected'>
+                        {#each equipmentLine.final as item, index}
+                            {#if index !== 0}
+                                <Icon class="big-icon" icon='mdi:add' />
+                            {/if}
+                            {#if item.options}
+                                <select bind:value={item.name}>
+                                    <option value="" selected disabled hidden>{item.placeholder ?? '???'}</option>
+                                    {#each item.options as itemOption}
+                                        <option value={itemOption}>
+                                            {itemOption}
+                                        </option>
+                                    {/each}
+                                </select>
+                            {:else}
+                                {`${item.amount !== 1 ? `${item.amount}x` : ''} ${item.name}`}
+                            {/if}
+                        {/each}
+                    </box>
                 </single-line>
             {/if}
         {/each}

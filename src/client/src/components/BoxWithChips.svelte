@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
 
     export let chipsArray: any[];
     export let blankChip: any = '';
@@ -7,11 +7,9 @@
     export let gridArea: string = label.toLowerCase();
     export let maxHeight: string = '';
     export let headerText: string = '';
-    export let chipsType: 'crud' | 'select-n' | 'readonly' | 'with-categories' = 'crud';
+    export let chipsType: 'crud' | 'select-n' | 'readonly' = 'crud';
     export let selectNFinalArray: any[] = [];
     export let selectNMaxChips: number = 0;
-
-    let showCategory = false;
 
     const addChip = () => {
         // just so BoxWithChips works with either object, arrays of strings or simple strings
@@ -40,7 +38,7 @@
         return chipName === '' || chipName === '???' || chipName === '---';
     }
 
-    $: occurences = (chipsType === 'with-categories' ? chipsArray.flatMap(a => a.items) : chipsArray[0]?.name ? chipsArray.map(chip => chip.name) : chipsArray).reduce((acc, curr) => {
+    $: occurences = (chipsArray[0]?.name ? chipsArray.map(chip => chip.name) : chipsArray).reduce((acc, curr) => {
         return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
     }, {});
 
@@ -52,48 +50,22 @@
         <p class="header-text">{headerText}</p>
     {/if}
     {#if chipsType === 'crud'}
-        <div class="add-new-item">
-            <sendable on:click={() => { addChip()}}>
-                <Icon class="material-icons">{'add'}</Icon>
-            </sendable>
-        </div>
+        <sendable class="add-new-item" on:click={() => { addChip()}}>
+            <Icon class="big-icon" icon="mdi:add" />
+        </sendable>
     {/if}
-    <div class="chips-array box-main-text {chipsType === 'readonly' || chipsType === 'with-categories' ? 'top-margin' : ''}">
+    <div class="chips-array box-main-text {chipsType === 'readonly' ? 'top-margin' : ''}">
         {#if chipsArray.length === 0}
             <div>No {label.toLowerCase()}</div>
-        {:else if chipsType === 'with-categories'}
-            <img class="toggle-show-category" 
-                src="../static/toggle-switch-variant{showCategory ? '' : '-off'}.svg" 
-                alt="show-category"
-                on:click={ () => showCategory = !showCategory }
-            >
-            {#each chipsArray as category, catIndex}
-                {#if category.items.length !== 0 && showCategory}
-                    <div class="category">
-                        <div class='category-label box-label'>{category.name}</div>
-                        {#each category.items as chip, index}
-                            <box class="chip{isBlank(chip) ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}">
-                                {chip}
-                            </box>
-                        {/each}
-                    </div>
-                {:else}
-                    {#each category.items as chip, index}
-                        <box class="chip{isBlank(chip) ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}">
-                            {chip}
-                        </box>
-                    {/each}
-                {/if}
-            {/each}
         {:else}
             {#each chipsArray as chip, index}
                 <box class="chip{isBlank(chip) ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" on:click={() => toggleChip(chip)}>
                     {#if chipsType === 'crud'}
                         <sendable class="delete-chip" on:click={() => { deleteChip(index)}}>
-                            <Icon class="material-icons">{'clear'}</Icon>
+                            <Icon class="big-icon" icon="mdi:close" />
                         </sendable>
                     {:else if selectNFinalArray.includes(chip)}
-                        <Icon class="material-icons">{'check'}</Icon>
+                        <Icon class="big-icon" icon="mdi:check" />
                     {/if}
                     <slot index={index}></slot>
                 </box>
@@ -173,37 +145,6 @@
     .non-uniq {
         background-color: var(--clr-contrast-normal) !important;
         font-weight: var(--semi-bold);
-    }
-
-    /* TODO - for box with chips with categories */
-    .category {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5em;
-        border: var(--clr-accent-light) 2px solid;
-        border-radius: 4px;
-        padding: 0.3em;
-        position: relative;
-        margin-bottom: 1em;
-        flex-wrap: wrap;
-        max-width: 90%;
-        justify-content: center;
-    }
-
-    .category-label {
-        position: absolute;
-        bottom: 0%;
-        left: 50%;
-        transform: translate(-50%, 120%);
-    }
-
-    .toggle-show-category {
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 1.5rem;
-        cursor: pointer;
-        z-index: 2;
     }
 
 </style>

@@ -269,6 +269,12 @@
           },
           "type": "array"
         },
+        "resources": {
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "type": "array"
+        },
         "treasure": {
           "type": "string"
         },
@@ -373,7 +379,7 @@
       "type": "object"
     },
     "Item": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "amount": {
           "type": "string"
@@ -442,7 +448,7 @@
       "type": "object"
     },
     "Spell": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "higher_levels": {
           "type": "string"
@@ -451,7 +457,7 @@
           "type": "string"
         },
         "components": {
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "material": {
               "type": "boolean"
@@ -566,6 +572,36 @@
         "name",
         "ability",
         "proficiency"
+      ],
+      "type": "object"
+    },
+    "Resource": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "total": {
+          "type": "string"
+        },
+        "current": {
+          "type": "string"
+        },
+        "item_id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "total",
+        "current"
       ],
       "type": "object"
     }

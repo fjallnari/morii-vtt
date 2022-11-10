@@ -4,11 +4,11 @@
     import { int2roman, validateClassName } from "../../../util/util";
     import BoxWithIcon from "../../BoxWithIcon.svelte";
     import InPlaceEditBox from "../../InPlaceEditBox.svelte";
-    import { Icon } from '@smui/icon-button';
     //@ts-ignore
     import { human, species } from 'fantastical';
     import Svelecte from "svelecte/src/Svelecte.svelte";
     import BioTextareaBox from "../../BioTextareaBox.svelte";
+    import Icon from "@iconify/svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -64,7 +64,7 @@
         <div class="name-edit">
             <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" editWidth='5em' onSubmitFce={() => {}}></InPlaceEditBox>
             <sendable class='random-name' on:click={() => generateName()}>
-                <Icon class="material-icons">{'shuffle'}</Icon>
+                <Icon icon='mdi:shuffle' />
             </sendable> 
         </div>
         <div class="name-gen">
@@ -79,15 +79,15 @@
                 {#if selectedNameGen?.needsGender}
                     <div class='box-main-text'>
                         <sendable class='gender-icon {selectedGender === 'male' ? ' selected-gender': ''}' on:click={() => selectedGender = 'male'}>
-                            <Icon class="material-icons">{'male'}</Icon>
+                            <Icon class="big-icon" icon='mdi:gender-male' />
                         </sendable> 
                         <sendable class='gender-icon{selectedGender === 'female' ? ' selected-gender': ''}' on:click={() => selectedGender = 'female'}>
-                            <Icon class="material-icons">{'female'}</Icon>
+                            <Icon class="big-icon" icon='mdi:gender-female' />
                         </sendable> 
                     </div>
                 {:else}
                     <div class='box-main-text gender-icon'>
-                        <Icon class="material-icons">{'all_inclusive'}</Icon>
+                        <Icon class="big-icon" icon='mdi:all-inclusive' />
                     </div> 
                 {/if}
                 <div class="box-justify-filler"></div>

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Character, Feature } from "../../../../interfaces/Character";
     import { modifyCharacter } from '../../../../stores';
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import { nanoid } from 'nanoid/non-secure'
     import FeatureDetail from "./FeatureDetail.svelte";
     
@@ -51,7 +51,7 @@
             <FeatureDetail bind:feature={feature} bind:character={character}></FeatureDetail>
         {/each}
         <sendable class="add-new-item" on:click={() => { addNewFeature(); $modifyCharacter() }}>
-            <Icon class="material-icons">{'add'}</Icon>
+            <Icon class="big-icon" icon="mdi:add" />
         </sendable>
     </div>
     <div class="box-justify-filler"></div>

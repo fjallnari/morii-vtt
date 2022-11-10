@@ -1,7 +1,6 @@
 <script lang="ts">
     import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
     import { modifyCharacter, selectedCharacter, user, socket, ownerSocketID, userIDPairs } from "../../../stores";
-    import Button, { Label } from '@smui/button';
     import Dialog, { Content, Actions } from '@smui/dialog';
     import { params, replace } from "svelte-spa-router";
     import type { Character } from "../../../interfaces/Character";
@@ -9,6 +8,7 @@
     import SimpleButton from "../../SimpleButton.svelte";
     import ANIMALS from "../../../enum/Animals";
     import axios from "axios";
+    import Icon from "@iconify/svelte";
 
     export let character: Character;
 
@@ -67,25 +67,26 @@
 
             <line-div>
                 <div>Show Encumbrance</div>
-                <img class="use-encumbrance-icon" 
-                    src="../static/{character.settings.use_encumbrance ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                    alt="checkbox-icon"
-                    on:click={() => { character.settings.use_encumbrance = !character.settings.use_encumbrance; $modifyCharacter(); }}
-                >
+                <sendable on:click={() => { character.settings.use_encumbrance = !character.settings.use_encumbrance; $modifyCharacter(); }}>
+                    <Icon class="big-icon" icon="mdi:{character.settings.use_encumbrance ? 'checkbox-marked': 'checkbox-blank-outline'}" />
+                </sendable>
             </line-div>
             <line-div>
                 <div>Show Spell Components</div>
-                <img class="use-encumbrance-icon" 
-                    src="../static/{character.settings.use_spell_components ? 'checkbox-marked': 'checkbox-blank-outline'}.svg" 
-                    alt="checkbox-icon"
-                    on:click={() => { character.settings.use_spell_components = !character.settings.use_spell_components; $modifyCharacter(); }}
-                >
+                <sendable on:click={() => { character.settings.use_spell_components = !character.settings.use_spell_components; $modifyCharacter(); }}>
+                    <Icon class="big-icon" icon="mdi:{character.settings.use_spell_components ? 'checkbox-marked': 'checkbox-blank-outline'}" />
+                </sendable>
             </line-div>
         </div>
         <div class="settings-tab">
             <h4>CRUD Settings</h4>
-            <SimpleButton value='Export sheet to JSON' icon="data_object" onClickFn={exportToJSON}></SimpleButton>
-            <SimpleButton value='Delete Character' icon="delete_sweep" type="delete" onClickFn={() => isDeleteCharDialogOpen = true}></SimpleButton>
+            <SimpleButton value='Export sheet to JSON' icon="mdi:code-json" onClickFn={exportToJSON}></SimpleButton>
+            <SimpleButton value='Delete Character' 
+                icon="material-symbols:delete-sweep" 
+                iconWidth='1.25em' 
+                type="delete" 
+                onClickFn={() => isDeleteCharDialogOpen = true}>
+            </SimpleButton>
         </div>
     </div>
     <CharacterSheetMenu></CharacterSheetMenu>
@@ -148,12 +149,6 @@
         font-family: Athiti;
         text-transform: uppercase;
         font-size: 1.2em;
-    }
-
-    line-div > img {
-        cursor: pointer; 
-        height: 1.5rem;
-        width: 1.5rem;
     }
 
     h4 {

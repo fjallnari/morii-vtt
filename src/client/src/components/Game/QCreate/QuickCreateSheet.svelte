@@ -2,7 +2,6 @@
     import Dialog from '@smui/dialog';
     import CircularProgress from '@smui/circular-progress';
     import axios from "axios";
-    import { Icon } from '@smui/button';
     import StepDetailRace from "./StepDetailRace.svelte";
     import StepDetailClass from "./StepDetailClass.svelte";
     import StepDetailSpellcasting from "./StepDetailSpellcasting.svelte";
@@ -14,6 +13,7 @@
     import type QuickCreateCharacterParts from '../../../interfaces/QuickCreateCharacterParts';
     import type QuickCreateData from '../../../interfaces/QuickCreateData';
     import SimpleButton from '../../SimpleButton.svelte';
+    import Icon from '@iconify/svelte';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -23,12 +23,12 @@
     let characterParts: Partial<QuickCreateCharacterParts> = {};
 
     let creationSteps = [
-        { name: 'Race', icon: 'account-supervisor', isCompleted: false, component: StepDetailRace },
-        { name: 'Class', icon: 'arrow-projectile-multiple', isCompleted: false, component: StepDetailClass },
-        { name: 'Spellcasting', icon: 'fire', isCompleted: false, component: StepDetailSpellcasting },
-        { name: 'Ability Scores', icon: 'counter', isCompleted: false, component: StepDetailAbilityScores },
-        { name: 'Background', icon: 'sprout', isCompleted: false, component: StepDetailBackground },
-        { name: 'Summary', icon: 'clipboard-text', isCompleted: false, component: StepDetailSummary },
+        { name: 'Race', icon: 'mdi:account-supervisor', isCompleted: false, component: StepDetailRace },
+        { name: 'Class', icon: 'mdi:arrow-projectile-multiple', isCompleted: false, component: StepDetailClass },
+        { name: 'Spellcasting', icon: 'mdi:fire', isCompleted: false, component: StepDetailSpellcasting },
+        { name: 'Ability Scores', icon: 'mdi:counter', isCompleted: false, component: StepDetailAbilityScores },
+        { name: 'Background', icon: 'mdi:sprout', isCompleted: false, component: StepDetailBackground },
+        { name: 'Summary', icon: 'mdi:clipboard-text', isCompleted: false, component: StepDetailSummary },
     ];
 
     const closeDialog = () => {
@@ -255,7 +255,7 @@
 
 </script>
 
-<SimpleButton value='Quick-Create' icon="electric_bolt" type="primary" onClickFn={() => open = true}></SimpleButton>
+<SimpleButton value='Quick-Create' icon="material-symbols:electric-bolt" type="primary" onClickFn={() => open = true}></SimpleButton>
 <Dialog
     bind:open
     fullscreen
@@ -273,13 +273,10 @@
             <div class="creation-steps-list">
                 {#each creationSteps as step, index}
                     <box class="creation-step-item {index === selectedStepIndex ? 'selected': ''}" on:click={() => {selectedStepIndex = index}} tabindex='0'>
-                        <img class="step-icon"  
-                            src="../static/{step.icon}.svg" 
-                            alt="step-icon"
-                        >
+                        <Icon icon={step.icon}/>
                         {step.name}
                         {#if step.isCompleted}
-                            <Icon id="filled-in-icon" class="material-icons">done</Icon>
+                            <Icon width='1.25em' height='1.25em' icon='mdi:check' />
                         {/if}
                     </box>
                 {/each}
@@ -293,8 +290,8 @@
             />
 
             <dialog-buttons class="quick-create-buttons">
-                <SimpleButton value='Cancel' icon="close" onClickFn={() => closeDialog()}></SimpleButton>
-                <SimpleButton value='Create' icon='create' type='green' onClickFn={() => assembleCharacterSheet()}></SimpleButton>
+                <SimpleButton value='Cancel' icon="mdi:close" onClickFn={() => closeDialog()}></SimpleButton>
+                <SimpleButton value='Create' icon='mdi:create' type='green' onClickFn={() => assembleCharacterSheet()}></SimpleButton>
             </dialog-buttons>
         </dialog-content>
     {/await}
@@ -361,11 +358,6 @@
     .selected {
         transform: scale(1.04) !important;
         background-color: var(--clr-accent-dark) !important;
-    }
-
-    .creation-step-item img {
-        height: 1em;
-        width: 1em;
     }
 
 </style>

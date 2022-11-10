@@ -1,8 +1,8 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button';
     import { push, replace } from "svelte-spa-router";
     import type GameData from "../../interfaces/GameData";
     import { selectedCharacter, user } from '../../stores';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
 
     export let gameData: GameData;
 
@@ -22,9 +22,9 @@
     <h3>{gameData ? gameData.name : '_'}</h3>
     <div class="icon-bar">
         {#if $user && $user._id === gameData.owner}
-            <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => showGameOverview()}>dashboard</IconButton>
+            <SimpleIconButton icon='material-symbols:dashboard-rounded' color='#A7C284' onClickFn={() => showGameOverview()}></SimpleIconButton>
         {/if}
-        <IconButton class="material-icons" style="color: #EFA48B; font-size: xx-large;" ripple={false} on:click={() => leaveGame()}>logout</IconButton>
+        <SimpleIconButton icon='mdi:logout' color='#EFA48B' onClickFn={() => leaveGame()}></SimpleIconButton>
     </div>
 </div>
 

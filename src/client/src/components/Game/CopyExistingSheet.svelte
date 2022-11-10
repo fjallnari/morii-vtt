@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Icon from '@iconify/svelte';
     import CircularProgress from '@smui/circular-progress/src/CircularProgress.svelte';
     import Dialog from '@smui/dialog';
     import axios from 'axios';
@@ -34,7 +35,7 @@
 
 </script>
 
-<SimpleButton value='Copy Existing Sheet' icon="file_copy" onClickFn={() => open = true}></SimpleButton>
+<SimpleButton value='Copy Existing Sheet' icon="material-symbols:file-copy" onClickFn={() => open = true}></SimpleButton>
 <Dialog
     bind:open
     fullscreen
@@ -67,10 +68,10 @@
                                 {character.name ? character.name : '---'}
                             </div>
                             <selected-checkbox>
-                                <img id="checkbox-icon"
-                                    src="../static/{selectedCharacter === character ? 'arrow-left-box': 'checkbox-blank-outline'}.svg" 
-                                    alt="checkbox"
-                                >
+                                <Icon class="big-icon" 
+                                    icon={selectedCharacter === character ?  "mdi:checkbox-multiple-marked" : "mdi:checkbox-blank-outline"}
+                                    width='1.5em' height='1.5em'
+                                />
                             </selected-checkbox>
                         </box>
                     {/each}
@@ -78,8 +79,8 @@
             {/await}
         </characters-list>
         <dialog-buttons class="copy-existing">
-            <SimpleButton value='Cancel' icon="close" onClickFn={() => open = false}></SimpleButton>
-            <SimpleButton value='Copy & Load' icon='file_copy' type='green' onClickFn={() => copyCharacterSheet()}></SimpleButton>
+            <SimpleButton value='Cancel' icon="mdi:close" onClickFn={() => open = false}></SimpleButton>
+            <SimpleButton value='Copy & Load' icon='mdi:note-plus' type='green' onClickFn={() => copyCharacterSheet()}></SimpleButton>
         </dialog-buttons>
     </dialog-content>
 </Dialog>
@@ -189,7 +190,7 @@
         justify-content: center;
     }
 
-    #checkbox-icon {
+    .checkbox-icon {
         width: 3em;
         height: 3em;
     }

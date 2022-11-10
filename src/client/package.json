@@ -12,6 +12,7 @@
     "prepare-theme": "smui-theme compile public/static/smui-dark.css -i src/theme"
   },
   "devDependencies": {
+    "@iconify/svelte": "^3.0.0",
     "@material/elevation": "^13.0.0",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",

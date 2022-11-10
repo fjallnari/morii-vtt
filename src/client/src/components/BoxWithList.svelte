@@ -1,6 +1,6 @@
 <script lang="ts">
     import { modifyCharacter } from "../stores";
-    import { Icon } from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
 
     export let label: string;
     export let styleClass: string = '';
@@ -17,7 +17,7 @@
         <slot name="list"></slot>
         {#if !noCrud}
             <sendable class="add-new-item" on:click={() => { addNewListItem(); if (!isModifyDisabled) { $modifyCharacter()}}}>
-                <Icon class="material-icons">{'add'}</Icon>
+                <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         {/if}
     </div>
@@ -51,7 +51,6 @@
     .add-new-item {
         padding-top: 0.3em;
     }
-
 
     ::-webkit-scrollbar {
         width: 8px;

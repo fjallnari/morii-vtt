@@ -1,5 +1,5 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button';
+    import Icon from '@iconify/svelte';
     import List, {
         Item,
         Separator,
@@ -8,31 +8,39 @@
     import { push, replace } from 'svelte-spa-router';
 
     import { campaignDetailActive, selectedCampaign } from '../../stores';
+    import SimpleIconButton from '../SimpleIconButton.svelte';
     import CampaignLeave from './CampaignLeave.svelte';
 
 </script>
 
 <div class="campaign-detail-content">
     <div class="campaign-action-bar">
-        <IconButton class="material-icons" style="color: #A7C284; font-size: xx-large;" ripple={false} on:click={() => {push(`/game/${$selectedCampaign._id}`)}}>play_arrow</IconButton>
+        <SimpleIconButton 
+            icon="mdi:play" 
+            onClickFn={() => {replace(`/game/${$selectedCampaign._id}`)}}
+            color='#A7C284'
+            width="2.5em"
+            wrapperPadding="0.5em"
+        >
+        </SimpleIconButton>
         <CampaignLeave></CampaignLeave>
     </div>
     <div class="players-list">
         <List>
         <Item style="font-family: Montserrat">
-            <img class="player-role-image" src="../static/crown.svg" alt="crown">
-            <Text>
+            <Icon class="big-icon" icon="mdi:crown" color="var(--clr-icon-owner)" />
+            <span class="username">
                 {$selectedCampaign.owner.username}
-            </Text>
+            </span>
         </Item>
         <Separator />
         {#each $selectedCampaign.players as player}
             <div class="campaign-item">
                 <Item>
-                    <img class="player-role-image" src="../static/dice.svg" alt="dice">
-                    <Text>
+                    <Icon class="big-icon" icon="mdi:dice-multiple" color="var(--clr-icon-player)" />
+                    <span class="username">
                         {player.username}
-                    </Text>
+                    </span>
                 </Item>
             </div>
         {/each}
@@ -41,7 +49,7 @@
 </div>
 
 <div id="close-campaign-detail">
-    <IconButton class="material-icons" on:click={() => campaignDetailActive.set(false)}>close</IconButton>
+    <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignDetailActive.set(false)}></SimpleIconButton>
 </div>
 
 <style>
@@ -79,8 +87,8 @@
         font-family: Montserrat;
     }
 
-    .player-role-image {
-        margin-right: 1em;
+    .username {
+        margin-left: 0.75em;
     }
 
     #close-campaign-detail {

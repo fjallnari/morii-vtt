@@ -1,21 +1,21 @@
 <script lang="ts">
     import { modifyCharacter } from '../../../../stores';
-    import { Icon } from '@smui/icon-button';
     import { slide, fade } from 'svelte/transition';
     import type { Character, OtherProf } from '../../../../interfaces/Character';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
+    import Icon from '@iconify/svelte';
 
     export let other_prof: OtherProf;
     export let character: Character;
     let isOpen: boolean = false;
 
     const profTypes = [
-        { name: 'OTHER', icon: 'atom' },
-        { name: 'ARMOR', icon: 'shield-half-full' },
-        { name: 'WEAPON', icon: 'sword' },
-        { name: 'LANGUAGE', icon: 'translate' },
-        { name: 'INSTRUMENT', icon: 'music' }
+        { name: 'OTHER', icon: 'mdi:atom' },
+        { name: 'ARMOR', icon: 'mdi:shield-half-full' },
+        { name: 'WEAPON', icon: 'mdi:sword' },
+        { name: 'LANGUAGE', icon: 'mdi:translate' },
+        { name: 'INSTRUMENT', icon: 'mdi:music' }
     ];
 
     const deleteProf = () => {
@@ -28,18 +28,14 @@
 
 <box class="prof-main-container">
     <div class="prof-summary">
-        <div class="prof-type">
-            <img class="prof-type-icon" 
-                src="../static/{profTypes[other_prof.type]?.icon}.svg" 
-                alt="prof-type-icon"
-                on:click={() => { other_prof.type += 1 + (other_prof.type === 4 ? -5 : 0); $modifyCharacter(); }}
-            >
-        </div>
+        <sendable class="prof-type" on:click={() => { other_prof.type += 1 + (other_prof.type === 4 ? -5 : 0); $modifyCharacter(); }}>
+            <Icon icon={profTypes[other_prof.type]?.icon} />
+        </sendable>
         <div class="prof-name">
             <InPlaceEdit bind:value={other_prof.name} editWidth='6em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
         <sendable class="prof-menu" on:click={() => { isOpen = !isOpen }}>
-            <Icon class="material-icons">{isOpen ? 'menu_open' : 'menu'}</Icon>
+            <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
     {#if isOpen}
@@ -78,7 +74,12 @@
     }
 
     .prof-name { grid-area: prof-name; }
-    .prof-type { grid-area: prof-type; }
+
+    .prof-type { grid-area: prof-type; 
+        cursor: pointer; 
+        font-size: 1.25em;
+    }
+    
     .prof-menu { grid-area: prof-menu; }
 
     div.details {
@@ -95,12 +96,6 @@
         height: 4em;
         padding: 0.2em;
         line-height: 1.2em;
-    }
-
-    img {
-        cursor: pointer; 
-        height: 1.25em;
-        width: 1.25em;
     }
 
     ::-webkit-scrollbar {

@@ -1,45 +1,225 @@
 <script lang="ts">
-    import Login from '../components/Auth/Login.svelte';
-    import Register from '../components/Auth/Register.svelte';
+    import Button, { Label } from "@smui/button";
+    import { accessToken, user } from "../stores";
+    import Snackbar, {
+        Actions,
+        SnackbarComponentDev,
+    } from '@smui/snackbar';
+    import IconButton from '@smui/icon-button';
+    import { axiosPublic } from '../axiosPublic';
+    import { querystring, replace } from 'svelte-spa-router';
+    import Icon from '@iconify/svelte';
+    import SimpleTextfield from "../components/SimpleTextfield.svelte";
+    import SimpleButton from "../components/SimpleButton.svelte";
+    import ProgressCircle from "../components/ProgressCircle.svelte";
+
+    let statusSnackbar: SnackbarComponentDev;
+
+    let username = "";
+    let password = "";
+    let passwordCheck = "";
+    let inProgress = false;
+    let loginActive = true;
+
+    const snackbarMessages = {
+        "login_fail": "Login failed. Please try again or sign up.",
+        "register_success": "Registration succesful! You can login now.",
+        "no_match": "Passwords don't match.",
+        "user_exists": "User with this username already exists, please login.",
+        "default": "Something went wrong."
+    }
+
+    let snackbarStatus: string = "default";
+
+    const loginUser = async () => {
+        if (! password || ! username){
+            return;
+        }
+
+        try {
+            inProgress = true;
+            const response = await axiosPublic.post('/auth/signin', {
+                username: username,
+                password: password
+            });
+
+            if (response.status === 200) {
+                accessToken.set(response.data.accessToken);
+                replace(`/${$querystring ? `?${$querystring}` : ''}`);
+            }
+        }
+        catch (err) {
+            // if login fails -> popup with 'login failed' appears
+            snackbarStatus = "login_fail";
+            statusSnackbar.open();
+            inProgress = false;
+        }
+    }
+
+    const registerNewUser = async () => {
+        inProgress = true;
+
+        if (! password || password !== passwordCheck){
+            snackbarStatus = "no_match";
+            statusSnackbar.open();
+        }
+
+        try {
+            await axiosPublic.post('/auth/signup', {
+                username: username,
+                password: password
+            });
+
+            snackbarStatus = "register_success";
+            statusSnackbar.open();
+            switchAuthView();
+        }
+        catch (err) {
+            snackbarStatus = "user_exists";
+            statusSnackbar.open();
+        }
+
+        username = password = passwordCheck = "";
+        inProgress = false;
+    }
+
+    const switchAuthView = () => {
+        loginActive = !loginActive;
+        username = password = passwordCheck = ""; 
+    }
+
 </script>
 
-<auth-container>
-    <Login></Login>
-    <Register></Register>
-</auth-container>
 
+<auth-main>
+    <div class="auth-content">
+        <div class="inner-auth-box">
+            <h3>{loginActive ? "Login": "Sign up"}</h3>
+            {#if !inProgress}
+                {#if loginActive}
+                    <SimpleTextfield bind:value={username} placeholder="Username" icon="mdi:account"></SimpleTextfield>
+                    <SimpleTextfield type="password" bind:value={password} placeholder="Password" icon="mdi:lock"></SimpleTextfield>
+                {:else}
+                    <SimpleTextfield bind:value={username} placeholder="Username" icon="mdi:account"></SimpleTextfield>
+                    <SimpleTextfield type="password" bind:value={password} placeholder="Password" icon="mdi:lock-outline"></SimpleTextfield>
+                    <SimpleTextfield type="password" bind:value={passwordCheck} placeholder="Confirm password" icon="mdi:lock"></SimpleTextfield>
+                {/if}
+
+                <div class="switch-auth">
+                    <span class="color-text">{loginActive ? "Don't have an account?": "Already have an account?"}</span>
+                    <span class="accent-text" on:click={() => switchAuthView()}>
+                        {loginActive ? "Sign up here.": "Login here."}
+                    </span>
+                </div>
+
+                <div class="button-container">
+                    <SimpleButton 
+                        value={loginActive ? "Login": "Sign up"} 
+                        type='primary' 
+                        onClickFn={loginActive ? loginUser: registerNewUser}>
+                    </SimpleButton>
+                </div>
+                <div class="socials">
+                    <sendable on:click={ () => window.open("https://github.com/Ashmogh/morii-vtt")}>
+                        <Icon icon="mdi:github" /> 
+                    </sendable>         
+                </div>
+            {:else}
+                <ProgressCircle></ProgressCircle>
+            {/if}
+        </div>
+        <Snackbar bind:this={statusSnackbar} labelText={snackbarMessages[snackbarStatus]}>
+            <Label />
+            <Actions>
+            <IconButton class="material-icons" title="Dismiss">close</IconButton>
+            </Actions>
+        </Snackbar>
+    </div>
+</auth-main>
 
 
 <style>
-    auth-container {
+    auth-main {
+        background: var(--bg-waves) no-repeat;
+        background-size: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .auth-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #212125A1;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        width: 40vw;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
-        gap: 5em;
-        height: 95vh;
-        background: var(--bg-waves) no-repeat;
-        background-size: 100%;
-        margin: 0em -1em;
+        backdrop-filter: blur(6px);
     }
 
-    :global(auth-container auth-simple-box) {
-        width: 25em;
-        height: 40em;
-        background-color: var(--clr-box-bg-dark);
-        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        border-radius: 1%;
-
+    .inner-auth-box {
         display: flex;
 		justify-content: flex-start;
 		align-items: center;
         flex-direction: column;
-        gap: 2em;
+        gap: 2.5em;
     }
 
-    :global(auth-container auth-simple-box > h2) {
-        padding-top: 0.5em;
-        text-transform: none;
+    h3 {
+        font-size: 3.5em;
+        font-weight: 400;
+        font-family: Quicksand;
+        margin: 1em;
     }
 
+    .switch-auth {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25em;
+        font-family: Montserrat;
+        font-size: 1rem;
+        margin-top: 1em;
+    }
+
+    .switch-auth .color-text {
+        color: #fcf7f8de;
+    }
+
+    .accent-text {
+        color: var(--clr-accent-light);
+        cursor: pointer;
+        transition-duration: 200ms;
+        transition-property: color;
+    }
+
+    .accent-text:active {
+        color: var(--clr-accent-normal);
+        transition-duration: 200ms;
+        transition-property: color;
+    }    
+
+    .button-container {
+        display: flex;
+        margin: 2em; 
+    }
+
+    :global(.button-container simple-button) {
+        padding: 0.5em 1.5em !important;
+    }
+
+    .socials {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        bottom: 5%;
+        font-size: 3em;
+    }
+    
 </style>

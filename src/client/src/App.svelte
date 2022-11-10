@@ -251,6 +251,10 @@
        font-size: 2em;
    	}
 
+	:global(svg.biggest-icon) {
+       font-size: 2.5em;
+   	}
+
     :global(.box-with-label) {
         flex-grow: 1;
         height: 100%;

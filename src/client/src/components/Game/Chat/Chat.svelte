@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="send-message-box">
-        <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false}></textarea>
+        <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false} spellcheck={false}></textarea>
 
         <div class="send-options-box">
             <SimpleIconButton 

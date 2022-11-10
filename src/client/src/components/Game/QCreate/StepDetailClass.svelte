@@ -94,7 +94,7 @@
                     <SimpleAccordionDetail 
                         bind:value={feature.name} 
                         bind:content={feature.content}
-                        icon='arrow-projectile-multiple' 
+                        icon='mdi:arrow-projectile-multiple' 
                         deleteItem={() => deleteFeature(feature)}
                         textareaHeight='15em'>
                     </SimpleAccordionDetail>

@@ -98,7 +98,7 @@
                     Ritual:
                 </div>
                 <sendable on:click={() => { spell.ritual = !spell.ritual; modifyCharacterFce(); }}>
-                    <Icon class="big-icon" icon="mdi:{spell.ritual ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
+                    <Icon class="big-icon" icon="{spell.ritual ? 'mdi:checkbox-marked': 'mdi:checkbox-blank-outline'}"/>
                 </sendable> 
             </div>
             <div class="single-detail-line">

@@ -330,7 +330,7 @@
                     <SimpleAccordionDetail 
                         bind:value={feat.name} 
                         bind:content={feat.content}
-                        icon='arm-flex'
+                        icon='mdi:arm-flex'
                         editWidth='8rem'
                         deleteItem={() => deleteFeat(feat)}>
                     </SimpleAccordionDetail>

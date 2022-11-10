@@ -31,10 +31,7 @@
     <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable || typeof amount != 'undefined' ? 'type' : 'name'} feature-name feature-menu";`}>
         {#if icon}
             <div class="feature-type">
-                <img class="feature-type-icon" 
-                    src="../static/{icon}.svg" 
-                    alt="feature-type-icon"
-                >
+                <Icon class="medi-icon" icon={icon} />
             </div>
         {/if}
         {#if typeof amount != 'undefined'}
@@ -91,11 +88,6 @@
         flex-direction: column;
         justify-content: center;
         width: 95%;
-    }
-
-    img {
-        height: 1.25em;
-        width: 1.25em;
     }
 
     .feature-summary {

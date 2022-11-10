@@ -90,7 +90,7 @@
                         bind:value={feature.name} 
                         bind:content={feature.content} 
                         bind:source={feature.source} 
-                        icon='account-supervisor' 
+                        icon='mdi:account-supervisor' 
                         deleteItem={() => deleteTrait(index)}>
                     </SimpleAccordionDetail>
                 {/each}

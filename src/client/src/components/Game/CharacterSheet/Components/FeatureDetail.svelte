@@ -12,11 +12,11 @@
     let isOpen: boolean = false;
 
     const featureTypes = [
-        { name: 'RACIAL', icon: 'account-supervisor' },
-        { name: 'CLASS', icon: 'arrow-projectile-multiple' },
-        { name: 'FEAT', icon: 'arm-flex' },
-        { name: 'BACKGROUND', icon: 'sprout' },
-        { name: 'OTHER', icon: 'atom' }
+        { name: 'RACIAL', icon: 'mdi:account-supervisor' },
+        { name: 'CLASS', icon: 'mdi:arrow-projectile-multiple' },
+        { name: 'FEAT', icon: 'mdi:arm-flex' },
+        { name: 'BACKGROUND', icon: 'mdi:sprout' },
+        { name: 'OTHER', icon: 'mdi:atom' }
     ];
 
     const deleteFeature = () => {
@@ -47,11 +47,9 @@
 <box class="feature-main-container">
     <div class="feature-summary">
         <div class="feature-type">
-            <img class="prof-type-icon" 
-                src="../static/{featureTypes[feature.type].icon}.svg" 
-                alt="prof-type-icon"
-                on:click={() => { feature.type += 1 + (feature.type === 4 ? -5 : 0); $modifyCharacter(); }}
-            >
+            <sendable on:click={() => { feature.type += 1 + (feature.type === 4 ? -5 : 0); $modifyCharacter(); }}>
+                <Icon class="medi-icon" icon={featureTypes[feature.type].icon} />
+            </sendable>
         </div>
   
         <div class="feature-name">
@@ -102,12 +100,6 @@
         justify-content: center;
         width: 95%;
         background-color: var(--clr-box-bg-light);
-    }
-
-    img {
-        cursor: pointer; 
-        height: 1.25em;
-        width: 1.25em;
     }
 
     textarea {

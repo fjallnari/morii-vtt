@@ -30,6 +30,7 @@
     "@smui/tooltip": "^6.0.0-beta.14",
     "@svelte-plugins/tooltips": "^0.1.6",
     "@tsconfig/svelte": "^2.0.0",
+    "@types/svelte-range-slider-pips": "^2.0.0",
     "postcss": "^8.4.5",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
@@ -43,6 +44,7 @@
     "svelte-check": "^2.0.0",
     "svelte-dnd-action": "^0.9.19",
     "svelte-preprocess": "^4.10.1",
+    "svelte-range-slider-pips": "^2.1.0",
     "ts-json-schema-generator": "^1.0.0",
     "tslib": "^2.0.0",
     "typescript": "^4.2.0"

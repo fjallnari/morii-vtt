@@ -175,7 +175,8 @@
         font-size: 3.5em;
         font-weight: 400;
         font-family: Quicksand;
-        margin: 1em;
+        margin-bottom: 1.5em;
+        margin-top: -1em;
     }
 
     .switch-auth {
@@ -207,7 +208,7 @@
 
     .button-container {
         display: flex;
-        margin: 2em; 
+        margin: 1em 0em; 
     }
 
     :global(.button-container simple-button) {
@@ -218,7 +219,7 @@
         position: absolute;
         left: 50%;
         transform: translate(-50%, 0);
-        bottom: 5%;
+        bottom: 2%;
         font-size: 3em;
     }
     

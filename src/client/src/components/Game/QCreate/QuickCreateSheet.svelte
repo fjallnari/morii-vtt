@@ -14,6 +14,9 @@
     import type QuickCreateData from '../../../interfaces/QuickCreateData';
     import SimpleButton from '../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
+    import { sleep } from '../../../util/util';
+    import ProgressCircle from '../../ProgressCircle.svelte';
+    import SimpleIconButton from '../../SimpleIconButton.svelte';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -41,6 +44,7 @@
     // quick and dirty way to trigger the reactivity
     const loadQuickCreateData = async (open: boolean) => {
         if (open) {
+            await sleep(60000);
             try {
                 const response = await axios.get('/api/quick-create-data');
                 const { characterSkeleton, ...quickCreateData } = response.data;
@@ -260,14 +264,16 @@
     bind:open
     fullscreen
     scrimClickAction=""
-    escapeKeyAction=""
     aria-labelledby="simple-title"
     surface$style="padding: 1em 1em; width: 80vw !important;"
 >
     <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
     <h3 id="simple-title">Quick-Create</h3>
     {#await loadQuickCreateData(open)}
-        <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+        <div id="progress-circle">
+            <ProgressCircle/>
+            <SimpleButton value="Cancel" icon="mdi:close" onClickFn={() => open = false}></SimpleButton>
+        </div>
     {:then quickCreateData}
         <dialog-content>
             <div class="creation-steps-list">
@@ -358,6 +364,21 @@
     .selected {
         transform: scale(1.04) !important;
         background-color: var(--clr-accent-dark) !important;
+    }
+
+    #progress-circle {
+        width: 100%;
+        height: calc(80vh - 2.5em);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+    }
+
+    :global(#progress-circle simple-button) {
+        max-width: 5em;
+        padding: 0.2em 0.4em;
     }
 
 </style>

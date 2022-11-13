@@ -1588,6 +1588,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/svelte-range-slider-pips@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/svelte-range-slider-pips/-/svelte-range-slider-pips-2.0.0.tgz#bcb97cd7daeac86a2dd3892845b2344547f84258"
+  integrity sha512-+Yq3xwyI0ViGZKdrsNpM8Wqa0wCnSBKc8NcRfYGiu22kVJ3Xr0gfiZATWMzZ2mryt/tQR8QgH2B782ogrZS1aw==
+  dependencies:
+    svelte "^3.0.0"
+
 abstract-logging@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/abstract-logging/-/abstract-logging-2.0.1.tgz#6b0c371df212db7129b57d2e7fcf282b8bf1c839"
@@ -3252,6 +3259,11 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.10.1:
     magic-string "^0.25.7"
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
+
+svelte-range-slider-pips@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/svelte-range-slider-pips/-/svelte-range-slider-pips-2.1.0.tgz#6bcd410b7edb781e6f62c993470aeb46b3b7a7f4"
+  integrity sha512-WpJQSXo1RG++mIKOkkfmcFho9ngzIBl7fPl0bDzpa6yFTFbxeFUVF5KkUSaiZwzs2SNT3xy6nAUeVLbVQ74JLA==
 
 svelte-spa-router@^3.2.0:
   version "3.2.0"

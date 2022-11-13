@@ -4,7 +4,6 @@
     import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../../interfaces/QuickCreateData";
     import MarkdownBoxText from ".././MarkdownBoxText.svelte";
-    import Slider from '@smui/slider';
     import { findHighestPossibleValue, validateClassName } from "../../../util/util";
     import BoxWithList from "../../BoxWithList.svelte";
     import type { Spell } from "../../../interfaces/Character";
@@ -16,6 +15,7 @@
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
     import { nanoid } from "nanoid/non-secure";
+    import SimpleSlider from "../../SimpleSlider.svelte";
  
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -197,9 +197,9 @@
                     </div>
                 </box>
             {/if}
-            <box class="slider-level">
+            <box class="level-slider">
                 <div class="box-main-text">
-                    <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
+                    <SimpleSlider bind:value={selectedClass.level}></SimpleSlider>
                 </div>
                 <div class="box-justify-filler"></div>
                 <div class="box-label">
@@ -388,7 +388,7 @@
         align-items: center;
     }
 
-    .slider-level {
+    .level-slider {
         align-items: unset;
         width: 100%;
         flex: 4 !important;

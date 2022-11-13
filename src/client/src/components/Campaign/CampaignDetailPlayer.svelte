@@ -65,6 +65,7 @@
     .players-list {
         overflow-x: hidden;
         overflow-y: auto;
+        scrollbar-width: thin;
     }
 
     :global(.players-list ul) {

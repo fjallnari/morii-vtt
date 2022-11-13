@@ -25,6 +25,8 @@ export const randomChoice = <T>(array: T[]) => {
     return array[getRandomIndex(array.length)];
 }
 
+export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 /**
  * looks through the record of levels ( level: total) to find the highest one under or equal to current class level
  * this way we don't have to have all the levels saved, only the ones where the value change

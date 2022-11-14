@@ -3,8 +3,6 @@
     import DashboardBox from "../components/Campaign/DashboardBox.svelte";
     import { campaignNewActive, campaignDetailActive, selectedCampaign, user } from "../stores";
     import CampaignChoice from '../components/Campaign/CampaignChoice.svelte';
-    import CampaignDetailOwner from "../components/Campaign/CampaignDetailOwner.svelte";
-    import CampaignDetailPlayer from '../components/Campaign/CampaignDetailPlayer.svelte';
     import DashboardHeader from '../components/Campaign/DashboardHeader.svelte';
     import { onMount } from 'svelte';
     import { querystring, replace } from 'svelte-spa-router';
@@ -14,6 +12,7 @@
     import SimpleTextfield from '../components/SimpleTextfield.svelte';
     import SimpleProgressCircle from '../components/SimpleProgressCircle.svelte';
     import Campaigns from '../components/Campaign/Campaigns.svelte';
+    import CampaignDetail from '../components/Campaign/CampaignDetail.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
@@ -88,7 +87,7 @@
             </div>
             {#if $campaignDetailActive}
                 <div class="campaign-detail" transition:fade="{{ duration: 100 }}">
-                    <DashboardBox title={$selectedCampaign.name} component={$user._id === $selectedCampaign.owner._id ? CampaignDetailOwner : CampaignDetailPlayer}></DashboardBox>
+                    <DashboardBox title={$selectedCampaign.name} component={CampaignDetail}></DashboardBox>
                 </div>
             {/if}   
         </div>

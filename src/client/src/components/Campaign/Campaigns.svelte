@@ -1,6 +1,5 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-    import type Campaign from "../../interfaces/Campaign";
     import { campaignDetailActive, campaignNewActive, selectedCampaign, user } from '../../stores';
     import SimpleIconButton from "../SimpleIconButton.svelte";
 
@@ -21,7 +20,7 @@
 
 <div class="campaigns">
     <campaigns-list>
-        {#each $user?.campaigns ?? [] as campaign, index}
+        {#each $user?.campaigns ?? [] as campaign}
             <item on:click={() => showCampaignDetails(campaign._id)} selected={selection === campaign._id}>
                 <div class="title">
                     {campaign.name}
@@ -87,8 +86,7 @@
 
     item:hover {
         transform: scale(1.02);
-        background-color: #404044aa;
-        
+        background-color: var(--clr-box-bg-light);
     }
 
     item[selected="true"] {
@@ -120,6 +118,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding-bottom: 0.2em;
     }
 
     .create-campaign-button {

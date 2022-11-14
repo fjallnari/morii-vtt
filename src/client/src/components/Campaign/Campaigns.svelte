@@ -1,14 +1,8 @@
 <script lang="ts">
-    import Icon from '@iconify/svelte';
-    import List, {
-        Item,
-        Meta,
-        Text,
-        PrimaryText,
-        SecondaryText,
-    } from '@smui/list';
+    import Icon from "@iconify/svelte";
+    import type Campaign from "../../interfaces/Campaign";
     import { campaignDetailActive, campaignNewActive, selectedCampaign, user } from '../../stores';
-    import SimpleIconButton from '../SimpleIconButton.svelte';
+    import SimpleIconButton from "../SimpleIconButton.svelte";
 
     let selection = '';
 
@@ -21,72 +15,116 @@
     const switchToCampaignCreation = () => {
         campaignDetailActive.set(false);
         campaignNewActive.set(! $campaignNewActive);
-    }
+    };
 
 </script>
 
-<div class="campaigns-content">
-    <List
-        class="demo-list"
-        twoLine
-        singleSelection
-    >
-        {#each $user?.campaigns ?? [] as campaign}
-            <div class="campaign-item">
-                <Item
-                    style="margin-bottom: 1em; border-radius: 1%;"
-                    on:SMUI:action={() => showCampaignDetails(campaign._id)}
-                    selected={selection === campaign._id}
-                >
-                    <Text>
-                        <PrimaryText>{campaign.name}</PrimaryText>
-                        <SecondaryText>{campaign.system}</SecondaryText>
-                    </Text>
-                    <Meta>
-                        <Icon class="bigger-icon" 
-                            icon="mdi:{campaign?.owner?._id === $user?._id ? 'crown': 'dice-multiple'}" 
-                            color="var(--clr-icon-{campaign?.owner?._id === $user?._id ? 'owner' : 'player'})"
-                        />
-                    </Meta>
-                </Item>
-            </div>
+<div class="campaigns">
+    <campaigns-list>
+        {#each $user?.campaigns ?? [] as campaign, index}
+            <item on:click={() => showCampaignDetails(campaign._id)} selected={selection === campaign._id}>
+                <div class="title">
+                    {campaign.name}
+                </div>
+                <div class="subtitle">
+                    {campaign.system}
+                </div>
+                <div class="icon">
+                    <Icon class="big-icon" 
+                        icon="mdi:{campaign.owner?._id === $user?._id ? 'crown': 'dice-multiple'}" 
+                        color="var(--clr-icon-{campaign.owner?._id === $user?._id ? 'owner' : 'player'})"
+                    />
+                </div>            
+            </item>
         {/each}
-    </List>
+    </campaigns-list>
 </div>
 
-<div id="create-campaign-button">
+<div class="create-campaign-button">
     <SimpleIconButton icon="mdi:add" width="1.5em" onClickFn={() => switchToCampaignCreation() }></SimpleIconButton>
 </div>
 
-<style>
-    #create-campaign-button {
-        margin-top: auto;
-        padding-bottom: 1.5em;
-    }
 
-    .campaigns-content {
-        overflow-y: auto;
-        overflow-x: hidden;
+<style>
+    .campaigns {
         display: flex;
         align-items: flex-start;
         justify-content: center;
-        width: 85%;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
     }
 
-    :global(.campaigns-content ul) {
+    campaigns-list {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        align-items: center;
+        gap: 0.5em;
+        height: 100%;
         width: 100%;
-        text-align: left; 
+        margin: 4px 0px;
+        font-family: Quicksand;
+    }
+    
+    item {
+        display: grid; 
+        grid-template-columns: 1fr 1fr 6fr 1fr; 
+        grid-template-rows: 1fr 1fr; 
+        gap: 0.1em;
+        width: 85%;
+        padding: 0.25em 0.5em 0em 0.5em;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 150ms ease-out;
+        background-color: transparent;
+        
+        grid-template-areas: 
+            "title title padding-div icon"
+            "subtitle subtitle . icon";
     }
 
-    .campaign-item:hover {
+    item:hover {
         transform: scale(1.02);
+        background-color: #404044aa;
+        
     }
 
-    .campaign-item {
-        font-family: Montserrat;
+    item[selected="true"] {
+        background-color: var(--clr-accent-muted);
+    }
+
+    item[selected="true"] .title {
+        color: var(--clr-accent-light);
+    }
+
+    .title, .subtitle {
+        text-align: left;
+    }
+
+    .title { grid-area: title; 
+        font-family: Palanquin;
+        font-size: 1.1em;
+        opacity: 0.9;
+    }
+
+    .subtitle { grid-area: subtitle;
+        font-family: Quicksand;
+        font-size: 0.9em;
+        color: var(--clr-text);
+        opacity: 0.7;
+    }
+
+    .icon { grid-area: icon; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .create-campaign-button {
+        margin-top: auto;
+        padding-bottom: 1.5em;
     }
 
 </style>

@@ -7,7 +7,7 @@
     $: value = values[0] ?? 1
 
     const styleVariables = `
-        --range-slider:          #5A77A13D; /* slider main background color */
+        --range-slider:          var(--clr-accent-muted); /* slider main background color #5A77A13D*/
         --range-handle-inactive: var(--clr-accent-normal); /* inactive handle color */
         --range-handle:          var(--clr-accent-normal); /* non-focussed handle color */
         --range-handle-focus:    var(--clr-accent-normal); /* focussed handle color */

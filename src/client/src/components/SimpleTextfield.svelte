@@ -15,9 +15,9 @@
         <Icon class="biggest-icon" icon={icon} color="{disabled ? '#fcf7f861' : '#fcf7f88a'}"></Icon>
     {/if}
     {#if type === "password"}
-        <input type="password" placeholder={placeholder} bind:value>
+        <input type="password" placeholder={placeholder} bind:value disabled={disabled}>
     {:else}
-        <input type="text" placeholder={placeholder} bind:value>
+        <input type="text" placeholder={placeholder} bind:value disabled={disabled}>
     {/if}
 </textfield>
 

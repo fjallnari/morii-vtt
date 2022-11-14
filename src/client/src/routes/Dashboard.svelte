@@ -1,6 +1,5 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
-    import Campaigns from "../components/Campaign/Campaigns.svelte";
     import DashboardBox from "../components/Campaign/DashboardBox.svelte";
     import { campaignNewActive, campaignDetailActive, selectedCampaign, user } from "../stores";
     import CampaignChoice from '../components/Campaign/CampaignChoice.svelte';
@@ -14,6 +13,7 @@
     import SimpleButton from '../components/SimpleButton.svelte';
     import SimpleTextfield from '../components/SimpleTextfield.svelte';
     import SimpleProgressCircle from '../components/SimpleProgressCircle.svelte';
+    import Campaigns from '../components/Campaign/Campaigns.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);

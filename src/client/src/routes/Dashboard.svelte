@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
     import Campaigns from "../components/Campaign/Campaigns.svelte";
-    import DashboardBox from "../components/DashboardBox.svelte";
+    import DashboardBox from "../components/Campaign/DashboardBox.svelte";
     import { campaignNewActive, campaignDetailActive, selectedCampaign, user } from "../stores";
     import CampaignChoice from '../components/Campaign/CampaignChoice.svelte';
     import CampaignDetailOwner from "../components/Campaign/CampaignDetailOwner.svelte";
@@ -10,10 +10,10 @@
     import { onMount } from 'svelte';
     import { querystring, replace } from 'svelte-spa-router';
     import axios from 'axios';
-    import Dialog, { Content, Actions } from '@smui/dialog';
+    import Dialog from '@smui/dialog';
     import SimpleButton from '../components/SimpleButton.svelte';
-    import CircularProgress from '@smui/circular-progress/src/CircularProgress.svelte';
-    import PasswordField from '../components/PasswordField.svelte';
+    import SimpleTextfield from '../components/SimpleTextfield.svelte';
+    import SimpleProgressCircle from '../components/SimpleProgressCircle.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
@@ -75,10 +75,9 @@
     
 </script>
 
-<div class="upper-container">
+<dashboard-main>
     <div class="dashboard-container">
         <DashboardHeader></DashboardHeader>
-        <h1>Dashboard</h1>
         <div class="dashboard-content">
             <div class:active = {$campaignDetailActive} class="campaigns-list">
                 {#if $campaignNewActive}
@@ -94,7 +93,6 @@
             {/if}   
         </div>
     </div>
-    <div class="overlay"></div>
     <Dialog
         bind:open={joinDialogOpen}
         aria-labelledby="simple-title"
@@ -112,7 +110,7 @@
                         <div class="owner-name">{`by ${inviteInfo?.ownerName ?? '???'}`}</div>
                     </div>
                     {#if inviteInfo?.needsPassword}
-                        <PasswordField bind:password={invitePassword} label="Password"></PasswordField>
+                        <SimpleTextfield type="password" bind:value={invitePassword} placeholder="Password" icon="mdi:lock"></SimpleTextfield>
                     {/if}
                 </div>
                 <div class="reject-inv">
@@ -134,28 +132,24 @@
             </div>
         {:else}
             <div class="join-placeholder">
-                <CircularProgress style="height: 4em; width: 4em;" indeterminate />
+                <SimpleProgressCircle></SimpleProgressCircle>
             </div>
         {/if}
     </Dialog>
-</div>
+</dashboard-main>
 
 
 
 
 <style>
-    .upper-container {
-        display: grid;
-    }
-
-    .dashboard-container, .overlay {
-        grid-area: 1 / 1;
-    }
-
-    .overlay {
+    dashboard-main {
         background: var(--bg-waves) no-repeat;
         background-size: 100%;
-        margin: 0em -1em;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
     }
 
     .dashboard-content {
@@ -163,8 +157,7 @@
         justify-content: center;
         flex-direction: row;
         align-items: center;
-        padding-right: 10%;
-        padding-left: 10%;
+        padding: 5% 15% 0% 15%;
         position: relative;
     }
     

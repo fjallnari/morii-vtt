@@ -3,8 +3,6 @@
     import IconButton from '@smui/icon-button';
     import Dialog, { Title, Content } from '@smui/dialog';
     import axios from 'axios';
-    import CircularProgress from '@smui/circular-progress';
-    import PasswordField from '../PasswordField.svelte';
     import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
     import Snackbar, {
@@ -12,9 +10,13 @@
         Label,
         SnackbarComponentDev,
     } from '@smui/snackbar';
+
+    import Icon from '@iconify/svelte';
     import SimpleButton from '../SimpleButton.svelte';
     import SimpleIconButton from '../SimpleIconButton.svelte';
-    import Icon from '@iconify/svelte';
+    import SimpleTextfield from '../SimpleTextfield.svelte';
+    import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
+    import { sleep } from '../../util/util';
 
     let open = false;
     let codeWasCopied = false;
@@ -86,10 +88,10 @@
     <h3 id="simple-title">Invite Players to {$selectedCampaign.name}</h3>
     <div class="dialog-content">
         {#if inProgress}
-            <CircularProgress style="height: 2em; width: 2em;" indeterminate></CircularProgress>
+            <SimpleProgressCircle></SimpleProgressCircle>
         {:else if ! $selectedCampaign.invite}
             <div id="generate-code-div">
-                <PasswordField bind:password={password} label="Password"></PasswordField>
+                <SimpleTextfield type="password" bind:value={password} placeholder="Password" icon="mdi:lock"></SimpleTextfield>
                 <SimpleIconButton icon="mdi:invite" color="#DBD8B3" onClickFn={() => createInviteCode()}></SimpleIconButton>
             </div>
             <p id="invite-tooltip">Generates new invite code. Password is optional.</p>

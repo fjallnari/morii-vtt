@@ -1,13 +1,11 @@
 <script lang="ts">
     import axios from 'axios';
-    import Textfield from '@smui/textfield';
-    import Select, { Option } from '@smui/select';
-
     import { campaignNewActive, user, accessToken } from '../../stores';
     import type Campaign from '../../interfaces/Campaign';
     import ProgressCircle from '../ProgressCircle.svelte';
     import SimpleButton from '../SimpleButton.svelte';
     import SimpleIconButton from '../SimpleIconButton.svelte';
+    import SimpleTextfield from '../SimpleTextfield.svelte';
 
     const gameSystems = ["D&D 5E"];
     let campaignName: string = "";
@@ -55,14 +53,8 @@
 
 {#if !inProgress}
     <div class="create-campaign-content">
-        <Textfield style="width: 17em;" bind:value={campaignName} label="Name" required variant="outlined"></Textfield>
-        <div>
-            <Select style="width: 17em;" variant="outlined" bind:gameSystem label="Game System" disabled>
-                {#each gameSystems as system}
-                    <Option gameSystem={system}>{system}</Option>
-                {/each}
-            </Select>
-        </div>
+        <SimpleTextfield bind:value={campaignName} placeholder="Name" icon="mdi:folder-text"></SimpleTextfield>
+        <SimpleTextfield bind:value={gameSystem} placeholder="Game System" icon="iconoir:hexagon-dice" disabled></SimpleTextfield>
         <SimpleButton value="Create!" type="green" onClickFn={createCampaign}></SimpleButton>
     </div>
 {:else}
@@ -86,7 +78,8 @@
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
-        gap: 2em;        
+        gap: 2em;
+        font-family: Quicksand; 
     }
 
     :global(.create-campaign-content simple-button) {

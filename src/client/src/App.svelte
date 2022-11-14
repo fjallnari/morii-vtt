@@ -192,16 +192,13 @@
 
     :global(sendable) {
         cursor: pointer;
-        transition-duration: 200ms;
-        transition-property: color;
+		transition: color 100ms ease-in;
 		display: inline-grid;
 		align-self: center;
     }
 
     :global(sendable:active) {
         color: var(--clr-accent-normal);
-        transition-duration: 200ms;
-        transition-property: color;
     }
 
     :global(textarea) {

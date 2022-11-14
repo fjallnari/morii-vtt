@@ -1,6 +1,5 @@
 <script lang="ts">
     import Dialog from '@smui/dialog';
-    import CircularProgress from '@smui/circular-progress';
     import axios from "axios";
     import StepDetailRace from "./StepDetailRace.svelte";
     import StepDetailClass from "./StepDetailClass.svelte";
@@ -14,9 +13,7 @@
     import type QuickCreateData from '../../../interfaces/QuickCreateData';
     import SimpleButton from '../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
-    import { sleep } from '../../../util/util';
-    import ProgressCircle from '../../ProgressCircle.svelte';
-    import SimpleIconButton from '../../SimpleIconButton.svelte';
+    import SimpleProgressCircle from '../../SimpleProgressCircle.svelte';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
@@ -44,7 +41,6 @@
     // quick and dirty way to trigger the reactivity
     const loadQuickCreateData = async (open: boolean) => {
         if (open) {
-            await sleep(60000);
             try {
                 const response = await axios.get('/api/quick-create-data');
                 const { characterSkeleton, ...quickCreateData } = response.data;
@@ -271,7 +267,7 @@
     <h3 id="simple-title">Quick-Create</h3>
     {#await loadQuickCreateData(open)}
         <div id="progress-circle">
-            <ProgressCircle/>
+            <SimpleProgressCircle/>
             <SimpleButton value="Cancel" icon="mdi:close" onClickFn={() => open = false}></SimpleButton>
         </div>
     {:then quickCreateData}

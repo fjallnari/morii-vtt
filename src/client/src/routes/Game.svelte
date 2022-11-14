@@ -5,11 +5,11 @@
     import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
-    import CircularProgress from '@smui/circular-progress';
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import type UserIDPair from "../interfaces/UserIDPair";
     import GameOverview from "../components/Game/GameOverview/GameOverview.svelte";
     import { nanoid } from "nanoid/non-secure";
+    import LoadingCircle from "../components/LoadingCircle.svelte";
 
     export let params: { id?: string } = {};
 
@@ -98,7 +98,9 @@
 </script>
 
 {#await loadGame()}
-    <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+    <div id="progress-circle">
+        <LoadingCircle/>
+    </div>
 {:then gameData}
     <div class="game-content">
         {#if $user && $user._id === gameData.owner}

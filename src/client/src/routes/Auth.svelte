@@ -12,6 +12,9 @@
     import SimpleTextfield from "../components/SimpleTextfield.svelte";
     import SimpleButton from "../components/SimpleButton.svelte";
     import ProgressCircle from "../components/ProgressCircle.svelte";
+    import SimpleProgressCircle from "../components/SimpleProgressCircle.svelte";
+    import LoadingCircle from "../components/LoadingCircle.svelte";
+    import { sleep } from "../util/util";
 
     let statusSnackbar: SnackbarComponentDev;
 
@@ -125,7 +128,7 @@
                     </sendable>         
                 </div>
             {:else}
-                <ProgressCircle></ProgressCircle>
+                <LoadingCircle></LoadingCircle>
             {/if}
         </div>
         <Snackbar bind:this={statusSnackbar} labelText={snackbarMessages[snackbarStatus]}>

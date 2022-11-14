@@ -28,6 +28,7 @@
         justify-content: flex-end;
         align-items: center;
         position: relative;
+        margin: 1em 2em;
     }
 
     user-tag {

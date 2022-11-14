@@ -13,6 +13,7 @@
     } from '@smui/snackbar';
     import Button, { Label } from "@smui/button";
     import SimpleIconButton from '../SimpleIconButton.svelte';
+    import SimpleTextfield from '../SimpleTextfield.svelte';
 
     let inviteCode: string = "";
     let password: string = "";
@@ -54,8 +55,8 @@
 
 {#if !inProgress}
     <div class="join-campaign-content">
-        <Textfield style="width: 15em;" bind:value={inviteCode} label="Invite Code" required variant="outlined"></Textfield>
-        <PasswordField bind:password={password} label="Password"></PasswordField>
+        <SimpleTextfield bind:value={inviteCode} placeholder="Invite Code" icon="mdi:note-text"></SimpleTextfield>
+        <SimpleTextfield bind:value={password} type="password" placeholder="Password" icon="mdi:lock"></SimpleTextfield>
         <SimpleButton value="Join!" type="primary" onClickFn={joinCampaign}></SimpleButton>
     </div>
 {:else}

@@ -1,9 +1,9 @@
 <script lang="ts">
     import Dialog, { Title, Content, Actions } from '@smui/dialog';
-    import Button, { Label } from '@smui/button';
     import { accessToken, campaignDetailActive, selectedCampaign, user } from '../../stores';
     import axios from 'axios';
     import SimpleIconButton from '../SimpleIconButton.svelte';
+    import SimpleButton from '../SimpleButton.svelte';
 
     let open = false;
 
@@ -47,12 +47,8 @@
         <h3 id="simple-title">Leave campaign</h3>
         <Content>Are you sure you want to leave <strong>{$selectedCampaign.name}</strong>?<br><em>This is irreversible.</em></Content>
         <Actions>
-        <Button variant="raised" on:click={() => open = false}>
-            <Label>No</Label>
-        </Button>
-        <Button color="secondary" on:click={() => leaveCampaign()}>
-            <Label>Yes</Label>
-        </Button>
+            <SimpleButton value="No" type="primary" onClickFn={() => open = false}></SimpleButton>
+            <SimpleButton value="Yes" onClickFn={() => leaveCampaign()}></SimpleButton>
         </Actions>
     </Dialog>
 </div>

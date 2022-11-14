@@ -1,25 +1,17 @@
 <script lang="ts">
-    import IconButton from '@smui/icon-button';
-    import Textfield from '@smui/textfield';
-
     import { campaignNewActive, user, accessToken } from '../../stores';
     import axios from 'axios';
-    import PasswordField from '../PasswordField.svelte';
-    import ProgressCircle from '../ProgressCircle.svelte';
     import SimpleButton from '../SimpleButton.svelte';
-    import Snackbar, {
-        Actions,
-        SnackbarComponentDev,
-    } from '@smui/snackbar';
-    import Button, { Label } from "@smui/button";
     import SimpleIconButton from '../SimpleIconButton.svelte';
     import SimpleTextfield from '../SimpleTextfield.svelte';
+    import SimpleSnackbar from '../SimpleSnackbar.svelte';
+    import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
 
     let inviteCode: string = "";
     let password: string = "";
     let inProgress: boolean = false;
 
-    let invalidInviteSnackbar: SnackbarComponentDev;
+    let statusSnackbar: SimpleSnackbar;
 
     const joinCampaign = async () => {
         if (! inviteCode) {
@@ -45,7 +37,7 @@
             campaignNewActive.set(! $campaignNewActive);
         }
         catch (err) {
-            invalidInviteSnackbar.open();
+            statusSnackbar.open();
             inProgress = false;
         }
         
@@ -61,7 +53,7 @@
     </div>
 {:else}
     <div id="progress-circle">
-        <ProgressCircle></ProgressCircle>
+        <SimpleProgressCircle></SimpleProgressCircle>
     </div>
 {/if}
 
@@ -69,13 +61,7 @@
     <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignNewActive.set(!$campaignNewActive)}></SimpleIconButton>
 </div>
 
-<Snackbar bind:this={invalidInviteSnackbar}>
-    <Label>Failed to join. Invalid invite code.</Label>
-    <Actions>
-      <IconButton class="material-icons" title="Dismiss">close</IconButton>
-    </Actions>
-</Snackbar>
-
+<SimpleSnackbar bind:this={statusSnackbar} label="Failed to join. Invalid invite code." theme="error"></SimpleSnackbar>
 
 <style>
     .join-campaign-content {

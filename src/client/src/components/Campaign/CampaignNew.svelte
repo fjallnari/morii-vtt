@@ -2,10 +2,10 @@
     import axios from 'axios';
     import { campaignNewActive, user, accessToken } from '../../stores';
     import type Campaign from '../../interfaces/Campaign';
-    import ProgressCircle from '../ProgressCircle.svelte';
     import SimpleButton from '../SimpleButton.svelte';
     import SimpleIconButton from '../SimpleIconButton.svelte';
     import SimpleTextfield from '../SimpleTextfield.svelte';
+    import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
 
     const gameSystems = ["D&D 5E"];
     let campaignName: string = "";
@@ -59,7 +59,7 @@
     </div>
 {:else}
     <div id="progress-circle">
-        <ProgressCircle></ProgressCircle>
+        <SimpleProgressCircle></SimpleProgressCircle>
     </div>
 {/if}
 

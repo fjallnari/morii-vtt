@@ -1,29 +1,22 @@
 <script lang="ts">
-    import { accessToken, selectedCampaign } from '../../stores';
-    import IconButton from '@smui/icon-button';
-    import Dialog, { Title, Content } from '@smui/dialog';
+    import { selectedCampaign } from '../../stores';
+    import Dialog from '@smui/dialog';
     import axios from 'axios';
     import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
-    import Snackbar, {
-        Actions,
-        Label,
-        SnackbarComponentDev,
-    } from '@smui/snackbar';
-
-    import Icon from '@iconify/svelte';
     import SimpleButton from '../SimpleButton.svelte';
     import SimpleIconButton from '../SimpleIconButton.svelte';
     import SimpleTextfield from '../SimpleTextfield.svelte';
     import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
-    import { sleep } from '../../util/util';
+    import SimpleSnackbar from '../SimpleSnackbar.svelte';
+    import Icon from '@iconify/svelte';
 
     let open = false;
     let codeWasCopied = false;
     let password: string = "";
     let inProgress = false; 
 
-    let inviteSnackbar: SnackbarComponentDev;
+    let inviteSnackbar: SimpleSnackbar;
 
     const createInviteCode = async () => {
         try {
@@ -108,7 +101,7 @@
             </div>
             <div class="invite-or">OR</div>
             <div class="invite-link">
-                <CopyToClipboard text={inviteLink} let:copy on:copy={() => (inviteSnackbar.open())}>
+                <CopyToClipboard text={inviteLink} let:copy on:copy={() => inviteSnackbar.open()}>
                     <SimpleButton value="Get invite link" icon="mdi:link" iconClass="big-icon" type="primary" onClickFn={() => copy()}></SimpleButton>
                 </CopyToClipboard>
             </div>
@@ -119,12 +112,7 @@
     </div>
 </Dialog>
 
-<Snackbar bind:this={inviteSnackbar}>
-    <Label>Copied {inviteLink} to clipboard.</Label>
-    <Actions>
-        <IconButton class="material-icons" title="Dismiss">close</IconButton>
-    </Actions>
-</Snackbar>
+<SimpleSnackbar bind:this={inviteSnackbar} label="Copied {inviteLink} to clipboard."></SimpleSnackbar>
 
 <style>
     .dialog-content {

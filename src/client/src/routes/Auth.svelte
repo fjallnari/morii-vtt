@@ -1,22 +1,14 @@
 <script lang="ts">
-    import Button, { Label } from "@smui/button";
     import { accessToken, user } from "../stores";
-    import Snackbar, {
-        Actions,
-        SnackbarComponentDev,
-    } from '@smui/snackbar';
-    import IconButton from '@smui/icon-button';
     import { axiosPublic } from '../axiosPublic';
     import { querystring, replace } from 'svelte-spa-router';
     import Icon from '@iconify/svelte';
     import SimpleTextfield from "../components/SimpleTextfield.svelte";
     import SimpleButton from "../components/SimpleButton.svelte";
-    import ProgressCircle from "../components/ProgressCircle.svelte";
-    import SimpleProgressCircle from "../components/SimpleProgressCircle.svelte";
     import LoadingCircle from "../components/LoadingCircle.svelte";
-    import { sleep } from "../util/util";
+    import SimpleSnackbar from "../components/SimpleSnackbar.svelte";
 
-    let statusSnackbar: SnackbarComponentDev;
+    let statusSnackbar: SimpleSnackbar;
 
     let username = "";
     let password = "";
@@ -54,7 +46,7 @@
         catch (err) {
             // if login fails -> popup with 'login failed' appears
             snackbarStatus = "login_fail";
-            statusSnackbar.open();
+            statusSnackbar.open('error');
             inProgress = false;
         }
     }
@@ -64,7 +56,9 @@
 
         if (! password || password !== passwordCheck){
             snackbarStatus = "no_match";
-            statusSnackbar.open();
+            statusSnackbar.open('error');
+            inProgress = false;
+            return;
         }
 
         try {
@@ -74,12 +68,12 @@
             });
 
             snackbarStatus = "register_success";
-            statusSnackbar.open();
+            statusSnackbar.open('success');
             switchAuthView();
         }
         catch (err) {
             snackbarStatus = "user_exists";
-            statusSnackbar.open();
+            statusSnackbar.open('error');
         }
 
         username = password = passwordCheck = "";
@@ -131,12 +125,7 @@
                 <LoadingCircle></LoadingCircle>
             {/if}
         </div>
-        <Snackbar bind:this={statusSnackbar} labelText={snackbarMessages[snackbarStatus]}>
-            <Label />
-            <Actions>
-            <IconButton class="material-icons" title="Dismiss">close</IconButton>
-            </Actions>
-        </Snackbar>
+        <SimpleSnackbar bind:this={statusSnackbar} label={snackbarMessages[snackbarStatus]}></SimpleSnackbar>
     </div>
 </auth-main>
 

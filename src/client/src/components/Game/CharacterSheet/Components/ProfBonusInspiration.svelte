@@ -13,7 +13,7 @@
         <InPlaceEdit bind:value={character.prof_bonus} editWidth="2em" editHeight="2em" on:submit={() => $modifyCharacter()}/>
     </box>
     <box class="row-box-label">
-        Proficiency Bonus    
+        Proficiency Bonus  
     </box>
 </div>
 <div class="row-box-with-label">
@@ -52,7 +52,6 @@
         text-transform: uppercase;
         font-family: Athiti;
         margin-left: -5px;
-        z-index: 1;
         padding-left: 15px;
         padding-right: 0.75em;
     }

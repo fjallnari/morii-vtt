@@ -1,11 +1,11 @@
 <script lang="ts">
     import { addNewResource, createNewAttack, modifyCharacter } from '../../../../stores';
     import { slide, fade } from 'svelte/transition';
-    import Tooltip, { Wrapper, Content } from '@smui/tooltip';
     import type { Character, Item } from '../../../../interfaces/Character';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
+    import { tooltip } from "@svelte-plugins/tooltips";
 
     export let item: Item;
     export let character: Character;
@@ -86,17 +86,25 @@
             <div class="item-amount">
                 <InPlaceEdit bind:value={item.amount} editWidth='1.5em' editHeight='1.5em' on:submit={() => changeItemAmount()}/>x
             </div>
-            <Wrapper>
+            {#if item.want_tooltip && item.tooltip}
+                <div class="item-name" 
+                    style={item.is_equipped ? '' : 'text-decoration: line-through; '}
+                    use:tooltip={{
+                        content: `<h4>${item.name}</h4><div>${item.tooltip}</div>`, 
+                        theme: 'blurred', 
+                        position: 'top', 
+                        animation: 'fade',
+                        arrow: false,
+                        autoPosition: true
+                    }}
+                >
+                    <InPlaceEdit bind:value={item.name} editWidth='11em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                </div>
+            {:else}
                 <div class="item-name" style={item.is_equipped ? '' : 'text-decoration: line-through; '}>
                     <InPlaceEdit bind:value={item.name} editWidth='11em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
                 </div>
-                <Tooltip style={item.want_tooltip && item.tooltip ? '': 'display: none;'} rich xPos="center">
-                    <Content>
-                        {item.tooltip}
-                    </Content>
-                </Tooltip>
-            </Wrapper>
-
+            {/if}
         </div>
     
         <div class="toggable-item-info">
@@ -199,6 +207,7 @@
 
     .main-item-info .item-name {
         flex-grow: 2;
+        position: unset !important;
     }
 
     .toggable-item-info { grid-area: toggable-item-info;
@@ -241,17 +250,6 @@
         align-items: center;
         justify-content: center;
         gap: 0.2em;
-    }
-    
-    :global(.mdc-tooltip__surface) {
-        background-color: var(--clr-box-bg-dark);
-    }
-
-    :global(.mdc-tooltip__content) {
-        font-size: 1em;
-        font-family: Athiti;
-        color: var(--clr-text);
-        width: 100%;
     }
 
     ::-webkit-scrollbar {

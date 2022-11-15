@@ -228,13 +228,5 @@
         font-size: 1.4em;
     }
 
-    :global(.tooltip.dark-tooltip) {
-        --tooltip-background-color: var(--clr-box-bg-dark);
-        --tooltip-border-radius: 4px;
-        --tooltip-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        --tooltip-font-family: Quicksand;
-        --tooltip-line-height: 1em;
-        --tooltip-padding: 12px;
-    }
 
 </style>

@@ -67,6 +67,7 @@
         height: 100%;
         display: flex;
         align-items: normal;
+        position: relative;
     }
 
     .coins-boxes {
@@ -94,6 +95,7 @@
 
         margin-top: 0.5em;
         overflow-y: auto;
+        overflow-x: hidden;
         height: 100%;
         scrollbar-width: thin;
     }

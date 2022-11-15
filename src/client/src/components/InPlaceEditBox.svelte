@@ -1,6 +1,7 @@
 <script lang="ts">
     import { modifyCharacter } from "../stores";
     import InPlaceEdit from "./InPlaceEdit.svelte";
+    import { Tooltip } from "@svelte-plugins/tooltips";
 
     export let value: string;
     export let boxLabel: string;
@@ -9,6 +10,7 @@
     export let editWidth: string = '';
     export let editHeight: string = '';
     export let onSubmitFce: () => void = () => $modifyCharacter();
+    export let tooltip: string = undefined;
 
 </script>
 
@@ -23,7 +25,18 @@
     </div>
     <div class="box-justify-filler"></div>
     <div class="box-label">
-        {boxLabel}
+        {#if tooltip}
+            <Tooltip 
+                content={tooltip} 
+                theme="blurred" 
+                position='bottom' 
+                animation='slide'
+            >
+                {boxLabel}
+            </Tooltip>
+        {:else}
+            {boxLabel}
+        {/if}
     </div>
 </box>
 

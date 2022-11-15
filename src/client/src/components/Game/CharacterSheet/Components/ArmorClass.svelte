@@ -4,15 +4,16 @@
     export let value: string;
 </script>
 
+
 <div class="armor-class-wrapper">
     <InPlaceEditBox 
         bind:value={value}
         boxLabel="Armor Class"
         editWidth="2em"
-        editHeight="2em">
+        editHeight="2em"
+        tooltip="Base unarmored AC is 10 + DEX modifier. Can be modified by wearing armor, by certain class features or otherwise.">
     </InPlaceEditBox>
 </div>
-
 
 <style>
     .armor-class-wrapper :global(box) {

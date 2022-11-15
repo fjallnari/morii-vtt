@@ -330,50 +330,34 @@
 		z-index: 4;
 	}
 
+	:global(.tooltip.dark-tooltip) {
+        --tooltip-background-color: var(--clr-box-bg-dark);
+        --tooltip-border-radius: 4px;
+        --tooltip-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        --tooltip-font-family: Quicksand !important;
+        --tooltip-line-height: 1em;
+        --tooltip-padding: 12px;
+    }
+
+    :global(.tooltip.blurred) {
+        --tooltip-background-color: #212125BA;
+        --tooltip-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        --tooltip-border-radius: 4px;
+        --tooltip-font-family: Quicksand !important;
+        --tooltip-padding: 12px;
+		--tooltip-line-height: 1.2em;
+        backdrop-filter: blur(6px);
+        text-transform: none;
+    }
+
+	:global(.tooltip h4) {
+        margin: 0.25rem 0em 0.5rem 0em;
+        font-size: 1.1em;
+        font-weight: var(--semi-bold);
+    }
+
 	:global(.mdc-dialog .mdc-dialog__surface) {
 		background-color: var(--clr-box-bg-dark);
-	}
-
-	:global(.mdc-text-field .mdc-text-field__input) {
-		caret-color: var(--clr-accent-normal) !important;
-	}
-
-	:global(.mdc-slider .mdc-slider__value-indicator) {
-        color: var(--clr-text) !important;
-        background-color: var(--clr-bg) !important;
-        opacity: 1 !important;
-    }
-
-    :global(.mdc-slider__track .mdc-slider__tick-mark--inactive) {
-        background-color: var(--clr-accent-normal) !important;
-    }
-
-    :global(.mdc-slider .mdc-slider__thumb-knob) {
-        background-color: var(--clr-accent-dark) !important;
-        border-color: var(--clr-accent-normal) !important;
-    }
-
-    :global(.mdc-slider .mdc-slider__track--active_fill) {
-        background-color: var(--clr-accent-dark) !important;
-        border-color: var(--clr-accent-dark) !important;
-    }
-
-	:global(.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading, 
-	.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch, 
-	.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing) {
-		border-color: var(--clr-accent-normal) !important;
-	}
-
-	:global(.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label) {
-		color: var(--clr-accent-normal) !important;
-	}
-
-	:global(.mdc-deprecated-list-item--selected, .mdc-deprecated-list-item--activated) {
-		color: var(--clr-accent-normal) !important;
-	}
-
-	:global(.mdc-circular-progress__determinate-circle, .mdc-circular-progress__indeterminate-circle-graphic) {
-		stroke: var(--clr-accent-normal) !important;
 	}
 
 	@media only screen and (min-width: 640px) {

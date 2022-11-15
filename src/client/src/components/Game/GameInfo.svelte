@@ -34,8 +34,8 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        width: 30em;
-        height: 5em;
+        width: 100%;
+        height: 100%;
         background-color: var(--clr-box-bg-dark);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
@@ -47,10 +47,11 @@
         font-weight: 100;
         font-family: Montserrat;
         width: 8em;
-        text-align: start;
+        text-align: left;
         text-overflow: ellipsis;
         overflow: hidden;
         padding-left: 1em;
+        margin: 0.5em 0em;
     }
 
     .game-info .icon-bar {

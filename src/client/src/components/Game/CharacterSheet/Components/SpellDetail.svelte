@@ -234,6 +234,7 @@
 
     .single-detail-line div {
         font-size: 1em;
+        white-space: nowrap;
     }
 
     .spell-component {

@@ -2,7 +2,6 @@
     import { selectedCampaign } from '../../stores';
     import Dialog from '@smui/dialog';
     import axios from 'axios';
-    import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
     import SimpleButton from '../SimpleButton.svelte';
     import SimpleIconButton from '../SimpleIconButton.svelte';
@@ -52,6 +51,7 @@
                     invite: ""
                 }));
             }
+            codeWasCopied = false;
             inProgress = false;
         }
         catch (err) {
@@ -91,7 +91,7 @@
         {:else}
             <div class="invite-card">
                 <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
-                    <div class="invite-code" use:Ripple={{ surface: true }} on:click={copy}>
+                    <div class="invite-code icon-ripple" on:click={copy}>
                         <Icon class="big-icon" icon={`mdi:${codeWasCopied ? "check" : "content-copy"}`} />
                         <p>{$selectedCampaign.invite.invite_code}</p>
                         <Icon class="big-icon" icon={`material-symbols:${$selectedCampaign.invite.has_password ? "password" : "no-encryption"}`} />

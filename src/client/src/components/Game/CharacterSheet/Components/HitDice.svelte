@@ -1,12 +1,9 @@
 <script lang="ts">
     import type { Character } from "../../../../interfaces/Character";
     import { getASModifier, modifyCharacter, sendSkillCheck } from'../../../../stores';
-    import Tooltip, {
-        Wrapper,
-        Content,
-    } from '@smui/tooltip';
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import { onMount } from "svelte";
+    import { Tooltip } from "@svelte-plugins/tooltips";
 
     export let character: Character;
 
@@ -55,17 +52,16 @@
         <InPlaceEdit bind:value={character.hd_total} editWidth="4em" editHeight="2em" on:submit={() => {parseHitDiceStr(); $modifyCharacter()}}/>
     </div>
     <div class="box-justify-filler"></div>
-    <Wrapper rich>
-        <div class="box-label">
+    <div class="box-label">
+        <Tooltip 
+            content="Use dice notation, separated by spaces, e.g. '3d8 1d10'" 
+            theme="blurred" 
+            position='bottom' 
+            animation='slide'
+        >
             Total
-        </div>
-        <Tooltip>
-            <Content style="white-space: pre-line;">
-                Use dice notation, separated by spaces, e.g. '3d8 1d10'
-            </Content>
         </Tooltip>
-    </Wrapper>
-
+    </div>
 </box>
 <box class="current-hit-dice box-with-label">
     <div class="box-main-text">

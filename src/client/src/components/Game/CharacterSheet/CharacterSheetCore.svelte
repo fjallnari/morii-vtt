@@ -33,7 +33,7 @@
             bind:value={character.xp} 
             boxLabel="XP" 
             editWidth="5em"
-            tooltip={`<h4>XP needed per level</h4>${XP_LEVELS.map((xp, i) => `<div>${i + 1} ~ ${xp} XP</div>`).join('')}`}>
+            tooltip={`<h4>XP needed per level</h4><table><tr><th>Level</th><th>XP</th></tr>${XP_LEVELS.map((xp, i) => `<tr><td>${i + 1}</td><td>${xp} XP</td></tr>`).join('')}`}>
         </InPlaceEditBox>
         <InPlaceEditBox bind:value={character.subclass} boxLabel="Subclass" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>
         <InPlaceEditBox bind:value={character.race} boxLabel="Race" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>

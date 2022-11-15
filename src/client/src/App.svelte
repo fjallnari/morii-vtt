@@ -132,10 +132,10 @@
 	$scheme-auburn: #CE9391, #B8605D, #A22C29, #642929, #A22C2929, url('../static/bg/waves-auburn.svg');
 	$scheme-forest: #A68A64, #936639, #7F4F24, #582F0E, #7F4F2429, url('../static/bg/waves-forest.svg');
 
-	$scheme-bg-default: #1B1B1E, #212125, #252529, #303036, #F9F9F9;
-	$scheme-bg-rose: #141414, #1F1F1F, #272727, #333333, #ECE1D5;
-	$scheme-bg-sea: #041F1E, #0B2323, #112627, #1E2D2F, #FAF6EF;
-	$scheme-bg-forest: #1F2518, #333D29, #414833, #656D4A, #C2C5AA;
+	$scheme-bg-default: #1B1B1E, #212125, #252529, #303036,#56565D, #F9F9F9;
+	$scheme-bg-rose: #141414, #1F1F1F, #272727, #333333,#4B4948 #ECE1D5;
+	$scheme-bg-sea: #041F1E, #0B2323, #112627, #1E2D2F,#3A4747, #FAF6EF;
+	$scheme-bg-forest: #1F2518, #333D29, #414833, #535B3F,#717856, #CBCDB6;
 
 	@mixin color-scheme($accent-light, $accent-normal, $accent-dark, $accent-darker, $accent-muted, $bg-image) {
 		--clr-accent-light: #{$accent-light};
@@ -150,11 +150,12 @@
 		--bg-waves: #{$bg-image};
 	}
 
-	@mixin color-scheme-bg($bg, $box-bg-dark, $box-bg-normal, $box-bg-light, $text) {
+	@mixin color-scheme-bg($bg, $box-bg-dark, $box-bg-normal, $box-bg-light, $box-bg-lighter, $text) {
 		--clr-bg: #{$bg};
 		--clr-box-bg-dark: #{$box-bg-dark};
 		--clr-box-bg-normal: #{$box-bg-normal};
 		--clr-box-bg-light: #{$box-bg-light};
+		--clr-box-bg-lighter: #{$box-bg-lighter};
 		--clr-text: #{$text};
 	}
 

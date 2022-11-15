@@ -39,7 +39,7 @@
     }
 
     $: occurences = (chipsArray[0]?.name ? chipsArray.map(chip => chip.name) : chipsArray).reduce((acc, curr) => {
-        return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+        return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc;
     }, {});
 
 </script>

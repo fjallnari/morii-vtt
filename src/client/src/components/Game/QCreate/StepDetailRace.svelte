@@ -10,15 +10,14 @@
     import SimpleAccordionDetail from '.././SimpleAccordionDetail.svelte';
     import BoxWithChips from '../../BoxWithChips.svelte';
     import SKILLS from '../../../enum/Skills';
-    import SegmentedButton, { Label, Segment } from '@smui/segmented-button';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
+    import SegmentedChoice from "../../SegmentedChoice.svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
     export let isCompleted: boolean;
 
     let selectedRace: RaceData | undefined = characterParts.race;
-    let chosenTool: string = '';
 
     // fires up on every change of selected race
     $ : characterParts.race = selectedRace;
@@ -32,12 +31,6 @@
         selectedRace.features = selectedRace.features.filter((_, index: number) => i !== index);
     }
 
-    $: if (chosenTool) {
-        console.log(chosenTool)
-        selectedRace.tools_prof = selectedRace.tools_prof.slice(1).concat([{ name: chosenTool }]);
-        chosenTool = undefined;
-    }
-
     const placeholderBoxes = [
         { label: 'Skill Proficiencies', gridArea: 'skill-prof' },
         { label: 'Other Proficiencies', gridArea: 'other-prof' },
@@ -46,7 +39,7 @@
         { label: 'Racial Traits', gridArea: 'features' }
     ];
 
-    $: raceIcon = `${characterParts.race?.name ? `race-icons/variant/${characterParts.race?.name.toLowerCase()}` : 'race'}`
+    $: raceIcon = `${characterParts.race?.name && characterParts.race?.name !== 'Custom' ? `race-icons/variant/${characterParts.race?.name.toLowerCase()}` : 'race'}`
 
 </script>
 
@@ -100,12 +93,7 @@
         <BoxWithChips bind:chipsArray={selectedRace.tools_prof} label='Tool Proficiencies' let:index={index} gridArea='tools-prof' blankChip={{ name: '' }}>
             <div class="chip">
                 {#if selectedRace.tools_prof[index].options}
-                    <SegmentedButton segments={selectedRace.tools_prof[index].options} let:segment singleSelect bind:selected={chosenTool}>
-                        <!-- Note: the `segment` property is required! -->
-                        <Segment {segment}>
-                            <Label>{segment}</Label>
-                        </Segment>
-                    </SegmentedButton>
+                    <SegmentedChoice bind:options={selectedRace.tools_prof[index].options} bind:final={selectedRace.tools_prof[index].name}></SegmentedChoice>
                 {:else}
                     <InPlaceEdit bind:value={selectedRace.tools_prof[index].name} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
                 {/if}

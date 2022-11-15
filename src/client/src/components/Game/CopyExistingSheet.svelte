@@ -1,11 +1,11 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
-    import CircularProgress from '@smui/circular-progress/src/CircularProgress.svelte';
     import Dialog from '@smui/dialog';
     import axios from 'axios';
     import type { Character } from '../../interfaces/Character';
     import { getClassIcon } from '../../util/util';
     import SimpleButton from '../SimpleButton.svelte';
+    import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     let open: boolean;
@@ -47,7 +47,7 @@
     <dialog-content>
         <characters-list>
             {#await getUserCharacters()}
-                <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+                <SimpleProgressCircle></SimpleProgressCircle>
             {:then characters}
                 {#if !characters || characters.length === 0}
                     <h4>You have no characters.</h4>
@@ -188,11 +188,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .checkbox-icon {
-        width: 3em;
-        height: 3em;
     }
 
 </style>

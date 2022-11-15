@@ -14,6 +14,7 @@
     class="icon-wrapper icon-ripple" 
     style='width: {`calc(${width} + ${wrapperPadding})`}; height: {`calc(${height} + ${wrapperPadding})`};' 
     on:click={() => onClickFn()}
+    tabindex="0"
 >
     <Icon icon={icon} width={width} height={height} color={color} />
 </div>

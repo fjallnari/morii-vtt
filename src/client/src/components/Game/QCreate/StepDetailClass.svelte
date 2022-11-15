@@ -2,7 +2,6 @@
     import type ClassData from "../../../interfaces/ClassData";
     import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
     import type QuickCreateData from "../../../interfaces/QuickCreateData";
-    import Slider from '@smui/slider';
     import BoxWithChips from '../../BoxWithChips.svelte';
     import SKILLS from '../../../enum/Skills';
     import InPlaceEdit from '../../InPlaceEdit.svelte';
@@ -14,6 +13,7 @@
     import BoxWithList from "../../BoxWithList.svelte";
     import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
     import ABILITY_TAGS from "../../../enum/AbilityTags";
+    import SimpleSlider from "../../SimpleSlider.svelte";
 
     export let characterParts: Partial<QuickCreateCharacterParts>;
     export let quickCreateData: Partial<QuickCreateData>;
@@ -86,7 +86,7 @@
     {#if selectedClass}
         <BoxWithList label='Features' inlineStyle='grid-area: features;' addNewListItem={addFeature} isModifyDisabled>
             <div class='level-slider' slot='filter-menu'>
-                <Slider bind:value={selectedClass.level} min={1} max={20} step={1} discrete tickMarks/>
+                <SimpleSlider bind:value={selectedClass.level}></SimpleSlider>
                 <div class="box-label level-slider-label">Level: {int2roman(selectedClass.level)}</div>          
             </div>
             <div class="features-list" slot='list'>

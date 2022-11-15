@@ -15,6 +15,7 @@
     import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
     import Inventory from './Components/Inventory.svelte';
     import Resources from './Components/Resources.svelte';
+    import XP_LEVELS from '../../../enum/XpPerLevel';
 
     export let character: Character;
 
@@ -28,7 +29,12 @@
 
     <div class="character-basic-info">
         <InPlaceEditBox bind:value={character.classes} boxLabel="Class & Level" inlineStyle="flex-grow: 4;" editWidth="10em"></InPlaceEditBox>
-        <InPlaceEditBox bind:value={character.xp} boxLabel="XP" editWidth="5em"></InPlaceEditBox>
+        <InPlaceEditBox 
+            bind:value={character.xp} 
+            boxLabel="XP" 
+            editWidth="5em"
+            tooltip={`<h4>XP needed per level</h4><table><tr><th>Level</th><th>XP</th></tr>${XP_LEVELS.map((xp, i) => `<tr><td>${i + 1}</td><td>${xp} XP</td></tr>`).join('')}`}>
+        </InPlaceEditBox>
         <InPlaceEditBox bind:value={character.subclass} boxLabel="Subclass" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>
         <InPlaceEditBox bind:value={character.race} boxLabel="Race" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>
         <InPlaceEditBox bind:value={character.background} boxLabel="Background" inlineStyle="flex-grow: 2;" editWidth="6em"></InPlaceEditBox>

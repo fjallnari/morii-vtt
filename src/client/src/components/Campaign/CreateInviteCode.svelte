@@ -1,19 +1,13 @@
 <script lang="ts">
-    import { accessToken, selectedCampaign } from '../../stores';
-    import IconButton from '@smui/icon-button';
-    import Dialog, { Title, Content } from '@smui/dialog';
+    import { selectedCampaign } from '../../stores';
+    import Dialog from '@smui/dialog';
     import axios from 'axios';
-    import CircularProgress from '@smui/circular-progress';
-    import PasswordField from '../PasswordField.svelte';
-    import Ripple from '@smui/ripple';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
-    import Snackbar, {
-        Actions,
-        Label,
-        SnackbarComponentDev,
-    } from '@smui/snackbar';
     import SimpleButton from '../SimpleButton.svelte';
     import SimpleIconButton from '../SimpleIconButton.svelte';
+    import SimpleTextfield from '../SimpleTextfield.svelte';
+    import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
+    import SimpleSnackbar from '../SimpleSnackbar.svelte';
     import Icon from '@iconify/svelte';
 
     let open = false;
@@ -21,7 +15,7 @@
     let password: string = "";
     let inProgress = false; 
 
-    let inviteSnackbar: SnackbarComponentDev;
+    let inviteSnackbar: SimpleSnackbar;
 
     const createInviteCode = async () => {
         try {
@@ -57,6 +51,7 @@
                     invite: ""
                 }));
             }
+            codeWasCopied = false;
             inProgress = false;
         }
         catch (err) {
@@ -86,17 +81,17 @@
     <h3 id="simple-title">Invite Players to {$selectedCampaign.name}</h3>
     <div class="dialog-content">
         {#if inProgress}
-            <CircularProgress style="height: 2em; width: 2em;" indeterminate></CircularProgress>
+            <SimpleProgressCircle></SimpleProgressCircle>
         {:else if ! $selectedCampaign.invite}
             <div id="generate-code-div">
-                <PasswordField bind:password={password} label="Password"></PasswordField>
+                <SimpleTextfield type="password" bind:value={password} placeholder="Password" icon="mdi:lock"></SimpleTextfield>
                 <SimpleIconButton icon="mdi:invite" color="#DBD8B3" onClickFn={() => createInviteCode()}></SimpleIconButton>
             </div>
             <p id="invite-tooltip">Generates new invite code. Password is optional.</p>
         {:else}
             <div class="invite-card">
                 <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
-                    <div class="invite-code" use:Ripple={{ surface: true }} on:click={copy}>
+                    <div class="invite-code icon-ripple" on:click={copy}>
                         <Icon class="big-icon" icon={`mdi:${codeWasCopied ? "check" : "content-copy"}`} />
                         <p>{$selectedCampaign.invite.invite_code}</p>
                         <Icon class="big-icon" icon={`material-symbols:${$selectedCampaign.invite.has_password ? "password" : "no-encryption"}`} />
@@ -106,7 +101,7 @@
             </div>
             <div class="invite-or">OR</div>
             <div class="invite-link">
-                <CopyToClipboard text={inviteLink} let:copy on:copy={() => (inviteSnackbar.open())}>
+                <CopyToClipboard text={inviteLink} let:copy on:copy={() => inviteSnackbar.open()}>
                     <SimpleButton value="Get invite link" icon="mdi:link" iconClass="big-icon" type="primary" onClickFn={() => copy()}></SimpleButton>
                 </CopyToClipboard>
             </div>
@@ -117,12 +112,7 @@
     </div>
 </Dialog>
 
-<Snackbar bind:this={inviteSnackbar}>
-    <Label>Copied {inviteLink} to clipboard.</Label>
-    <Actions>
-        <IconButton class="material-icons" title="Dismiss">close</IconButton>
-    </Actions>
-</Snackbar>
+<SimpleSnackbar bind:this={inviteSnackbar} label="Copied {inviteLink} to clipboard."></SimpleSnackbar>
 
 <style>
     .dialog-content {

@@ -5,11 +5,11 @@
     import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
-    import CircularProgress from '@smui/circular-progress';
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import type UserIDPair from "../interfaces/UserIDPair";
     import GameOverview from "../components/Game/GameOverview/GameOverview.svelte";
     import { nanoid } from "nanoid/non-secure";
+    import LoadingCircle from "../components/LoadingCircle.svelte";
 
     export let params: { id?: string } = {};
 
@@ -98,39 +98,53 @@
 </script>
 
 {#await loadGame()}
-    <div id="progress-circle"><CircularProgress style="height: 4em; width: 4em;" indeterminate /></div>
+    <div id="progress-circle">
+        <LoadingCircle/>
+    </div>
 {:then gameData}
-    <div class="game-content">
-        {#if $user && $user._id === gameData.owner}
-            <GameOverview gameData={gameData}></GameOverview>
-        {:else}
-            <CharacterHandler gameData={gameData}></CharacterHandler>
-        {/if}
-        <div class="right-panel">
+    <game-content>
+        <div class="character-sheet">
+            {#if $user && $user._id === gameData.owner}
+                <GameOverview gameData={gameData}></GameOverview>
+            {:else}
+                <CharacterHandler gameData={gameData}></CharacterHandler>
+            {/if}
+        </div>
+        <div class="game-info">
             <GameInfo gameData={gameData}></GameInfo>
+        </div>
+        <div class="chat">
             <Chat></Chat>
         </div>
-    </div>
+    </game-content>
 {/await}
 
 
 <style>
-    .game-content {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
+    game-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 10fr);
+        grid-auto-flow: row;
+        grid-template-areas:
+            "character-sheet character-sheet character-sheet game-info"
+            "character-sheet character-sheet character-sheet chat";
+        
         padding-top: 1em;
-        height: calc(95vh - 2px);
+        height: calc(95vh);
         gap: 1em;
     }
 
-    .right-panel {
+    game-content > div {
         display: flex;
-        flex-direction: column; 
-        align-items: center;
-        height: inherit;
-        gap: 1em;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
     }
+
+    .character-sheet { grid-area: character-sheet; }
+    .game-info { grid-area: game-info; }
+    .chat { grid-area: chat; }
 
     #progress-circle {
       display: flex; 

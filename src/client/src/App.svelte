@@ -124,7 +124,7 @@
 	$scheme-salmon: #FCC8B2, #EFA48B, #E9805D, #875343, #E9805D29, url('../static/bg/waves-salmon-b.svg');
 	$scheme-rajah: #F6D0A7, #F2A654, #BF864A, #8C663F, #BF864A29, url('../static/bg/waves-rajah.svg');	
 	$scheme-blue: #78A1BB, #5A77A1, #3C4C87, #2C3863, #3C4C8729, url('../static/bg/waves-blue.svg');
-	$scheme-cyan: #AAD5DA, #5AB1BB, #457179, #3B5158, #45717929, url('../static/bg/waves-cyan.svg');
+	$scheme-cyan: #AAD5DA, #547B81, #457179, #3B5158, #45717929, url('../static/bg/waves-cyan.svg');
 	$scheme-sea: #79B1A3, #5F9B8D, #417D71, #335E57, #417D7129, url('../static/bg/waves-sea.svg');
 	$scheme-viridian: #8BBBA7, #549C7E, #1C7C54, #21513F, #1C7C5429, url('../static/bg/waves-viridian.svg');
 	$scheme-cordovan: #C5A4A7,#AB797E, #904E55, #603F46, #904E5529, url('../static/bg/waves-cordovan.svg');
@@ -163,7 +163,7 @@
 		--semi-bold: 600;
 
 		@include color-scheme-bg($scheme-bg-default ...);
-		@include color-scheme($scheme-blue ...);
+		@include color-scheme($scheme-cyan ...);
 	}
 	
 	:global(tab-container) {
@@ -356,10 +356,6 @@
         font-size: 1.1em;
         font-weight: var(--semi-bold);
     }
-
-	:global(.mdc-dialog .mdc-dialog__surface) {
-		background-color: var(--clr-box-bg-dark);
-	}
 
 	@media only screen and (min-width: 640px) {
 		main {

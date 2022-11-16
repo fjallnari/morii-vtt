@@ -1,8 +1,6 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-
-
-
+    
     type ButtonType = 'default' | 'primary' | 'green' | 'delete' | 'orange';
     
     interface ButtonColors {

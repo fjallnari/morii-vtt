@@ -9,6 +9,9 @@
 	import Game from "./routes/Game.svelte";
 	import { axiosPublic } from "./axiosPublic";
 	import mem from "mem";
+    import { onMount } from "svelte";
+    import { cssVarTheme } from "./util/util";
+    import THEMES from "./enum/Themes";
 
 	const maxAge = 10000; // for memoizing refresh token
 
@@ -103,6 +106,11 @@
 	}
 
 	const memoizedRefreshToken = mem(refreshAccessToken, { maxAge });
+
+	onMount(() => {
+		const colorThemeID = localStorage.theme || "default";
+		document.getElementById("root").setAttribute("style", cssVarTheme(THEMES.find(theme => theme.id === colorThemeID) ?? THEMES[0]));
+	});
 	
 </script>
 
@@ -137,33 +145,33 @@
 	$scheme-bg-sea: #041F1E, #0B2323, #112627, #1E2D2F,#3A4747, #FAF6EF;
 	$scheme-bg-forest: #1F2518, #333D29, #414833, #535B3F,#717856, #CBCDB6;
 
-	@mixin color-scheme($accent-light, $accent-normal, $accent-dark, $accent-darker, $accent-muted, $bg-image) {
-		--clr-accent-light: #{$accent-light};
-		--clr-accent-normal: #{$accent-normal};
-		--clr-accent-dark: #{$accent-dark};
-		--clr-accent-darker: #{$accent-darker};
-		--clr-accent-muted: #{$accent-muted};
-		--clr-contrast-normal: #BC4B51;
-		--clr-contrast-dark: #A43D42;
-		--clr-icon-owner: #E2C044;
-		--clr-icon-player: #6CD4FF; 
-		--bg-waves: #{$bg-image};
-	}
+	// @mixin color-scheme($accent-light, $accent-normal, $accent-dark, $accent-darker, $accent-muted, $bg-image) {
+	// 	--clr-accent-light: #{$accent-light};
+	// 	--clr-accent-normal: #{$accent-normal};
+	// 	--clr-accent-dark: #{$accent-dark};
+	// 	--clr-accent-darker: #{$accent-darker};
+	// 	--clr-accent-muted: #{$accent-muted};
+	// 	--bg-waves: #{$bg-image};
+	// }
 
-	@mixin color-scheme-bg($bg, $box-bg-dark, $box-bg-normal, $box-bg-light, $box-bg-lighter, $text) {
-		--clr-bg: #{$bg};
-		--clr-box-bg-dark: #{$box-bg-dark};
-		--clr-box-bg-normal: #{$box-bg-normal};
-		--clr-box-bg-light: #{$box-bg-light};
-		--clr-box-bg-lighter: #{$box-bg-lighter};
-		--clr-text: #{$text};
-	}
+	// @mixin color-scheme-bg($bg, $box-bg-dark, $box-bg-normal, $box-bg-light, $box-bg-lighter, $text) {
+	// 	--clr-bg: #{$bg};
+	// 	--clr-box-bg-dark: #{$box-bg-dark};
+	// 	--clr-box-bg-normal: #{$box-bg-normal};
+	// 	--clr-box-bg-light: #{$box-bg-light};
+	// 	--clr-box-bg-lighter: #{$box-bg-lighter};
+	// 	--clr-text: #{$text};
+	// }
 
 	:root {
 		--semi-bold: 600;
+		--clr-contrast-normal: #BC4B51;
+		--clr-contrast-dark: #A43D42;
+		--clr-icon-owner: #E2C044;
+		--clr-icon-player: #6CD4FF;
 
-		@include color-scheme-bg($scheme-bg-default ...);
-		@include color-scheme($scheme-cyan ...);
+		//@include color-scheme-bg($scheme-bg-default ...);
+		//@include color-scheme($scheme-cyan ...);
 	}
 	
 	:global(tab-container) {
@@ -252,6 +260,10 @@
 	:global(svg.biggest-icon) {
        font-size: 2.5em;
    	}
+
+	:global(pfp) {
+		fill: var(--clr-text);
+	}
 
     :global(.box-with-label) {
         flex-grow: 1;

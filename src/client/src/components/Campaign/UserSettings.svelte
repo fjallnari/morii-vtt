@@ -2,7 +2,7 @@
     import Dialog from '@smui/dialog';
     import { replace } from 'svelte-spa-router';
     import { axiosPublic } from '../../axiosPublic';
-    import ANIMALS from '../../enum/Animals';
+    import ANIMALS from '../../enum/SVGAnimals';
     import type UserSettings from '../../interfaces/UserSettings';
     import { accessToken, user } from '../../stores';
     import SimpleButton from '../SimpleButton.svelte';
@@ -64,21 +64,23 @@
     <h3 id="simple-title">Settings</h3>
     <settings-content>
         <div class="pfp-select">
-            {#each ANIMALS as pfpAnimal, index}
-                <img 
-                    class="{settingsEditObj.pfpID === index ? 'selected' : 'pfp'}" 
+            {#each Object.keys(ANIMALS).slice(1) as pfpAnimal}
+                <pfp
+                    selected={settingsEditObj.pfpID === pfpAnimal}
                     style="background-color: transparent;" 
-                    src="../static/pfp/{pfpAnimal}.svg" 
-                    alt="pfp"
-                    on:click={() => {settingsEditObj.pfpID = index}}
+                    on:click={() => {settingsEditObj.pfpID = pfpAnimal}}
                     tabindex="0"
                 >
+                    {@html `${ANIMALS[pfpAnimal] ?? ANIMALS['default']}`}
+                </pfp>
             {/each}
         </div>
         <div class="color-picker">
             <HsvPicker on:colorChange={colorCallback} startColor={`#${$user.settings.pfpColor}`}/>
             <user-tag>
-                <img class="pfp" style="background-color: #{settingsEditObj.pfpColor};" src="../static/pfp/{ANIMALS[settingsEditObj.pfpID]}.svg" alt="pfp">
+                <pfp style="background-color: #{settingsEditObj.pfpColor};">
+                    {@html `${ANIMALS[settingsEditObj.pfpID] ?? ANIMALS['default']}`}
+                </pfp>
                 <h3>{$user.username}</h3>
             </user-tag>
         </div>
@@ -121,23 +123,27 @@
         scrollbar-width: thin;
     }
 
-    .pfp-select img {
+    .pfp-select pfp {
         width: 3em;
         height: 3em;
         cursor: pointer;
+        border-bottom: 2px transparent solid;
     }
 
-    .pfp-select img:hover {
-        filter: brightness(0) saturate(100%) invert(68%) sepia(12%) saturate(919%) hue-rotate(160deg) brightness(89%) contrast(91%);
+    .pfp-select pfp:hover {
+        fill: var(--clr-accent-light);
+        /* filter: brightness(0) saturate(100%) invert(68%) sepia(12%) saturate(919%) hue-rotate(160deg) brightness(89%) contrast(91%); */
     }
 
-    .pfp-select img:active {
-        filter: brightness(0) saturate(100%) invert(30%) sepia(10%) saturate(3076%) hue-rotate(190deg) brightness(90%) contrast(90%);
+    .pfp-select pfp:active {
+        fill: var(--clr-accent-dark);
+        /* filter: brightness(0) saturate(100%) invert(30%) sepia(10%) saturate(3076%) hue-rotate(190deg) brightness(90%) contrast(90%); */
     }
 
-    .pfp-select > img.selected {
-        border-bottom: 2px var(--clr-text) solid;
-        filter: brightness(0) saturate(100%) invert(50%) sepia(49%) saturate(409%) hue-rotate(176deg) brightness(81%) contrast(82%);
+    .pfp-select > pfp[selected="true"] {
+        fill: var(--clr-accent-normal);
+        border-bottom: 2px var(--clr-accent-normal) solid;
+        /* filter: brightness(0) saturate(100%) invert(50%) sepia(49%) saturate(409%) hue-rotate(176deg) brightness(81%) contrast(82%); */
     }
 
 
@@ -175,7 +181,7 @@
         max-width: 70%;
     }
 
-    user-tag img {
+    user-tag pfp {
         border-radius: 15%;
         width: 3em;
         height: 3em;

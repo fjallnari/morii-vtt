@@ -24,7 +24,7 @@
         align-items: center;
         width: 80%;
         height: 50%;
-        border: var(--clr-text) 0.15em solid;
+        border: 0.15em solid;
         border-radius: 4px;
         margin-top: auto;
         position: absolute;

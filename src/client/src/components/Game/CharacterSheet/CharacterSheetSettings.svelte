@@ -6,7 +6,7 @@
     import type { Character } from "../../../interfaces/Character";
     import type UserSimple from "../../../interfaces/UserSimple";
     import SimpleButton from "../../SimpleButton.svelte";
-    import ANIMALS from "../../../enum/Animals";
+    import ANIMALS from "../../../enum/SVGAnimals";
     import axios from "axios";
     import Icon from "@iconify/svelte";
 
@@ -60,7 +60,9 @@
             <line-div>
                 <div>Created by: </div>
                 <div class="player-tag">
-                    <img id="pfp" style="background-color: #{playerObj.settings.pfpColor};" src="../static/pfp/{ANIMALS[playerObj.settings.pfpID]}.svg" alt="pfp">
+                    <pfp style="background-color: #{playerObj.settings.pfpColor};">
+                        {@html `${ANIMALS[playerObj.settings.pfpID] ?? ANIMALS['default']}`}
+                    </pfp>
                     <div>{playerObj.username}</div>
                 </div>
             </line-div>
@@ -185,7 +187,7 @@
         font-size: 1.2em;
     }
 
-    .player-tag img {
+    .player-tag pfp {
         border-radius: 4px;
         width: 2em;
         height: 2em;

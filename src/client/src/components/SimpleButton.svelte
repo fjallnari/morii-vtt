@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     
-    type ButtonType = 'default' | 'primary' | 'green' | 'delete' | 'orange';
+    type ButtonType = 'default' | 'primary' | 'green' | 'delete';
     
     interface ButtonColors {
         bg_color: string,
@@ -19,16 +19,12 @@
 
     const BUTTON_TYPES: Record<ButtonType, ButtonColors> = {
         'default': {
-            bg_color: '#303036',
-            active_bg_color: '#27272B'
+            bg_color: 'var(--clr-box-bg-light)',
+            active_bg_color: 'var(--clr-box-bg-normal)' //#27272B
         },
         'primary': {
             bg_color: 'var(--clr-accent-dark)',
             active_bg_color: 'var(--clr-accent-darker)'
-        },
-        'orange': {
-            bg_color: '#E9805D',
-            active_bg_color: '#E7724B'
         },
         'green': {
             bg_color: '#80A451',

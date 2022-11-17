@@ -28,6 +28,10 @@ export const randint = (max: number) => {
   return Math.floor(Math.random() * max);
 }
 
+export const randomChoice = <T>(options: T[]) => {
+  return options[Math.floor(Math.random() * options.length)];
+}
+
 export const randomColor = () => {
   return "000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
 }

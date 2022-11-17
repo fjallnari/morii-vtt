@@ -2,7 +2,7 @@
     import { user } from "../../../stores";
     import SvelteMarkdown from 'svelte-markdown';
     import type MessageData from '../../../interfaces/MessageData';
-    import ANIMALS from '../../../enum/Animals';
+    import ANIMALS from '../../../enum/SVGAnimals';
     import PrettyRollResult from './PrettyRollResult.svelte';
     import LangMessage from './LangMessage.svelte';
     import Icon from "@iconify/svelte";
@@ -37,7 +37,9 @@
     
     <div class="sender-pfp">
         {#if message && message.messageMode === MESSAGE_MODES.PUBLIC}
-            <img class='user-icon' style="background-color: #{message.senderInfo.settings.pfpColor};" src="../static/pfp/{ANIMALS[message.senderInfo.settings.pfpID]}.svg" alt="pfp">
+            <pfp class='user-icon' style="background-color: #{message.senderInfo.settings.pfpColor};">
+                {@html `${ANIMALS[message.senderInfo.settings.pfpID] ?? ANIMALS['default']}`}
+            </pfp>
         {:else}
             <img class='mode-icon' src="../static/{message.messageMode === MESSAGE_MODES.SECRET ? 'eye-off': 'message-text-lock'}.svg" alt="msg-mode">
         {/if}
@@ -106,11 +108,13 @@
         height: 2.5em; 
     }
 
-    .sender-pfp > img {
+    .sender-pfp > img, .sender-pfp > pfp {
         border-radius: 25%;
     }
 
-    .sender-pfp img.user-icon {
+    .sender-pfp pfp.user-icon {
+        width: 100%;
+        height: 100%;
         background-color: var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     }

@@ -1,4 +1,4 @@
 export default interface UserSettings {
-    pfpID: number;
+    pfpID: string;
     pfpColor: string;
 }

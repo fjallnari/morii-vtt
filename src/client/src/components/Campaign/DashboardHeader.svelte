@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ANIMALS from "../../enum/Animals";
+    import ANIMALS from "../../enum/SVGAnimals";
     import { user } from "../../stores";
     import ThemeSwitcher from "./ThemeSwitcher.svelte";
     import UserSettings from "./UserSettings.svelte";
@@ -11,7 +11,9 @@
 <header>
     <ThemeSwitcher></ThemeSwitcher>
     <user-tag on:click={() => {openSettings = true}}>
-        <img class="pfp" style="background-color: #{$user.settings.pfpColor};" src="../static/pfp/{ANIMALS[$user.settings.pfpID]}.svg" alt="pfp">
+        <pfp style="background-color: #{$user.settings.pfpColor};">
+            {@html `${ANIMALS[$user.settings.pfpID] ?? ANIMALS['default']}`}
+        </pfp>
         <h3>{$user.username}</h3>
     </user-tag>
 </header>
@@ -49,7 +51,7 @@
         border-radius: 4px;
     }
 
-    user-tag img {
+    user-tag pfp {
         border-radius: 15%;
         width: 3em;
         height: 3em;

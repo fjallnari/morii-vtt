@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
 import { Collection, Document } from "mongodb";
 import bcrypt from 'bcrypt';
 import { getCollection } from "../../../db/Mongo";
-import { randint, randomColor } from "../../../util/util";
+import { randint, randomChoice, randomColor } from "../../../util/util";
 import RouteController from "../RouteController";
+import ANIMALS from "../../../enum/ANIMALS";
 
 export default class SignUpController extends RouteController {
     
@@ -18,7 +18,7 @@ export default class SignUpController extends RouteController {
                 password: hashedPassword,
                 refresh_token: "",
                 settings: {
-                    pfpID: randint(16),
+                    pfpID: randomChoice(ANIMALS),
                     pfpColor: randomColor()
                 },
                 campaigns: [],

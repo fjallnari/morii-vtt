@@ -109,7 +109,7 @@
 
 	onMount(() => {
 		const colorThemeID = localStorage.theme || "default";
-		document.getElementById("root").setAttribute("style", cssVarTheme(THEMES.find(theme => theme.id === colorThemeID)));
+		document.getElementById("root").setAttribute("style", cssVarTheme(THEMES.find(theme => theme.id === colorThemeID) ?? THEMES[0]));
 	});
 	
 </script>
@@ -260,6 +260,10 @@
 	:global(svg.biggest-icon) {
        font-size: 2.5em;
    	}
+
+	:global(pfp) {
+		fill: var(--clr-text);
+	}
 
     :global(.box-with-label) {
         flex-grow: 1;

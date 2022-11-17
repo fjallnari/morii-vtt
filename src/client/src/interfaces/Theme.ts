@@ -1,0 +1,16 @@
+export default interface Theme {
+    "id": string,
+    "name": string,
+    "--clr-accent-light": string,
+    "--clr-accent-normal": string,
+    "--clr-accent-dark": string,
+    "--clr-accent-darker": string,
+    "--clr-accent-muted": string,
+    "--bg-waves": string,
+    "--clr-bg": string,
+    "--clr-box-bg-dark": string,
+    "--clr-box-bg-normal": string,
+    "--clr-box-bg-light": string,
+    "--clr-box-bg-lighter": string,
+    "--clr-text": string,
+}

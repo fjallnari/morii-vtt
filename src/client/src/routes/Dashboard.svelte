@@ -13,6 +13,7 @@
     import SimpleProgressCircle from '../components/SimpleProgressCircle.svelte';
     import Campaigns from '../components/Campaign/Campaigns.svelte';
     import CampaignDetail from '../components/Campaign/CampaignDetail.svelte';
+    import ThemeSwitcher from '../components/Campaign/ThemeSwitcher.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);

@@ -1,4 +1,5 @@
 import CLASS_NAMES from "../enum/ClassNames";
+import type Theme from "../interfaces/Theme";
 
 export const validateClassName = (className: string) => {
     return CLASS_NAMES.includes(className) ? className : 'class-default';  
@@ -26,6 +27,14 @@ export const randomChoice = <T>(array: T[]) => {
 }
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export const cssVarTheme = (theme: Theme) => Object.entries(theme)
+    .map(([key, value]) => {
+        if (key !== 'id' && key !== 'name') {
+            return `${key}:${value}`;
+        }
+    })
+    .join(';');
 
 /**
  * looks through the record of levels ( level: total) to find the highest one under or equal to current class level

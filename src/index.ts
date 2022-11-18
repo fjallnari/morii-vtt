@@ -8,12 +8,23 @@ import userRoutes from './routes/UserRoutes';
 import ownerRoutes from './routes/OwnerRoutes';
 import cookieParser from 'cookie-parser';
 import SocketsController from "./controllers/SocketsIO/SocketsController";
+import logger from './logger';
 
 dotenv.config();
 setUpDB();
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const DEV = process.env.DEV || false;
 
+process.on('uncaughtException', (err) => {
+    logger.error(err);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+    logger.error(err);
+    process.exit(1);
+});
 
 const main = async () => {
     const app = express();
@@ -67,8 +78,8 @@ const main = async () => {
         res.json({ error: err });
     });
 
-    httpServer.listen(3000, () => {
-        console.log(`Server started on http://localhost:${port}/?#`);
+    httpServer.listen(PORT, () => {
+        logger.info(`server started on ${DEV ? `http://localhost:${PORT}/?#` : `port ${PORT}`}`);
     });
 }
 

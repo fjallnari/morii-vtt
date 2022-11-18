@@ -14,6 +14,7 @@ import ACKOwnerJoinEmit from "../../interfaces/emits/ACKOwnerJoinEmit";
 import DiceHandler from "../../services/DiceHandler";
 import LangModule from "../../services/LangModule";
 import MESSAGE_MODES from "../../enum/MESSAGE_MODES";
+import logger from "../../logger";
 
 
 export default class SocketsController {
@@ -54,6 +55,9 @@ export default class SocketsController {
      */
     public async joinRoom(socket: Socket, data: JoinRoomEmit) {
         const ownerID = await this.getOwnerID(data.roomID);
+
+        logger.info({ userID: data.userID, roomID: data.roomID }, `user '${data.userID}' joined socket room '${data.roomID} succesfully'`);
+
         this.io.to(data.roomID).emit('user-joined-room', { userID: data.userID, socketID: socket.id, isOwner: data.userID === ownerID});
         socket.join(data.roomID);
     }

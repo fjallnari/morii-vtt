@@ -3,6 +3,7 @@ import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
 import jwt from 'jsonwebtoken';
+import logger from "../../../logger";
 
 export default class LeaveCampaignController extends RouteController {
 
@@ -11,7 +12,9 @@ export default class LeaveCampaignController extends RouteController {
 
         const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
         const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-        const userID = new ObjectId(decodedToken.user._id);
+        const userID = new ObjectId(decodedToken?.user?._id);
+
+        logger.info({ userID, campaignID }, `user '${userID}' attempting to leave campaign '${campaignID}'`);
     
         try {
             const usersCollection = <Collection<Document>> await getCollection('users');
@@ -22,11 +25,12 @@ export default class LeaveCampaignController extends RouteController {
             
             // remove campaign from user's campaigns
             await usersCollection.updateOne({_id: userID}, {$pull: { campaigns: new ObjectId(campaignID) }});
-    
+
+            logger.info({ userID, campaignID, status: 200 }, `user '${userID}' left '${campaignID}' successfully`);    
             return this.res.status(200).end();
         }
-        catch (err) {
-            console.log(err);
+        catch (error) {
+            logger.info({ userID, campaignID, error, status: 401 }, `user '${userID}' failed to leave camapaign '${campaignID}'`);
             return this.res.status(401).end();
         }
     }

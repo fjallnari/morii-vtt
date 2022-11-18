@@ -21,6 +21,7 @@
                 campaignID: $params.id,
                 characterID: character._id,
                 playerID: character.playerID,
+                removerID: $user._id,
                 isNPC: isNPC
             });
             

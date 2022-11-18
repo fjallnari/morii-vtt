@@ -8,11 +8,14 @@ import { QC_AS_BLANK } from "../../../enum/QC_AS_BLANK";
 import { ASI } from "../../../enum/srd/ASI";
 import { QC_BIO_BLANK } from "../../../enum/QC_BIO_BLANK";
 import { WEAPON_STATS } from "../../../enum/srd/WEAPON_STATS";
+import logger from "../../../logger";
 
 export default class GetQuickCreateDataController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
         try {
+            logger.info({ status: 200 }, `attempting to get q-create data`);
+            
             return this.res.status(200).send({ 
                 characterSkeleton: CHARACTER_SKELETON, 
                 races: RACES, 
@@ -38,6 +41,7 @@ export default class GetQuickCreateDataController extends RouteController {
             });
         }
         catch (error) {
+            logger.error({ error, status: 500 }, `failed getting q-create data`);
             return this.res.status(500).end();
         }
     }

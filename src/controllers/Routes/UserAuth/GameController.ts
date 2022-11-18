@@ -4,6 +4,7 @@ import { getCollection, getIdsFromCollection } from "../../../db/Mongo";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
 import UserDB from "../../../interfaces/UserDB";
+import logger from "../../../logger";
 import { getFullCampaignsInfo, getUserFromToken, simplifyPlayerInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
 
@@ -41,20 +42,25 @@ export default class GameController extends RouteController {
     }
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
+        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
+        const user = await getUserFromToken(accessToken);
+        const campaignIDString = this.req.params.id;
+
+        logger.info({ userID: user._id, campaignID: campaignIDString}, `attempting to get game data for campaign '${campaignIDString}'`);
         try {
-            const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
-            const user = await getUserFromToken(accessToken);
-            
-            if (! user.campaigns.find( campaign => campaign.toString() === this.req.params.id)) {
+            if (! user.campaigns.find( campaign => campaign.toString() === campaignIDString)) {
+                logger.info({ userID: user._id, campaignID: campaignIDString, status: 404 }, `failed getting game data; campaign was not found`); 
                 return this.res.status(404).end();
             }
 
-            const campaignID = new ObjectId(this.req.params.id);
+            const campaignID = new ObjectId(campaignIDString);
             const gameData = await this.getGameData(campaignID, user._id);
-    
+
+            logger.info({ userID: user._id, campaignID: campaignIDString, status: 200 }, `succesfully sent game data for campaign '${campaignIDString}'`);    
             return this.res.status(200).send({ userInfo: {...simplifyPlayerInfo(user), gameData }});
         }
         catch (err) {
+            logger.info({ userID: user._id, campaignID: campaignIDString, status: 401 }, `failed getting game data for campaign '${campaignIDString}'`); 
             return this.res.status(401).end();
         }
     }

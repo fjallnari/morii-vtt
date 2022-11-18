@@ -3,6 +3,7 @@ import { Collection, Document } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController"
 import jwt from 'jsonwebtoken';
+import logger from "../../../logger";
 
 export default class RefreshTokenController extends RouteController {
     
@@ -10,7 +11,15 @@ export default class RefreshTokenController extends RouteController {
         try {
             const refreshToken = this.req.cookies._refresh_token;
 
-            if (!refreshToken || ! process.env.JWT_SECRET || ! process.env.JWT_REFRESH_SECRET) {
+            logger.info(`attempting JWT token refresh`);
+
+            if (!refreshToken) {
+                logger.info({ status: 401 }, `JWT token does not exist`);
+                return this.res.status(401).send('Invalid token.');
+            }
+
+            if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
+                logger.error({ status: 401 }, `JWT secrets were not found in .env file`);
                 return this.res.status(401).send('Invalid token.');
             }
 
@@ -18,13 +27,15 @@ export default class RefreshTokenController extends RouteController {
             try {
                 this.req.user = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
               } catch (err) {
+                logger.info({ status: 401 }, `JWT refresh token is invalid`);
                 return this.res.status(401).send("Invalid Token");
             }
 
             const usersCollection = <Collection<Document>> await getCollection('users');
-            const user = await usersCollection.findOne({refresh_token: refreshToken});
+            const user = await usersCollection.findOne({ refresh_token: refreshToken });
 
             if (! user ) {
+                logger.info({ refresh_token: refreshToken }, `No user has this refreshToken stored in DB`);
                 return this.res.status(401).send('Invalid token.');
             }
 
@@ -38,9 +49,11 @@ export default class RefreshTokenController extends RouteController {
             // add new refresh token to the db
             await usersCollection.updateOne({_id: user._id}, {$set: {refresh_token: newRefreshToken}});
 
+            logger.info({ username: user.username, status: 200 }, `JWT refresh token for user '${user.username}' was refreshed`);
             return this.res.status(200).json({ accessToken });
 
         } catch (error) {
+            logger.warn({ error, status: 403 }, `JWT refresh failed`);
             return this.res.status(403).send('Login failed');
         }        
     }

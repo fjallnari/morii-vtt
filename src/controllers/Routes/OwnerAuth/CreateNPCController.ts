@@ -12,10 +12,10 @@ export default class CreateNPCController extends RouteController {
          // TODO: verify if the owner of campaign is the one actually making the request
         const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
         const { campaignID, characterTemplate } = this.req.body;
+        const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
+        const userID = new ObjectId(decodedToken?.user?._id);
     
         try {
-            const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-            const userID = new ObjectId(decodedToken.user._id);
 
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
             const usersCollection = <Collection<Document>> await getCollection('users');

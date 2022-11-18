@@ -6,9 +6,10 @@
   "scripts": {
     "build-server": "tsc --outDir dist",
     "build-client": "cd src/client && yarn build-prod && cd ../..",
-    "server-dev": "ts-node-dev src/index.ts",
-    "run-dev": "yarn build-client && yarn start-server-dev",
+    "server-dev": "ts-node-dev src/index.ts | npx pino-pretty",
+    "run-stack-dev": "yarn build-client && yarn start-server-dev",
     "dev-client": "cd src/client && yarn dev",
+    "debug-dev": "DEBUG=* yarn server-dev",
     "build-prod": "yarn install --frozen-lockfile && yarn build-client && yarn build-server",
     "start-prod": "node dist/",
     "run-prod": "yarn build-prod && yarn start-prod"
@@ -31,6 +32,7 @@
     "@types/luxon": "^2.3.0",
     "@types/node": "^16.11.12",
     "@types/passport": "^1.0.7",
+    "pino-pretty": "^9.1.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.5.2"
   },
@@ -47,6 +49,7 @@
     "luxon": "^2.3.1",
     "mongodb": "^4.3.1",
     "nanoid": "^3.0.0",
+    "pino": "^8.7.0",
     "socket.io": "^4.4.1",
     "ts-node": "^10.8.2"
   }

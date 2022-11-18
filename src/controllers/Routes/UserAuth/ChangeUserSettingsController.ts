@@ -3,24 +3,29 @@ import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
 import jwt from 'jsonwebtoken';
+import logger from "../../../logger";
 
 export default class ChangeUserSettingsController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
         const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
         const { newSettings } = this.req.body;
+        const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
+        const userID = new ObjectId(decodedToken?.user?._id);
 
         try {
-            const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-            const userID = new ObjectId(decodedToken.user._id);
+            logger.info({ userID }, `user '${userID}' attempting to change settings`);
+
             const usersCollection = <Collection<Document>> await getCollection('users');
             
             // modify user's settings
             await usersCollection.updateOne({ _id: userID }, { $set: { settings: newSettings }});
 
+            logger.info({ userID, status: 200 }, `user '${userID}' changed settings successfully`);
             return this.res.status(200).end();
         }
         catch (error) {
+            logger.warn({ error, userID, newSettings, status: 500 }, `user '${userID}' failed changing settings`);
             return this.res.status(500).send('User settings change failed.');
         }
     }

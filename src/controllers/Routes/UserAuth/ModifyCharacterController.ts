@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
+import logger from "../../../logger";
 import RouteController from "../RouteController";
 
 export default class ModifyCharacterController extends RouteController {
@@ -15,7 +16,7 @@ export default class ModifyCharacterController extends RouteController {
             const characterWithoutID = (({ _id, ...other }) => other)(modifiedCharacter);
             const characterObj = Object.assign(characterWithoutID, {playerID: new ObjectId(characterWithoutID.playerID)});
             await charactersCollection.updateOne({ _id: characterID }, { $set: { ...characterObj }});
-    
+
             return this.res.status(200).end();
         }
         catch (error) {

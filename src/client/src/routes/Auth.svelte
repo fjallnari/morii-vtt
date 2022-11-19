@@ -12,6 +12,7 @@
 
     let username = "";
     let password = "";
+    let honeypot = "";
     let passwordCheck = "";
     let inProgress = false;
     let loginActive = true;
@@ -35,7 +36,8 @@
             inProgress = true;
             const response = await axiosPublic.post('/auth/signin', {
                 username: username,
-                password: password
+                password: password,
+                salt: honeypot
             });
 
             if (response.status === 200) {
@@ -64,7 +66,8 @@
         try {
             await axiosPublic.post('/auth/signup', {
                 username: username,
-                password: password
+                password: password,
+                salt: honeypot
             });
 
             snackbarStatus = "register_success";
@@ -101,6 +104,10 @@
                     <SimpleTextfield type="password" bind:value={password} placeholder="Password" icon="mdi:lock-outline"></SimpleTextfield>
                     <SimpleTextfield type="password" bind:value={passwordCheck} placeholder="Confirm password" icon="mdi:lock"></SimpleTextfield>
                 {/if}
+
+                <div style="display: none;">
+                    <SimpleTextfield type="password" bind:value={honeypot} placeholder="Password" icon="mdi:lock"></SimpleTextfield>
+                </div>
 
                 <div class="switch-auth">
                     <span class="color-text">{loginActive ? "Don't have an account?": "Already have an account?"}</span>

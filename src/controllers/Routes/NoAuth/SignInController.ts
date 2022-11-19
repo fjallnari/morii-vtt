@@ -10,7 +10,12 @@ import logger from "../../../logger";
 export default class SignInController extends RouteController {
     
     public async handleRequest (): Promise<Response | void> {
-        const { username, password } = this.req.body;
+        const { username, password, salt } = this.req.body;
+
+        if (salt !== "") {
+            logger.warn({ username, salt, status: 400 }, `there seems to be a bot trying to log in as '${username}'; aborting`);
+            return this.res.status(400).send("Login failed. Try again later please.");
+        }
 
         logger.info(`user '${username}' attempting to login`);
 

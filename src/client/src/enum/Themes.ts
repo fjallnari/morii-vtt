@@ -15,6 +15,14 @@ const BG_THEMES = {
 		"--clr-box-bg-lighter": "#3A4747",
 		"--clr-text": "#FAF6EF",
     },
+    "mocha": {
+        "--clr-bg": "#725E51",
+		"--clr-box-bg-dark": "#8E7A6E",
+		"--clr-box-bg-normal": "#AA968A",
+		"--clr-box-bg-light": "#BFAFA6",
+		"--clr-box-bg-lighter": "#D4D2D5",
+		"--clr-text": "#282624",
+    }
 }
 
 const THEMES = [
@@ -62,6 +70,17 @@ const THEMES = [
         "--bg-waves": "url('../static/bg/waves-sea.svg')",
         ... BG_THEMES["sea"]
     },
+    // {
+    //     "id": "light_red",
+    //     "name": "strawberry",
+    //     "--clr-accent-light": "#D09385",
+    //     "--clr-accent-normal": "#995656",
+    //     "--clr-accent-dark": "#A67373",
+    //     "--clr-accent-darker": "#845B5B",
+    //     "--clr-accent-muted": "#417D7129",
+    //     "--bg-waves": "url('../static/bg/waves-sea.svg')",
+    //     ... BG_THEMES["mocha"]
+    // },
 ]
 
 

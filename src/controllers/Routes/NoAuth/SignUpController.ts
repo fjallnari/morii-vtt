@@ -9,7 +9,12 @@ import logger from "../../../logger";
 export default class SignUpController extends RouteController {
     
     public async handleRequest () {
-        const { username, password } = this.req.body;
+        const { username, password, salt } = this.req.body;
+
+        if (salt !== "") {
+            logger.warn({ username, salt, status: 400 }, `there seems to be a bot trying to register as '${username}'; aborting`);
+            return this.res.status(400).send("Register failed. Try again later please.");
+        }
 
         logger.info({ username }, `user '${username}' attempting to register`);
         

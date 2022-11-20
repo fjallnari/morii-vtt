@@ -595,7 +595,8 @@
         },
         "type": {
           "type": "string"
-        }
+        },
+        "levels": {}
       },
       "required": [
         "id",

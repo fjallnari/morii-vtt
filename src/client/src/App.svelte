@@ -350,6 +350,7 @@
         --tooltip-font-family: Quicksand !important;
         --tooltip-line-height: 1em;
         --tooltip-padding: 12px;
+		--tooltip-color: var(--clr-text);
     }
 
     :global(.tooltip.blurred) {

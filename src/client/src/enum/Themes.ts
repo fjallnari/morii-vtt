@@ -15,14 +15,22 @@ const BG_THEMES = {
 		"--clr-box-bg-lighter": "#3A4747",
 		"--clr-text": "#FAF6EF",
     },
-    "mocha": {
-        "--clr-bg": "#725E51",
-		"--clr-box-bg-dark": "#8E7A6E",
-		"--clr-box-bg-normal": "#AA968A",
-		"--clr-box-bg-light": "#BFAFA6",
-		"--clr-box-bg-lighter": "#D4D2D5",
-		"--clr-text": "#282624",
-    }
+    // "mocha": {
+    //     "--clr-bg": "#725E51",
+	// 	"--clr-box-bg-dark": "#8E7A6E",
+	// 	"--clr-box-bg-normal": "#AA968A",
+	// 	"--clr-box-bg-light": "#BFAFA6",
+	// 	"--clr-box-bg-lighter": "#D4D2D5",
+	// 	"--clr-text": "#282624",
+    // },
+    // "light": {
+    //     "--clr-bg": "#EAEAEA",
+	// 	"--clr-box-bg-dark": "#D6D6D6",
+	// 	"--clr-box-bg-normal": "#C2C2C2",
+	// 	"--clr-box-bg-light": "#ADADAD",
+	// 	"--clr-box-bg-lighter": "#A3A3A3",
+	// 	"--clr-text": "#32292B",
+    // }
 }
 
 const THEMES = [
@@ -71,15 +79,15 @@ const THEMES = [
         ... BG_THEMES["sea"]
     },
     // {
-    //     "id": "light_red",
-    //     "name": "strawberry",
-    //     "--clr-accent-light": "#D09385",
-    //     "--clr-accent-normal": "#995656",
-    //     "--clr-accent-dark": "#A67373",
-    //     "--clr-accent-darker": "#845B5B",
-    //     "--clr-accent-muted": "#417D7129",
+    //     "id": "light_green",
+    //     "name": "light green",
+    //     "--clr-accent-light": "#598567",
+    //     "--clr-accent-normal": "#688E74",
+    //     "--clr-accent-dark": "#779781",
+    //     "--clr-accent-darker": "#869F8E",
+    //     "--clr-accent-muted": "#77978129",
     //     "--bg-waves": "url('../static/bg/waves-sea.svg')",
-    //     ... BG_THEMES["mocha"]
+    //     ... BG_THEMES["light"]
     // },
 ]
 

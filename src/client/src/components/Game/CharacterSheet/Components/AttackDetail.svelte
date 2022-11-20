@@ -40,7 +40,7 @@
     const deleteAttack = () => {
         isOpen = false;
         // changes the 'has_attack' icon near the item if the attack is associated with an item
-        if(attack.item_id !== '') {
+        if(attack.item_id && attack.item_id !== '') {
             Object.assign(character.inventory.find(item => item.id === attack.item_id), { attack_id: '', has_attack: false })
         }
         character.attacks = character.attacks.filter(obj => obj.id !== attack.id);

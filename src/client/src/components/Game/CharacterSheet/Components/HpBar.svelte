@@ -36,7 +36,7 @@
     .hp-bar-indicator {
         background-color: transparent;
         position: absolute;
-        color: #fff;
+        color: var(--clt-text);
         text-align: center;
         font-family: Montserrat;
         font-weight: var(--semi-bold);

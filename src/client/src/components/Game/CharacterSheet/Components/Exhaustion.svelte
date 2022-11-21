@@ -2,6 +2,7 @@
     import EXHAUSTION from '../../../../enum/ExhaustionInfo';
     import { modifyCharacter } from '../../../../stores';
     import { Tooltip } from "@svelte-plugins/tooltips";
+    import CUSTOM_ICONS from '../../../../enum/SVGCustomIcons';
 
     export let charExhaustion: number;
 </script>
@@ -9,11 +10,9 @@
 <box class="box-with-label">
     <div class="box-main-text">
         {#each Array.from({ length: 6 }, (_, i) => i + 1) as exhaustion_level}
-            <img class="exhaustion-icon"
-                src="../static/{exhaustion_level > charExhaustion ? 'checkbox-blank-outline' : exhaustion_level === 6 ?  'skull-scan' : `numeric/roman-${exhaustion_level}-box`}.svg" 
-                alt="checkbox"
-                on:click={() => { charExhaustion = exhaustion_level === charExhaustion ? 0 : exhaustion_level; $modifyCharacter()}}
-            >
+            <icon class="exhaustion-icon" on:click={() => { charExhaustion = exhaustion_level === charExhaustion ? 0 : exhaustion_level; $modifyCharacter()}}>
+                {@html `${CUSTOM_ICONS[exhaustion_level > charExhaustion ? 'checkbox-blank-outline' : exhaustion_level === 6 ?  'skull-scan' : `roman-${exhaustion_level}-box`]}`}
+            </icon>
         {/each}
     </div>
     <div class="box-justify-filler"></div>

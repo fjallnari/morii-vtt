@@ -15,28 +15,38 @@ export const BG_THEMES = {
 		"--clr-box-bg-lighter": "#3A4747",
 		"--clr-text": "#FAF6EF",
     },
-    "mocha": {
-        "--clr-bg": "#725E51",
-		"--clr-box-bg-dark": "#8E7A6E",
-		"--clr-box-bg-normal": "#AA968A",
-		"--clr-box-bg-light": "#BFAFA6",
-		"--clr-box-bg-lighter": "#D4D2D5",
-		"--clr-text": "#282624",
-    },
-    "silver": {
-        "--clr-bg": "#EAEAEA",
-		"--clr-box-bg-dark": "#D6D6D6",
-		"--clr-box-bg-normal": "#C2C2C2",
-		"--clr-box-bg-light": "#ADADAD",
-		"--clr-box-bg-lighter": "#A3A3A3",
-		"--clr-text": "#32292B",
-    }
+    // "mocha": {
+    //     "--clr-bg": "#725E51",
+	// 	"--clr-box-bg-dark": "#8E7A6E",
+	// 	"--clr-box-bg-normal": "#AA968A",
+	// 	"--clr-box-bg-light": "#BFAFA6",
+	// 	"--clr-box-bg-lighter": "#D4D2D5",
+	// 	"--clr-text": "#282624",
+    // },
+    // "silver": {
+    //     "--clr-bg": "#EAEAEA",
+	// 	"--clr-box-bg-dark": "#D6D6D6",
+	// 	"--clr-box-bg-normal": "#C2C2C2",
+	// 	"--clr-box-bg-light": "#ADADAD",
+	// 	"--clr-box-bg-lighter": "#A3A3A3",
+	// 	"--clr-text": "#32292B",
+    // },
+    // "rose": {
+    //     "--clr-bg": "#f3d2c1",
+	// 	"--clr-box-bg-dark": "#fef6e4",
+	// 	"--clr-box-bg-normal": "#fadfd7",
+	// 	"--clr-box-bg-light": "#FFF0EB",
+	// 	"--clr-box-bg-lighter": "#D4D2D5",
+	// 	"--clr-text": "#001858",        
+    // }
 }
 
 export const BG_WAVES = {
-    "cyan": '../static/bg/waves-cyan.svg',
     "blue": '../static/bg/waves-blue.svg',
+    "cyan": '../static/bg/waves-cyan.svg',
     "salmon": '../static/bg/waves-salmon-b.svg',
+    "auburn": '../static/bg/waves-auburn.svg',
+    "viridian": '../static/bg/waves-viridian.svg',
     "sea": '../static/bg/waves-sea.svg',
     // "mocha": '../static/bg/waves-mocha.svg',
     // "silver": '../static/bg/waves-silver.svg'
@@ -45,17 +55,6 @@ export const BG_WAVES = {
 export const THEMES = [
     {
         "id": "default",
-        "name": "cyan",
-        "--clr-accent-light": "#AAD5DA",
-        "--clr-accent-normal": "#547B81",
-        "--clr-accent-dark": "#457179",
-        "--clr-accent-darker": "#3B5158",
-        "--clr-accent-muted": "#45717929",
-        "--bg-waves": `url(${BG_WAVES["cyan"]})`,
-        ... BG_THEMES["default"]
-    },
-    {
-        "id": "blue",
         "name": "blue mists",
         "--clr-accent-light": "#78A1BB",
         "--clr-accent-normal": "#5A77A1",
@@ -63,6 +62,17 @@ export const THEMES = [
         "--clr-accent-darker": "#2C3863",
         "--clr-accent-muted": "#3C4C8729",
         "--bg-waves": `url(${BG_WAVES["blue"]})`,
+        ... BG_THEMES["default"]
+    },
+    {
+        "id": "cyan",
+        "name": "cyan",
+        "--clr-accent-light": "#AAD5DA",
+        "--clr-accent-normal": "#547B81",
+        "--clr-accent-dark": "#457179",
+        "--clr-accent-darker": "#3B5158",
+        "--clr-accent-muted": "#45717929",
+        "--bg-waves": `url(${BG_WAVES["cyan"]})`,
         ... BG_THEMES["default"]
     },
     {
@@ -77,6 +87,28 @@ export const THEMES = [
         ... BG_THEMES["default"]
     },
     {
+        "id": "auburn",
+        "name": "sunset",
+        "--clr-accent-light": "#CE9391",
+        "--clr-accent-normal": "#B8605D",
+        "--clr-accent-dark": "#A22C29",
+        "--clr-accent-darker": "#642929",
+        "--clr-accent-muted": "#A22C2929",
+        "--bg-waves": `url(${BG_WAVES["auburn"]})`,
+        ... BG_THEMES["default"]
+    },
+    {
+        "id": "viridian",
+        "name": "viridian",
+        "--clr-accent-light": "#8BBBA7",
+        "--clr-accent-normal": "#549C7E",
+        "--clr-accent-dark": "#1C7C54",
+        "--clr-accent-darker": "#21513F",
+        "--clr-accent-muted": "#1C7C5429",
+        "--bg-waves": `url(${BG_WAVES["viridian"]})`,
+        ... BG_THEMES["default"]
+    },
+    {
         "id": "sea",
         "name": "bottom of the sea",
         "--clr-accent-light": "#79B1A3",
@@ -87,6 +119,7 @@ export const THEMES = [
         "--bg-waves": `url(${BG_WAVES["sea"]})`,
         ... BG_THEMES["sea"]
     },
+
     // {
     //     "id": "light_green",
     //     "name": "light green",
@@ -97,5 +130,27 @@ export const THEMES = [
     //     "--clr-accent-muted": "#77978129",
     //     "--bg-waves": `url(${BG_WAVES["silver"]})`,
     //     ... BG_THEMES["silver"]
+    // },
+    // {
+    //     "id": "mocha",
+    //     "name": "strawberry mocha",
+    //     "--clr-accent-light": "#FCC8B2",
+    //     "--clr-accent-normal": "#EFA48B",
+    //     "--clr-accent-dark": "#E9805D",
+    //     "--clr-accent-darker": "#875343",
+    //     "--clr-accent-muted": "#E9805D29",
+    //     "--bg-waves": `url(${BG_WAVES["mocha"]})`,
+    //     ... BG_THEMES["mocha"]
+    // },
+    // {
+    //     "id": "rose",
+    //     "name": "rose",
+    //     "--clr-accent-light": "#FCC8B2",
+    //     "--clr-accent-normal": "#EFA48B",
+    //     "--clr-accent-dark": "#E9805D",
+    //     "--clr-accent-darker": "#875343",
+    //     "--clr-accent-muted": "#E9805D29",
+    //     "--bg-waves": `url(${BG_WAVES["rose"]})`,
+    //     ... BG_THEMES["rose"]
     // },
 ]

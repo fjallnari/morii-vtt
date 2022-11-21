@@ -5,18 +5,11 @@
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
+    import PROF_TYPES from '../../../../enum/OtherProfTypes';
 
     export let other_prof: OtherProf;
     export let character: Character;
     let isOpen: boolean = false;
-
-    const profTypes = [
-        { name: 'OTHER', icon: 'mdi:atom' },
-        { name: 'ARMOR', icon: 'mdi:shield-half-full' },
-        { name: 'WEAPON', icon: 'mdi:sword' },
-        { name: 'LANGUAGE', icon: 'mdi:translate' },
-        { name: 'INSTRUMENT', icon: 'mdi:music' }
-    ];
 
     const deleteProf = () => {
         character.other_profs = character.other_profs.filter(obj => obj.id !== other_prof.id);
@@ -29,7 +22,7 @@
 <box class="prof-main-container">
     <div class="prof-summary">
         <sendable class="prof-type" on:click={() => { other_prof.type += 1 + (other_prof.type === 4 ? -5 : 0); $modifyCharacter(); }}>
-            <Icon icon={profTypes[other_prof.type]?.icon} />
+            <Icon icon={PROF_TYPES[other_prof.type]?.icon} />
         </sendable>
         <div class="prof-name">
             <InPlaceEdit bind:value={other_prof.name} editWidth='6em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>

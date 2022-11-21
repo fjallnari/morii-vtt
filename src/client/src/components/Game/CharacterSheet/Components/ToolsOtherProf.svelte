@@ -5,6 +5,7 @@
     import { nanoid } from 'nanoid/non-secure';
     import ToolDetail from "./ToolDetail.svelte";
     import Icon from "@iconify/svelte";
+    import PROF_TYPES from "../../../../enum/OtherProfTypes";
 
     export let character: Character;
     let currentFilter = 0;
@@ -35,6 +36,7 @@
         return filteredType === 0 ? true : profType === filteredType - 1;
     }
 
+    const OTHER_PROF_FILTER_ICONS = [{name: "FILTER_OFF", icon: "mdi:filter-off"}, ...PROF_TYPES];
 
 </script>
 
@@ -56,13 +58,10 @@
 
     <box class="other-prof inside-box-content">
         <div class="filter-menu">
-            {#each ['filter-off', 'atom', 'shield-half-full', 'sword', 'translate', 'music'] as profType, index}
-                <img class="prof-type-icon" 
-                    src="../static/{profType}.svg"
-                    alt="prof-type-icon"
-                    style="{currentFilter === index ? 'border-bottom: 1px solid var(--clr-accent-normal); padding-bottom: 0.2em;': ''}"
-                    on:click={ () => { currentFilter = index;}}
-                >
+            {#each OTHER_PROF_FILTER_ICONS as profType, index}
+                <sendable class="prof-type-icon"  on:click={() => currentFilter = index } selected={currentFilter === index}>
+                    <Icon class="medi-icon" icon={profType.icon} />
+                </sendable>
             {/each}                
         </div>
         <div class="inside-box-list">
@@ -83,12 +82,13 @@
 
 
 <style>
-    img {
-        cursor: pointer; 
-        height: 1.25em;
-        width: 1.25em;
-        transition-duration: 200ms;
-        transition-property: border;
+    sendable {
+        transition: border 100ms ease-in;
+    }
+
+    sendable[selected="true"] {
+        border-bottom: 1px solid var(--clr-accent-normal); 
+        padding-bottom: 0.2em;
     }
 
     .tools-other-container {

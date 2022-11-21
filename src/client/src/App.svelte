@@ -11,7 +11,7 @@
 	import mem from "mem";
     import { onMount } from "svelte";
     import { cssVarTheme } from "./util/util";
-    import THEMES from "./enum/Themes";
+    import { THEMES } from "./enum/Themes";
 
 	const maxAge = 10000; // for memoizing refresh token
 
@@ -261,7 +261,7 @@
        font-size: 2.5em;
    	}
 
-	:global(pfp) {
+	:global(pfp), :global(icon) {
 		fill: var(--clr-text);
 	}
 

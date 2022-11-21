@@ -9,7 +9,7 @@
 <box class="box-with-label">
     <div class="box-main-text">
         {#each Array.from({ length: 6 }, (_, i) => i + 1) as exhaustion_level}
-            <img class="skill-prof-icon"
+            <img class="exhaustion-icon"
                 src="../static/{exhaustion_level > charExhaustion ? 'checkbox-blank-outline' : exhaustion_level === 6 ?  'skull-scan' : `numeric/roman-${exhaustion_level}-box`}.svg" 
                 alt="checkbox"
                 on:click={() => { charExhaustion = exhaustion_level === charExhaustion ? 0 : exhaustion_level; $modifyCharacter()}}
@@ -35,7 +35,7 @@
         gap: 0.2em;
     }
 
-    .skill-prof-icon {
+    .exhaustion-icon {
         cursor: pointer;
         width: 1.5vw;
     }

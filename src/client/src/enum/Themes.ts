@@ -66,7 +66,7 @@ export const THEMES = [
     },
     {
         "id": "cyan",
-        "name": "cyan",
+        "name": "frozen lake",
         "--clr-accent-light": "#AAD5DA",
         "--clr-accent-normal": "#547B81",
         "--clr-accent-dark": "#457179",
@@ -99,7 +99,7 @@ export const THEMES = [
     },
     {
         "id": "viridian",
-        "name": "viridian",
+        "name": "jungle",
         "--clr-accent-light": "#8BBBA7",
         "--clr-accent-normal": "#549C7E",
         "--clr-accent-dark": "#1C7C54",

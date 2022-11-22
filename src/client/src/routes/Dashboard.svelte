@@ -13,7 +13,6 @@
     import SimpleProgressCircle from '../components/SimpleProgressCircle.svelte';
     import Campaigns from '../components/Campaign/Campaigns.svelte';
     import CampaignDetail from '../components/Campaign/CampaignDetail.svelte';
-    import { BG_WAVES } from '../enum/Themes';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
@@ -74,11 +73,6 @@
     }
     
 </script>
-
-<!-- preloads all the background waves for more seamless theme-switching -->
-{#each Object.keys(BG_WAVES) as WAVE_ID}
-    <link rel="preload" as="image" href={BG_WAVES[WAVE_ID]} />
-{/each}
 
 <dashboard-main>
     <div class="dashboard-container">

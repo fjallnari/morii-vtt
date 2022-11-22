@@ -5,17 +5,6 @@ import UserDB from '../interfaces/UserDB';
 import Campaign from '../interfaces/Campaign';
 import Invite from "../interfaces/Invite";
 
-
-
-export const getUserFromToken = async (accessToken: string) => {
-    const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-    const userID = new ObjectId(decodedToken.user._id);
-
-    const usersCollection = <Collection<Document>> await getCollection('users');
-
-    return <WithId<UserDB>> await usersCollection.findOne({ _id: userID});
-}
-
 export const simplifyPlayerInfo = (player: UserDB) => {
     return {
         _id: player._id.toString(),

@@ -2,20 +2,23 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
-import jwt from 'jsonwebtoken';
 import logger from "../../../logger";
+import Campaign from "../../../interfaces/Campaign";
 
 export default class DeleteCharacterController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
-        const { campaignID, characterID, playerID, removerID, isNPC = false } = this.req.body;
+        const { campaignID, characterID, playerID, isNPC = false } = this.req.body;
+        const userID = this.req.user?._id;
 
         const childLogger = logger.child({
-            removerID: removerID, 
-            playerID: playerID, 
+            userID: userID, // the user who is attempting to delete the character
+            playerID: playerID, // owner of the character
             characterID, 
             campaignID
         });
+
+        childLogger.info(`user '${userID}' attempting to delete ${isNPC ? 'npc': 'character'}`);
     
         try {
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
@@ -24,8 +27,16 @@ export default class DeleteCharacterController extends RouteController {
             
             const characterObjectID = new ObjectId(characterID);
             const playerObjectID = new ObjectId(playerID);
+            const campaignObjectID = new ObjectId(campaignID);
 
-            childLogger.info(`user '${removerID}' attempting to delete ${isNPC ? 'npc': 'character'}`);
+            const campaignObj = <Campaign> await campaignsCollection.findOne({_id: campaignObjectID});
+
+            // check if the user eithers is the GM or owns the character
+            if (!(userID?.toString() !== campaignObj.owner.toString()
+              || !campaignObj.players.some(player => player.playerID.toString() === userID.toString() && player.characterID === characterID))) {
+                logger.warn({ userID, characterID, campaignID, status: 401 }, `user '${userID}' without access rights tried to delete character '${characterID}'`);
+                return this.res.status(401).send('Invalid access rights.');
+            }
 
             if (isNPC){
                 // delete character link from campaigns' npcs array
@@ -43,14 +54,14 @@ export default class DeleteCharacterController extends RouteController {
             await charactersCollection.deleteOne({ _id: characterObjectID });
 
             childLogger.info({ status: 200 }, 
-                `user '${removerID}' deleted ${isNPC ? 'npc': 'character'} successfully`
+                `user '${userID}' deleted ${isNPC ? 'npc': 'character'} successfully`
             );
 
             return this.res.status(200).end();
         }
         catch (error) {
             childLogger.warn({ status: 500 }, 
-                `user '${removerID}' failed deleting ${isNPC ? 'npc': 'character'}`
+                `user '${userID}' failed deleting ${isNPC ? 'npc': 'character'}`
             );
             return this.res.status(500).send('Creation failed');
         }

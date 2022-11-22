@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import Dialog from "@smui/dialog/src/Dialog.svelte";
-    import { THEMES } from "../../enum/Themes";
+    import { BG_WAVES, THEMES } from "../../enum/Themes";
     import { cssVarTheme } from "../../util/util";
     import SimpleIconButton from "../SimpleIconButton.svelte";
 
@@ -15,6 +15,12 @@
     }
 
 </script>
+
+
+<!-- preloads all the background waves for more seamless theme-switching -->
+{#each Object.keys(BG_WAVES) as WAVE_ID}
+    <link rel="preload" as="image" href={BG_WAVES[WAVE_ID]} />
+{/each}
 
 <Dialog
     bind:open

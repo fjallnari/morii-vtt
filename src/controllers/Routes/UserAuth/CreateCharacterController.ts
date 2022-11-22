@@ -10,10 +10,8 @@ import logger from "../../../logger";
 export default class CreateCharacterController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
-        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
         const { campaignID, characterTemplate } = this.req.body;
-        const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-        const userID = new ObjectId(decodedToken?.user?._id);
+        const userID = this.req.user?._id;
 
         const childLogger = logger.child({ userID, campaignID });
         childLogger.info( `user '${userID}' attempting to create new character`);
@@ -34,7 +32,7 @@ export default class CreateCharacterController extends RouteController {
             
             childLogger.info({ characterID: newCharacterID, status: 200  }, `user '${userID}' created new character successfully`);
             // sends newly created blank character object
-            return this.res.status(200).send({characterInfo: Object.assign(newCharacterObj, {_id: insertResult.insertedId.toString(), playerID: userID.toString()})});
+            return this.res.status(200).send({characterInfo: Object.assign(newCharacterObj, {_id: insertResult.insertedId.toString(), playerID: userID?.toString()})});
         }
         catch (error) {
             childLogger.warn({ campaignID, error, status: 500 }, `user '${userID}' failed creating new character`);

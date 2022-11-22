@@ -11,9 +11,7 @@ export default class KickPlayerController extends RouteController {
 
         logger.info({ playerID, campaignID }, `attempting to kick player '${playerID}' from campaign`);
 
-        try {
-            // TODO: verify if the owner of campaign is the one actually making the request
-    
+        try {    
             const usersCollection = <Collection<Document>> await getCollection('users');
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
     

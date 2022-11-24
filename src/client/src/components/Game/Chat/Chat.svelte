@@ -63,7 +63,8 @@
 
         <div class="send-options-box">
             <SimpleIconButton 
-                icon={`mdi:${['earth', 'eye-off', 'crown'][$messageMode]}`} 
+                icon={`mdi:${['earth', 'eye-off', 'crown'][$messageMode]}`}
+                color={$messageMode === 2 ? 'var(--clr-icon-owner)' : 'inherit'}
                 onClickFn={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}>
             </SimpleIconButton>
             <SimpleIconButton icon='material-symbols:send-rounded' onClickFn={sendMessage}></SimpleIconButton>

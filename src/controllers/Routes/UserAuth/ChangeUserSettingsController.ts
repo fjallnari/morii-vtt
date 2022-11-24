@@ -2,16 +2,13 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
-import jwt from 'jsonwebtoken';
 import logger from "../../../logger";
 
 export default class ChangeUserSettingsController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
-        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
         const { newSettings } = this.req.body;
-        const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-        const userID = new ObjectId(decodedToken?.user?._id);
+        const userID = this.req.user?._id;
 
         try {
             logger.info({ userID }, `user '${userID}' attempting to change settings`);

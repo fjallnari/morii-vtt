@@ -1,7 +1,6 @@
 import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
-import logger from "../../../logger";
 import RouteController from "../RouteController";
 
 export default class ModifyCharacterController extends RouteController {

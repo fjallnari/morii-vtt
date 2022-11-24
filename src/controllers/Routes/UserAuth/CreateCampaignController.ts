@@ -2,21 +2,17 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
-import jwt from 'jsonwebtoken';
 import logger from "../../../logger";
 
 export default class CreateCampaignController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
-        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
         const { campaignName, gameSystem } = this.req.body;
+        const userID = this.req.user?._id;
 
         logger.info({ campaignName }, `attempting to create new campaign '${campaignName}'`);
     
         try {
-            const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-            const userID = new ObjectId(decodedToken.user._id);
-    
             // add campaign to campaigns collection
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
             const usersCollection = <Collection<Document>> await getCollection('users');
@@ -38,7 +34,7 @@ export default class CreateCampaignController extends RouteController {
             return this.res.status(200).send({campaign: Object.assign(newCampaign, {_id: insertResult.insertedId})});
         }
         catch (error) {
-            logger.warn({ campaignName, error }, `campaign '${campaignName}' creation failed `); 
+            logger.warn({ error, campaignName, userID, status: 500 }, `campaign '${campaignName}' creation by user ${userID} failed `); 
             return this.res.status(500).send('Creation failed');
         }
     }

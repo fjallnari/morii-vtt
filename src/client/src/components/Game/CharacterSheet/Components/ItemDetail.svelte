@@ -6,6 +6,7 @@
     import SimpleButton from '../../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
     import { tooltip } from "@svelte-plugins/tooltips";
+    import CUSTOM_ICONS from '../../../../enum/SVGCustomIcons';
 
     export let item: Item;
     export let character: Character;
@@ -109,11 +110,9 @@
     
         <div class="toggable-item-info">
             {#if character.settings.use_encumbrance}
-                <img class="has-weight-icon" 
-                    src="../static/{ item.has_weight ? 'weight': 'weight-crossed'}.svg" 
-                    alt="has-weight"
-                    on:click={() => { item.has_weight = !item.has_weight; $modifyCharacter(); }}
-                >
+                <icon class="has-weight-icon" on:click={() => { item.has_weight = !item.has_weight; $modifyCharacter();}}>
+                    {@html `${CUSTOM_ICONS[item.has_weight ? 'weight': 'weight-off']}`}
+                </icon>
                 {#if item.has_weight}
                     <div class="item-weight">
                         <InPlaceEdit bind:value={item.weight} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
@@ -190,7 +189,7 @@
         margin-left: 0.5em;
     }
 
-    img {
+    icon {
         cursor: pointer; 
         height: 1.25em;
         width: 1.25em;

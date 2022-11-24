@@ -126,7 +126,10 @@
                 <div class="socials">
                     <sendable on:click={ () => window.open("https://github.com/Ashmogh/morii-vtt")}>
                         <Icon icon="mdi:github" /> 
-                    </sendable>         
+                    </sendable>
+                    <sendable on:click={ () => window.open("https://discord.gg/MhKxwkRpEU")}>
+                        <Icon icon="ic:baseline-discord" /> 
+                    </sendable>      
                 </div>
             {:else}
                 <LoadingCircle></LoadingCircle>

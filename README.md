@@ -11,7 +11,7 @@ Morii is a web-based half-vtt (i.e. no maps) for playing 5E.
 
 As a bonus, you can swear or w/e at other players in dwarvish/elvish/gnomish (using e.g. /l dwarvish --- in chat) and none will know. *(III)*
 
-**With all that aside**, this project is still actively developed, and as such expect some rough edges here and there. If you have any issues, encounter bugs, or have some general feedback etc., feel free to start a new issue or reach out directly.
+**With all that aside**, this project is still actively developed, and as such expect some rough edges here and there. If you have any issues, encounter bugs, or have some general feedback etc., feel free to [start a new issue](https://github.com/Ashmogh/morii-vtt/issues/new) or [reach out directly over Discord](https://discord.com/invite/MhKxwkRpEU).
 
 *(I)* Uses MersenneTwister for randomness so all nat 1s are non refundable.\
 *(II)* As there are no subclasses/backgrounds under the OGL you will sadly still have to import these manually.\

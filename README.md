@@ -22,4 +22,5 @@ As a bonus, you can swear or w/e at other players in dwarvish/elvish/gnomish (us
 -   **Designation of Open Game Content:** This project contains classes, races, spells, equipment and general rules contained in SRD5 under the aforementioned OGL license.
 -   **Source Code:** The source code itself (typescript, svelte etc.) is licenced under the [MIT License](https://github.com/Ashmogh/morii-vtt/blob/main/LICENSE).
 -   **Race Icons:** All race icons were created by Ashmogh using Midjourney.
--   **Class Icons:** All class icons were created by Jime Mosqueda.
+-   **Class Icons:** All class icons were created by [Jime Mosqueda](https://www.artstation.com/jimemosqueda).
+-   **Fonts:** *Midjungards* (the elvish font) was made by [Robert Pfeffer](http://robert-pfeffer.net). *Moonrune* (the dwarvish & gnomish font) was made by Morten Bek.

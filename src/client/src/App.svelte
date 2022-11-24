@@ -351,6 +351,7 @@
 		--sv-icon-color: var(--clr-text) !important;
 		--sv-icon-hover: var(--clr-accent-light) !important;
 		--sv-item-active-bg: var(--clr-accent-dark) !important;
+		--sv-highlight-bg: var(--clr-accent-normal) !important;
 		--sv-dropdown-height: 400px !important;
 		z-index: 4;
 	}

@@ -84,6 +84,7 @@
             concentration: newSRDSpell.duration.includes('Concentration'),
             components: Object.assign(newSRDSpell.components, { materials_needed: newSRDSpell.components.material ? newSRDSpell.components.materials_needed.toString() : '' })
         }));
+        $modifyCharacter();
         statusSnackbar.open("success");
         newSRDSpell = undefined;
     }
@@ -126,8 +127,7 @@
     <div class="fill-spell-button">
         <SimpleButton 
             value='' 
-            icon='mdi:add' 
-            iconClass="big-icon"
+            customIcon='spell-add'
             type='primary' 
             onClickFn={() => { newSpellDialogOpen = true } }>
         </SimpleButton>

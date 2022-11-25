@@ -10,7 +10,6 @@ export default class CreateInviteCodeController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
         try {
-            // TODO: verify if the owner of campaign is the one actually making the request
             const { campaignID, password } = this.req.body;
             const inviteCode = nanoid(16);
 

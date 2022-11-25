@@ -9,10 +9,7 @@ export default class LeaveCampaignController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
         const { campaignID } = this.req.body;
-
-        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
-        const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-        const userID = new ObjectId(decodedToken?.user?._id);
+        const userID = this.req.user?._id;
 
         logger.info({ userID, campaignID }, `user '${userID}' attempting to leave campaign '${campaignID}'`);
     

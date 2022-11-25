@@ -1,5 +1,6 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
+    import CUSTOM_ICONS from "../enum/SVGCustomIcons";
     
     type ButtonType = 'default' | 'primary' | 'green' | 'delete';
     
@@ -10,6 +11,7 @@
 
     export let value: string;
     export let icon: string = '';
+    export let customIcon: string | undefined = undefined;
     export let disabled: boolean = false;
     export let type: ButtonType = 'default';
     export let onClickFn: () => void;
@@ -46,8 +48,12 @@
     on:keydown={(event) => {if (event.key === 'Enter') {onClickFn();}}}
     tabindex="0"
 >
-    {#if icon}
+    {#if icon && !customIcon}
         <Icon class={iconClass} icon={icon} width={iconWidth} height={iconHeight} />
+    {:else if customIcon}
+        <div class="custom-icon">
+            {@html `${CUSTOM_ICONS[customIcon ?? 'skull-scan']}`}
+        </div>
     {/if}
     {value}
 </simple-button>
@@ -89,6 +95,12 @@
         cursor: not-allowed;
         pointer-events: none;
         opacity: 0.4;
+    }
+
+    .custom-icon {
+        height: 50%;
+        width: 50%;
+        fill: var(--clr-text);
     }
 
 </style>

@@ -1,11 +1,11 @@
 import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
-import { getCollection, getIdsFromCollection } from "../../../db/Mongo";
+import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mongo";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
 import UserDB from "../../../interfaces/UserDB";
 import logger from "../../../logger";
-import { getFullCampaignsInfo, getUserFromToken, simplifyPlayerInfo } from "../../../util/helpers";
+import { simplifyPlayerInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
 
 export default class GameController extends RouteController {
@@ -42,8 +42,7 @@ export default class GameController extends RouteController {
     }
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
-        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
-        const user = await getUserFromToken(accessToken);
+        const user = await getUserObj(this.req.user?._id);
         const campaignIDString = this.req.params.id;
 
         logger.info({ userID: user._id, campaignID: campaignIDString}, `attempting to get game data for campaign '${campaignIDString}'`);

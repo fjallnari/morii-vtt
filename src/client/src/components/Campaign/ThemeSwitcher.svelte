@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import Dialog from "@smui/dialog/src/Dialog.svelte";
-    import THEMES from "../../enum/Themes";
+    import { THEMES } from "../../enum/Themes";
     import { cssVarTheme } from "../../util/util";
     import SimpleIconButton from "../SimpleIconButton.svelte";
 

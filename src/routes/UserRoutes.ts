@@ -12,6 +12,7 @@ import ChangeUserSettingsController from '../controllers/Routes/UserAuth/ChangeU
 import GetCharactersController from '../controllers/Routes/UserAuth/GetCharactersController';
 import GetQuickCreateDataController from '../controllers/Routes/UserAuth/GetQuickCreateDataController';
 import GetInviteController from '../controllers/Routes/UserAuth/GetInviteController';
+import GetSpells from '../controllers/Routes/UserAuth/GetSpells';
 
 const router = express.Router();
 
@@ -30,6 +31,10 @@ router.get('/api/characters', verifyToken, async (req, res, next) => {
 
 router.get('/api/quick-create-data', verifyToken, async (req, res, next) => {
     await new GetQuickCreateDataController(req, res).handleRequest();
+});
+
+router.get('/api/spells', verifyToken, async (req, res, next) => {
+    await new GetSpells(req, res).handleRequest();
 });
 
 router.post('/api/create-campaign', verifyToken, async (req, res, next) => {

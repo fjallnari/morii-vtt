@@ -4,7 +4,6 @@ import { getCollection } from "../../../db/Mongo";
 import Invite from "../../../interfaces/Invite";
 import { getFullCampaignsInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import Campaign from "../../../interfaces/Campaign";
 import logger from "../../../logger";
@@ -12,10 +11,8 @@ import logger from "../../../logger";
 export default class JoinCampaignController extends RouteController {
 
     public async handleRequest(): Promise<void | Response<any, Record<string, any>>> {
-        const accessToken = <string> this.req.headers.authorization?.split(' ')[1];
+        const userID = this.req.user?._id;
         const { inviteCode, password } = this.req.body;
-        const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
-        const userID = new ObjectId(decodedToken?.user?._id);
 
         logger.info({ userID, inviteCode }, `'user ${userID}' attempting to join campaign`);
 
@@ -40,7 +37,7 @@ export default class JoinCampaignController extends RouteController {
             const campaignObj = <Campaign> await campaignsCollection.findOne({_id: new ObjectId(inviteObj.campaign_id)});
 
             // prevents double-add and owner adding themselves
-            if (campaignObj.players.map(id => id.playerID.toString()).includes(decodedToken.user._id) || campaignObj.owner.toString() === decodedToken.user._id) {
+            if (campaignObj.players.map(id => id.playerID.toString()).includes(<string> userID?.toString()) || campaignObj.owner.toString() === userID?.toString()) {
                 logger.info({ userID, campaignID: campaignObj._id, inviteCode, status: 401 }, `aborting join; user is already in campaign`);
                 return this.res.status(401).send('Already in campaign');
             }

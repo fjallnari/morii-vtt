@@ -23,9 +23,9 @@ export default class RefreshTokenController extends RouteController {
                 return this.res.status(401).send('Invalid token.');
             }
 
-            // actually check if the token is still valid
+            // check if the token is still valid
             try {
-                this.req.user = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+                jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
               } catch (err) {
                 logger.info({ status: 401 }, `JWT refresh token is invalid`);
                 return this.res.status(401).send("Invalid Token");

@@ -1,4 +1,6 @@
-import { Collection, Db, Document, FindCursor, FindOptions, IndexDescription, IndexInformationOptions, IndexSpecification, MongoClient, ObjectId } from "mongodb";
+import { Collection, Db, Document, FindCursor, FindOptions, IndexDescription, IndexInformationOptions, IndexSpecification, MongoClient, ObjectId, WithId } from "mongodb";
+import UserDB from "../interfaces/UserDB";
+import jwt from 'jsonwebtoken';
 
 let _client: MongoClient;
 
@@ -101,6 +103,21 @@ export const getCollection = async(collectionName: string) => {
     }
 
     return;
+}
+
+export const getUserFromToken = async (accessToken: string) => {
+    const decodedToken = <jwt.JwtPayload> jwt.decode(accessToken);
+    const userID = new ObjectId(decodedToken.user._id);
+
+    const usersCollection = <Collection<Document>> await getCollection('users');
+
+    return <WithId<UserDB>> await usersCollection.findOne({ _id: userID});
+}
+
+export const getUserObj = async (userID: ObjectId | undefined) => {
+    const usersCollection = <Collection<Document>> await getCollection('users');
+
+    return <WithId<UserDB>> await usersCollection.findOne({ _id: userID});
 }
 
 export async function setUpDB() {

@@ -11,7 +11,7 @@
 	import mem from "mem";
     import { onMount } from "svelte";
     import { cssVarTheme } from "./util/util";
-    import THEMES from "./enum/Themes";
+    import { THEMES } from "./enum/Themes";
 
 	const maxAge = 10000; // for memoizing refresh token
 
@@ -265,6 +265,15 @@
 		fill: var(--clr-text);
 	}
 
+	:global(icon) {
+		fill: var(--clr-text);
+        transition: fill 100ms ease-in;
+	}
+
+	:global(icon:active) {
+		fill: var(--clr-accent-normal);
+	}
+
     :global(.box-with-label) {
         flex-grow: 1;
         height: 100%;
@@ -336,9 +345,13 @@
 		box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 		--sv-bg: var(--clr-box-bg-normal) !important;
 		--sv-color: var(--clr-text) !important;
+		--sv-placeholder-color: var(--clr-text) !important; 
 		--sv-border: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%) !important;
 		--sv-item-color: var(--clr-text) !important;
+		--sv-icon-color: var(--clr-text) !important;
+		--sv-icon-hover: var(--clr-accent-light) !important;
 		--sv-item-active-bg: var(--clr-accent-dark) !important;
+		--sv-highlight-bg: var(--clr-accent-normal) !important;
 		--sv-dropdown-height: 400px !important;
 		z-index: 4;
 	}

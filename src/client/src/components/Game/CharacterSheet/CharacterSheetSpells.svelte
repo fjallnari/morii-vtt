@@ -32,7 +32,7 @@
             higher_levels: ''
         }
 
-        character.spells_by_level[spellLevel].spells = character.spells_by_level[spellLevel].spells.concat([Object.assign(spellSkeleton, { ...spellTemplate })]);
+        character.spells_by_level[spellLevel].spells = character.spells_by_level[spellLevel].spells.concat([Object.assign(spellSkeleton, { ...spellTemplate, level: spellLevel })]);
     };
 
     const spellGridClasses = ['cantrips'].concat([...Array(9)].map((_, i) => `level-${1 + i}`)); // ~= ['cantrips', 'level-1', 'level-2', etc.]

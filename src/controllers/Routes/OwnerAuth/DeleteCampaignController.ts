@@ -13,7 +13,6 @@ export default class DeleteCampaignController extends RouteController {
         logger.info({ campaignID }, `attempting to delete campaign '${campaignID}'`);
 
         try {
-            // TODO: verify if the owner of campaign is the one actually making the request
     
             const usersCollection = <Collection<Document>> await getCollection('users');
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');

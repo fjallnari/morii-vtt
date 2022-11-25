@@ -11,9 +11,7 @@ export default class RemoveInviteCodeController extends RouteController {
 
         logger.info({ campaignID }, `attempting to remove invite-code for campaign '${campaignID}'`);
 
-        try {
-            // TODO: verify if the owner of campaign is the one actually making the request
-    
+        try {    
             const invitesCollection = <Collection<Document>> await getCollection('invites');
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
             

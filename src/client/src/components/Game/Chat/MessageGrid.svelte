@@ -41,7 +41,9 @@
                 {@html `${ANIMALS[message.senderInfo.settings.pfpID] ?? ANIMALS['default']}`}
             </pfp>
         {:else}
-            <img class='mode-icon' src="../static/{message.messageMode === MESSAGE_MODES.SECRET ? 'eye-off': 'message-text-lock'}.svg" alt="msg-mode">
+            <div class="mode-icon-wrapper">
+                <Icon class="mode-icon" icon="mdi:{message.messageMode === MESSAGE_MODES.SECRET ? 'eye-off': 'message-text-lock'}"/>
+            </div>
         {/if}
     </div>
 
@@ -108,7 +110,10 @@
         height: 2.5em; 
     }
 
-    .sender-pfp > img, .sender-pfp > pfp {
+    .sender-pfp > pfp, .mode-icon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 25%;
     }
 
@@ -119,9 +124,8 @@
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     }
 
-    .sender-pfp img.mode-icon {
-        width: 2.25em;
-        height: 2.25em;
+    :global(.mode-icon-wrapper .mode-icon) {
+        font-size: 2.25em;
     }
 
     /** MARKDOWN 'CORRECTIONS' */

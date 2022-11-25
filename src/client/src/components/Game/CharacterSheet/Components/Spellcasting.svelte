@@ -3,14 +3,22 @@
     import type { Character } from '../../../../interfaces/Character';
     import { getASModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
     import SimpleButton from '../../../SimpleButton.svelte';
-    import Dialog, { Content, Actions } from '@smui/dialog';
+    import Dialog from '@smui/dialog';
+    import Svelecte from 'svelecte/src/Svelecte.svelte';
+    import LoadingCircle from '../../../LoadingCircle.svelte';
+    import axios from 'axios';
+    import SimpleSnackbar from '../../../SimpleSnackbar.svelte';
 
     export let character: Character;
     export let addNewSpell: (spellLevel: number, spellTemplate?: any) => void;
 
-    let isFillSpellDialogOpen: boolean = false;
+
+    let statusSnackbar: SimpleSnackbar;
+    let newSpellDialogOpen: boolean = false;
     let isSummaryValid: boolean = true;
     let fillSpellContent: string = '';
+    let newSRDSpell = undefined;
+    let lastAddedSpellName = "";
     
     // if the field is empty, show zero
     $: spellSaveDC = ['', '---'].includes(character.spell_ability) ? 0 : 8 + $getASModifier(character.spell_ability) + ~~character.prof_bonus + ~~character.spell_save_dc_bonus;
@@ -57,8 +65,28 @@
         
         addNewSpell(~~level, spellTemplate);
         $modifyCharacter();
-        isFillSpellDialogOpen = false;
+        newSpellDialogOpen = false;
         fillSpellContent = '';
+    }
+
+    const getSRDSPells = async () => {
+		try {
+			const response = await axios.get(`/api/spells`);
+			return response.data.spells;
+		}
+		catch (err) {}
+	}
+
+    $: if (newSRDSpell) {
+        lastAddedSpellName = newSRDSpell?.name ?? '???';
+        addNewSpell(~~newSRDSpell.level, Object.assign(newSRDSpell, { 
+            level: ~~newSRDSpell.level, 
+            concentration: newSRDSpell.duration.includes('Concentration'),
+            components: Object.assign(newSRDSpell.components, { materials_needed: newSRDSpell.components.material ? newSRDSpell.components.materials_needed.toString() : '' })
+        }));
+        $modifyCharacter();
+        statusSnackbar.open("success");
+        newSRDSpell = undefined;
     }
 
 </script>
@@ -99,31 +127,55 @@
     <div class="fill-spell-button">
         <SimpleButton 
             value='' 
-            icon='material-symbols:content-paste-go' 
-            iconClass="big-icon"
-            type='default' 
-            onClickFn={() => { fillSpellContent = ''; isSummaryValid = true; isFillSpellDialogOpen = true } }>
+            customIcon='spell-add'
+            type='primary' 
+            onClickFn={() => { newSpellDialogOpen = true } }>
         </SimpleButton>
+
         <Dialog
-            bind:open={isFillSpellDialogOpen}
-            aria-labelledby="simple-title"
-            surface$style="padding: 1em 2em; height: 30em; width: 30em;"
+            bind:open={newSpellDialogOpen}
+            surface$style="padding: 1em 2em; height: 35em; width: 30em;"
         >
+            {#await getSRDSPells()}
+                <div class="loading-container">
+                    <LoadingCircle/>
+                    <SimpleButton value="Cancel" icon="mdi:close" onClickFn={() => newSpellDialogOpen = false}></SimpleButton>
+                </div>
+            {:then srdSpells}
             <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-            <h3 id="simple-title">Add spell from summary</h3>
-            <textarea style="height: 100%;" on:change={() => {isSummaryValid = true}} bind:value={fillSpellContent}></textarea>
-            <Actions id="dialog-buttons">
-                <SimpleButton value='' icon='mdi:close' iconClass="big-icon" type='default' onClickFn={() => isFillSpellDialogOpen = false}></SimpleButton>
-                <SimpleButton 
-                    value='{isSummaryValid ? 'Create' : 'Invalid format'}' 
-                    icon='mdi:create'
-                    iconClass="big-icon"
-                    type='{isSummaryValid ? 'green' : 'delete'}'  
-                    onClickFn={() => createSpellFromSummary()} 
-                    disabled={! isSummaryValid}>
-                </SimpleButton>
-            </Actions>
+                <div class="new-spell-dialog">
+                    <div class="sd-title">
+                        <h3>Add new spell</h3>
+                    </div>
+                    <div class="sd-content">
+                        <div class="add-srd-spell">
+                            <h4>Add SRD Spell:</h4>
+                            <Svelecte 
+                                options={srdSpells}
+                                valueAsObject
+                                placeholder='All SRD spells'
+                                bind:value={newSRDSpell}>
+                            </Svelecte>
+                        </div>
+                        <h4><span style="color: var(--clr-accent-light);">OR</span> Paste & Create spell from wiki summary:</h4>
+                        <textarea style="height: 100%;" on:change={() => {isSummaryValid = true}} bind:value={fillSpellContent}></textarea>
+                    </div>
+                    <div class="sd-buttons">
+                        <SimpleButton value='' icon='mdi:close' iconClass="big-icon" type='default' onClickFn={() => newSpellDialogOpen = false}></SimpleButton>
+                        <SimpleButton 
+                            value='{isSummaryValid ? 'Create' : 'Invalid format'}' 
+                            icon='mdi:create'
+                            iconClass="big-icon"
+                            type='{isSummaryValid ? 'green' : 'delete'}'  
+                            onClickFn={() => createSpellFromSummary()} 
+                            disabled={! isSummaryValid}>
+                        </SimpleButton>
+                    </div>
+                </div>
+            {/await}
         </Dialog>
+
+        <SimpleSnackbar bind:this={statusSnackbar} label="Succesfully added '{lastAddedSpellName}' to your spells."></SimpleSnackbar>
     </div>
 </div>
 
@@ -163,18 +215,80 @@
         display: flex;
     }
 
-    :global(#dialog-buttons) {
+    .new-spell-dialog {
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr; 
+        grid-template-rows: 0.4fr 2.2fr 0.4fr; 
+        gap: 1em; 
+        grid-template-areas: 
+            "sd-title sd-title sd-title"
+            "sd-content sd-content sd-content"
+            "sd-buttons sd-buttons sd-buttons";
+        min-height: 0;
+        height: 100%;
+    }
+
+    .new-spell-dialog > div {
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 0.5em;
+    }
+
+    .sd-title { grid-area: sd-title; }
+
+    .sd-title h3 {
+        color: var(--clr-text);
+        font-size: 1.5em;
+        font-family: Montserrat;
+        text-transform: uppercase;
+        font-weight: 400;
+        margin: 0.5em;
+    }
+
+    .sd-content { grid-area: sd-content; 
+        flex-direction: column;
+    }
+
+    .sd-content h4 {
+        font-family: Quicksand;
+        font-size: large;
+        font-weight: 400;
+        margin: 0em;
+        align-self: center;
+    }
+
+    .sd-buttons { grid-area: sd-buttons; 
         gap: 1em;
-        margin-top: 1em;
     }
 
-    :global(#dialog-buttons simple-button) {
+    :global(.sd-buttons simple-button) {
         padding: 0.4rem 0em;
-        max-width: 45%;
     }
 
+    .add-srd-spell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap: 0.5em;
+        width: 90%;
+        margin-bottom: 1em;
+    }
+
+    .loading-container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    :global(.loading-container > simple-button) {
+        max-width: 5em;
+        padding: 0.2em 0.4em;
+    }
 
 </style>

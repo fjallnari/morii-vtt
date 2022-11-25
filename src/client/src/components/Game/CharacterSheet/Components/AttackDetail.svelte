@@ -6,6 +6,7 @@
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import ABILITY_TAGS from '../../../../enum/AbilityTags';
     import SimpleButton from '../../../SimpleButton.svelte';
+    import CUSTOM_ICONS from '../../../../enum/SVGCustomIcons';
 
     export let attack: Attack;
     export let character: Character;
@@ -87,11 +88,9 @@
                 </sendable>
                 <justify-filler></justify-filler>
                 {#if attack.versatile_die}
-                    <img class="skill-prof-icon" 
-                        src="../static/{attack.versatile_active ? 'hand-clap': 'hand-one'}.svg" 
-                        alt="versatile"
-                        on:click={() => { attack.versatile_active = !attack.versatile_active; $modifyCharacter() }}
-                    >
+                    <icon class="versatile-icon" on:click={() => { attack.versatile_active = !attack.versatile_active; $modifyCharacter() }}>
+                        {@html `${CUSTOM_ICONS[attack.versatile_active ? 'hand-clap': 'hand-one']}`}
+                    </icon>
                 {/if}
             </line-div>
             {#if isOpen}
@@ -284,19 +283,14 @@
         width: 0;
     }
 
-    .attack-damage line-div img {
+    .attack-damage line-div icon {
         margin-left: -1.7em;
         padding-right: 0.2em;
         display: flex; 
         cursor: pointer;
-        width: 2em;     
-    } 
-
-    .skill-prof-icon {
-        cursor: pointer; 
         height: 1.4em; 
-        width: 1.4em;
-    }
+        width: 1.8em;   
+    } 
 
     .atk-proficiency {
         display: flex;

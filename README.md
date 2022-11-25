@@ -3,19 +3,18 @@ Morii is a web-based half-vtt (i.e. no maps) for playing 5E.
 
 ## Key Features
 - **Campaign Management** - Create, destroy and join campaigns, invite/kick players
-- **Live Games** - See/edit your character sheet, send messages to fellow players, roll some dice *(I)*
+- **Live Games** - See/edit your character sheet, send messages to fellow players, roll some dice
 - **Game Overview for GMs** - All character/NPC sheets in one place, with initiative tracker and simple ordered views of characters' armor class and passive perceptions
 - **Character sheets** - All the things you would expect from normal 5E sheets, fully incorporated rolling and more
-- **Quick-Create** - Create your new character *blazingly fast* with 5E SRD Classes, Races, Spells and Equipment included *(II)*
+- **Quick-Create** - Create your new character *blazingly fast* with 5E SRD Classes, Races, Spells and Equipment included *(I)*
 - **Import/Export** - Import your characters exported from roll20 using the [VTTES](https://github.com/justas-d/roll20-enhancement-suite) plugin. Import/export them into simple .json files or between campaigns/players.
 
-As a bonus, you can swear or w/e at other players in dwarvish/elvish/gnomish (using e.g. /l dwarvish --- in chat) and none will know. *(III)*
+As a bonus, you can swear or w/e at other players in dwarvish/elvish/gnomish (using e.g. /l dwarvish --- in chat) and none will know. *(II)*
 
 **With all that aside**, this project is still actively developed, and as such expect some rough edges here and there. If you have any issues, encounter bugs, or have some general feedback etc., feel free to [start a new issue](https://github.com/Ashmogh/morii-vtt/issues/new) or [reach out directly over Discord](https://discord.com/invite/MhKxwkRpEU).
 
-*(I)* Uses MersenneTwister for randomness so all nat 1s are non refundable.\
-*(II)* As there are no subclasses/backgrounds under the OGL you will sadly still have to import these manually.\
-*(III)* Unless they are the GM or know dwarvish.
+*(I)* As there are no subclasses/backgrounds under the OGL you will sadly still have to import these manually.\
+*(II)* Unless they are the GM or know dwarvish.
 
 ## 📝 Licenses
 -   **Notice of Open Game Content:** This project uses *open game content* under the [Open Gaming License, Version 1.0a](Legal.md).

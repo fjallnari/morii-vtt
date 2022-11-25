@@ -153,4 +153,16 @@ export const THEMES = [
     //     "--bg-waves": `url(${BG_WAVES["rose"]})`,
     //     ... BG_THEMES["rose"]
     // },
+
+    // --clr-accent-light: #A26D54;
+    // --clr-accent-normal: #d09172;
+    // --clr-accent-dark: #D9906A;
+    // --clr-accent-darker: #C38E70;
+    // --clr-accent-muted: #D9906A29;
+    // --clr-bg: #CD9777;
+    // --clr-box-bg-dark: #D69F7E;
+    // --clr-box-bg-normal: #DEAB90;
+    // --clr-box-bg-light: #E6B8A2;
+    // --clr-box-bg-lighter: #EDC4B3;
+    // --clr-text: #774936;
 ]

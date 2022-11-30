@@ -15,7 +15,7 @@
 
 </script>
 
-<section use:dndzone={{items, flipDurationMs, dropTargetStyle: {outline: '', 'width': '100%'}}} on:consider={handleSort} on:finalize={deleteItem}>
+<section use:dndzone={{items, flipDurationMs, dragDisabled: true, dropTargetStyle: {outline: '', 'width': '100%'}}} on:consider={handleSort} on:finalize={deleteItem}>
     <slot></slot>
 </section>
 

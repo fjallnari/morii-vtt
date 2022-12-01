@@ -1,11 +1,10 @@
 <script lang="ts">
-    export let title = "";
     export let component;
 </script>
 
 
 <div class="dashboard-box">
-    <h3>{title}</h3>
+    <slot name="title"></slot>
     <svelte:component this={component}/>
 </div>
 
@@ -27,7 +26,7 @@
         border-radius: 4px;
     }
 
-    h3 {
+    :global(.dashboard-box > h3) {
         color: var(--clr-text);
         font-size: 2em;
         font-family: Quicksand;

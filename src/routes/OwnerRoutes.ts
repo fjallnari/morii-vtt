@@ -6,6 +6,7 @@ import RemoveInviteCodeController from '../controllers/Routes/OwnerAuth/RemoveIn
 import DeleteCampaignController from '../controllers/Routes/OwnerAuth/DeleteCampaignController';
 import CreateNPCController from '../controllers/Routes/OwnerAuth/CreateNPCController';
 import verifyOwner from '../middleware/ownerAuth';
+import RenameCampaignController from '../controllers/Routes/OwnerAuth/RenameCampaignController';
 
 const router = express.Router();
 
@@ -25,8 +26,12 @@ router.post("/api/delete-campaign", verifyToken, verifyOwner, async (req, res) =
     await new DeleteCampaignController(req, res).handleRequest();
 });
 
-router.post('/api/create-npc', verifyToken, verifyOwner, async (req, res, next) => {
+router.post('/api/create-npc', verifyToken, verifyOwner, async (req, res) => {
     await new CreateNPCController(req, res).handleRequest();
+});
+
+router.post("/api/rename-campaign", verifyToken, verifyOwner, async (req, res) => {
+    await new RenameCampaignController(req, res).handleRequest();
 });
 
 export default router;

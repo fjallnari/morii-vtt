@@ -1,6 +1,9 @@
 import ClassData from "../../interfaces/srd/ClassData";
 import { OTHER_PROF } from "../OTHER_PROF";
+import { ARMORS } from "./ARMORS";
 import { PACKS } from "./PACKS";
+import { SPELLSLOTS_HALFCASTER, SPELLSLOTS_STANDARD, SPELLSLOTS_WARLOCK } from "./SPELLSLOTS";
+import { SPELLS_BY_LEVEL_BLANK } from "./SPELLS_BY_LEVEL";
 import { TOOLS } from "./TOOLS";
 import { WEAPONS } from "./WEAPONS";
 
@@ -17,128 +20,6 @@ const ASI_LEVELS_STANDARD = {
     16: '4',
     19: '5'
 };
-
-const SPELLSLOTS_STANDARD = [
-    [ '2' ],
-    [ '3' ],
-    [ '4', '2' ],
-    [ '4', '3' ],
-    [ '4', '3', '2' ],
-    [ '4', '3', '3' ],
-    [ '4', '3', '3', '1' ],
-    [ '4', '3', '3', '2' ],
-    [ '4', '3', '3', '3', '1' ],
-    [ '4', '3', '3', '3', '2' ],
-    [ '4', '3', '3', '3', '2', '1' ],
-    [ '4', '3', '3', '3', '2', '1' ],
-    [ '4', '3', '3', '3', '2', '1', '1' ],
-    [ '4', '3', '3', '3', '2', '1', '1' ],
-    [ '4', '3', '3', '3', '2', '1', '1', '1' ],
-    [ '4', '3', '3', '3', '2', '1', '1', '1' ],
-    [ '4', '3', '3', '3', '2', '1', '1', '1', '1' ],
-    [ '4', '3', '3', '3', '3', '1', '1', '1', '1' ],
-    [ '4', '3', '3', '3', '3', '2', '1', '1', '1' ],
-    [ '4', '3', '3', '3', '3', '2', '2', '1', '1' ],
-];
-
-const SPELLSLOTS_HALFCASTER = [
-    [ ],
-    [ '2' ],
-    [ '3' ],
-    [ '3' ],
-    [ '4', '2' ],
-    [ '4', '2' ], 
-    [ '4', '3' ], 
-    [ '4', '3' ],
-    [ '4', '3', '2' ],
-    [ '4', '3', '2' ],
-    [ '4', '3', '3' ],
-    [ '4', '3', '3'  ],
-    [ '4', '3', '3', '1' ],
-    [ '4', '3', '3', '1' ],
-    [ '4', '3', '3', '2' ],
-    [ '4', '3', '3', '2' ],
-    [ '4', '3', '3', '3', '1' ],
-    [ '4', '3', '3', '3', '1' ],
-    [ '4', '3', '3', '3', '2' ],
-    [ '4', '3', '3', '3', '2' ],
-];
-
-const SPELLSLOTS_WARLOCK = [
-    [ '1' ],
-    [ '2' ],
-    [ '0', '2' ],
-    [ '0', '2' ],
-    [ '0', '0', '2' ],
-    [ '0', '0', '2' ], 
-    [ '0', '0', '0', '2' ], 
-    [ '0', '0', '0', '2' ],
-    [ '0', '0', '0', '0', '2' ],
-    [ '0', '0', '0', '0', '2' ],
-    [ '0', '0', '0', '0', '3' ],
-    [ '0', '0', '0', '0', '3'  ],
-    [ '0', '0', '0', '0', '3' ],
-    [ '0', '0', '0', '0', '3' ],
-    [ '0', '0', '0', '0', '3' ],
-    [ '0', '0', '0', '0', '3' ],
-    [ '0', '0', '0', '0', '4' ],
-    [ '0', '0', '0', '0', '4' ],
-    [ '0', '0', '0', '0', '4' ],
-    [ '0', '0', '0', '0', '4' ],
-];
-
-const SPELLS_BY_LEVEL_BLANK = {
-    0: { // ~= cantrips
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    1: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    2: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    3: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    4: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    5: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    6: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    7: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    8: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-    9: {
-        slots_total: '',
-        slots_current: '',
-        spells: []
-    },
-}
 
 export const CLASSES: ClassData[] = [
     {
@@ -278,7 +159,7 @@ export const CLASSES: ClassData[] = [
                         name: 'Explorer’s pack',
                         amount: 1,
                         tags: [],
-                        description: PACKS['EXPLORER']
+                        description: PACKS.EXPLORER
                     },
                     {
                         name: 'Javelin',
@@ -513,7 +394,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                             name: "Diplomat's pack",
                             amount: 1,
                             tags: [],
-                            description: PACKS['DIPLOMAT']
+                            description: PACKS.DIPLOMAT
                         }
                     ],
                     // (b)
@@ -522,7 +403,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                             name: "Entertainer’s pack",
                             amount: 1,
                             tags: [],
-                            description: PACKS['ENTERTAINER']
+                            description: PACKS.ENTERTAINER
                         }
                     ],
                 ]
@@ -558,7 +439,7 @@ Each time you use this feature after the first, the DC increases by 5. When you 
                         name: 'Explorer’s pack',
                         amount: 1,
                         tags: [],
-                        description: PACKS['EXPLORER']
+                        description: PACKS.EXPLORER
                     },
                     {
                         name: 'Javelin',
@@ -821,8 +702,10 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                         {
                             name: "Scale Mail",
                             amount: 1,
-                            tags: [],
-                            description: '' // TODO
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.SCALE_MAIL
                         }
                     ],
                     // (b)
@@ -830,8 +713,10 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                         {
                             name: "Leather Armor",
                             amount: 1,
-                            tags: [],
-                            description: '' // TODO
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.LEATHER
                         }
                     ],
                     // (c)
@@ -840,7 +725,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                             name: "Chain Mail (if proficient)",
                             amount: 1,
                             tags: [],
-                            description: '' // TODO
+                            description: ARMORS.CHAIN_MAIL
                         }
                     ],
                 ]
@@ -890,7 +775,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                             name: 'Priest’s pack',
                             amount: 1,
                             tags: [],
-                            description: PACKS['PRIEST']
+                            description: PACKS.PRIEST
                         }
                     ],
                     // (b)
@@ -899,7 +784,7 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                             name: 'Explorer’s pack',
                             amount: 1,
                             tags: [],
-                            description: PACKS['EXPLORER']
+                            description: PACKS.EXPLORER
                         }
                     ],
                 ]
@@ -910,7 +795,10 @@ Additionally, when you gain a level in this class, you can choose one of the bar
                     {
                         name: 'Shield',
                         amount: 1,
-                        tags: [],
+                        tags: [
+                            'armor'
+                        ],
+                        description: ARMORS.SHIELD
                     },
                     {
                         name: 'Holy Symbol',
@@ -1142,7 +1030,10 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                         {
                             name: 'Wooden shield',
                             amount: 1,
-                            tags: []
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.SHIELD
                         }
                     ],
                     // (b)
@@ -1193,13 +1084,16 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                     {
                         name: 'Leather armor',
                         amount: 1,
-                        tags: [],
+                        tags: [
+                            'armor'
+                        ],
+                        description: ARMORS.LEATHER
                     },
                     {
                         name: 'Explorer’s pack',
                         amount: 1,
                         tags: [],
-                        description: PACKS['EXPLORER']
+                        description: PACKS.EXPLORER
                     },
                     {
                         name: 'Druidic focus',
@@ -1370,7 +1264,10 @@ You prepare the list of druid spells that are available for you to cast, choosin
                         {
                             name: 'Chain mail',
                             amount: 1,
-                            tags: [] // TODO
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.CHAIN_MAIL
                         }
                     ],
                     // (b)
@@ -1378,7 +1275,10 @@ You prepare the list of druid spells that are available for you to cast, choosin
                         {
                             name: 'Leather armor',
                             amount: 1,
-                            tags: []
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.LEATHER
                         }
                     ],
                     // (c)
@@ -1418,8 +1318,10 @@ You prepare the list of druid spells that are available for you to cast, choosin
                         {
                             name: "Shield",
                             amount: 1,
-                            tags: [],
-                            description: '' // TODO
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.SHIELD
                         }
                     ],
                     // (b)
@@ -1487,7 +1389,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
                             name: 'Dungeoneer’s pack',
                             amount: 1,
                             tags: [],
-                            description: PACKS['DUNGEONEER']
+                            description: PACKS.DUNGEONEER
                         },
                     ],
                     [
@@ -1495,7 +1397,7 @@ You prepare the list of druid spells that are available for you to cast, choosin
                             name: 'Explorer’s pack',
                             amount: 1,
                             tags: [],
-                            description: PACKS['EXPLORER']
+                            description: PACKS.EXPLORER
                         },
                     ]
                 ]
@@ -1674,7 +1576,7 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
                             name: 'Dungeoneer’s pack',
                             amount: 1,
                             tags: [],
-                            description: PACKS['DUNGEONEER']
+                            description: PACKS.DUNGEONEER
                         },
                     ],
                     [
@@ -1682,7 +1584,7 @@ When you engage in two-weapon fighting, you can add your ability modifier to the
                             name: 'Explorer’s pack',
                             amount: 1,
                             tags: [],
-                            description: PACKS['EXPLORER']
+                            description: PACKS.EXPLORER
                         },
                     ]
                 ]
@@ -1933,7 +1835,10 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                             {
                                 name: 'Shield',
                                 amount: 1,
-                                tags: []
+                                tags: [
+                                    'armor'
+                                ],
+                                description: ARMORS.SHIELD
                             }
                         ],
                         // (b)
@@ -1998,7 +1903,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                                 name: "Priest’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: PACKS['PRIEST']
+                                description: PACKS.PRIEST
                             }
                         ],
                         // (b)
@@ -2007,7 +1912,7 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                                 name: "Explorer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: PACKS['EXPLORER']
+                                description: PACKS.EXPLORER
                             }
                         ],
                     ]
@@ -2018,7 +1923,10 @@ At 9th level, you gain the ability to move along vertical surfaces and across li
                         {
                             name: 'Chain Mail',
                             amount: 1,
-                            tags: [],
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.CHAIN_MAIL
                         },
                         {
                             name: 'Holy Symbol',
@@ -2238,7 +2146,10 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                             {
                                 name: 'Scale Mail',
                                 amount: 1,
-                                tags: []
+                                tags: [
+                                    'armor'
+                                ],
+                                description: ARMORS.SCALE_MAIL
                             }
                         ],
                         // (b)
@@ -2246,7 +2157,10 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                             {
                                 name: 'Leather Armor',
                                 amount: 1,
-                                tags: []
+                                tags: [
+                                    'armor'
+                                ],
+                                description: ARMORS.LEATHER
                             }
                         ],
                     ]
@@ -2298,7 +2212,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                                 name: "Dungeoneer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: PACKS['DUNGEONEER']
+                                description: PACKS.DUNGEONEER
                             }
                         ],
                         // (b)
@@ -2307,7 +2221,7 @@ You can change your list of prepared spells when you finish a long rest. Prepari
                                 name: "Explorer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: PACKS['EXPLORER']
+                                description: PACKS.EXPLORER
                             }
                         ],
                     ]
@@ -2610,7 +2524,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                                 name: "Burglar’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: PACKS['BURGLAR']
+                                description: PACKS.BURGLAR
                             }
                         ],
                         // (b)
@@ -2619,7 +2533,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                                 name: "Dungeoneer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: PACKS['DUNGEONEER']
+                                description: PACKS.DUNGEONEER
                             }
                         ],
                         // (c)
@@ -2628,7 +2542,7 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                                 name: "Explorer’s pack",
                                 amount: 1,
                                 tags: [],
-                                description: PACKS['EXPLORER']
+                                description: PACKS.EXPLORER
                             }
                         ],
                     ]
@@ -2639,7 +2553,10 @@ Additionally, when you gain a level in this class, you can choose one of the ran
                         {
                             name: 'Leather armor',
                             amount: 1,
-                            tags: [],
+                            tags: [
+                                'armor'
+                            ],
+                            description: ARMORS.LEATHER
                         },
                         {
                             name: 'Dagger',
@@ -2866,7 +2783,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
                             name: "Dungeoneer’s pack",
                             amount: 1,
                             tags: [],
-                            description: PACKS['DUNGEONEER']
+                            description: PACKS.DUNGEONEER
                         }
                     ],
                     // (b)
@@ -2876,7 +2793,7 @@ Once you use this feature, you can’t use it again until you finish a short or 
                             name: "Explorer’s pack",
                             amount: 1,
                             tags: [],
-                            description: PACKS['EXPLORER']
+                            description: PACKS.EXPLORER
                         }
                     ],
                 ]
@@ -3224,7 +3141,7 @@ Additionally, when you gain a level in this class, you can choose one of the sor
                             name: 'Scholar’s pack',
                             amount: 1,
                             tags: [],
-                            description: PACKS['SCHOLAR']
+                            description: PACKS.SCHOLAR
                         }
                     ],
                     // (b)
@@ -3233,7 +3150,7 @@ Additionally, when you gain a level in this class, you can choose one of the sor
                             name: "Dungeoneer’s pack",
                             amount: 1,
                             tags: [],
-                            description: PACKS['DUNGEONEER']
+                            description: PACKS.DUNGEONEER
                         }
                     ],
                 ]
@@ -3245,7 +3162,10 @@ Additionally, when you gain a level in this class, you can choose one of the sor
                     {
                         name: 'Leather armor',
                         amount: 1,
-                        tags: [],
+                        tags: [
+                            'armor'
+                        ],
+                        description: ARMORS.LEATHER
                     },
                     {
                         name: '',
@@ -3673,7 +3593,7 @@ You can communicate telepathically with your familiar and perceive through your 
                             name: "Scholar’s pack",
                             amount: 1,
                             tags: [],
-                            description: PACKS['SCHOLAR']
+                            description: PACKS.SCHOLAR
                         }
                     ],
                     // (b)
@@ -3683,7 +3603,7 @@ You can communicate telepathically with your familiar and perceive through your 
                             name: "Explorer’s pack",
                             amount: 1,
                             tags: [],
-                            description: PACKS['EXPLORER']
+                            description: PACKS.EXPLORER
                         }
                     ],
                 ]

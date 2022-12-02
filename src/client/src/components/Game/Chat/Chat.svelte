@@ -4,6 +4,7 @@
     import type MessageData from "../../../interfaces/MessageData";
     import MessageGrid from "./MessageGrid.svelte";
     import SimpleIconButton from "../../SimpleIconButton.svelte";
+    import { tooltip, Tooltip } from "@svelte-plugins/tooltips";
 
     // export let socket;
     let messages: MessageData[] = [];
@@ -62,11 +63,17 @@
         <textarea bind:value={messageText} on:focus={() => isMsgBoxFocused = true} on:blur={() => isMsgBoxFocused = false} spellcheck={false}></textarea>
 
         <div class="send-options-box">
-            <SimpleIconButton 
-                icon={`mdi:${['earth', 'eye-off', 'crown'][$messageMode]}`}
-                color={$messageMode === 2 ? 'var(--clr-icon-owner)' : 'inherit'}
-                onClickFn={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}>
-            </SimpleIconButton>
+            <Tooltip
+                content='{['Public', 'Secret', 'GM Only'][$messageMode]}'
+                theme="dark-tooltip"
+                animation='slide'
+            >
+                <SimpleIconButton 
+                    icon={`mdi:${['earth', 'eye-off', 'crown'][$messageMode]}`}
+                    color={$messageMode === 2 ? 'var(--clr-icon-owner)' : 'inherit'}
+                    onClickFn={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0)) }}>
+                </SimpleIconButton>
+            </Tooltip>
             <SimpleIconButton icon='material-symbols:send-rounded' onClickFn={sendMessage}></SimpleIconButton>
         </div>
     </div>

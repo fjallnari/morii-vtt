@@ -6,6 +6,8 @@
     import ToolDetail from "./ToolDetail.svelte";
     import Icon from "@iconify/svelte";
     import PROF_TYPES from "../../../../enum/OtherProfTypes";
+    import { tooltip } from "@svelte-plugins/tooltips";
+    import { capitalize } from "../../../../util/util";
 
     export let character: Character;
     let currentFilter = 0;
@@ -59,7 +61,10 @@
     <box class="other-prof inside-box-content">
         <div class="filter-menu">
             {#each OTHER_PROF_FILTER_ICONS as profType, index}
-                <sendable class="prof-type-icon"  on:click={() => currentFilter = index } selected={currentFilter === index}>
+                <sendable class="prof-type-icon" 
+                    use:tooltip={{content: `${capitalize(profType.name.toLowerCase()).split('_').join(' ')}`, theme: 'blurred'}} 
+                    on:click={() => currentFilter = index } selected={currentFilter === index}
+                >
                     <Icon class="medi-icon" icon={profType.icon} />
                 </sendable>
             {/each}                

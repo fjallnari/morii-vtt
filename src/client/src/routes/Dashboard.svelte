@@ -14,6 +14,7 @@
     import Campaigns from '../components/Campaign/Campaigns.svelte';
     import CampaignDetail from '../components/Campaign/CampaignDetail.svelte';
     import { BG_WAVES } from '../enum/Themes';
+    import InPlaceEdit from '../components/InPlaceEdit.svelte';
 
     campaignDetailActive.set(false);
     campaignNewActive.set(false);
@@ -46,7 +47,6 @@
             return;
         }
         try {
-
             const response = await axios.post('/api/join-campaign', {
                 inviteCode: inviteCode,
                 password: password
@@ -72,6 +72,29 @@
         joinDialogOpen = false;
         replace('/');
     }
+
+    const renameCampaign = async () => {
+        try {            
+            await axios.post('/api/rename-campaign', {
+                campaignID: $selectedCampaign._id,
+                newName: $selectedCampaign.name
+            });
+
+            user.update( userInfo => {
+                return Object.assign(userInfo, { 
+                    campaigns: userInfo.campaigns.map(campaign => {
+                        if (campaign._id === $selectedCampaign._id) {
+                            campaign.name = $selectedCampaign.name
+                        }
+                        return campaign;
+                    })
+                });
+            });
+
+        }
+        catch (err) {
+        }
+    }
     
 </script>
 
@@ -86,14 +109,26 @@
         <div class="dashboard-content">
             <div class:active = {$campaignDetailActive} class="campaigns-list">
                 {#if $campaignNewActive}
-                    <DashboardBox title="Add Campaign" component={CampaignChoice}></DashboardBox>
+                    <DashboardBox component={CampaignChoice}>
+                        <h3 slot="title">Add Campaign</h3>
+                    </DashboardBox>
                 {:else}
-                    <DashboardBox title="Your Campaigns" component={Campaigns}></DashboardBox>
+                    <DashboardBox component={Campaigns}>
+                        <h3 slot="title">Your Campaigns</h3>
+                    </DashboardBox>
                 {/if}
             </div>
             {#if $campaignDetailActive}
                 <div class="campaign-detail" transition:fade="{{ duration: 100 }}">
-                    <DashboardBox title={$selectedCampaign.name} component={CampaignDetail}></DashboardBox>
+                    <DashboardBox component={CampaignDetail}>
+                        <h3 slot="title">
+                            {#if $selectedCampaign.owner._id === $user._id}
+                                <InPlaceEdit bind:value={$selectedCampaign.name} on:submit={() => renameCampaign()}/>
+                            {:else}
+                                {$selectedCampaign.name}
+                            {/if}
+                        </h3>
+                    </DashboardBox>
                 </div>
             {/if}   
         </div>

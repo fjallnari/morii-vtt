@@ -46,7 +46,7 @@
         <input style="width: {editWidth}; height: {editHeight};" bind:value on:blur={submit} {required} use:focus/>
     </form>
 {:else}
-    <div on:click={() => edit()}>
+    <div class="text-display" on:click={() => edit()}>
         {value && (typeof value === 'string') && value.trim() ? value : defaultValue}
     </div>
 {/if}
@@ -66,6 +66,10 @@
         max-width: inherit;
         outline: solid 1.5px var(--clr-accent-normal);
         border-radius: 4px;
+    }
+
+    .text-display {
+        border: 1px solid transparent;
     }
 
 </style>

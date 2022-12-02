@@ -189,7 +189,7 @@
                     has_weight: false,
                     has_attack: hasAttack,
                     attack_id: attackID ?? '',
-                    want_tooltip: item.name?.includes('pack'),
+                    want_tooltip: item.name?.includes('pack') || item.tags?.includes('armor'),
                     tooltip: item.description ?? item.tooltip ?? '',
                     use_as_resource: isResource,
                     resource_id: resourceID ?? ''

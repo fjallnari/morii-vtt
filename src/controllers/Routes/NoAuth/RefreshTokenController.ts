@@ -11,8 +11,6 @@ export default class RefreshTokenController extends RouteController {
         try {
             const refreshToken = this.req.cookies._refresh_token;
 
-            logger.info(`attempting JWT token refresh`);
-
             if (!refreshToken) {
                 logger.info({ status: 401 }, `JWT token does not exist`);
                 return this.res.status(401).send('Invalid token.');
@@ -49,7 +47,6 @@ export default class RefreshTokenController extends RouteController {
             // add new refresh token to the db
             await usersCollection.updateOne({_id: user._id}, {$set: {refresh_token: newRefreshToken}});
 
-            logger.info({ username: user.username, status: 200 }, `JWT refresh token for user '${user.username}' was refreshed`);
             return this.res.status(200).json({ accessToken });
 
         } catch (error) {

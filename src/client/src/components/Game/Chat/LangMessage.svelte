@@ -12,7 +12,7 @@
 
     $: langFont = langFonts[message.langData.name.toLowerCase()] ?? 'Quicksand';
 
-    $: isLegible = $user?.gameData?.characters.find(char => char.playerID === $user._id)?.other_profs.find(prof => prof.name.toLowerCase() === message.langData.name.toLowerCase()) && true || $user?._id === $user?.gameData.owner;
+    $: isLegible = ($user?.gameData?.characters ?? []).find(char => char.playerID === $user._id)?.other_profs.find(prof => prof.name.toLowerCase() === message.langData.name.toLowerCase()) && true || $user?._id === $user?.gameData?.owner;
 
 </script>
 

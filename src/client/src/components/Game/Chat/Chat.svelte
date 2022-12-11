@@ -56,7 +56,7 @@
             <MessageGrid message={message}></MessageGrid>
         {/each}
         <div class="help-message">
-            Use either /r or /roll to roll dice.<br>E.g. /r 4d6kh3, /roll d20 - 2, /r 6d8dl2 + 1 ...
+            Use /r to roll dice e.g. /r 4d6kh3.<br>For more info, use <em>/help or /h</em>
         </div>
     </div>
     <div class="send-message-box">

@@ -15,6 +15,7 @@ import DiceHandler from "../../services/DiceHandler";
 import LangModule from "../../services/LangModule";
 import MESSAGE_MODES from "../../enum/MESSAGE_MODES";
 import logger from "../../logger";
+import { CHAT_HELP } from "../../enum/CHAT_HELP";
 
 
 export default class SocketsController {
@@ -82,6 +83,11 @@ export default class SocketsController {
         // fantasy "language" module, replaces the text with gibberish
         if (/^\/lang\040|^\/l\040/.test(messageData.messageText)) {
             Object.assign(messageData, {...this.langModule.composeMessage(messageData.messageText)});
+        }
+
+        // sends the help message
+        if (/^\/help$|^\/h$/.test(messageData.messageText)) {
+            Object.assign(messageData, { messageMode: MESSAGE_MODES.SECRET, messageText: CHAT_HELP });
         }
 
         // format looks like e.g. 'Mar 14, 18:41'

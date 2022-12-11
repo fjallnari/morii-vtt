@@ -120,7 +120,7 @@
             {spellAttackBonus}
         </div>    
         <div class="box-justify-filler"></div>
-        <sendable class="box-label" on:click={() => $sendSkillCheck(spellAttackBonus, 'spell attack', character.name)}>
+        <sendable class="box-label" on:click={() => $sendSkillCheck(spellAttackBonus, 'spell attack', character.name)} on:keyup={() => {}}>
             Spell Attack Bonus
         </sendable>
     </box>

@@ -53,8 +53,10 @@
                     <h4>You have no characters.</h4>
                 {:else}
                     {#each characters as character}
+                        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                         <box class="character-tag" 
-                            on:click={() => selectedCharacter = character} 
+                            on:click={() => selectedCharacter = character}
+                            on:keyup={() => {}}
                             style="{selectedCharacter === character ? 'background-color: var(--clr-box-bg-light);' : ''}"
                             tabindex='0'
                         >

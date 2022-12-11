@@ -40,7 +40,7 @@
 <box class="inventory-box box-with-label">
     {#if character.inventory.length === 0}
         <div class="box-main-text">
-            <sendable on:click={() => { addNewItem(); $modifyCharacter() }}>
+            <sendable on:click={() => { addNewItem(); $modifyCharacter() }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
@@ -49,7 +49,7 @@
             {#each character.inventory as item}
                 <ItemDetail bind:item={item} bind:character={character}></ItemDetail>
             {/each}
-            <sendable class="add-new-item" on:click={() => { addNewItem(); $modifyCharacter() }}>
+            <sendable class="add-new-item" on:click={() => { addNewItem(); $modifyCharacter() }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>

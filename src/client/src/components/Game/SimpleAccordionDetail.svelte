@@ -48,7 +48,7 @@
                 <Icon class="big-icon" icon="mdi:check" />
             </div>
         {/if}
-        <div class="feature-name {selectable ? 'selectable': ''}" on:click={toggleItem}>
+        <div class="feature-name {selectable ? 'selectable': ''}" on:click={toggleItem} on:keyup={() => {}}>
             {#if editable}
                 <InPlaceEdit bind:value editWidth={editWidth} editHeight='1.5rem' on:submit={() => {}}/>
             {:else}
@@ -57,7 +57,7 @@
         </div>
         
         {#if content || editable}
-            <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }}>
+            <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
             </sendable>
         {/if}

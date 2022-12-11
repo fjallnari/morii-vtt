@@ -65,10 +65,12 @@
     <settings-content>
         <div class="pfp-select">
             {#each Object.keys(ANIMALS).slice(1) as pfpAnimal}
+                <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                 <pfp
                     selected={settingsEditObj.pfpID === pfpAnimal}
                     style="background-color: transparent;" 
                     on:click={() => {settingsEditObj.pfpID = pfpAnimal}}
+                    on:keyup={() => {}}
                     tabindex="0"
                 >
                     {@html `${ANIMALS[pfpAnimal] ?? ANIMALS['default']}`}

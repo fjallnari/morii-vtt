@@ -14,7 +14,7 @@
             <h3>No characters found</h3>
         {:else}
             {#each gameData.characters as character}
-                <li class="character-item" on:click={() => selectedCharacter.set(character)}>
+                <li class="character-item" on:click={() => selectedCharacter.set(character)} on:keyup={() => {}}>
                     <class-icon>
                         <img id="main-class" src="../static/class-icons/{getClassIcon(character.classes)[0]}.svg" alt="class-icon">
                         {#if getClassIcon(character.classes).length > 2}

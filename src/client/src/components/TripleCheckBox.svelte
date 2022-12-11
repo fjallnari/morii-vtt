@@ -12,7 +12,7 @@
 
 <div class="triple-checkbox">
     {#each Array.from({ length: 3 }, (_, i) => i + 1) as iter_level}
-        <sendable on:click={() => { value = iter_level === value ? 0 : iter_level; $modifyCharacter()}}>
+        <sendable on:click={() => { value = iter_level === value ? 0 : iter_level; $modifyCharacter()}} on:keyup={() => {}}>
             <Icon class="bigger-icon" 
                 icon={iter_level > value ? `${iter_level === 3 ? blankBoxLast : blankBox}`: `${iter_level === 3 ? fullBoxLast : fullBox}`}
             />

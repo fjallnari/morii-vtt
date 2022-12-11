@@ -79,7 +79,7 @@
 <box class="item-container">
     <div class="item-summary">
         <div class="main-item-info">
-            <sendable on:click={() => { item.is_equipped = !item.is_equipped; $modifyCharacter(); }}>
+            <sendable on:click={() => { item.is_equipped = !item.is_equipped; $modifyCharacter(); }} on:keyup={() => {}}>
                 <Icon class="medi-icon" 
                     icon="mdi:{item.is_equipped ? 'checkbox-marked': 'checkbox-blank-outline'}"
                 />
@@ -110,7 +110,7 @@
     
         <div class="toggable-item-info">
             {#if character.settings.use_encumbrance}
-                <icon class="has-weight-icon" on:click={() => { item.has_weight = !item.has_weight; $modifyCharacter();}}>
+                <icon class="has-weight-icon" on:click={() => { item.has_weight = !item.has_weight; $modifyCharacter();}} on:keyup={() => {}}>
                     {@html `${CUSTOM_ICONS[item.has_weight ? 'weight': 'weight-off']}`}
                 </icon>
                 {#if item.has_weight}
@@ -119,7 +119,7 @@
                     </div>
                 {/if}
             {/if}
-            <sendable class="show-details-icon" on:click={() => { isOpen = !isOpen }}>
+            <sendable class="show-details-icon" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
             </sendable>
         </div>
@@ -128,7 +128,7 @@
         <div class="details" transition:slide|local>
             <div class="special-tags">
                 <div class="tag-with-icon">
-                    <sendable on:click={() => { item.want_tooltip = !item.want_tooltip; $modifyCharacter(); }}>
+                    <sendable on:click={() => { item.want_tooltip = !item.want_tooltip; $modifyCharacter(); }} on:keyup={() => {}}>
                         <Icon class="medi-icon" icon="mdi:{item.want_tooltip ? 'tooltip-text': 'tooltip-text-outline'}"/>
                     </sendable>
                     <div class="box-label">
@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div class="tag-with-icon">
-                    <sendable on:click={() => changeHasAttack()}>
+                    <sendable on:click={() => changeHasAttack()} on:keyup={() => {}}>
                         <Icon class="medi-icon" icon="mdi:{item.has_attack ? 'shield-sword': 'shield-sword-outline'}"/>
                     </sendable>
                     <div class="box-label">
@@ -144,7 +144,7 @@
                     </div>
                 </div>
                 <div class="tag-with-icon">
-                    <sendable on:click={() => changeUseAsResource()}>
+                    <sendable on:click={() => changeUseAsResource()} on:keyup={() => {}}>
                         <Icon class="medi-icon" icon="mdi:{item.use_as_resource  ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
                     </sendable>
                     <div class="box-label">

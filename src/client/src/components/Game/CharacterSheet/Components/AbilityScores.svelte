@@ -43,22 +43,24 @@
 
         <div class="skills">
             <div class="skill-field">
-                <sendable class="skill-prof-icon" on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; $modifyCharacter() }}>
+                <sendable class="skill-prof-icon" 
+                    on:click={() => { character.ability_scores[AS].saving_throw = !character.ability_scores[AS].saving_throw; $modifyCharacter() }} on:keyup={() => {}}
+                >
                     <Icon icon="mdi:rhombus{character.ability_scores[AS].saving_throw ? '' : '-outline'}" />
                 </sendable>
                 <mod>
                     {$formatModifier(getSavingThrowModifier(AS))}
                 </mod>
-                <sendable on:click={() => { $sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`, character.name) }}>{AS} saving throws<br></sendable>
+                <sendable on:click={() => { $sendSkillCheck(getSavingThrowModifier(AS), `${AS} saving throw`, character.name) }} on:keyup={() => {}}>{AS} saving throws<br></sendable>
             </div>
             {#each character.ability_scores[AS].skills as skill}
                 <div class="skill-field">
                     <!-- cycles through proficiency values 0, 1 and 2 -->
-                    <sendable class="skill-prof-icon" on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }}>
+                    <sendable class="skill-prof-icon" on:click={() => { skill.proficiency += 1 + (skill.proficiency === 2 ? -3 : 0); $modifyCharacter() }} on:keyup={() => {}}>
                         <Icon icon="mdi:{['checkbox-blank-outline', 'checkbox-marked', 'flare'][skill.proficiency]}" />
                     </sendable>
                     <mod>{$formatModifier(getSkillModifier(AS, skill))}</mod>
-                    <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name, character.name) }}>{skill.name}<br></sendable>
+                    <sendable on:click={() => { $sendSkillCheck(getSkillModifier(AS, skill), skill.name, character.name) }} on:keyup={() => {}}>{skill.name}<br></sendable>
                 </div>
             {/each}
         </div>
@@ -81,7 +83,9 @@
                         {$formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
                     </div>
                     <div class="box-justify-filler"></div>
-                    <sendable class="box-label" on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`, character.name, character._id)}>
+                    <sendable class="box-label" 
+                        on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`, character.name, character._id)} on:keyup={() => {}}
+                    >
                         Initiative
                     </sendable>
                 </div>

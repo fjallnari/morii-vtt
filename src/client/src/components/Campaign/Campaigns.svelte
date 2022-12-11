@@ -21,7 +21,7 @@
 <div class="campaigns">
     <campaigns-list>
         {#each $user?.campaigns ?? [] as campaign}
-            <item on:click={() => showCampaignDetails(campaign._id)} selected={selection === campaign._id}>
+            <item on:click={() => showCampaignDetails(campaign._id)} selected={selection === campaign._id} on:keyup={() => {}}>
                 <div class="title">
                     {campaign.name}
                 </div>

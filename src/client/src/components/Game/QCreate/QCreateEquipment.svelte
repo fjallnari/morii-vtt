@@ -20,7 +20,7 @@
                             </div>
                         {/if}
                         
-                        <box class='chip selectable {equipmentLine.final === itemOptions ? 'selected': ''}' on:click={() => {equipmentLine.final = itemOptions}}>
+                        <box class='chip selectable {equipmentLine.final === itemOptions ? 'selected': ''}' on:click={() => {equipmentLine.final = itemOptions}} on:keyup={() => {}}>
                             {#each itemOptions as item, index}
                                 {#if index !== 0}
                                     <Icon class="big-icon" icon='mdi:add' />

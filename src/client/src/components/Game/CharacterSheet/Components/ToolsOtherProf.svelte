@@ -48,7 +48,7 @@
             {#each character.tools as tool}
                 <ToolDetail bind:tool={tool} bind:character={character}></ToolDetail>
             {/each}
-            <sendable class="add-new-item" on:click={() => { addNewTool(); $modifyCharacter() }}>
+            <sendable class="add-new-item" on:click={() => { addNewTool(); $modifyCharacter() }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
@@ -63,7 +63,7 @@
             {#each OTHER_PROF_FILTER_ICONS as profType, index}
                 <sendable class="prof-type-icon" 
                     use:tooltip={{content: `${capitalize(profType.name.toLowerCase()).split('_').join(' ')}`, theme: 'blurred'}} 
-                    on:click={() => currentFilter = index } selected={currentFilter === index}
+                    on:click={() => currentFilter = index } selected={currentFilter === index} on:keyup={() => {}}
                 >
                     <Icon class="medi-icon" icon={profType.icon} />
                 </sendable>
@@ -73,7 +73,7 @@
             {#each character.other_profs.filter( prof => isSelectedType(currentFilter, prof.type)) as other_prof}
                 <OtherProfDetail bind:other_prof={other_prof} bind:character={character}></OtherProfDetail>
             {/each}
-            <sendable class="add-new-item" on:click={() => { addNewProf(); $modifyCharacter() }}>
+            <sendable class="add-new-item" on:click={() => { addNewProf(); $modifyCharacter() }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>

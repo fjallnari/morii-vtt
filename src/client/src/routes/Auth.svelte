@@ -111,7 +111,7 @@
 
                 <div class="switch-auth">
                     <span class="color-text">{loginActive ? "Don't have an account?": "Already have an account?"}</span>
-                    <span class="accent-text" on:click={() => switchAuthView()}>
+                    <span class="accent-text" on:click={() => switchAuthView()} on:keyup={() => {}}>
                         {loginActive ? "Sign up here.": "Login here."}
                     </span>
                 </div>
@@ -124,10 +124,10 @@
                     </SimpleButton>
                 </div>
                 <div class="socials">
-                    <sendable on:click={ () => window.open("https://github.com/Ashmogh/morii-vtt")}>
+                    <sendable on:click={ () => window.open("https://github.com/Ashmogh/morii-vtt")} on:keyup={() => {}}>
                         <Icon icon="mdi:github" /> 
                     </sendable>
-                    <sendable on:click={ () => window.open("https://discord.gg/MhKxwkRpEU")}>
+                    <sendable on:click={ () => window.open("https://discord.gg/MhKxwkRpEU")} on:keyup={() => {}}>
                         <Icon icon="ic:baseline-discord" /> 
                     </sendable>      
                 </div>

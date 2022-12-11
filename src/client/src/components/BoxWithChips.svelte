@@ -50,7 +50,7 @@
         <p class="header-text">{headerText}</p>
     {/if}
     {#if chipsType === 'crud'}
-        <sendable class="add-new-item" on:click={() => { addChip()}}>
+        <sendable class="add-new-item" on:click={() => { addChip()}} on:keyup={() => {}}>
             <Icon class="big-icon" icon="mdi:add" />
         </sendable>
     {/if}
@@ -59,9 +59,11 @@
             <div>No {label.toLowerCase()}</div>
         {:else}
             {#each chipsArray as chip, index}
-                <box class="chip{isBlank(chip) ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" on:click={() => toggleChip(chip)}>
+                <box class="chip{isBlank(chip) ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" 
+                    on:click={() => toggleChip(chip)} on:keyup={() => {}}
+                >
                     {#if chipsType === 'crud'}
-                        <sendable class="delete-chip" on:click={() => { deleteChip(index)}}>
+                        <sendable class="delete-chip" on:click={() => { deleteChip(index)}} on:keyup={() => {}}>
                             <Icon class="big-icon" icon="mdi:close" />
                         </sendable>
                     {:else if selectNFinalArray.includes(chip)}

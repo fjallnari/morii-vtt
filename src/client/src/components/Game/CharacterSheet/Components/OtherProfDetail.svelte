@@ -21,13 +21,13 @@
 
 <box class="prof-main-container">
     <div class="prof-summary">
-        <sendable class="prof-type" on:click={() => { other_prof.type += 1 + (other_prof.type === 4 ? -5 : 0); $modifyCharacter(); }}>
+        <sendable class="prof-type" on:click={() => { other_prof.type += 1 + (other_prof.type === 4 ? -5 : 0); $modifyCharacter(); }} on:keyup={() => {}}>
             <Icon icon={PROF_TYPES[other_prof.type]?.icon} />
         </sendable>
         <div class="prof-name">
             <InPlaceEdit bind:value={other_prof.name} editWidth='6em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
-        <sendable class="prof-menu" on:click={() => { isOpen = !isOpen }}>
+        <sendable class="prof-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>

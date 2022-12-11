@@ -10,6 +10,7 @@
     import GameOverview from "../components/Game/GameOverview/GameOverview.svelte";
     import { nanoid } from "nanoid/non-secure";
     import LoadingCircle from "../components/LoadingCircle.svelte";
+    import GameGuide from "../components/Game/GameGuide/GameGuide.svelte";
 
     export let params: { id?: string } = {};
 
@@ -103,6 +104,7 @@
     </div>
 {:then gameData}
     <game-content>
+        <!-- <GameGuide></GameGuide> -->
         <div class="character-sheet">
             {#if $user && $user._id === gameData.owner}
                 <GameOverview gameData={gameData}></GameOverview>

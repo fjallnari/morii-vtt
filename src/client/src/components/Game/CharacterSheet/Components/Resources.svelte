@@ -43,7 +43,7 @@
             <ResourceDetail bind:resource={resource} bind:character={character} deleteFce={deleteResource}></ResourceDetail>
         {/each}
         {#if character.resources.length < 4}
-            <sendable class="add-new-item" on:click={() => { $addNewResource(); $modifyCharacter() }}>
+            <sendable class="add-new-item" on:click={() => { $addNewResource(); $modifyCharacter() }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         {/if}

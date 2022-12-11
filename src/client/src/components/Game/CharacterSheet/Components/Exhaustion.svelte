@@ -10,7 +10,7 @@
 <box class="box-with-label">
     <div class="box-main-text">
         {#each Array.from({ length: 6 }, (_, i) => i + 1) as exhaustion_level}
-            <icon class="exhaustion-icon" on:click={() => { charExhaustion = exhaustion_level === charExhaustion ? 0 : exhaustion_level; $modifyCharacter()}}>
+            <icon class="exhaustion-icon" on:click={() => { charExhaustion = exhaustion_level === charExhaustion ? 0 : exhaustion_level; $modifyCharacter()}} on:keyup={() => {}}>
                 {@html `${CUSTOM_ICONS[exhaustion_level > charExhaustion ? 'checkbox-blank-outline' : exhaustion_level === 6 ?  'skull-scan' : `roman-${exhaustion_level}-box`]}`}
             </icon>
         {/each}

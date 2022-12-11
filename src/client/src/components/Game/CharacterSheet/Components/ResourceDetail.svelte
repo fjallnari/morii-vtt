@@ -49,19 +49,19 @@
         <div class="resource-name">
             <InPlaceEdit bind:value={resource.name} editWidth="5rem" editHeight="2rem" on:submit={modifyCharacterFce}></InPlaceEdit>  
         </div>
-        <sendable class="flip-card-icon" on:click={() => { isFlipped = true}}>
+        <sendable class="flip-card-icon" on:click={() => { isFlipped = true}} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:arrow-left-rounded" />
         </sendable>
     </div>
     <div class="back">
-        <sendable class="change-resource-type" on:click={changeResourceType}>
+        <sendable class="change-resource-type" on:click={changeResourceType} on:keyup={() => {}}>
             <Icon class="resource-type-icon big-icon" icon="{resource.type && resource.type === 'simple' ? 'mdi:alpha-a' : 'mdi:ab-testing'}" />
             <div class="change-resource-type-label box-label">
                 {resource.type ?? 'complex'}
             </div>
         </sendable>
         <SimpleButton value='Delete' type="delete" onClickFn={() => deleteFce(resource)}></SimpleButton>
-        <sendable class="flip-card-icon" on:click={() => { isFlipped = false}}>
+        <sendable class="flip-card-icon" on:click={() => { isFlipped = false}} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:arrow-left-rounded" />
         </sendable>
     </div>

@@ -13,7 +13,7 @@
     import NpcList from "./NpcList.svelte";
 
     export let gameData: GameData;
-    let createMenuEnabled: boolean = false;
+    let createMenuEnabled: boolean = gameData?.npcs?.length === 0 ? true : false;
     let initiative = {
         topID: '',
         order: [] as InitiativeEntity[]

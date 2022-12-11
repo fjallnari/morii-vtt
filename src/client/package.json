@@ -43,7 +43,7 @@
     "fantastical": "^2.0.1",
     "mem": "^9.0.2",
     "sirv-cli": "^2.0.0",
-    "socket.io-client": "^4.4.1",
+    "socket.io-client": "^4.5.4",
     "svelecte": "^3.9.2",
     "svelte-color-picker": "^1.0.7",
     "svelte-copy-to-clipboard": "^0.2.5",

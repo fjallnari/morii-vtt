@@ -55,6 +55,17 @@ export const BG_WAVES = {
 export const THEMES = [
     {
         "id": "default",
+        "name": "jungle",
+        "--clr-accent-light": "#8BBBA7",
+        "--clr-accent-normal": "#549C7E",
+        "--clr-accent-dark": "#1C7C54",
+        "--clr-accent-darker": "#21513F",
+        "--clr-accent-muted": "#1C7C5429",
+        "--bg-waves": `url(${BG_WAVES["viridian"]})`,
+        ... BG_THEMES["default"]
+    },
+    {
+        "id": "blue",
         "name": "blue mists",
         "--clr-accent-light": "#78A1BB",
         "--clr-accent-normal": "#5A77A1",
@@ -95,17 +106,6 @@ export const THEMES = [
         "--clr-accent-darker": "#642929",
         "--clr-accent-muted": "#A22C2929",
         "--bg-waves": `url(${BG_WAVES["auburn"]})`,
-        ... BG_THEMES["default"]
-    },
-    {
-        "id": "viridian",
-        "name": "jungle",
-        "--clr-accent-light": "#8BBBA7",
-        "--clr-accent-normal": "#549C7E",
-        "--clr-accent-dark": "#1C7C54",
-        "--clr-accent-darker": "#21513F",
-        "--clr-accent-muted": "#1C7C5429",
-        "--bg-waves": `url(${BG_WAVES["viridian"]})`,
         ... BG_THEMES["default"]
     },
     {

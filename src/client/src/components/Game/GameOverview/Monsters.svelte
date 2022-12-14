@@ -40,7 +40,7 @@
         return [];
     }
     
-    $: if (monsterChosenSimple) {
+    $: if (monsterChosenSimple && monsterChosenSimple?.id !== monsterChosenObj?.id) {
         monsterChosenObj = undefined;
         getMonsterData(open, monsterChosenSimple.id).then(
             response => monsterChosenObj = response[0]

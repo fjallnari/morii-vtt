@@ -1241,7 +1241,7 @@ export const MONSTERS: MonsterData[] = [
     speed: "40 ft. ",
     skills: "Perception +3, Stealth +5",
     senses: "Passive Perception 13",
-    languages: "Blink Dog  Understands Sylvan but can't speak it",
+    languages: "Understands Sylvan but can't speak it",
     challenge: "1/4 (50 XP)",
     traits: "<p><em><strong>Keen Hearing and Smell.</strong></em> The dog has advantage on Wisdom (Perception) checks that rely on hearing or smell.</p>",
     actions: "<p><em><strong>Bite.</strong></em> <em>Melee Weapon Attack:</em> +3 to hit, reach 5 ft., one target. <em>Hit:</em> 4 (1d6 + 1) piercing damage. </p><p><em><strong>Teleport (Recharge 4\u20136).</strong></em> The dog magically teleports, along with any equipment it is wearing or carrying, up to 40 feet to an unoccupied space it can see. Before or after teleporting, the dog can make one bite attack.</p>",

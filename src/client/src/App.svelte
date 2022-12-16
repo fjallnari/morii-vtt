@@ -356,6 +356,10 @@
 		z-index: 4;
 	}
 
+	:global(.sv-dropdown-scroll) {
+		scrollbar-width: thin;
+	}
+
 	:global(.tooltip.dark-tooltip) {
         --tooltip-background-color: var(--clr-box-bg-dark);
         --tooltip-border-radius: 4px;

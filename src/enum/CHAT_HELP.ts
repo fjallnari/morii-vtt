@@ -16,7 +16,7 @@ export const CHAT_HELP = `#### Morii Chat Commands
 
 **/lang [language] [message], /l**
 
-- translate & transcribe message into the specified language
+- translate & transliterate message into the specified language
 
 - original message is shown to GMs and characters who know the language
 

@@ -36,7 +36,7 @@
 {#if character.attacks.length === 0}
     <box class="box-with-label">
         <div class="box-main-text">
-            <sendable on:click={() => { $createNewAttack(); $modifyCharacter() }}>
+            <sendable on:click={() => { $createNewAttack(); $modifyCharacter() }} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         </div>
@@ -50,7 +50,7 @@
         {#each character.attacks as attack}
             <AttackDetail bind:attack={attack} bind:character={character}></AttackDetail>
         {/each}
-        <sendable style="cursor: pointer;" on:click={() => { $createNewAttack(); $modifyCharacter() }}>
+        <sendable style="cursor: pointer;" on:click={() => { $createNewAttack(); $modifyCharacter() }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="mdi:add" />
         </sendable>
     </div>

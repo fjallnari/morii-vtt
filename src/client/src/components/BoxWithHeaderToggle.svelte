@@ -12,7 +12,7 @@
 <box class="box-with-header-main-container" style="grid-area: {gridArea};">
     <box-header>
         <header-text class='{isHeaderToggled ? 'toggle-on' : 'toggle-off'}' >{headerText}</header-text>
-        <sendable class="tooltip-toggle-icon" on:click={() => isHeaderToggled = !isHeaderToggled}>
+        <sendable class="tooltip-toggle-icon" on:click={() => isHeaderToggled = !isHeaderToggled} on:keyup={() => {}}>
             <Icon class="big-icon" icon="{isHeaderToggled ? 'mdi:information' : 'mdi:information-outline'}" />
         </sendable>
     </box-header>

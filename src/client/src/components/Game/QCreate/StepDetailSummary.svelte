@@ -63,7 +63,7 @@
     <div class="char-name">
         <div class="name-edit">
             <InPlaceEditBox bind:value={characterParts.name} characterLimit={20} boxLabel="Character Name" editWidth='5em' onSubmitFce={() => {}}></InPlaceEditBox>
-            <sendable class='random-name' on:click={() => generateName()}>
+            <sendable class='random-name' on:click={() => generateName()} on:keyup={() => {}}>
                 <Icon icon='mdi:shuffle' />
             </sendable> 
         </div>
@@ -78,10 +78,10 @@
             <box class="gender-options">
                 {#if selectedNameGen?.needsGender}
                     <div class='box-main-text'>
-                        <sendable class='gender-icon {selectedGender === 'male' ? ' selected-gender': ''}' on:click={() => selectedGender = 'male'}>
+                        <sendable class='gender-icon {selectedGender === 'male' ? ' selected-gender': ''}' on:click={() => selectedGender = 'male'} on:keyup={() => {}}>
                             <Icon class="big-icon" icon='mdi:gender-male' />
                         </sendable> 
-                        <sendable class='gender-icon{selectedGender === 'female' ? ' selected-gender': ''}' on:click={() => selectedGender = 'female'}>
+                        <sendable class='gender-icon{selectedGender === 'female' ? ' selected-gender': ''}' on:click={() => selectedGender = 'female'} on:keyup={() => {}}>
                             <Icon class="big-icon" icon='mdi:gender-female' />
                         </sendable> 
                     </div>

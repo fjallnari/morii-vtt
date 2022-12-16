@@ -31,19 +31,19 @@
 
 <box>
     <div class="tool-summary">
-        <sendable class="tool-modifier" on:click={() => sendToolCheck()}>
+        <sendable class="tool-modifier" on:click={() => sendToolCheck()} on:keyup={() => {}}>
             {getToolFormula(tool.ability, tool.proficiency, character.prof_bonus)}
         </sendable>
         <div class="tool-name">
             <InPlaceEdit bind:value={tool.name} editWidth='7em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
-        <sendable class="tool-menu" on:click={() => { isOpen = !isOpen }}>
+        <sendable class="tool-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
     {#if isOpen}
         <div class="details" transition:slide|local>
-            <sendable class="simple-detail-line" on:click={() => { tool.proficiency += 1 + (tool.proficiency === 2 ? -3 : 0); $modifyCharacter(); }}>
+            <sendable class="simple-detail-line" on:click={() => { tool.proficiency += 1 + (tool.proficiency === 2 ? -3 : 0); $modifyCharacter(); }} on:keyup={() => {}}>
                 <Icon class="medi-icon" icon="mdi:{['hammer-screwdriver','checkbox-marked','flare'][tool.proficiency]}" />
                 <div class="select-ability-label box-label">
                     {['jack of all trades', 'proficient', 'expertise'][tool.proficiency]}

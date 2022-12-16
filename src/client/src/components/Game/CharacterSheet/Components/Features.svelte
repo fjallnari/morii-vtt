@@ -40,7 +40,7 @@
         {#each ['all', 'racial', 'class', 'feat', 'background', 'other'] as featureType, index}
             <sendable class="filter-names"
                 style="{currentFilter === index ? 'border-bottom: 1px solid var(--clr-accent-normal); padding-bottom: 0.2em;': ''}"
-                on:click={ () => { currentFilter = index;}}
+                on:click={ () => { currentFilter = index;}} on:keyup={() => {}}
             >
                 {featureType}
             </sendable>
@@ -50,7 +50,7 @@
         {#each character.features.filter( feature => isSelectedType(currentFilter, feature.type)) as feature}
             <FeatureDetail bind:feature={feature} bind:character={character}></FeatureDetail>
         {/each}
-        <sendable class="add-new-item" on:click={() => { addNewFeature(); $modifyCharacter() }}>
+        <sendable class="add-new-item" on:click={() => { addNewFeature(); $modifyCharacter() }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="mdi:add" />
         </sendable>
     </div>

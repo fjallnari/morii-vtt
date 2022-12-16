@@ -98,6 +98,7 @@
                 <span class="entity-value">
                     <InPlaceEdit bind:value={initEntity.value} editWidth={'1.75em'} editHeight={'1em'}/>
                 </span>
+                <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                 <span class="entity-drag-handle handle"
                     tabindex={dragDisabled? 0 : -1} 
                     aria-label="drag-handle"
@@ -113,16 +114,16 @@
     </section>
     <box class='initiative-menu{!dragDisabled ? ' delete-mode': ''}'>
         {#if dragDisabled}
-            <sendable use:tooltip={{content: 'Clear', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => clearInitOrder()}>
+            <sendable use:tooltip={{content: 'Clear', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => clearInitOrder()} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="material-symbols:restart-alt" />
             </sendable>
-            <sendable use:tooltip={{content: 'Add new', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => addNewInitEntity()}>
+            <sendable use:tooltip={{content: 'Add new', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => addNewInitEntity()} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
-            <sendable use:tooltip={{content: 'Sort', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => sortInitOrder()}>
+            <sendable use:tooltip={{content: 'Sort', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => sortInitOrder()} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="material-symbols:sort" />
             </sendable>
-            <sendable use:tooltip={{content: 'Next', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => passTurn()}>
+            <sendable use:tooltip={{content: 'Next', theme: 'dark-tooltip'}} class="init-menu-icon" on:click={() => passTurn()} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:arrow-right-bold" />
             </sendable>
         {:else}

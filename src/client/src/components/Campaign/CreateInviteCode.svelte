@@ -91,7 +91,7 @@
         {:else}
             <div class="invite-card">
                 <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
-                    <div class="invite-code icon-ripple" on:click={copy}>
+                    <div class="invite-code icon-ripple" on:click={copy} on:keyup={() => {}}>
                         <Icon class="big-icon" icon={`mdi:${codeWasCopied ? "check" : "content-copy"}`} />
                         <p>{$selectedCampaign.invite.invite_code}</p>
                         <Icon class="big-icon" icon={`material-symbols:${$selectedCampaign.invite.has_password ? "password" : "no-encryption"}`} />

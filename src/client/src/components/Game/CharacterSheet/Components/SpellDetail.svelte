@@ -66,7 +66,7 @@
     <div class="spell-summary" style='grid-template-areas: "{spell.level === 0 ? 'spell-name': 'spell-prepared'} spell-name {character ? 'spell-send' : 'spell-name'} spell-menu"'>
         {#if spell.level != 0}
             <div class="spell-prepared">
-                <sendable on:click={() => { spell.is_prepared = !spell.is_prepared; modifyCharacterFce(); }}>
+                <sendable on:click={() => { spell.is_prepared = !spell.is_prepared; modifyCharacterFce(); }} on:keyup={() => {}}>
                     <Icon class="big-icon" icon="mdi:{spell.is_prepared ? 'rhombus': 'rhombus-outline'}"/>
                 </sendable>
             </div>
@@ -77,12 +77,12 @@
         </div>
 
         {#if character}        
-            <sendable class="spell-send" on:click={() => sendSpell()}>
+            <sendable class="spell-send" on:click={() => sendSpell()} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="material-symbols:send-rounded" />
             </sendable>
         {/if}
 
-        <sendable class="spell-menu" on:click={() => { isOpen = !isOpen }}>
+        <sendable class="spell-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
@@ -97,7 +97,7 @@
                 <div class="box-label">
                     Ritual:
                 </div>
-                <sendable on:click={() => { spell.ritual = !spell.ritual; modifyCharacterFce(); }}>
+                <sendable on:click={() => { spell.ritual = !spell.ritual; modifyCharacterFce(); }} on:keyup={() => {}}>
                     <Icon class="big-icon" icon="{spell.ritual ? 'mdi:checkbox-marked': 'mdi:checkbox-blank-outline'}"/>
                 </sendable> 
             </div>
@@ -126,19 +126,19 @@
                         Components:
                     </div>
                     <div class="spell-component">
-                        <sendable on:click={() => { spell.components.verbal = !spell.components.verbal; modifyCharacterFce(); }}>
+                        <sendable on:click={() => { spell.components.verbal = !spell.components.verbal; modifyCharacterFce(); }} on:keyup={() => {}}>
                             <Icon class="big-icon" icon="mdi:{spell.components.verbal ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
                         </sendable>
                         V
                     </div>
                     <div class="spell-component">
-                        <sendable on:click={() => { spell.components.somatic = !spell.components.somatic; modifyCharacterFce(); }}>
+                        <sendable on:click={() => { spell.components.somatic = !spell.components.somatic; modifyCharacterFce(); }} on:keyup={() => {}}>
                             <Icon class="big-icon" icon="mdi:{spell.components.somatic ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
                         </sendable>
                         S
                     </div>
                     <div class="spell-component">
-                        <sendable on:click={() => { spell.components.material = !spell.components.material; modifyCharacterFce(); }}>
+                        <sendable on:click={() => { spell.components.material = !spell.components.material; modifyCharacterFce(); }} on:keyup={() => {}}>
                             <Icon class="big-icon" icon="mdi:{spell.components.material ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
                         </sendable>
                         M
@@ -162,7 +162,7 @@
                 <div class="box-label">
                     Concentration:
                 </div>
-                <sendable on:click={() => { spell.concentration = !spell.concentration; modifyCharacterFce(); }}>
+                <sendable on:click={() => { spell.concentration = !spell.concentration; modifyCharacterFce(); }} on:keyup={() => {}}>
                     <Icon class="big-icon" icon="mdi:{spell.concentration ? 'checkbox-marked': 'checkbox-blank-outline'}"/>
                 </sendable>
             </div>

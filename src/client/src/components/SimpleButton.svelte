@@ -40,6 +40,7 @@
 
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <simple-button
     style:active=""
     style="--bg-color:{BUTTON_TYPES[type].bg_color}; --active-bg-color:{BUTTON_TYPES[type].active_bg_color};"

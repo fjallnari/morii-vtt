@@ -11,7 +11,7 @@
 <BoxWithList label={''} addNewListItem={() => createMenuEnabled = true} isModifyDisabled>
     <div class="npc-list" slot='list'>
         {#each gameData.npcs as npc}
-            <box class="npc-main-container" on:click={() => selectedCharacter.set(npc)}>
+            <box class="npc-main-container" on:click={() => selectedCharacter.set(npc)} on:keyup={() => {}}>
                 <class-icon>
                     <img id="main-class" src="../static/class-icons/{getClassIcon(npc.classes)[0]}.svg" alt="class-icon">
                     {#if getClassIcon(npc.classes).length > 2}

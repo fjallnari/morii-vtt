@@ -18,7 +18,7 @@
 </div>
 <div class="row-box-with-label">
     <!-- inverts inspiration value on click -->
-    <box class="row-box-value" style="cursor: pointer;" on:click={() => { character.inspiration = !character.inspiration; $modifyCharacter() }}>
+    <box class="row-box-value" style="cursor: pointer;" on:click={() => { character.inspiration = !character.inspiration; $modifyCharacter() }} on:keyup={() => {}}>
         <Icon icon="{character.inspiration ? 'mdi:auto-awesome': ''}" />
     </box>
     <box class="row-box-label">

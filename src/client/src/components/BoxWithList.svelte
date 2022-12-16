@@ -16,7 +16,7 @@
     <div class="inside-box-list">
         <slot name="list"></slot>
         {#if !noCrud}
-            <sendable class="add-new-item" on:click={() => { addNewListItem(); if (!isModifyDisabled) { $modifyCharacter()}}}>
+            <sendable class="add-new-item" on:click={() => { addNewListItem(); if (!isModifyDisabled) { $modifyCharacter()}}} on:keyup={() => {}}>
                 <Icon class="big-icon" icon="mdi:add" />
             </sendable>
         {/if}

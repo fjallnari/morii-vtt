@@ -46,7 +46,7 @@
         <input style="width: {editWidth}; height: {editHeight};" bind:value on:blur={submit} {required} use:focus/>
     </form>
 {:else}
-    <div class="text-display" on:click={() => edit()}>
+    <div class="text-display" on:click={() => edit()} on:keyup={() => {}}>
         {value && (typeof value === 'string') && value.trim() ? value : defaultValue}
     </div>
 {/if}

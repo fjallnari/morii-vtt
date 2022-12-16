@@ -10,10 +10,12 @@
 
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div 
     class="icon-wrapper icon-ripple" 
     style='width: {`calc(${width} + ${wrapperPadding})`}; height: {`calc(${height} + ${wrapperPadding})`};' 
     on:click={() => onClickFn()}
+    on:keyup={() => {}}
     tabindex="0"
 >
     <Icon icon={icon} width={width} height={height} color={color} />

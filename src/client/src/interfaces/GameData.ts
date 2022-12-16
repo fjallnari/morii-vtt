@@ -1,4 +1,5 @@
 import type { Character } from "./Character";
+import type MonsterSimple from "./MonsterSimple";
 import type UserSimple from "./UserSimple";
 
 export default interface GameData {
@@ -9,4 +10,5 @@ export default interface GameData {
     characters: Character[];
     players: UserSimple[];
     npcs: Character[];
+    monsters: MonsterSimple[];
 }

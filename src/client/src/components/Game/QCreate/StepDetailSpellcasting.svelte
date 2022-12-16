@@ -235,7 +235,7 @@
             <div class="filter-menu" slot='filter-menu'>
                 {#each spellLevelsStr as spellLevel, index}
                     <sendable class="filter-names {currentFilter === index ? 'filter-selected': ''}"
-                        on:click={ () => switchFilter(index)}
+                        on:click={ () => switchFilter(index)} on:keyup={() => {}}
                     >
                         {spellLevel}
                     </sendable>

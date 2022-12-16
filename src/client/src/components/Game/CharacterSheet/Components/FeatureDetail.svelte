@@ -47,7 +47,7 @@
 <box class="feature-main-container">
     <div class="feature-summary">
         <div class="feature-type">
-            <sendable on:click={() => { feature.type += 1 + (feature.type === 4 ? -5 : 0); $modifyCharacter(); }}>
+            <sendable on:click={() => { feature.type += 1 + (feature.type === 4 ? -5 : 0); $modifyCharacter(); }} on:keyup={() => {}}>
                 <Icon class="medi-icon" icon={featureTypes[feature.type].icon} />
             </sendable>
         </div>
@@ -56,11 +56,11 @@
             <InPlaceEdit bind:value={feature.name} editWidth='18rem' editHeight='2rem' on:submit={() => $modifyCharacter()}/>
         </div>
         
-        <sendable class="feature-send" on:click={() => sendFeature()}>
+        <sendable class="feature-send" on:click={() => sendFeature()} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:send-rounded" />
         </sendable>
 
-        <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }}>
+        <sendable class="feature-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>

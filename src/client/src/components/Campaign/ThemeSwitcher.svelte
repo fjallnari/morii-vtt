@@ -26,7 +26,8 @@
     <h3 id="simple-title">Change theme</h3>
     <div class="dialog-content">
         {#each THEMES as theme}
-            <theme-card tabindex="0" style="{cssVarTheme(theme)}" selected="{theme.id === selected}" on:click={() => selectTheme(theme)}>
+            <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+            <theme-card tabindex="0" style="{cssVarTheme(theme)}" selected="{theme.id === selected}" on:click={() => selectTheme(theme)} on:keyup={() => {}}>
                 <span class="theme-name">{theme.name}</span>
                 <div class="color-palette">
                     <span class="swatch accent-light"></span>
@@ -44,7 +45,7 @@
 </Dialog>
 
 <box class="theme-switch-button" >
-    <sendable on:click={() => open = !open}>
+    <sendable on:click={() => open = !open} on:keyup={() => {}}>
         <Icon icon="mdi:invert-colors" width="2em" height="2em"/>
     </sendable>
 </box>

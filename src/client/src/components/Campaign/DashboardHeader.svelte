@@ -10,7 +10,7 @@
 
 <header>
     <ThemeSwitcher></ThemeSwitcher>
-    <user-tag on:click={() => {openSettings = true}}>
+    <user-tag on:click={() => {openSettings = true}} on:keyup={() => {}}>
         <pfp style="background-color: #{$user.settings.pfpColor};">
             {@html `${ANIMALS[$user.settings.pfpID] ?? ANIMALS['default']}`}
         </pfp>

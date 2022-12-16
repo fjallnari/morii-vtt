@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import MonsterSimple from "./srd/MonsterSimple";
 
 interface PlayerInfo {
     playerID: ObjectId,
@@ -12,5 +13,6 @@ export default interface Campaign {
     owner: ObjectId,
     players: PlayerInfo[],
     invite?: ObjectId,
-    npcs: ObjectId[]
+    npcs: ObjectId[],
+    monsters: MonsterSimple[]
 }

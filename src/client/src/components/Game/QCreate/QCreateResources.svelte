@@ -40,7 +40,7 @@
             <ResourceDetail bind:resource={resource} deleteFce={() => {deleteResource(resource)}}></ResourceDetail>
         {/each}
         {#if selectedClass.resources.length < 4}
-            <sendable class="add-new-item" on:click={() => addResource()}>
+            <sendable class="add-new-item" on:click={() => addResource()} on:keyup={() => {}}>
                 <Icon class="big-icon" icon='mdi:add' />
             </sendable>
         {/if}

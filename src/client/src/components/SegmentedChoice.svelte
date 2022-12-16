@@ -13,7 +13,7 @@
                 {'OR'}
             </div>
         {/if}
-        <box class='chip selectable {final === option ? 'selected': ''}' on:click={() => {final = option}}>
+        <box class='chip selectable {final === option ? 'selected': ''}' on:click={() => {final = option}} on:keyup={() => {}}>
             {option}
         </box>
     {/each}

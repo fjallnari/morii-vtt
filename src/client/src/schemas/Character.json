@@ -418,7 +418,6 @@
         "is_equipped",
         "amount",
         "has_weight",
-        "has_attack",
         "want_tooltip"
       ],
       "type": "object"

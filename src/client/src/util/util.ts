@@ -18,6 +18,10 @@ export const getASModifier = ((abilityScores: any, AS: string) => {
     return (~~(abilityScores[AS] ? abilityScores[AS].value : 0) - 10) / 2 >> 0;
 });
 
+export const convertValueToASMod = (value: string) => {
+    return (~~value - 10) / 2 >> 0;
+}
+
 export const getRandomIndex = (arrayLen: number) => {
     return Math.floor(Math.random() * arrayLen);
 }
@@ -27,6 +31,10 @@ export const randomChoice = <T>(array: T[]) => {
 }
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export const toSnakeCase = (str: string) => {
+    return str.toLowerCase().replace(' ', '_');
+}
 
 export const cssVarTheme = (theme: Theme) => Object.entries(theme)
     .map(([key, value]) => {

@@ -64,7 +64,7 @@
         </box>
 
         <box class="attack-bonus">
-            <sendable on:click={() => $sendSkillCheck(~~getAttackFormula(), `${attack.name.toLowerCase()} | to hit`, character.name)}>
+            <sendable on:click={() => $sendSkillCheck(~~getAttackFormula(), `${attack.name.toLowerCase()} | to hit`, character.name)} on:keyup={() => {}}>
                 {$formatModifier(getUnbiasedModifier(attack.atk_ability) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus)}
             </sendable>
             {#if isOpen}
@@ -83,12 +83,13 @@
                         '-',
                         getDmgDie()
                     )}
+                    on:keyup={() => {}}
                 >
                     {`${getDmgDie(attack.versatile_active)} ${getDmgFormula()}`}
                 </sendable>
                 <justify-filler></justify-filler>
                 {#if attack.versatile_die}
-                    <icon class="versatile-icon" on:click={() => { attack.versatile_active = !attack.versatile_active; $modifyCharacter() }}>
+                    <icon class="versatile-icon" on:click={() => { attack.versatile_active = !attack.versatile_active; $modifyCharacter() }} on:keyup={() => {}}>
                         {@html `${CUSTOM_ICONS[attack.versatile_active ? 'hand-clap': 'hand-one']}`}
                     </icon>
                 {/if}
@@ -99,7 +100,7 @@
                 </div>
             {/if}
         </box>
-        <sendable class="attack-menu" on:click={() => { isOpen = !isOpen }}>
+        <sendable class="attack-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
         </sendable>
     </div>
@@ -121,7 +122,7 @@
                     </div>
                     +
                     <div class="atk-proficiency">
-                        <sendable on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }}>
+                        <sendable on:click={() => { attack.atk_proficiency = !attack.atk_proficiency; $modifyCharacter() }} on:keyup={() => {}}>
                             <Icon class="big-icon" 
                                 icon="mdi:{attack.atk_proficiency ? 'checkbox-marked': 'checkbox-blank-outline'}"
                             />

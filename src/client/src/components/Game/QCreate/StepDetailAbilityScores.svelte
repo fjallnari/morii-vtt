@@ -228,10 +228,10 @@
                 <operand>+</operand>
                 <box class="asi-bonus as-bonus-box">
                     <div class='asi-bonus-buttons'>
-                        <sendable on:click={changeASIBonus(abilityScores, AS, 1)}>
+                        <sendable on:click={changeASIBonus(abilityScores, AS, 1)} on:keyup={() => {}}>
                             <Icon class="big-icon" icon='material-symbols:keyboard-double-arrow-up-rounded' />                            
                         </sendable>
-                        <sendable on:click={changeASIBonus(abilityScores, AS, -1)}>
+                        <sendable on:click={changeASIBonus(abilityScores, AS, -1)} on:keyup={() => {}}>
                             <Icon class="big-icon" icon='material-symbols:keyboard-double-arrow-down-rounded' />
                         </sendable>
                     </div>
@@ -260,7 +260,10 @@
     <div class="roll-options">
         <box class="as-gen-opts">
             {#each asGenOpts as genOption}
-                <box class='gen-option' on:click={() => {selectGenOption(genOption)}} style='background-color: {selectedGenOption === genOption ? 'var(--clr-accent-dark)': ''}'>
+                <box class='gen-option' 
+                    style='background-color: {selectedGenOption === genOption ? 'var(--clr-accent-dark)': ''}'
+                    on:click={() => {selectGenOption(genOption)}} on:keyup={() => {}}
+                >
                     <div class="option-selected">
                         <Icon icon='material-symbols:{selectedGenOption === genOption ? 'keyboard-double-arrow-right-rounded': 'alt-route'}' />
                     </div>
@@ -273,7 +276,7 @@
             </div>
             <div class='roll-visibility'>
                 <div>{['Public roll', 'Secret roll', 'GM Only'][$messageMode]}</div>
-                <sendable on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}}>
+                <sendable on:click={() => { messageMode.set($messageMode + 1 + ($messageMode === 2 ? -3 : 0))}} on:keyup={() => {}}>
                     <Icon class="big-icon" icon={['mdi:earth', 'mdi:eye-off', 'mdi:crown'][$messageMode]}/>
                 </sendable>
             </div>
@@ -289,7 +292,11 @@
         </box>
         <box class="assign-array as-gen-opts">
             {#each asAssignOpts as assignOpt}
-                <box class='gen-option' on:click={() => {selectAssignOption(assignOpt)}} style='background-color: {selectedAssignOption === assignOpt ? 'var(--clr-accent-dark)': ''}'>
+                <box class='gen-option'
+                    style='background-color: {selectedAssignOption === assignOpt ? 'var(--clr-accent-dark)': ''}'
+                    on:click={() => {selectAssignOption(assignOpt)}} 
+                    on:keyup={() => {}}
+                >
                     <div class="option-selected">
                         <Icon icon='material-symbols:{selectedAssignOption === assignOpt ? 'keyboard-double-arrow-right-rounded': 'alt-route'}' />
                     </div>

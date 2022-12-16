@@ -36,7 +36,8 @@ export default class GameController extends RouteController {
             system: campaignInfo.system,
             characters: cleanCharacters,
             players: simpleUsers,
-            npcs: cleanNpcs
+            npcs: cleanNpcs,
+            monsters: campaignInfo.monsters ?? []
         }
 
     }

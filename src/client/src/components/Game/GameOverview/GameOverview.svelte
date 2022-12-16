@@ -10,6 +10,7 @@
     import CharactersList from "./CharactersList.svelte";
     import CreateNpc from "./CreateNpc.svelte";
     import Initiative from "./Initiative.svelte";
+    import Monsters from "./Monsters.svelte";
     import NpcList from "./NpcList.svelte";
 
     export let gameData: GameData;
@@ -82,6 +83,20 @@
                 <NpcList gameData={gameData} bind:createMenuEnabled={createMenuEnabled}></NpcList>
             {/if}
         </div>
+        <div class='armor-class'>
+            <h3>Armor Class</h3>
+            <box class='stats-chip-list'>
+                {#if gameData.characters.length > 0}
+                    {#each gameData.characters.sort((a, b) => a.armor_class < b.armor_class ? 1 : -1) as character}
+                        <RowBoxWithLabel label={character.name} boxColor='light' valueWidth='1.5em' labelClass='overview-label' valueBoxStyle='ac'>
+                            {!character.armor_class || character.armor_class === '' ? '??': character.armor_class}
+                        </RowBoxWithLabel>
+                    {/each}
+                {:else}
+                    <h3>No characters</h3>
+                {/if}
+            </box>
+        </div>
         <div class='passive-perception'>
             <h3>Passive Perception</h3>
             <box class='stats-chip-list'>
@@ -96,19 +111,8 @@
                 {/if}
             </box>
         </div>
-        <div class='armor-class'>
-            <h3>Armor Class</h3>
-            <box class='stats-chip-list'>
-                {#if gameData.characters.length > 0}
-                    {#each gameData.characters.sort((a, b) => a.armor_class < b.armor_class ? 1 : -1) as character}
-                        <RowBoxWithLabel label={character.name} boxColor='light' valueWidth='1.5em' labelClass='overview-label' valueBoxStyle='ac'>
-                            {!character.armor_class || character.armor_class === '' ? '??': character.armor_class}
-                        </RowBoxWithLabel>
-                    {/each}
-                {:else}
-                    <h3>No characters</h3>
-                {/if}
-            </box>
+        <div class='monsters'>
+            <Monsters></Monsters>
         </div>
         <div class='initiative'>
             <h3>Initiative</h3>
@@ -126,13 +130,14 @@
         border-radius: 4px;
         display: grid; 
         grid-template-columns: 0.05fr 1fr 0.5fr 0.5fr 1fr 0.05fr; 
-        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.2fr); 
+        grid-template-rows: minmax(0, 3fr) minmax(0, 2.5fr) minmax(0, 0.5fr) minmax(0, 2.5fr) minmax(0, 0.5fr); 
         gap: 1em; 
         grid-template-areas: 
             "characters-list characters-list characters-list characters-list characters-list characters-list"
             ". npcs armor-class armor-class initiative ."
+            ". npcs armor-class armor-class initiative ."
             ". npcs passive-perception passive-perception initiative ."
-            ". npcs . . initiative .";
+            ". monsters passive-perception passive-perception initiative .";
     }
 
     h3 {
@@ -153,7 +158,7 @@
     }
 
     .npcs { grid-area: npcs; 
-        margin: 0em 0em 1em 0em;
+        
     }
 
     .passive-perception { grid-area: passive-perception; }
@@ -176,6 +181,10 @@
     }
 
     .initiative { grid-area: initiative; 
+        margin: 0em 0em 1em 0em;
+    }
+
+    .monsters { grid-area: monsters; 
         margin: 0em 0em 1em 0em;
     }
 

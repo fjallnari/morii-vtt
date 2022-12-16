@@ -6,7 +6,6 @@
     import { selectedCharacter, socket, user } from "../../../stores";
     import { getASModifier } from "../../../util/util";
     import RowBoxWithLabel from "../../RowBoxWithLabel.svelte";
-    import SimpleButton from "../../SimpleButton.svelte";
     import CharacterSheetRouter from "../CharacterSheet/CharacterSheetRouter.svelte";
     import CharactersList from "./CharactersList.svelte";
     import CreateNpc from "./CreateNpc.svelte";

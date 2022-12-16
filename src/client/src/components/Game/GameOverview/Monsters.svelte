@@ -9,6 +9,7 @@
     import type MonsterSimple from "../../../interfaces/MonsterSimple";
     import Icon from "@iconify/svelte";
     import { capitalize } from "../../../util/util";
+    import { user } from "../../../stores";
 
     let open: boolean = false;
     let challengeFilterIndex = undefined;
@@ -67,10 +68,10 @@
         return ['Any Type', ... Array.from(new Set(monsterData.map(monster => capitalize(monster.type))))];
     }
 
-    const viewRandomMonster = (monsterData: MonsterSimple[]) => {
+    const viewMonster = (monsterToView: MonsterSimple) => {
         challengeFilterIndex = undefined;
         typeFilterIndex = undefined;
-        monsterChosenSimple = monsterData.random();
+        monsterChosenSimple = monsterToView;
     }
 
 </script>
@@ -93,7 +94,27 @@
         </div>
     {:then monsterData}
         <dialog-content>
-            <box class="favorites"></box>
+            <div class="favorites">
+                <div class="favorites-header">
+                    <Icon class="big-icon" icon="material-symbols:star-rounded" color="var(--clr-icon-owner)"/>
+                    <h4>Favorites</h4>
+                </div>
+                <div class="favorites-list">
+                    {#if $user && $user?.gameData?.monsters && $user?.gameData?.monsters?.length !== 0}
+                        {#each $user?.gameData?.monsters as favMonster}
+                            <box class="fav-monster-item {favMonster.id === monsterChosenSimple?.id ? 'selected' : ''}"
+                                on:click={() => viewMonster(favMonster)} on:keyup={() => {}}
+                            >
+                                <div class="fav-monster-img"></div>
+                                <div class="fav-monster-name">{favMonster.name}</div>
+                                <div class="fav-monster-source">SRD</div>
+                            </box>
+                        {/each}
+                    {:else}
+                        <p>No favorite monsters.</p>
+                    {/if}
+                </div>
+            </div>
             <div class="add-srd-monster">
                 <div class="monster-filter">
                     <Icon class="big-icon" icon="mdi:filter-multiple" />
@@ -115,6 +136,7 @@
                         return challengeFilter && typeFilter
                     })}
                     valueAsObject
+                    clearable
                     placeholder='All SRD monsters'
                     bind:value={monsterChosenSimple}>
                 </Svelecte>
@@ -133,7 +155,7 @@
                         <div>Loading {monsterChosenSimple.name}...</div>
                     {:else}
                         <div>Choose a monster to view or </div>
-                        <SimpleButton value='View random monster' icon='mdi:dice' type='green' onClickFn={() => viewRandomMonster(monsterData)}></SimpleButton>
+                        <SimpleButton value='View random monster' icon='mdi:dice' type='green' onClickFn={() => viewMonster(monsterData.random())}></SimpleButton>
                     {/if}
                 </div>
             {/if}
@@ -169,10 +191,76 @@
 
     .favorites { grid-area: favorites; 
         display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         width: 100%;
         height: 100%;
     }
-    
+
+    .favorites-header {
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.5em;
+    }
+
+    .favorites-header h4 {
+        font-weight: var(--semi-bold);
+        font-size: 1.2em;
+        font-family: Athiti;
+        text-transform: uppercase;
+        margin: 0;        
+    }
+
+    .favorites-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.4em;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    .fav-monster-item {
+        display: grid; 
+        grid-template-columns: 1fr 7fr 1fr; 
+        grid-template-rows: 1fr 1fr 1fr; 
+        gap: 0.5em;
+        padding: 0.4em 0em;
+        width: 90%;
+        cursor: pointer;
+        background-color: var(--clr-box-bg-light);
+        grid-template-areas: 
+            "fav-monster-img fav-monster-name fav-monster-source"
+            "fav-monster-img fav-monster-name fav-monster-source"
+            "fav-monster-img fav-monster-name fav-monster-source"; 
+    }
+
+    .fav-monster-item.selected {
+        background-color: var(--clr-accent-dark);
+    }
+
+    .fav-monster-item > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fav-monster-img { grid-area: fav-monster-img; }
+
+    .fav-monster-name { grid-area: fav-monster-name; 
+        font-size: 1.2em;
+    }
+
+    .fav-monster-source { grid-area: fav-monster-source; 
+        font-family: Athiti;
+        font-weight: var(--semi-bold);
+    }
+
     .monster-menu { grid-area: monster-menu; 
         display: flex;
         flex-direction: column;

@@ -1,16 +1,47 @@
 <script lang="ts">
+    import axios from "axios";
+    import { params } from "svelte-spa-router";
     import ABILITY_TAGS from "../../../enum/AbilityTags";
     import type MonsterData from "../../../interfaces/MonsterData";
-    import { formatModifier } from "../../../stores";
+    import { formatModifier, user } from "../../../stores";
     import { convertValueToASMod, toSnakeCase } from "../../../util/util";
     import SimpleIconButton from "../../SimpleIconButton.svelte";
 
     export let monster: MonsterData;
 
-    let isFavorite: boolean = false;
+    let isFavorite: boolean = $user?.gameData.monsters.some(saved => saved.id === monster.id) ?? false;
 
     const ACTION_TITLES = ['Actions', 'Legendary Actions', 'Reactions'];
     const STAT_TITLES = ['Saving Throws', 'Skills', 'Damage Resistances', 'Damage Immunities', 'Condition Immunities', 'Damage Vulnerabilities', 'Senses', 'Languages', 'Challenge'];
+
+    const getSimpleMonster = () => {
+        return {
+            id: monster.id, 
+            name: monster.name, 
+            cr: monster.challenge.split(' (')[0], 
+            type: monster.meta.split(' ')[1].replace(',', '') 
+        }
+    }
+
+    // either favorites and saves a monster or does the opposite
+    const changeMonsterStatus = async () => {
+        isFavorite = !isFavorite;
+        const simpleMonster = getSimpleMonster();
+
+		try {
+            axios.post('/api/favorite-monster', {
+                campaignID: $params.id,
+                monster: simpleMonster,
+                isFavorite: isFavorite
+            });
+
+            const updatedMonsters = isFavorite ? $user?.gameData?.monsters.concat([simpleMonster]) : $user?.gameData?.monsters.filter(saved => saved.id !== monster.id);
+            user.set(Object.assign($user, { gameData: Object.assign($user.gameData, { monsters: updatedMonsters})}));
+		}
+		catch (err) {
+            console.log(err);
+		}
+    }
 
 </script>
 
@@ -26,7 +57,7 @@
             <SimpleIconButton 
                 icon={`material-symbols:${isFavorite ? 'star-rounded': 'star-outline-rounded'}`}
                 color={isFavorite ? 'var(--clr-icon-owner)' : 'inherit'}
-                onClickFn={() => isFavorite = !isFavorite}>
+                onClickFn={() => changeMonsterStatus()}>
             </SimpleIconButton>
         </div>
     </div>

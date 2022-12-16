@@ -22,7 +22,8 @@ export default class CreateCampaignController extends RouteController {
                 system: gameSystem,
                 owner: userID,
                 players: [],
-                npcs: []
+                npcs: [],
+                monsters: []
             };
     
             const insertResult = await campaignsCollection.insertOne(newCampaign);

@@ -102,8 +102,10 @@
                 <div class="favorites-list">
                     {#if $user && $user?.gameData?.monsters && $user?.gameData?.monsters?.length !== 0}
                         {#each $user?.gameData?.monsters as favMonster}
+                            <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                             <box class="fav-monster-item {favMonster.id === monsterChosenSimple?.id ? 'selected' : ''}"
                                 on:click={() => viewMonster(favMonster)} on:keyup={() => {}}
+                                tabindex="0"
                             >
                                 <div class="fav-monster-img"></div>
                                 <div class="fav-monster-name">{favMonster.name}</div>

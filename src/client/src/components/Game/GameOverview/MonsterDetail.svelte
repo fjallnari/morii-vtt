@@ -83,7 +83,9 @@
                     </div>
                     <div class="as-value">
                         {monster.ability_scores[tag]}
-                        ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
+                        <sendable>
+                            ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
+                        </sendable>
                     </div>
                 </div>
             {/each}

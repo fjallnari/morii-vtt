@@ -6,6 +6,7 @@
     import PrettyRollResult from './PrettyRollResult.svelte';
     import LangMessage from './LangMessage.svelte';
     import Icon from "@iconify/svelte";
+    import HtmlRendererOverride from "../../HTMLRendererOverride.svelte";
 
     export let message: MessageData;
 
@@ -53,7 +54,9 @@
         {:else if message.langData}
             <LangMessage message={message}></LangMessage>
         {:else}
-            <SvelteMarkdown source={message.rollResult && message.rollResult.error ? getCleanErrorMessage(message.rollResult.error, message.messageText) : message.messageText} />
+            <SvelteMarkdown source={message.rollResult && message.rollResult.error ? getCleanErrorMessage(message.rollResult.error, message.messageText) : message.messageText} 
+                renderers={{html: HtmlRendererOverride}}
+            />
         {/if}
     </div>
 </div>

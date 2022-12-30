@@ -4,12 +4,12 @@
     import SimpleProgressCircle from "../../SimpleProgressCircle.svelte";
     import Svelecte from "svelecte/src/Svelecte.svelte";
     import axios from "axios";
-    import type MonsterData from "../../../interfaces/MonsterData";
     import MonsterDetail from "./MonsterDetail.svelte";
     import type MonsterSimple from "../../../interfaces/MonsterSimple";
     import Icon from "@iconify/svelte";
     import { capitalize } from "../../../util/util";
     import { user } from "../../../stores";
+    import type { MonsterData } from "../../../interfaces/MonsterData";
 
     let open: boolean = false;
     let challengeFilterIndex = undefined;

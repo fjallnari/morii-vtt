@@ -2,10 +2,11 @@
     import axios from "axios";
     import { params } from "svelte-spa-router";
     import ABILITY_TAGS from "../../../enum/AbilityTags";
-    import type MonsterData from "../../../interfaces/MonsterData";
+    import type { MonsterData } from "../../../interfaces/MonsterData";
     import { formatModifier, user } from "../../../stores";
     import { convertValueToASMod, toSnakeCase } from "../../../util/util";
     import SimpleIconButton from "../../SimpleIconButton.svelte";
+    import MonsterTraitDetail from "./MonsterTraitDetail.svelte";
 
     export let monster: MonsterData;
 
@@ -83,7 +84,9 @@
                     </div>
                     <div class="as-value">
                         {monster.ability_scores[tag]}
-                        ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
+                        <sendable>
+                            ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
+                        </sendable>
                     </div>
                 </div>
             {/each}
@@ -98,8 +101,13 @@
             {/if}
         {/each}
         <hr>
+        
         <div class="traits">
-            {@html monster.traits ?? ''}
+            {#if monster.traits}
+                {#each monster.traits as trait}
+                    <MonsterTraitDetail trait={trait}></MonsterTraitDetail>
+                {/each}
+            {/if}
         </div>
     </div>
     <div class="actions">
@@ -109,7 +117,9 @@
                     {ACTION_TITLES[index]}
                     <hr>
                 </div>
-                {@html actionType}
+                {#each actionType as trait}
+                    <MonsterTraitDetail trait={trait}></MonsterTraitDetail>
+                {/each}
             {/if}
         {/each}
     </div>

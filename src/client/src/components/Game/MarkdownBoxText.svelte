@@ -1,12 +1,13 @@
 <script lang="ts">
     import SvelteMarkdown from "svelte-markdown";
+    import HtmlRendererOverride from "../HTMLRendererOverride.svelte";
 
     export let text: string;
 
 </script>
 
 <markdown-text>
-    <p><SvelteMarkdown source={text}></SvelteMarkdown></p>
+    <p><SvelteMarkdown source={text} renderers={{html: HtmlRendererOverride}}></SvelteMarkdown></p>
 </markdown-text>
 
 <style>

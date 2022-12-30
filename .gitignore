@@ -141,3 +141,7 @@ dist
 # WSL junk files
 
 **/*Zone.Identifier
+
+# generated jsons
+
+MONSTERS.json

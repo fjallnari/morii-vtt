@@ -1,4 +1,13 @@
-export default interface MonsterData {
+export interface MonsterTrait {
+    name?: string,
+    subtitle?: string,
+    content?: string
+    type?: string,
+    attack_info?: string,
+    attack_dmg?: string
+}
+
+export interface MonsterData {
     id: string,
     name: string,
     meta: string,
@@ -15,9 +24,9 @@ export default interface MonsterData {
     senses: string,
     languages: string,
     challenge: string,
-    traits?: string,
-    actions?: string,
-    reactions?: string,
-    legendary_actions?: string,
+    traits?: MonsterTrait[],
+    actions?: MonsterTrait[],
+    reactions?: MonsterTrait[],
+    legendary_actions?: MonsterTrait[],
     img_url: string,
 }

@@ -7,10 +7,9 @@
     import GameInfo from "../components/Game/GameInfo.svelte";
     import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import type UserIDPair from "../interfaces/UserIDPair";
-    import GameOverview from "../components/Game/GameOverview/GameOverview.svelte";
     import { nanoid } from "nanoid/non-secure";
     import LoadingCircle from "../components/LoadingCircle.svelte";
-    import GameGuide from "../components/Game/GameGuide/GameGuide.svelte";
+    import OwnerGameRouter from "../components/Game/OwnerGameRouter.svelte";
 
     export let params: { id?: string } = {};
 
@@ -107,7 +106,7 @@
         <!-- <GameGuide></GameGuide> -->
         <div class="character-sheet">
             {#if $user && $user._id === gameData.owner}
-                <GameOverview gameData={gameData}></GameOverview>
+                <OwnerGameRouter gameData={gameData}></OwnerGameRouter>
             {:else}
                 <CharacterHandler gameData={gameData}></CharacterHandler>
             {/if}

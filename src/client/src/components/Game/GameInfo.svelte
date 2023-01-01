@@ -1,16 +1,24 @@
 <script lang="ts">
     import { push, replace } from "svelte-spa-router";
     import type GameData from "../../interfaces/GameData";
-    import { selectedCharacter, user } from '../../stores';
+    import { selectedCharacter, selectedGameTab, user } from '../../stores';
     import SimpleIconButton from '../SimpleIconButton.svelte';
+    import { Tooltip } from "@svelte-plugins/tooltips";
 
     export let gameData: GameData;
 
     const showGameOverview = () => {
+        selectedGameTab.set('default');
+        selectedCharacter.set(undefined);
+    }
+
+    const showMonsters = () => {
+        selectedGameTab.set('monsters');
         selectedCharacter.set(undefined);
     }
 
     const leaveGame = () => {
+        selectedGameTab.set('default');
         selectedCharacter.set(undefined);
         replace('/');
     }
@@ -22,9 +30,28 @@
     <h3>{gameData ? gameData.name : '_'}</h3>
     <div class="icon-bar">
         {#if $user && $user._id === gameData.owner}
-            <SimpleIconButton icon='material-symbols:dashboard-rounded' color='#A7C284' onClickFn={() => showGameOverview()}></SimpleIconButton>
+            <Tooltip 
+                content="Monsters" 
+                theme="blurred" 
+                position='bottom'
+            >
+                <SimpleIconButton icon='mdi:duck' color='#C7B573' onClickFn={() => showMonsters()}></SimpleIconButton>
+            </Tooltip>
+            <Tooltip 
+                content="Overview" 
+                theme="blurred" 
+                position='bottom'
+            >
+                <SimpleIconButton icon='material-symbols:dashboard-rounded' color='#A7C284' onClickFn={() => showGameOverview()}></SimpleIconButton>
+            </Tooltip>
         {/if}
-        <SimpleIconButton icon='mdi:logout' color='#EFA48B' onClickFn={() => leaveGame()}></SimpleIconButton>
+        <Tooltip 
+            content="Leave" 
+            theme="blurred" 
+            position='bottom'
+        >
+            <SimpleIconButton icon='mdi:logout' color='#EFA48B' onClickFn={() => leaveGame()}></SimpleIconButton>
+        </Tooltip>
     </div>
 </div>
 

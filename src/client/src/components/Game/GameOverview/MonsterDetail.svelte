@@ -132,7 +132,8 @@
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        gap: 0.5em; 
+        gap: 0.5em;
+        margin-top: 1em;
         grid-template-areas: 
             "name name name name name actions actions actions actions actions"
             "stats stats stats stats stats actions actions actions actions actions"
@@ -183,7 +184,7 @@
         grid-template-columns: 8fr 1fr; 
         grid-template-rows: 1fr 1fr; 
         gap: 0.25em;
-        margin: 0em 1em;
+        margin-right: 1em;
         border-bottom: 1px var(--clr-text) solid;
         grid-template-areas: 
             "monster-name favorite-monster"
@@ -216,7 +217,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         gap: 0.2em;
-        padding: 0em 1em;
+        padding: 0em 1em 1.4em 0em;
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
@@ -253,7 +254,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         gap: 0.2em;
-        padding: 0em 1em;
+        padding: 0em 1.4em 1.4em 0em;
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;

@@ -13,7 +13,7 @@ import GetCharactersController from '../controllers/Routes/UserAuth/GetCharacter
 import GetQuickCreateDataController from '../controllers/Routes/UserAuth/GetQuickCreateDataController';
 import GetInviteController from '../controllers/Routes/UserAuth/GetInviteController';
 import GetSpells from '../controllers/Routes/UserAuth/GetSpells';
-import GetMonsters from '../controllers/Routes/UserAuth/GetMonsters';
+import GetMonster from '../controllers/Routes/UserAuth/GetMonster';
 
 const router = express.Router();
 
@@ -38,8 +38,8 @@ router.get('/api/spells', verifyToken, async (req, res, next) => {
     await new GetSpells(req, res).handleRequest();
 });
 
-router.get('/api/monsters/:id?', verifyToken, async (req, res, next) => {
-    await new GetMonsters(req, res).handleRequest();
+router.get('/api/monsters/:id', verifyToken, async (req, res, next) => {
+    await new GetMonster(req, res).handleRequest();
 });
 
 router.post('/api/create-campaign', verifyToken, async (req, res, next) => {

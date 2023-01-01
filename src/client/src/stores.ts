@@ -13,6 +13,7 @@ export const campaignDetailActive: Writable<boolean> = writable(false);
 export const selectedCampaign: Writable<Campaign> = writable();
 export const selectedCharacter: Writable<Character> = writable(undefined);
 export const selectedCharacterTab: Writable<number> = writable(0);
+export const selectedGameTab: Writable<string> = writable('default');
 export const socket: Writable<Socket<DefaultEventsMap, DefaultEventsMap>> = writable();
 export const ownerSocketID: Writable<string> = writable("");
 export const userIDPairs: Writable<Record<string, string>> = writable({});

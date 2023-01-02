@@ -14,5 +14,5 @@ export default interface Campaign {
     players: PlayerInfo[],
     invite?: ObjectId,
     npcs: ObjectId[],
-    monsters: MonsterSimple[]
+    monsters: ObjectId[]
 }

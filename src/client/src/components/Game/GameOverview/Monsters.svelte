@@ -10,6 +10,7 @@
     import { user } from "../../../stores";
     import type { MonsterData } from "../../../interfaces/MonsterData";
     import type GameData from "../../../interfaces/GameData";
+    import { params } from "svelte-spa-router";
 
     export let gameData: GameData;
 
@@ -23,21 +24,39 @@
         try {
                 const response = await axios.get(`/api/monsters/${monsterID}`);
                 return response.data;
-            }
-            catch (err) {
-                console.log(err); 
-            }
+        }
+        catch (err) {
+            console.log(err); 
+        }
         return [];
     }
+
+    const addMonster = async (monsterTemplate = {}) => {
+		try {
+            const response = await axios.post('/api/add-monster', {
+                campaignID: $params.id,
+                monsterTemplate: monsterTemplate
+            });
+
+            const newMonster = response.data.monster;
+            user.set(Object.assign($user, { gameData: Object.assign($user.gameData, { monsters: $user.gameData.monsters.concat([newMonster])})}));
+
+            monsterChosenObj = newMonster;
+            return newMonster;
+		}
+		catch (err) {
+            console.log(err);
+		}
+	}
     
-    $: if (monsterChosenSimple && monsterChosenSimple?.id !== monsterChosenObj?.id) {
+    $: if (monsterChosenSimple) {
         monsterChosenObj = undefined;
         getMonsterData(monsterChosenSimple.id).then(
             monsterData => monsterChosenObj = monsterData
         );
     }
 
-    $: if (!monsterChosenSimple) {
+    $: if (!monsterChosenSimple && !monsterChosenObj?.is_custom) {
         monsterChosenObj = undefined;
     }
 
@@ -57,10 +76,18 @@
         return ['Any Type', ... Array.from(new Set(monsterData.map(monster => capitalize(monster.type))))];
     }
 
-    const viewMonster = (monsterToView: MonsterSimple) => {
+    const viewFavoriteMonster = (monsterToView: MonsterData) => {
         challengeFilterIndex = undefined;
         typeFilterIndex = undefined;
-        monsterChosenSimple = monsterToView;
+        monsterChosenSimple = undefined;
+        monsterChosenObj = monsterToView;
+    }
+
+    const viewRandomMonster = () => {
+        challengeFilterIndex = undefined;
+        typeFilterIndex = undefined;
+        monsterChosenObj = undefined;
+        monsterChosenSimple = gameData.monsters_SRD.random();  
     }
 
 </script>
@@ -97,27 +124,35 @@
         </div>
 
         <div class="monster-menu">
-            <SimpleButton value='Create Custom' icon="mdi:file-document-plus" onClickFn={() => {}} disabled></SimpleButton>
-            <SimpleButton value='Import' icon="mdi:file-import" onClickFn={() => {}} disabled></SimpleButton>
+            <SimpleButton value='Add custom' icon="mdi:notebook-edit" onClickFn={() => addMonster()}></SimpleButton>
+            <SimpleButton value='Import' icon="mdi:notebook-plus" onClickFn={() => {}} disabled></SimpleButton>
             <SimpleButton value='Export' icon="mdi:code-json" onClickFn={() => {}} disabled></SimpleButton>
         </div>
 
         <div class="favorites">
             <div class="favorites-header">
                 <Icon class="big-icon" icon="material-symbols:star-rounded" color="var(--clr-icon-owner)"/>
-                <h4>Favorites</h4>
+                <h4>Favorites & Custom</h4>
             </div>
             <div class="favorites-list">
-                {#if $user && gameData.monsters && gameData.monsters.length !== 0}
-                    {#each gameData.monsters as favMonster}
+                {#if $user && $user?.gameData?.monsters && $user?.gameData?.monsters.length !== 0}
+                    {#each $user?.gameData?.monsters as favMonster}
                         <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                        <box class="fav-monster-item {favMonster.id === monsterChosenSimple?.id ? 'selected' : ''}"
-                            on:click={() => viewMonster(favMonster)} on:keyup={() => {}}
+                        <box class="fav-monster-item {favMonster.id === monsterChosenObj?.id ? 'selected' : ''}"
+                            on:click={() => viewFavoriteMonster(favMonster)} on:keyup={() => {}}
                             tabindex="0"
                         >
-                            <div class="fav-monster-img"></div>
+                            <div class="fav-monster-source">
+                                {#if favMonster?.source === "srd"}
+                                    <Icon class="big-icon" icon="material-symbols:star-rounded" />
+                                {:else}
+                                    <Icon class="big-icon" icon="mdi:notebook" />
+                                {/if}
+                            </div>
                             <div class="fav-monster-name">{favMonster.name}</div>
-                            <div class="fav-monster-source">SRD</div>
+                            <div class="fav-monster-drag">
+                                <Icon class="big-icon" icon="material-symbols:drag-indicator" />
+                            </div>
                         </box>
                     {/each}
                 {:else}
@@ -127,7 +162,7 @@
         </div>
 
         {#if monsterChosenObj}
-            <MonsterDetail bind:monster={monsterChosenObj}></MonsterDetail>
+            <MonsterDetail bind:monster={monsterChosenObj} bind:monsterChosenObj={monsterChosenObj} addMonster={addMonster}></MonsterDetail>
         {:else}
             <div class="placeholder-no-monster">
                 {#if monsterChosenSimple && !monsterChosenObj}
@@ -135,7 +170,7 @@
                     <div>Loading {monsterChosenSimple.name}...</div>
                 {:else}
                     <div>Choose a monster to view or </div>
-                    <SimpleButton value='View random monster' icon='mdi:dice' type='green' onClickFn={() => viewMonster(gameData.monsters_SRD.random())}></SimpleButton>
+                    <SimpleButton value='View random monster' icon='mdi:dice' type='green' onClickFn={() => viewRandomMonster()}></SimpleButton>
                 {/if}
             </div>
         {/if}
@@ -195,6 +230,7 @@
         align-items: center;
         gap: 0.5em;
         position: relative;
+        z-index: 10;
     }
 
     .favorites { grid-area: favorites; 
@@ -202,8 +238,9 @@
         flex-direction: column;
         justify-content: flex-start;
         width: 100%;
-        height: 100%;
+        height: 95%;
         margin-top: 1em;
+        margin-bottom: 4px;
     }
 
     .favorites-header {
@@ -232,11 +269,12 @@
         height: 100%;
         overflow-y: auto;
         scrollbar-width: thin;
+        padding-bottom: 4px;
     }
 
     .fav-monster-item {
         display: grid; 
-        grid-template-columns: 1fr 7fr 1fr; 
+        grid-template-columns: 1fr 5fr 1fr; 
         grid-template-rows: 1fr 1fr 1fr; 
         gap: 0.5em;
         padding: 0.4em 0em;
@@ -244,9 +282,9 @@
         cursor: pointer;
         background-color: var(--clr-box-bg-light);
         grid-template-areas: 
-            "fav-monster-img fav-monster-name fav-monster-source"
-            "fav-monster-img fav-monster-name fav-monster-source"
-            "fav-monster-img fav-monster-name fav-monster-source"; 
+            "fav-monster-source fav-monster-name fav-monster-drag"
+            "fav-monster-source fav-monster-name fav-monster-drag"
+            "fav-monster-source fav-monster-name fav-monster-drag"; 
     }
 
     .fav-monster-item.selected {
@@ -259,7 +297,7 @@
         align-items: center;
     }
 
-    .fav-monster-img { grid-area: fav-monster-img; }
+    .fav-monster-drag { grid-area: fav-monster-drag; }
 
     .fav-monster-name { grid-area: fav-monster-name; 
         font-size: 1.2em;

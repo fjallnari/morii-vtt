@@ -5,39 +5,43 @@
     import type { MonsterData } from "../../../interfaces/MonsterData";
     import { formatModifier, user } from "../../../stores";
     import { convertValueToASMod, toSnakeCase } from "../../../util/util";
+    import InPlaceEdit from "../../InPlaceEdit.svelte";
     import SimpleIconButton from "../../SimpleIconButton.svelte";
     import MonsterTraitDetail from "./MonsterTraitDetail.svelte";
 
     export let monster: MonsterData;
+    export let addMonster: (monsterTemplate?: {}) => Promise<MonsterData>;
+    export let monsterChosenObj: MonsterData;
 
-    let isFavorite: boolean = $user?.gameData.monsters.some(saved => saved.id === monster.id) ?? false;
+    let isFavorite: boolean = false;
+    let editModeON: boolean = false;
 
     const ACTION_TITLES = ['Actions', 'Legendary Actions', 'Reactions'];
     const STAT_TITLES = ['Saving Throws', 'Skills', 'Damage Resistances', 'Damage Immunities', 'Condition Immunities', 'Damage Vulnerabilities', 'Senses', 'Languages', 'Challenge'];
 
-    const getSimpleMonster = () => {
-        return {
-            id: monster.id, 
-            name: monster.name, 
-            cr: monster.challenge.split(' (')[0], 
-            type: monster.meta.split(' ')[1].replace(',', '') 
+    // favorites and saves a monster
+    const addMonsterToFavorites = async () => {
+        isFavorite = !isFavorite;
+
+        if (isFavorite && monster) {
+            const { id, ... cleanMonster } = Object.assign(monster, { source: 'srd' });
+            await addMonster(cleanMonster);
         }
     }
 
-    // either favorites and saves a monster or does the opposite
-    const changeMonsterStatus = async () => {
-        isFavorite = !isFavorite;
-        const simpleMonster = getSimpleMonster();
-
-		try {
-            axios.post('/api/favorite-monster', {
+    const removeMonster = async () => {
+        try {
+            await axios.post('/api/remove-monster', {
                 campaignID: $params.id,
-                monster: simpleMonster,
-                isFavorite: isFavorite
+                monsterID: monster.id
             });
 
-            const updatedMonsters = isFavorite ? $user?.gameData?.monsters.concat([simpleMonster]) : $user?.gameData?.monsters.filter(saved => saved.id !== monster.id);
-            user.set(Object.assign($user, { gameData: Object.assign($user.gameData, { monsters: updatedMonsters})}));
+            user.set(Object.assign($user, { 
+                gameData: Object.assign($user.gameData, { 
+                    monsters: $user.gameData.monsters.filter(monsterIter => monsterIter.id !== monster.id)
+                })
+            }));
+            monsterChosenObj = undefined;
 		}
 		catch (err) {
             console.log(err);
@@ -49,33 +53,68 @@
 <monster-detail>
     <div class="name">
         <div class="monster-name">
-            {monster.name}
+            {#if editModeON}
+                <InPlaceEdit bind:value={monster.name} editWidth="15rem" editHeight="2rem" on:submit={() => {}}/>
+            {:else}
+                {monster.name}
+            {/if}
         </div>
         <div class="monster-meta">
-            <em>{monster.meta}</em>
+            <em>
+            {#if editModeON}
+                <InPlaceEdit bind:value={monster.meta} editWidth="15rem" editHeight="1.5rem" on:submit={() => {}}/>
+            {:else}
+                {monster.meta}
+            {/if}
+        </em>
         </div>
-        <div class="favorite-monster">
-            <SimpleIconButton 
-                icon={`material-symbols:${isFavorite ? 'star-rounded': 'star-outline-rounded'}`}
-                color={isFavorite ? 'var(--clr-icon-owner)' : 'inherit'}
-                onClickFn={() => changeMonsterStatus()}>
-            </SimpleIconButton>
+        <div class="monster-menu">
+            {#if monster.is_custom}
+                <SimpleIconButton 
+                    icon={`mdi:${editModeON ? 'content-save-edit': 'hammer-wrench'}`}
+                    color='var(--clr-accent-light)'
+                    onClickFn={() => editModeON = !editModeON}>
+                </SimpleIconButton>
+                <SimpleIconButton 
+                    icon='mdi:delete'
+                    color='var(--clr-contrast-normal)'
+                    onClickFn={() => removeMonster()}>
+                </SimpleIconButton>
+            {:else}
+                <SimpleIconButton 
+                    icon={`material-symbols:${isFavorite ? 'star-rounded': 'star-outline-rounded'}`}
+                    color={isFavorite ? 'var(--clr-icon-owner)' : 'inherit'}
+                    onClickFn={() => addMonsterToFavorites()}>
+                </SimpleIconButton>
+            {/if}
         </div>
     </div>
     <div class="stats">
         <div class="info-line">
             <b>Armor Class</b>
-            {monster.armor_class}
+            {#if editModeON}
+                <InPlaceEdit bind:value={monster.armor_class} editWidth="20rem" editHeight="2rem" on:submit={() => {}}/>
+            {:else}
+                {monster.armor_class}
+            {/if}
         </div>
         <div class="info-line">
             <b>Hit Points</b>
-            {monster.hit_points}
+            {#if editModeON}
+                <InPlaceEdit bind:value={monster.hit_points} editWidth="20rem" editHeight="2rem" on:submit={() => {}}/>
+            {:else}
+                {monster.hit_points}
+            {/if}
         </div>
         <div class="info-line">
             <b>Speed</b>
-            {monster.speed}
+            {#if editModeON}
+                <InPlaceEdit bind:value={monster.speed} editWidth="20rem" editHeight="2rem" on:submit={() => {}}/>
+            {:else}
+                {monster.speed}
+            {/if}
         </div>
-        <hr>
+        <hr class="{editModeON ? 'edit-mode' : ''}">
         <div class="ability-scores">
             {#each ABILITY_TAGS.slice(1) as tag}
                 <div class="ability-score">
@@ -83,25 +122,38 @@
                         <b>{tag}</b>                   
                     </div>
                     <div class="as-value">
-                        {monster.ability_scores[tag]}
-                        <sendable>
-                            ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
-                        </sendable>
+                        {#if editModeON}
+                            <InPlaceEdit bind:value={monster.ability_scores[tag]} editWidth="1.5rem" editHeight="1.5rem" on:submit={() => {}}/>
+                            <div>
+                                ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
+                            </div>
+                        {:else}
+                            {monster.ability_scores[tag]}
+                            <sendable on:click={() => {}} on:keyup={() => {}}>
+                                ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
+                            </sendable>
+                        {/if}
+
                     </div>
                 </div>
             {/each}
         </div>
-        <hr>
+
+        <hr class="{editModeON ? 'edit-mode' : ''}">
         {#each STAT_TITLES as statType}
-            {#if monster[`${toSnakeCase(statType)}`]}
+            {#if editModeON || monster[`${toSnakeCase(statType)}`]}
                 <div class="info-line">
                     <b>{statType}</b>
-                    {monster[`${toSnakeCase(statType)}`]}
+                    {#if editModeON}
+                        <InPlaceEdit bind:value={monster[`${toSnakeCase(statType)}`]} editWidth="18rem" editHeight="2rem" on:submit={() => {}}/>
+                    {:else}
+                        {monster[`${toSnakeCase(statType)}`]} 
+                    {/if}
                 </div>
             {/if}
         {/each}
-        <hr>
-        
+
+        <hr class="{editModeON ? 'edit-mode' : ''}">
         <div class="traits">
             {#if monster.traits}
                 {#each monster.traits as trait}
@@ -112,10 +164,10 @@
     </div>
     <div class="actions">
         {#each [monster.actions, monster.legendary_actions, monster.reactions] as actionType, index}
-            {#if actionType}
+            {#if actionType && (actionType.length !== 0 || editModeON)}
                 <div class="action-title">
                     {ACTION_TITLES[index]}
-                    <hr>
+                    <hr class="{editModeON ? 'edit-mode' : ''}">
                 </div>
                 {#each actionType as trait}
                     <MonsterTraitDetail trait={trait}></MonsterTraitDetail>
@@ -154,6 +206,12 @@
         color: var(--clr-accent-normal);
     }
 
+    hr.edit-mode {
+        color: none;
+        border: none;
+        border-top: 2px dashed var(--clr-contrast-dark);
+    }
+
     .ability-scores {
         display: flex;
         justify-content: space-evenly;
@@ -187,8 +245,8 @@
         margin-right: 1em;
         border-bottom: 1px var(--clr-text) solid;
         grid-template-areas: 
-            "monster-name favorite-monster"
-            "monster-meta favorite-monster";
+            "monster-name monster-menu"
+            "monster-meta monster-menu";
     }
 
     .monster-name { grid-area: monster-name; 
@@ -205,10 +263,11 @@
         align-items: flex-start;    
     }
 
-    .favorite-monster { grid-area: favorite-monster; 
+    .monster-menu { grid-area: monster-menu; 
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 0.5em;
     }
 
     .stats { grid-area: stats; 
@@ -217,7 +276,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         gap: 0.2em;
-        padding: 0em 1em 1.4em 0em;
+        padding: 0.1em 1em 1.4em 0em;
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;

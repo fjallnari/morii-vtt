@@ -8,6 +8,8 @@ import CreateNPCController from '../controllers/Routes/OwnerAuth/CreateNPCContro
 import verifyOwner from '../middleware/ownerAuth';
 import RenameCampaignController from '../controllers/Routes/OwnerAuth/RenameCampaignController';
 import FavoriteMonsterController from '../controllers/Routes/OwnerAuth/FavoriteMonsterController';
+import AddMonsterController from '../controllers/Routes/OwnerAuth/AddMonsterController';
+import RemoveMonsterController from '../controllers/Routes/OwnerAuth/RemoveMonsterController';
 
 const router = express.Router();
 
@@ -37,6 +39,14 @@ router.post("/api/rename-campaign", verifyToken, verifyOwner, async (req, res) =
 
 router.post("/api/favorite-monster", verifyToken, verifyOwner, async (req, res) => {
     await new FavoriteMonsterController(req, res).handleRequest();
+});
+
+router.post('/api/add-monster', verifyToken, verifyOwner, async (req, res) => {
+    await new AddMonsterController(req, res).handleRequest();
+});
+
+router.post('/api/remove-monster', verifyToken, verifyOwner, async (req, res) => {
+    await new RemoveMonsterController(req, res).handleRequest();
 });
 
 export default router;

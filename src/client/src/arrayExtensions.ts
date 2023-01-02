@@ -1,6 +1,9 @@
 export {}
 declare global {
     interface Array<T> {
+        /**
+         * Returns random element from the array
+         */
         random(): T;
     }
 }

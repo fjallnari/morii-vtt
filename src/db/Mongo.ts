@@ -127,4 +127,5 @@ export async function setUpDB() {
     await createCollectionIfNotExists("campaigns", db);
     await createCollectionIfNotExists("invites", db);
     await createCollectionIfNotExists("characters", db);
+    await createCollectionIfNotExists("monsters", db);
 }

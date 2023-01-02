@@ -29,6 +29,13 @@
 
     <h3>{gameData ? gameData.name : '_'}</h3>
     <div class="icon-bar">
+        <!-- <Tooltip 
+            content="Combat" 
+            theme="blurred" 
+            position='bottom'
+        >
+            <SimpleIconButton icon='mdi:sword-cross' color='#8FB8DE' onClickFn={() => {}}></SimpleIconButton>
+        </Tooltip> -->
         {#if $user && $user._id === gameData.owner}
             <Tooltip 
                 content="Monsters" 

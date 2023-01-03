@@ -123,6 +123,7 @@
         font-size: 1.1em;
         font-weight: 400;
         font-family: Quicksand;
+        text-align: center;
     }
 
     .feature-name.selectable {

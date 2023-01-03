@@ -50,7 +50,7 @@
 		}
 	}
     
-    $: if (monsterChosenSimple) {
+    $: if (monsterChosenSimple && monsterChosenSimple.id !== monsterChosenObj?.id) {
         monsterChosenObj = undefined;
         getMonsterData(monsterChosenSimple.id).then(
             monsterData => monsterChosenObj = monsterData
@@ -321,7 +321,8 @@
     }
 
     :global(.placeholder-no-monster simple-button) {
-        width: 30%;
+        width: fit-content;
+        padding: 0.2em 1em;
     }
 
 </style>

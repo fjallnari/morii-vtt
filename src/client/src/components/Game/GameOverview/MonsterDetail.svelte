@@ -86,8 +86,8 @@
     }
 
     const addAttack = async () => {
-        //monster[`${traitField}`] = monster[`${traitField}`].concat([{ name: '', content: '' }]);
-        //editMonster();
+        monster.actions = monster.actions.concat([{ name: '', type: '', attack_info: '', attack_dmg: '---'}]);
+        editMonster();
     }
 
 </script>
@@ -135,7 +135,7 @@
         <div class="info-line">
             <b>Armor Class</b>
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.armor_class} editWidth="20rem" editHeight="2rem" on:submit={() => editMonster()}/>
+                <InPlaceEdit bind:value={monster.armor_class} editWidth="fit-content" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.armor_class}
             {/if}
@@ -143,7 +143,7 @@
         <div class="info-line">
             <b>Hit Points</b>
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.hit_points} editWidth="20rem" editHeight="2rem" on:submit={() => editMonster()}/>
+                <InPlaceEdit bind:value={monster.hit_points} editWidth="fit-content" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.hit_points}
             {/if}
@@ -151,7 +151,7 @@
         <div class="info-line">
             <b>Speed</b>
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.speed} editWidth="20rem" editHeight="2rem" on:submit={() => editMonster()}/>
+                <InPlaceEdit bind:value={monster.speed} editWidth="fit-content" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.speed}
             {/if}
@@ -208,7 +208,7 @@
                                 bind:value={trait.name} 
                                 bind:content={trait.content}
                                 icon='mdi:text-box'
-                                editWidth='20rem'
+                                editWidth='15rem'
                                 editHeight='2rem'
                                 onSubmitFn={editMonster}
                                 deleteItem={() => deleteTrait('traits', trait)}>
@@ -235,7 +235,7 @@
                             icon="mdi:text-box-plus" 
                             iconClass='big-icon' 
                             type="primary" 
-                            onClickFn={() => addTrait(`${actionType}`) }>
+                            onClickFn={() => addTrait(`${actionType}`)}>
                         </SimpleButton>
                         {#if actionType === "actions"}
                             <SimpleButton 
@@ -243,7 +243,7 @@
                                 icon="mdi:sword" 
                                 iconClass='big-icon' 
                                 type="green" 
-                                onClickFn={() => addAttack() }>
+                                onClickFn={() => addAttack()}>
                             </SimpleButton>
                         {/if}
                     </div>
@@ -254,7 +254,7 @@
                             bind:value={trait.name} 
                             bind:content={trait.content}
                             icon={trait.attack_dmg ? 'mdi:sword' : 'mdi:text-box'}
-                            editWidth='20rem'
+                            editWidth='15rem'
                             editHeight='2rem'
                             textareaHeight='15em'
                             useCustomComponent={trait.attack_dmg && true}
@@ -407,13 +407,14 @@
         width: fit-content;
         font-size: 1.1rem;
         align-self: center;
-        margin: 1em;
+        margin: 1em 0em;
     }
 
     .actions-edit-buttons {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        gap: 1em;
     }
 
     .traits-list {

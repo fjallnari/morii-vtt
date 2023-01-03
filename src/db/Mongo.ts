@@ -120,6 +120,12 @@ export const getUserObj = async (userID: ObjectId | undefined) => {
     return <WithId<UserDB>> await usersCollection.findOne({ _id: userID});
 }
 
+// ! TODO - Remove after one run on prod, no need for it to be repeated
+export const fixMissingMonstersArrays = async() => {
+    const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
+    await campaignsCollection.updateMany({'monsters': {$exists : false}}, {$set: {'monsters': []}});
+}
+
 export async function setUpDB() {
     await initConnection(<string>process.env.MONGO_URL);
     const db = await getDb(process.env.MONGO_INITDB_DATABASE);
@@ -128,4 +134,5 @@ export async function setUpDB() {
     await createCollectionIfNotExists("invites", db);
     await createCollectionIfNotExists("characters", db);
     await createCollectionIfNotExists("monsters", db);
+    await fixMissingMonstersArrays();
 }

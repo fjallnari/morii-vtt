@@ -13,10 +13,13 @@
     export let selectable: boolean = false;
     export let isSelected: boolean = false;
     export let editable: boolean = true;
+    export let useCustomComponent: boolean = false;
     export let textareaHeight: string = '10em';
     export let editWidth: string = '18rem';
+    export let editHeight: string = '1.5rem';
     export let deleteItem: () => void = () => {};
     export let toggleItem: () => void = () => {};
+    export let onSubmitFn: () => void = () => {};
 
     let isOpen: boolean = false;
 
@@ -26,7 +29,6 @@
 
 <box class="feature-main-container" 
     style='background-color: {isSelected ? 'var(--clr-accent-dark)' : 'var(--clr-box-bg-light)'};' 
-    transition:fade|local
 >
     <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable || typeof amount != 'undefined' ? 'type' : 'name'} feature-name feature-menu";`}>
         {#if icon}
@@ -37,7 +39,7 @@
         {#if typeof amount != 'undefined'}
             <div class="feature-type feature-amount">
                 {#if editable}
-                    <InPlaceEdit bind:value={amount} editWidth='1.5em' editHeight='1.5em' on:submit={() => {}}/>x
+                    <InPlaceEdit bind:value={amount} editWidth='1.5em' editHeight={editHeight} on:submit={() => {}}/>x
                 {:else}
                     {amount}x
                 {/if}
@@ -50,7 +52,7 @@
         {/if}
         <div class="feature-name {selectable ? 'selectable': ''}" on:click={toggleItem} on:keyup={() => {}}>
             {#if editable}
-                <InPlaceEdit bind:value editWidth={editWidth} editHeight='1.5rem' on:submit={() => {}}/>
+                <InPlaceEdit bind:value editWidth={editWidth} editHeight={editHeight} on:submit={() => onSubmitFn()}/>
             {:else}
                 {value}
             {/if}
@@ -72,8 +74,10 @@
             </div>
         {/if}
         <div class="details" transition:slide|local>
-            {#if editable}
-                <textarea style='height: {textareaHeight};' on:change={() => {}} bind:value={content}></textarea>
+            {#if useCustomComponent}
+                <slot name="custom-component"></slot>
+            {:else if editable}
+                <textarea style='height: {textareaHeight};' on:change={() => onSubmitFn()} bind:value={content}></textarea>
                 <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem()}></SimpleButton>
             {:else}
                 <MarkdownBoxText text={content}></MarkdownBoxText>
@@ -142,6 +146,10 @@
         justify-content: flex-start;
         align-items: flex-start;
         gap: 0.5em;
+    }
+
+    :global(.details > span) {
+        width: 100%;
     }
 
     .single-detail-line {

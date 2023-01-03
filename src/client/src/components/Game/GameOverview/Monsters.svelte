@@ -42,6 +42,7 @@
             user.set(Object.assign($user, { gameData: Object.assign($user.gameData, { monsters: $user.gameData.monsters.concat([newMonster])})}));
 
             monsterChosenObj = newMonster;
+            monsterChosenSimple = undefined;
             return newMonster;
 		}
 		catch (err) {

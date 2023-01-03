@@ -19,7 +19,7 @@ export default class AddMonsterController extends RouteController {
             const monsterInsertResult = await monstersCollection.insertOne(monsterObj);
             const newMonsterID = monsterInsertResult.insertedId;
 
-            const monsterWithID = Object.assign(monsterObj, {id: newMonsterID.toString()});
+            const monsterWithID = Object.assign(monsterObj, { id: newMonsterID.toString() });
 
             await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$push: { monsters: newMonsterID }});
 

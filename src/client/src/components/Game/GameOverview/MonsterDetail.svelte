@@ -2,11 +2,14 @@
     import axios from "axios";
     import { params } from "svelte-spa-router";
     import ABILITY_TAGS from "../../../enum/AbilityTags";
-    import type { MonsterData } from "../../../interfaces/MonsterData";
+    import type { MonsterData, MonsterTrait } from "../../../interfaces/MonsterData";
     import { formatModifier, user } from "../../../stores";
     import { convertValueToASMod, toSnakeCase } from "../../../util/util";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
+    import SimpleButton from "../../SimpleButton.svelte";
     import SimpleIconButton from "../../SimpleIconButton.svelte";
+    import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
+    import MonsterAttackInner from "./MonsterAttackInner.svelte";
     import MonsterTraitDetail from "./MonsterTraitDetail.svelte";
 
     export let monster: MonsterData;
@@ -48,13 +51,52 @@
 		}
     }
 
+    const editMonster = async () => {
+        try {
+            await axios.post('/api/edit-monster', {
+                campaignID: $params.id,
+                modifiedMonster: monster
+            });
+
+            user.set(Object.assign($user, { 
+                gameData: Object.assign($user.gameData, { 
+                    monsters: $user.gameData.monsters.map(monsterIter => {
+                        if (monsterIter.id === monster.id) {
+                            return monster;
+                        }
+                        return monsterIter;
+                    })
+                    })
+                }));
+		    }
+
+		catch (err) {
+            console.log(err);
+		}
+    }
+
+    const addTrait = async (traitField: string) => {
+        monster[`${traitField}`] = monster[`${traitField}`].concat([{ name: '', content: '' }]);
+        editMonster();
+    }
+
+    const deleteTrait = async (traitField: string, trait: MonsterTrait) => {
+        monster[`${traitField}`] = monster[`${traitField}`].filter(traitIter => traitIter !== trait);
+        editMonster();
+    }
+
+    const addAttack = async () => {
+        //monster[`${traitField}`] = monster[`${traitField}`].concat([{ name: '', content: '' }]);
+        //editMonster();
+    }
+
 </script>
 
 <monster-detail>
     <div class="name">
         <div class="monster-name">
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.name} editWidth="15rem" editHeight="2rem" on:submit={() => {}}/>
+                <InPlaceEdit bind:value={monster.name} editWidth="15rem" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.name}
             {/if}
@@ -62,7 +104,7 @@
         <div class="monster-meta">
             <em>
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.meta} editWidth="15rem" editHeight="1.5rem" on:submit={() => {}}/>
+                <InPlaceEdit bind:value={monster.meta} editWidth="15rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.meta}
             {/if}
@@ -93,7 +135,7 @@
         <div class="info-line">
             <b>Armor Class</b>
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.armor_class} editWidth="20rem" editHeight="2rem" on:submit={() => {}}/>
+                <InPlaceEdit bind:value={monster.armor_class} editWidth="20rem" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.armor_class}
             {/if}
@@ -101,7 +143,7 @@
         <div class="info-line">
             <b>Hit Points</b>
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.hit_points} editWidth="20rem" editHeight="2rem" on:submit={() => {}}/>
+                <InPlaceEdit bind:value={monster.hit_points} editWidth="20rem" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.hit_points}
             {/if}
@@ -109,7 +151,7 @@
         <div class="info-line">
             <b>Speed</b>
             {#if editModeON}
-                <InPlaceEdit bind:value={monster.speed} editWidth="20rem" editHeight="2rem" on:submit={() => {}}/>
+                <InPlaceEdit bind:value={monster.speed} editWidth="20rem" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
                 {monster.speed}
             {/if}
@@ -123,7 +165,7 @@
                     </div>
                     <div class="as-value">
                         {#if editModeON}
-                            <InPlaceEdit bind:value={monster.ability_scores[tag]} editWidth="1.5rem" editHeight="1.5rem" on:submit={() => {}}/>
+                            <InPlaceEdit bind:value={monster.ability_scores[tag]} editWidth="1.5rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
                             <div>
                                 ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
                             </div>
@@ -145,7 +187,7 @@
                 <div class="info-line">
                     <b>{statType}</b>
                     {#if editModeON}
-                        <InPlaceEdit bind:value={monster[`${toSnakeCase(statType)}`]} editWidth="18rem" editHeight="2rem" on:submit={() => {}}/>
+                        <InPlaceEdit bind:value={monster[`${toSnakeCase(statType)}`]} editWidth="18rem" editHeight="2rem" on:submit={() => editMonster()}/>
                     {:else}
                         {monster[`${toSnakeCase(statType)}`]} 
                     {/if}
@@ -154,23 +196,80 @@
         {/each}
 
         <hr class="{editModeON ? 'edit-mode' : ''}">
-        <div class="traits">
+        <div class="traits-container">
+            {#if editModeON}
+                <SimpleButton value="Add trait" icon="mdi:text-box-plus" iconClass='big-icon' type="primary" onClickFn={() => addTrait('traits') }></SimpleButton>
+            {/if}
             {#if monster.traits}
-                {#each monster.traits as trait}
-                    <MonsterTraitDetail trait={trait}></MonsterTraitDetail>
-                {/each}
+                <div class="traits-list {editModeON ? 'edit-mode' : ''}">
+                    {#each monster.traits as trait}
+                        {#if editModeON}
+                            <SimpleAccordionDetail 
+                                bind:value={trait.name} 
+                                bind:content={trait.content}
+                                icon='mdi:text-box'
+                                editWidth='20rem'
+                                editHeight='2rem'
+                                onSubmitFn={editMonster}
+                                deleteItem={() => deleteTrait('traits', trait)}>
+                            </SimpleAccordionDetail>
+                        {:else}
+                            <MonsterTraitDetail trait={trait}></MonsterTraitDetail>          
+                        {/if}
+                    {/each}
+                </div>
             {/if}
         </div>
     </div>
-    <div class="actions">
-        {#each [monster.actions, monster.legendary_actions, monster.reactions] as actionType, index}
-            {#if actionType && (actionType.length !== 0 || editModeON)}
+    <div class="actions {editModeON ? 'edit-mode' : ''}">
+        {#each ["actions", "legendary_actions", "reactions"] as actionType, index}
+            {#if monster[`${actionType}`] && (monster[`${actionType}`].length !== 0 || editModeON)}
                 <div class="action-title">
                     {ACTION_TITLES[index]}
                     <hr class="{editModeON ? 'edit-mode' : ''}">
                 </div>
-                {#each actionType as trait}
-                    <MonsterTraitDetail trait={trait}></MonsterTraitDetail>
+                {#if editModeON}
+                    <div class="actions-edit-buttons">
+                        <SimpleButton 
+                            value={`Add ${actionType.slice(0, -1).split('_').join(' ')}`} 
+                            icon="mdi:text-box-plus" 
+                            iconClass='big-icon' 
+                            type="primary" 
+                            onClickFn={() => addTrait(`${actionType}`) }>
+                        </SimpleButton>
+                        {#if actionType === "actions"}
+                            <SimpleButton 
+                                value={`Add attack`} 
+                                icon="mdi:sword" 
+                                iconClass='big-icon' 
+                                type="green" 
+                                onClickFn={() => addAttack() }>
+                            </SimpleButton>
+                        {/if}
+                    </div>
+                {/if}
+                {#each monster[`${actionType}`] as trait}
+                    {#if editModeON}
+                        <SimpleAccordionDetail
+                            bind:value={trait.name} 
+                            bind:content={trait.content}
+                            icon={trait.attack_dmg ? 'mdi:sword' : 'mdi:text-box'}
+                            editWidth='20rem'
+                            editHeight='2rem'
+                            textareaHeight='15em'
+                            useCustomComponent={trait.attack_dmg && true}
+                            onSubmitFn={editMonster}
+                            deleteItem={() => deleteTrait(actionType, trait)}
+                        >
+                            <span slot="custom-component">
+                                {#if trait.attack_dmg}
+                                    <MonsterAttackInner bind:trait={trait} deleteItem={() => deleteTrait(actionType, trait)}></MonsterAttackInner>
+                                {/if}
+                            </span>            
+                        </SimpleAccordionDetail>
+                    {:else}
+                        <MonsterTraitDetail trait={trait}></MonsterTraitDetail>          
+                    {/if}
                 {/each}
             {/if}
         {/each}
@@ -276,7 +375,8 @@
         justify-content: flex-start;
         align-items: flex-start;
         gap: 0.2em;
-        padding: 0.1em 1em 1.4em 0em;
+        padding: 0.1em 1em 4px 0em;
+        margin-bottom: 2em;
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
@@ -294,16 +394,43 @@
         white-space: nowrap;
     }
 
-    .traits { 
+    .traits-container {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        margin-top: -0.4em;
+        width: 100%;
+    }
+
+    :global(.traits-container > simple-button, .actions-edit-buttons > simple-button) {
+        padding: 0.2em 1em;
+        width: fit-content;
+        font-size: 1.1rem;
+        align-self: center;
+        margin: 1em;
+    }
+
+    .actions-edit-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .traits-list {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
         flex-direction: column;
         text-align: left;
-        margin-top: -0.4em;
     }
 
-    :global(.traits p, .actions p) {
+    .traits-list.edit-mode {
+        gap: 0.4em;        
+        text-align: center;
+        align-items: center;
+    }
+
+    :global(.traits-list p, .actions p) {
         margin: 0.4em 0em;
     }
 
@@ -313,11 +440,18 @@
         justify-content: flex-start;
         align-items: flex-start;
         gap: 0.2em;
-        padding: 0em 1.4em 1.4em 0em;
+        padding-right: 1.4em;
+        padding-bottom: 4px;
+        margin-bottom: 2em;
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
         text-align: left;
+    }
+
+    .actions.edit-mode {
+        gap: 0.4em;
+        align-items: center;
     }
 
     .action-title {

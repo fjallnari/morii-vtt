@@ -7,8 +7,6 @@
     export let deleteItem: () => void = () => {};
     export let editMonster: () => void = () => {};
 
-    // TODO
-
 </script>
 
 <div class="inner-container">

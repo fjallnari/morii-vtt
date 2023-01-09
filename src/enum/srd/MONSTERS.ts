@@ -2598,7 +2598,7 @@ export const MONSTERS: MonsterData[] = [
       "meta": "Medium undead, chaotic evil",
       "armor_class": "12 ",
       "hit_points": "58 (13d8)",
-      "speed": "40 ft., (hover)\r\n                    , walking 0 ft. ",
+      "speed": "40 ft. (hover), walking 0 ft.",
       "saving_throws": "WIS +2, CHA +5",
       "damage_resistances": "Acid, Fire, Lightning, Thunder; Bludgeoning, Piercing, and Slashing from Nonmagical Attacks",
       "damage_immunities": "Cold, Necrotic, Poison",

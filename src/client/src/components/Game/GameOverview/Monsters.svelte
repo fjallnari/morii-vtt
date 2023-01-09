@@ -7,7 +7,7 @@
     import type MonsterSimple from "../../../interfaces/MonsterSimple";
     import Icon from "@iconify/svelte";
     import { capitalize } from "../../../util/util";
-    import { user } from "../../../stores";
+    import { messageMode, user } from "../../../stores";
     import type { MonsterData } from "../../../interfaces/MonsterData";
     import type GameData from "../../../interfaces/GameData";
     import { params } from "svelte-spa-router";

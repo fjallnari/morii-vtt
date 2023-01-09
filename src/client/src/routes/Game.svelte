@@ -75,14 +75,24 @@
         }).format(modifier);
     });
 
-    sendSkillCheck.set(async (modifier: number, skillName: string, charName: string = '', entityID: string = '', diceType = 'd20', customID = nanoid(16)) => {
+    sendSkillCheck.set(async (
+        modifier: number, 
+        skillName: string, 
+        charName: string = '', 
+        entityID: string = '', 
+        diceType = 'd20', 
+        customID = nanoid(16),
+        customFormula: string = ''
+    ) => {
+        const messageText = customFormula === '' ? `/r ${diceType}${modifier !== 0 ? $formatModifier(modifier, "always"): ''}` : `/r ${customFormula}`;
+
         $socket.emit('chat-message', {
             senderInfo: {
                 _id: $user._id, 
                 username: $user.username,
                 settings: $user.settings,
             }, 
-            messageText: `/r ${diceType}${modifier !== 0 ? $formatModifier(modifier, "always"): ''}`,
+            messageText: messageText,
             messageID: customID, 
             skillCheckInfo: {
                 characterName: charName,

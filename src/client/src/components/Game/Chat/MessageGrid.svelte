@@ -21,11 +21,13 @@
         return `ERROR: ${cleanError}`;
     }
 
+    $: characterName = `${message?.skillCheckInfo?.characterName !== '' ? ` (${message?.skillCheckInfo?.characterName})` : ''}`;
+
 </script>
 
 <div class="message-content">
     <div class="sender-info">
-        {message.senderInfo.username}{message.skillCheckInfo ? ` (${message.skillCheckInfo.characterName})` : ''}
+        {message.senderInfo.username}{message.skillCheckInfo ? characterName : ''}
         {#if message.senderInfo._id === $user.gameData?.owner}
             <Icon class="big-icon" icon="mdi:crown" color="var(--clr-icon-owner)" />    
         {/if}

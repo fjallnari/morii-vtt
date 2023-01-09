@@ -1,9 +1,10 @@
 <script lang="ts">
     import axios from "axios";
+    import { stat } from "fs";
     import { params } from "svelte-spa-router";
     import ABILITY_TAGS from "../../../enum/AbilityTags";
     import type { MonsterData, MonsterTrait } from "../../../interfaces/MonsterData";
-    import { formatModifier, user } from "../../../stores";
+    import { formatModifier, messageMode, sendSkillCheck, user } from "../../../stores";
     import { convertValueToASMod, toSnakeCase } from "../../../util/util";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import SimpleButton from "../../SimpleButton.svelte";
@@ -90,6 +91,23 @@
         editMonster();
     }
 
+    const sendASRoll = (tag: string) => {
+        $sendSkillCheck(
+            convertValueToASMod(monster.ability_scores[tag]), `${monster.name.toUpperCase()} | straight ${tag.toUpperCase()}`, '', '-', 'd20'
+        );
+    }
+
+    const rollHP = () => {
+        const hpFormula = monster.hit_points.split('(')[1]?.split(')')[0];
+        $sendSkillCheck(0, `${monster.name.toUpperCase()} | hit points | ${hpFormula}`, '', '-', '-', '-', hpFormula);
+    }
+
+    const sendSkill = (skill: string, statType: string) => {
+        const skillSplit = skill.trim().split(' ');
+        const skillName = statType === "Saving Throws" ? `${skillSplit[0]} saving throw` : skillSplit[0].toLowerCase();
+        $sendSkillCheck(~~skillSplit[1] ?? 0, `${monster.name.toUpperCase()} | ${skillName}`, '');
+    }
+
 </script>
 
 <monster-detail>
@@ -145,7 +163,9 @@
             {#if editModeON}
                 <InPlaceEdit bind:value={monster.hit_points} editWidth="fit-content" editHeight="2rem" on:submit={() => editMonster()}/>
             {:else}
-                {monster.hit_points}
+                <sendable on:click={() => rollHP()} on:keyup={() => {}}>
+                    {monster.hit_points}
+                </sendable>
             {/if}
         </div>
         <div class="info-line">
@@ -171,7 +191,7 @@
                             </div>
                         {:else}
                             {monster.ability_scores[tag]}
-                            <sendable on:click={() => {}} on:keyup={() => {}}>
+                            <sendable on:click={() => sendASRoll(tag)} on:keyup={() => {}}>
                                 ({$formatModifier(convertValueToASMod(monster.ability_scores[tag]), 'always')})
                             </sendable>
                         {/if}
@@ -188,6 +208,12 @@
                     <b>{statType}</b>
                     {#if editModeON}
                         <InPlaceEdit bind:value={monster[`${toSnakeCase(statType)}`]} editWidth="18rem" editHeight="2rem" on:submit={() => editMonster()}/>
+                    {:else if statType === 'Skills' || statType === 'Saving Throws'}
+                        {#each monster[`${toSnakeCase(statType)}`].split(',') as singleSkill}
+                            <sendable on:click={() => sendSkill(singleSkill, statType)} on:keyup={() => {}}>                                
+                                {singleSkill}
+                            </sendable>
+                        {/each}
                     {:else}
                         {monster[`${toSnakeCase(statType)}`]} 
                     {/if}
@@ -263,7 +289,11 @@
                         >
                             <span slot="custom-component">
                                 {#if trait.attack_dmg}
-                                    <MonsterAttackInner bind:trait={trait} deleteItem={() => deleteTrait(actionType, trait)}></MonsterAttackInner>
+                                    <MonsterAttackInner 
+                                        bind:trait={trait}
+                                        editMonster={editMonster}
+                                        deleteItem={() => deleteTrait(actionType, trait)}>
+                                    </MonsterAttackInner>
                                 {/if}
                             </span>            
                         </SimpleAccordionDetail>

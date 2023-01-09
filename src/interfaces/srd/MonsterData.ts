@@ -9,6 +9,8 @@ export interface MonsterTrait {
 
 export interface MonsterData {
     id: string,
+    is_custom?: boolean,
+    source?: string,
     name: string,
     meta: string,
     ability_scores: Record<string, string>,

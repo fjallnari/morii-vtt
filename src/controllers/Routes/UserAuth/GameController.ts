@@ -1,8 +1,10 @@
 import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mongo";
+import { MONSTERS } from "../../../enum/srd/MONSTERS";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
+import { MonsterData } from "../../../interfaces/srd/MonsterData";
 import UserDB from "../../../interfaces/UserDB";
 import logger from "../../../logger";
 import { simplifyPlayerInfo } from "../../../util/helpers";
@@ -29,6 +31,12 @@ export default class GameController extends RouteController {
         const npcsObj = <Character[]> await getIdsFromCollection(campaignInfo.npcs, 'characters');
         const cleanNpcs = npcsObj.map(npc => Object.assign(npc, {_id: npc._id.toString(), playerID: npc.playerID.toString()}));
 
+        // get all monsters 
+        const monstersObj = await getIdsFromCollection(campaignInfo.monsters, 'monsters');
+        const cleanMonsters = monstersObj?.map( monster => Object.assign(monster, { id: monster._id.toString() }));
+
+        const initiativeTemplate = { topID: '', order: [] };
+
         return {
             id: campaignInfo._id,
             owner: campaignInfo.owner.toString(),
@@ -37,7 +45,16 @@ export default class GameController extends RouteController {
             characters: cleanCharacters,
             players: simpleUsers,
             npcs: cleanNpcs,
-            monsters: campaignInfo.monsters ?? []
+            monsters: cleanMonsters ?? [],
+            monsters_SRD: MONSTERS.map(monster => { 
+                return { 
+                    id: monster.id, 
+                    name: monster.name, 
+                    cr: monster.challenge.split(' (')[0], 
+                    type: monster.meta.split(' ')[1].replace(',', '') 
+                }
+            }), 
+            initiative: initiativeTemplate
         }
 
     }

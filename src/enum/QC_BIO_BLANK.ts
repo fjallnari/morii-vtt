@@ -14,7 +14,9 @@ If you can’t find a feature that matches your desired background, work with yo
     tools: [],
     languages: [],
     equipment: [],
-    features: [{name: '', content: ''}],
+    features: [
+        { name: '', content: '' }
+    ],
     personality: "",
     ideals: "",
     bonds: "",

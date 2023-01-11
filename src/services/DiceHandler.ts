@@ -14,7 +14,7 @@ export default class DiceHandler {
     }
 
     public rollDice(messageText: string) {
-        const matchedText = /^(?:\/roll|\/r)\040(.*)$/gm.exec(messageText) as RegExpExecArray; // cannot ever be null
+        const matchedText = /^(?:\/roll|\/r)\040(.*)$/gm.exec(messageText.trim()) as RegExpExecArray; // cannot ever be null
         const diceInput = matchedText[1];
 
         try {

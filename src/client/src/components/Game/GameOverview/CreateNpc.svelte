@@ -3,9 +3,7 @@
     import axios from 'axios';
     import { params } from "svelte-spa-router";
     import SimpleButton from "../../SimpleButton.svelte";
-    import CopyExistingSheet from "../CopyExistingSheet.svelte";
-    import ImportJsonSheet from "../ImportJsonSheet.svelte";
-    import QuickCreateSheet from "../QCreate/QuickCreateSheet.svelte";
+    import GAME_SYSTEMS from "../../../enum/GameSystems";
 
     export let gameData: GameData;
     export let createMenuEnabled: boolean;
@@ -29,9 +27,10 @@
 
 <div class="create-npc-container">
     <SimpleButton value='Create New' type="green" icon="material-symbols:note-add" onClickFn={createNPC}></SimpleButton>
-    <QuickCreateSheet createCharacter={createNPC}></QuickCreateSheet>
-    <CopyExistingSheet createCharacter={createNPC}></CopyExistingSheet>
-    <ImportJsonSheet createCharacter={createNPC}></ImportJsonSheet>
+
+    {#each GAME_SYSTEMS[gameData.system].creationOptions as creationOption}
+        <svelte:component this={creationOption} createCharacter={createNPC} />
+    {/each}
 
     <SimpleButton value='' icon="mdi:close" onClickFn={() => {createMenuEnabled = false}}></SimpleButton>
 </div>

@@ -126,6 +126,11 @@ export const fixMissingMonstersArrays = async() => {
     await campaignsCollection.updateMany({'monsters': {$exists : false}}, {$set: {'monsters': []}});
 }
 
+export const fixMissingSystem = async() => {
+    const charactersCollection = <Collection<Document>> await getCollection('characters');
+    await charactersCollection.updateMany({'system': {$exists : false}}, {$set: {'system': 'D&D 5E'}});
+}
+
 export async function setUpDB() {
     await initConnection(<string>process.env.MONGO_URL);
     const db = await getDb(process.env.MONGO_INITDB_DATABASE);
@@ -134,5 +139,6 @@ export async function setUpDB() {
     await createCollectionIfNotExists("invites", db);
     await createCollectionIfNotExists("characters", db);
     await createCollectionIfNotExists("monsters", db);
-    await fixMissingMonstersArrays();
+    // await fixMissingMonstersArrays();
+    fixMissingSystem()
 }

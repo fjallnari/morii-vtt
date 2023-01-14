@@ -6,6 +6,9 @@ export const validateClassName = (className: string) => {
 }
 
 export const getClassIcon = (characterClasses: string) => {
+    if (! characterClasses) {
+        return ["class-default"];
+    }
     const classesArray = characterClasses.split(' ').map(charClass => charClass.toLowerCase());
     return classesArray.length <= 2 ? [validateClassName(classesArray[0])] : classesArray.map(charClass => validateClassName(charClass));
 }

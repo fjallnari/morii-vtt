@@ -1,7 +1,6 @@
 import { Response } from "express";
 import RouteController from "../RouteController";
 import { RACES } from "../../../enum/srd/RACES";
-import { CHARACTER_SKELETON } from "../../../enum/CHARACTER_SKELETON";
 import { CLASSES } from "../../../enum/srd/CLASSES";
 import { SPELLS } from "../../../enum/srd/SPELLS";
 import { QC_AS_BLANK } from "../../../enum/QC_AS_BLANK";
@@ -9,6 +8,7 @@ import { ASI } from "../../../enum/srd/ASI";
 import { QC_BIO_BLANK } from "../../../enum/QC_BIO_BLANK";
 import { WEAPON_STATS } from "../../../enum/srd/WEAPON_STATS";
 import logger from "../../../logger";
+import { SKELETON_5E } from "../../../enum/skeletons/SKELETON_5E";
 
 export default class GetQuickCreateDataController extends RouteController {
 
@@ -17,7 +17,7 @@ export default class GetQuickCreateDataController extends RouteController {
             logger.info({ status: 200 }, `attempting to get q-create data`);
             
             return this.res.status(200).send({ 
-                characterSkeleton: CHARACTER_SKELETON, 
+                characterSkeleton: SKELETON_5E, 
                 races: RACES, 
                 classes: CLASSES, 
                 spells: SPELLS, 

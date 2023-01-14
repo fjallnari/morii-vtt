@@ -7,6 +7,7 @@
     import type { Character } from "../../../interfaces/Character";
     import { params } from "svelte-spa-router";
     import axios from "axios";
+    import GAME_SYSTEMS from "../../../enum/GameSystems";
     
     export let character: Character;
 
@@ -51,8 +52,8 @@
 
     
     selectedCharacterTab.set(0);
-    const tabsComponents = [CharacterSheetCore, CharacterSheetBio, CharacterSheetSpells, CharacterSheetSettings];
+    const characterSheetTabs = GAME_SYSTEMS[$user.gameData.system].characterSheetTabs;
 
 </script>
 
-<svelte:component this={tabsComponents[$selectedCharacterTab]} bind:character={character}></svelte:component>
+<svelte:component this={characterSheetTabs[$selectedCharacterTab]} bind:character={character}></svelte:component>

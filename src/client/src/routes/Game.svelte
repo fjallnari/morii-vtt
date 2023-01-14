@@ -5,11 +5,11 @@
     import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
-    import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import type UserIDPair from "../interfaces/UserIDPair";
     import { nanoid } from "nanoid/non-secure";
     import LoadingCircle from "../components/LoadingCircle.svelte";
-    import OwnerGameRouter from "../components/Game/OwnerGameRouter.svelte";
+    import GameRouterOwner from "../components/Game/GameRouterOwner.svelte";
+    import GameRouterPlayer from "../components/Game/GameRouterPlayer.svelte";
 
     export let params: { id?: string } = {};
 
@@ -116,9 +116,9 @@
         <!-- <GameGuide></GameGuide> -->
         <div class="character-sheet">
             {#if $user && $user._id === gameData.owner}
-                <OwnerGameRouter gameData={gameData}></OwnerGameRouter>
+                <GameRouterOwner gameData={gameData}></GameRouterOwner>
             {:else}
-                <CharacterHandler gameData={gameData}></CharacterHandler>
+                <GameRouterPlayer gameData={gameData}></GameRouterPlayer>
             {/if}
         </div>
         <div class="game-info">

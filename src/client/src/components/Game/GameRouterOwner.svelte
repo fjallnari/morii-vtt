@@ -1,17 +1,14 @@
 <script lang="ts">
+    import GAME_SYSTEMS from "../../enum/GameSystems";
     import type { Character } from "../../interfaces/Character";
     import type GameData from "../../interfaces/GameData";
     import { selectedCharacter, selectedGameTab, socket } from "../../stores";
     import CharacterSheetRouter from "./CharacterSheet/CharacterSheetRouter.svelte";
-    import GameOverview from "./GameOverview/GameOverview.svelte";
-    import Monsters from "./GameOverview/Monsters.svelte";
 
     export let gameData: GameData;
 
-    let ownerGameTabs = {
-        'default': GameOverview,
-        'monsters': Monsters,
-    }
+    let ownerGameTabs = (GAME_SYSTEMS[gameData.system]?.gameTabs ?? []).filter(tab => tab.access === 'owner');
+    $: selectedTabComponent = ownerGameTabs.find(tab => tab.id === $selectedGameTab)?.component;
 
     $socket.on('change-character', (modifiedCharacter: Character) => {
         const index = gameData.characters.findIndex( char => char._id === modifiedCharacter._id);
@@ -20,7 +17,6 @@
         if ($selectedCharacter && $selectedCharacter._id === modifiedCharacter._id) {
             selectedCharacter.set(modifiedCharacter);
         }
-
     });
 
     $socket.on('add-character', (newCharacter: Character) => {
@@ -37,16 +33,11 @@
         selectedCharacter.set(undefined);
     });
 
-
 </script>
 
 
 {#if $selectedCharacter}
     <CharacterSheetRouter bind:character={$selectedCharacter}></CharacterSheetRouter>
 {:else}
-    <svelte:component this={ownerGameTabs[$selectedGameTab]} bind:gameData={gameData}></svelte:component>
+    <svelte:component this={selectedTabComponent} bind:gameData={gameData}></svelte:component>
 {/if}
-
-<style>
-
-</style>

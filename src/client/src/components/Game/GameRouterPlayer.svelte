@@ -8,6 +8,7 @@
     import ImportJsonSheet from "./ImportJsonSheet.svelte";
     import CopyExistingSheet from "./CopyExistingSheet.svelte";
     import QuickCreateSheet from "./QCreate/QuickCreateSheet.svelte";
+    import GAME_SYSTEMS from "../../enum/GameSystems";
 
     export let gameData: GameData;
 
@@ -34,8 +35,6 @@
 
 </script>
 
-
-
 {#if gameData && character}
     <CharacterSheetRouter bind:character={character}></CharacterSheetRouter>
 {:else}
@@ -43,9 +42,9 @@
         <h3>You don't have any character assigned to this campaign.</h3>
         <div class="new-character-options">
             <SimpleButton value='Create New' type="green" icon="material-symbols:note-add" onClickFn={createCharacter}></SimpleButton>
-            <QuickCreateSheet createCharacter={createCharacter}></QuickCreateSheet>
-            <CopyExistingSheet createCharacter={createCharacter}></CopyExistingSheet>
-            <ImportJsonSheet createCharacter={createCharacter}></ImportJsonSheet>
+            {#each GAME_SYSTEMS[gameData.system].creationOptions as creationOption}
+                <svelte:component this={creationOption} createCharacter={createCharacter} />
+            {/each}
         </div>
     </div>
 {/if}

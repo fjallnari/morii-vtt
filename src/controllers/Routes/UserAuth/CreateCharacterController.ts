@@ -2,9 +2,9 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
-import jwt from 'jsonwebtoken';
-import { CHARACTER_SKELETON } from "../../../enum/CHARACTER_SKELETON";
 import logger from "../../../logger";
+import Campaign from "../../../interfaces/Campaign";
+import CHARACTER_SKELETONS from "../../../enum/skeletons/CHARACTER_SKELETONS";
 
 
 export default class CreateCharacterController extends RouteController {
@@ -22,13 +22,22 @@ export default class CreateCharacterController extends RouteController {
             const usersCollection = <Collection<Document>> await getCollection('users');
             const charactersCollection = <Collection<Document>> await getCollection('characters');
 
-            const newCharacterObj = Object.assign({}, { _id: new ObjectId(), playerID: userID, ... CHARACTER_SKELETON, ... characterTemplate });
+            const campaignObjectID = new ObjectId(campaignID);
+            const campaignObj = await campaignsCollection.findOne({_id: campaignObjectID}) as Campaign;
+
+            const newCharacterObj = Object.assign({}, { 
+                _id: new ObjectId(), 
+                playerID: userID,
+                system: campaignObj.system,
+                ... CHARACTER_SKELETONS[campaignObj.system] ?? {},
+                ... characterTemplate 
+            });
 
             const insertResult = await charactersCollection.insertOne(newCharacterObj);
             const newCharacterID = insertResult.insertedId;
             
             await usersCollection.updateOne({_id: userID}, {$push: { characters: newCharacterID }});
-            await campaignsCollection.updateOne({_id: new ObjectId(campaignID), "players.playerID": userID}, {$set: { "players.$.characterID": newCharacterID }});
+            await campaignsCollection.updateOne({_id: campaignObjectID, "players.playerID": userID}, {$set: { "players.$.characterID": newCharacterID }});
             
             childLogger.info({ characterID: newCharacterID, status: 200  }, `user '${userID}' created new character successfully`);
             // sends newly created blank character object

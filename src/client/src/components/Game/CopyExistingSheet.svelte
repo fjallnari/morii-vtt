@@ -3,6 +3,7 @@
     import Dialog from '@smui/dialog';
     import axios from 'axios';
     import type { Character } from '../../interfaces/Character';
+    import { user } from '../../stores';
     import { getClassIcon } from '../../util/util';
     import SimpleButton from '../SimpleButton.svelte';
     import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
@@ -14,7 +15,7 @@
     const getUserCharacters = async () => {
         try {
             const response = await axios.get('/api/characters');
-            return response.data.characters as Character[];
+            return (response.data.characters as Character[]).filter(character => character.system === $user?.gameData?.system);
 		}
 		catch (err) {
             console.log(err);      

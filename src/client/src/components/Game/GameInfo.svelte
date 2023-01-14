@@ -4,54 +4,43 @@
     import { selectedCharacter, selectedGameTab, user } from '../../stores';
     import SimpleIconButton from '../SimpleIconButton.svelte';
     import { Tooltip } from "@svelte-plugins/tooltips";
+    import GAME_SYSTEMS from "../../enum/GameSystems";
+    import type GameTab from "../../interfaces/GameTab";
 
     export let gameData: GameData;
 
-    const showGameOverview = () => {
-        selectedGameTab.set('default');
-        selectedCharacter.set(undefined);
-    }
-
-    const showMonsters = () => {
-        selectedGameTab.set('monsters');
-        selectedCharacter.set(undefined);
-    }
-
     const leaveGame = () => {
-        selectedGameTab.set('default');
-        selectedCharacter.set(undefined);
+        selectGameTab();
         replace('/');
     }
+
+    const selectGameTab = (tabName: string = 'default') => {
+        selectedGameTab.set(tabName);
+        selectedCharacter.set(undefined);        
+    }
+
+
+    const filterTabs = (tab: GameTab) => {
+        const accessGroup = $user && $user._id === gameData.owner ? 'owner': 'player';
+        return tab.access === 'any' || tab.access === accessGroup;
+    }
+
+    $: gameTabs = GAME_SYSTEMS[gameData.system]?.gameTabs?.filter(tab => filterTabs(tab)) ?? [];
 
 </script>
 
 <div class="game-info">
-
     <h3>{gameData ? gameData.name : '_'}</h3>
     <div class="icon-bar">
-        <!-- <Tooltip 
-            content="Combat" 
-            theme="blurred" 
-            position='bottom'
-        >
-            <SimpleIconButton icon='mdi:sword-cross' color='#8FB8DE' onClickFn={() => {}}></SimpleIconButton>
-        </Tooltip> -->
-        {#if $user && $user._id === gameData.owner}
+        {#each gameTabs as tab}
             <Tooltip 
-                content="Monsters" 
-                theme="blurred" 
+                content={tab.tooltip}
+                theme="blurred"
                 position='bottom'
             >
-                <SimpleIconButton icon='mdi:duck' color='#C7B573' onClickFn={() => showMonsters()}></SimpleIconButton>
+                <SimpleIconButton icon={tab.icon} color={tab.color} onClickFn={() => selectGameTab(tab.id)}></SimpleIconButton>
             </Tooltip>
-            <Tooltip 
-                content="Overview" 
-                theme="blurred" 
-                position='bottom'
-            >
-                <SimpleIconButton icon='material-symbols:dashboard-rounded' color='#A7C284' onClickFn={() => showGameOverview()}></SimpleIconButton>
-            </Tooltip>
-        {/if}
+        {/each}
         <Tooltip 
             content="Leave" 
             theme="blurred" 

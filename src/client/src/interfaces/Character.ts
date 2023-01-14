@@ -110,6 +110,7 @@ export interface CharacterSettings {
 export interface Character {
     _id: string,
     playerID: string,
+    system: string,
 
     // core tab    
     name: string,

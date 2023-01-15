@@ -1,10 +1,10 @@
 <script lang="ts">
     import { nanoid } from "nanoid/non-secure";
-    import type ClassData from "../../../interfaces/ClassData";
+    import type ClassData from "../../../interfaces/5E/ClassData";
+    import type { QCAbilityScores } from "../../../interfaces/5E/QCAbilityScores";
     import type MessageData from "../../../interfaces/MessageData";
-    import type { QCAbilityScores } from "../../../interfaces/QCAbilityScores";
     import { sendSkillCheck, socket, formatModifier } from "../../../stores";
-    import { getASModifier } from "../../../util/util";
+    import { calc5EModifier } from "../../../util/util";
     import BoxWithHeaderToggle from "../../BoxWithHeaderToggle.svelte";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import SimpleButton from "../../SimpleButton.svelte";
@@ -12,7 +12,7 @@
     export let selectedClass: ClassData;
     export let abilityScores: QCAbilityScores;
 
-    $: modCON = getASModifier(abilityScores, 'CON');
+    $: modCON = calc5EModifier(abilityScores['CON']?.value);
     $: averageHPPerLevel = ~~(~~selectedClass.hp.hit_die/2) + 1;
     $: level1HP = ~~selectedClass.hp.hit_die + modCON;
 

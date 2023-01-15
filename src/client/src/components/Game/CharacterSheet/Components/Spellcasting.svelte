@@ -1,15 +1,16 @@
 <script lang="ts">
     import ABILITY_TAGS from '../../../../enum/AbilityTags';
-    import type { Character } from '../../../../interfaces/Character';
-    import { getASModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
+    import type { Character5E } from '../../../../interfaces/5E/Character5E';
+    import { modifyCharacter, sendSkillCheck } from '../../../../stores';
     import SimpleButton from '../../../SimpleButton.svelte';
     import Dialog from '@smui/dialog';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
     import LoadingCircle from '../../../LoadingCircle.svelte';
     import axios from 'axios';
     import SimpleSnackbar from '../../../SimpleSnackbar.svelte';
+    import { calc5EModifier } from '../../../../util/util';
 
-    export let character: Character;
+    export let character: Character5E;
     export let addNewSpell: (spellLevel: number, spellTemplate?: any) => void;
 
 
@@ -19,10 +20,11 @@
     let fillSpellContent: string = '';
     let newSRDSpell = undefined;
     let lastAddedSpellName = "";
-    
+
+    $: spellAbilityModifier = calc5EModifier(character.ability_scores[character.spell_ability]?.value);
     // if the field is empty, show zero
-    $: spellSaveDC = ['', '---'].includes(character.spell_ability) ? 0 : 8 + $getASModifier(character.spell_ability) + ~~character.prof_bonus + ~~character.spell_save_dc_bonus;
-    $: spellAttackBonus = ['', '---'].includes(character.spell_ability) ? 0 : $getASModifier(character.spell_ability) + ~~character.prof_bonus;
+    $: spellSaveDC = ['', '---'].includes(character.spell_ability) ? 0 : 8 + spellAbilityModifier + ~~character.prof_bonus + ~~character.spell_save_dc_bonus;
+    $: spellAttackBonus = ['', '---'].includes(character.spell_ability) ? 0 : spellAbilityModifier + ~~character.prof_bonus;
 
     const validateSpellSummary = () => {
         if (!fillSpellContent) {return null}

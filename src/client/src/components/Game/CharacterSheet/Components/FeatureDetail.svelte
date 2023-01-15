@@ -3,12 +3,12 @@
     import Icon from '@iconify/svelte';
     import { slide, fade } from 'svelte/transition';
     import { params } from "svelte-spa-router";
-    import type { Character, Feature } from '../../../../interfaces/Character';
+    import type { Character5E, Feature } from '../../../../interfaces/5E/Character5E';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
 
     export let feature: Feature;
-    export let character: Character;
+    export let character: Character5E;
     let isOpen: boolean = false;
 
     const featureTypes = [

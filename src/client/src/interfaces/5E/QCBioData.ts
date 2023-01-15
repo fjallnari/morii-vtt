@@ -1,4 +1,4 @@
-import type { Feature, Item } from "./Character";
+import type { Feature, Item } from "./5E/Character5E";
 
 export default interface QCBioData {
     info: string,

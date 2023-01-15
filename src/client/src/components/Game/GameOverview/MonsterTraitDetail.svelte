@@ -1,6 +1,6 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import type { MonsterTrait } from "../../../interfaces/MonsterData";
+    import type { MonsterTrait } from "../../../interfaces/5E/MonsterData";
     import { messageMode, ownerSocketID, sendSkillCheck, socket, user } from "../../../stores";
 
     export let trait: MonsterTrait;
@@ -44,7 +44,7 @@
 
 {#if !trait.attack_dmg}
     <p>
-        <sendable on:click={() => sendTrait()}>
+        <sendable on:click={() => sendTrait()} on:keyup={() => {}}>
             <em><strong>{trait.name ?? ''}</strong></em>
         </sendable>
         <em>{trait.subtitle ?? ''}</em>
@@ -55,15 +55,15 @@
     </p>
 {:else}
     <p>
-        <sendable on:click={() => { sendAttack(); sendDamage()}}>
+        <sendable on:click={() => { sendAttack(); sendDamage()}} on:keyup={() => {}}>
             <em><strong>{trait.name ?? ''}</strong></em>          
         </sendable>
-        <sendable on:click={() => sendAttack()}>
+        <sendable on:click={() => sendAttack()} on:keyup={() => {}}>
             <em>{trait.type ?? ''}</em>
         </sendable>
         {trait.attack_info}
-        <sendable on:click={() => sendDamage()}>
-            <em>{"Hit:"}</em>         
+        <sendable on:click={() => sendDamage()} on:keyup={() => {}}>
+            <em>{"Hit:"}</em>
         </sendable>
         {trait.attack_dmg}
         {trait?.content?.split('\n\n')[0] ?? ''}

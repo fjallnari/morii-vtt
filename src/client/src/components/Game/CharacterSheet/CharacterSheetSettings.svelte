@@ -3,15 +3,15 @@
     import { selectedCharacter, user, socket, ownerSocketID, userIDPairs } from "../../../stores";
     import Dialog, { Content, Actions } from '@smui/dialog';
     import { params, replace } from "svelte-spa-router";
-    import type { Character } from "../../../interfaces/Character";
     import type UserSimple from "../../../interfaces/UserSimple";
     import SimpleButton from "../../SimpleButton.svelte";
     import ANIMALS from "../../../enum/SVGAnimals";
     import axios from "axios";
     import ClassIcon from "../ClassIcon.svelte";
     import GAME_SYSTEMS from "../../../enum/GameSystems";
+    import type CharacterAny from "../../../interfaces/CharacterAny";
 
-    export let character: Character;
+    export let character: CharacterAny;
 
     let isDeleteCharDialogOpen: boolean = false;
 

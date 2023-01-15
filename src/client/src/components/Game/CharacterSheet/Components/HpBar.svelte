@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { Character } from "../../../../interfaces/Character";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
 
-    export let character: Character;
+    export let character: Character5E;
 
 </script>
 

@@ -1,11 +1,12 @@
 <script lang="ts">
-    import type { Character } from "../../../../interfaces/Character";
-    import { getASModifier, modifyCharacter, sendSkillCheck } from'../../../../stores';
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
+    import { modifyCharacter, sendSkillCheck } from'../../../../stores';
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import { onMount } from "svelte";
     import { Tooltip } from "@svelte-plugins/tooltips";
+    import { calc5EModifier } from "../../../../util/util";
 
-    export let character: Character;
+    export let character: Character5E;
 
     type RollNotationRegexGroups = { groups: { diceCount: string, diceSides: string } } | null;
 
@@ -40,7 +41,7 @@
 
     const sendHitDiceRoll = (d_type: string) => {
         character.hd_current[d_type] = (~~character.hd_current[d_type] - 1).toString(); 
-        $sendSkillCheck($getASModifier('CON'), `${d_type} hit dice`, character.name, '-', d_type);
+        $sendSkillCheck(calc5EModifier(character.ability_scores['CON']?.value), `${d_type} hit dice`, character.name, '-', d_type);
         $modifyCharacter();
     }
 

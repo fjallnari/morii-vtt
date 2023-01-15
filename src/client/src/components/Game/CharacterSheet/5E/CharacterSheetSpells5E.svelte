@@ -1,14 +1,14 @@
 <script lang="ts">
     import CharacterSheetMenu from "../Components/CharSheetMenu.svelte";
     import { nanoid } from 'nanoid/non-secure'
-    import type { Character, Spell } from "../../../../interfaces/Character";
+    import type { Character5E, Spell } from "../../../../interfaces/5E/Character5E";
     import Spellcasting from "../Components/Spellcasting.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import BoxWithList from "../../../BoxWithList.svelte";
     import SpellDetail from "../Components/SpellDetail.svelte";
     import { modifyCharacter } from "../../../../stores";
 
-    export let character: Character;
+    export let character: Character5E;
 
     const addNewSpell = (spellLevel: number, spellTemplate: object = {}) => {
         const spellSkeleton: Spell = {

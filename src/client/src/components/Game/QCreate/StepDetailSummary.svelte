@@ -1,6 +1,4 @@
 <script lang="ts">
-    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../../interfaces/QuickCreateData";
     import { int2roman, validateClassName } from "../../../util/util";
     import BoxWithIcon from "../../BoxWithIcon.svelte";
     import InPlaceEditBox from "../../InPlaceEditBox.svelte";
@@ -9,6 +7,8 @@
     import Svelecte from "svelecte/src/Svelecte.svelte";
     import BioTextareaBox from "../../BioTextareaBox.svelte";
     import Icon from "@iconify/svelte";
+    import type QuickCreateCharacterParts from "../../../interfaces/5E/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/5E/QuickCreateData";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

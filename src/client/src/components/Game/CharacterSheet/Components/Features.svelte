@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { Character, Feature } from "../../../../interfaces/Character";
+    import type { Character5E, Feature } from "../../../../interfaces/5E/Character5E";
     import { modifyCharacter } from '../../../../stores';
     import Icon from '@iconify/svelte';
     import { nanoid } from 'nanoid/non-secure'
     import FeatureDetail from "./FeatureDetail.svelte";
     
-    export let character: Character;
+    export let character: Character5E;
     let currentFilter = 0;
 
     enum SOURCE_TYPES {

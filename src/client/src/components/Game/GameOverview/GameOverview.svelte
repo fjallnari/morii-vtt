@@ -1,7 +1,6 @@
 <script lang="ts">
     import GAME_SYSTEMS from "../../../enum/GameSystems";
-import type GameData from "../../../interfaces/GameData";
-    import Game from "../../../routes/Game.svelte";
+    import type GameData from "../../../interfaces/GameData";
     import CharactersList from "./CharactersList.svelte";
     import CreateNpc from "./CreateNpc.svelte";
     import NpcList from "./NpcList.svelte";

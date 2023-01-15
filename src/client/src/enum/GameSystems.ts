@@ -9,6 +9,7 @@ import CharacterSheetCore5E from "../components/Game/CharacterSheet/5E/Character
 import CharacterSheetBio5E from "../components/Game/CharacterSheet/5E/CharacterSheetBio5E.svelte";
 import CharacterSheetSpells5E from "../components/Game/CharacterSheet/5E/CharacterSheetSpells5E.svelte";
 import SpecificSettings5E from "../components/Game/CharacterSheet/5E/SpecificSettings5E.svelte";
+import CharacterSheetCoreCairn from "../components/Game/CharacterSheet/Cairn/CharacterSheetCoreCairn.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {
@@ -69,15 +70,20 @@ const GAME_SYSTEMS = {
             OWNER_STANDARD_OVERVIEW
         ]
     },
-    'Cairn': {
-        characterSheetTabs: [
-            SETTINGS_TAB
-        ],
-        creationOptions: [],
-        gameTabs: [
-            OWNER_STANDARD_OVERVIEW
-        ]
-    }
+    // 'Cairn': {
+    //     characterSheetTabs: [
+    //         {
+    //             color: '#A7C284',
+    //             icon: 'mdi:home',
+    //             component:  CharacterSheetCoreCairn
+    //         },
+    //         SETTINGS_TAB
+    //     ],
+    //     creationOptions: [],
+    //     gameTabs: [
+    //         OWNER_STANDARD_OVERVIEW
+    //     ]
+    // }
 }
 
 export default GAME_SYSTEMS;

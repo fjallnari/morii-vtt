@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { Character } from "../../../../interfaces/Character";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
     import BioTextareaBox from "../../../BioTextareaBox.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import CharacterSheetMenu from "../Components/CharSheetMenu.svelte";
 
-    export let character: Character;
+    export let character: Character5E;
 
 </script>
 

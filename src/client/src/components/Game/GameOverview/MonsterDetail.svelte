@@ -3,7 +3,7 @@
     import { stat } from "fs";
     import { params } from "svelte-spa-router";
     import ABILITY_TAGS from "../../../enum/AbilityTags";
-    import type { MonsterData, MonsterTrait } from "../../../interfaces/MonsterData";
+    import type { MonsterData, MonsterTrait } from "../../../interfaces/5E/MonsterData";
     import { formatModifier, messageMode, sendSkillCheck, user } from "../../../stores";
     import { convertValueToASMod, toSnakeCase } from "../../../util/util";
     import InPlaceEdit from "../../InPlaceEdit.svelte";

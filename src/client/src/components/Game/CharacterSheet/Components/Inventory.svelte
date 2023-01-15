@@ -2,11 +2,11 @@
     import { modifyCharacter } from "../../../../stores";
     import Icon from '@iconify/svelte';
     import ItemDetail from "./ItemDetail.svelte";
-    import type { Character, Item } from "../../../../interfaces/Character";
+    import type { Character5E, Item } from "../../../../interfaces/5E/Character5E";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import { nanoid } from 'nanoid/non-secure'
 
-    export let character: Character;
+    export let character: Character5E;
 
     const coin_types = Object.keys(character.coins);
 

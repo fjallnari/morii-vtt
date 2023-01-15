@@ -1,6 +1,6 @@
 <script lang="ts">
     import XP_LEVELS from "../../../../enum/XpPerLevel";
-    import type { Character } from "../../../../interfaces/Character";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import AbilityScores from "../Components/AbilityScores.svelte";
     import ArmorClass from "../Components/ArmorClass.svelte";
@@ -17,7 +17,7 @@
     import Speed from "../Components/Speed.svelte";
     import ToolsOtherProf from "../Components/ToolsOtherProf.svelte";
 
-    export let character: Character;
+    export let character: Character5E;
 
 </script>
 
@@ -106,7 +106,7 @@
     tab-container {  display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 2fr 2fr 1fr; 
-        gap: 0.5em 0.5em;
+        gap: 0.5em;
         grid-template-areas: 
             "character-name character-basic-info character-basic-info"
             "ability-scores-bonuses character-stats other-prof-languages"

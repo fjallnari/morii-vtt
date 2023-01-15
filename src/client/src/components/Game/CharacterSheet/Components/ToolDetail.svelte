@@ -1,14 +1,15 @@
 <script lang="ts">
-    import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
+    import { formatModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
     import { slide, fade } from 'svelte/transition';
-    import type { Character, Tool } from '../../../../interfaces/Character';
+    import type { Character5E, Tool } from '../../../../interfaces/5E/Character5E';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
     import ABILITY_TAGS from '../../../../enum/AbilityTags';
     import Icon from '@iconify/svelte';
+    import { calc5EModifier } from '../../../../util/util';
 
     export let tool: Tool;
-    export let character: Character;
+    export let character: Character5E;
     let isOpen: boolean = false;
 
     const deleteTool = () => {
@@ -19,7 +20,7 @@
     // arguments are here only because of reactivity
     const getToolFormula = (tool_ability: string = tool.ability, tool_proficiency: number = tool.proficiency, char_prof_bonus: string = character.prof_bonus) => {
         return $formatModifier(
-            (tool_ability !== '---' ? ~~$getASModifier(tool_ability) : 0) + (Math.pow(2, tool_proficiency) * 0.5 * ~~char_prof_bonus)
+            (tool_ability !== '---' ? calc5EModifier(character.ability_scores[tool_ability]?.value) : 0) + (Math.pow(2, tool_proficiency) * 0.5 * ~~char_prof_bonus)
         );
     }
 

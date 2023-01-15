@@ -1,12 +1,12 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-    import type { Character, Resource } from "../../../../interfaces/Character";
+    import type { Character5E, Resource } from "../../../../interfaces/5E/Character5E";
     import { modifyCharacter } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
 
     export let resource: Partial<Resource>;
-    export let character: Character = undefined;
+    export let character: Character5E = undefined;
     export let deleteFce: (resource: Partial<Resource>) => void;
 
     let isFlipped: boolean = false;

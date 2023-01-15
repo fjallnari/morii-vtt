@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fileReader, validateCharacter, validateVTTESCharacter } from "../../main";
     import { CharacterVTTESConverter } from "../../util/CharacterVTTESConverter";
-    import type { CharacterVTTES } from "../../interfaces/CharacterVTTES";
+    import type { CharacterVTTES } from "../../interfaces/5E/Character5EVTTES";
     import SimpleButton from "../SimpleButton.svelte";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;

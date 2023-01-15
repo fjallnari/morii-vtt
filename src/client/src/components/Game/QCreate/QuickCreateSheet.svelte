@@ -8,18 +8,18 @@
     import StepDetailBackground from "./StepDetailBackground.svelte";
     import StepDetailSummary from "./StepDetailSummary.svelte";
     import { nanoid } from "nanoid/non-secure";
-    import type { Character, Item } from '../../../interfaces/Character';
-    import type QuickCreateCharacterParts from '../../../interfaces/QuickCreateCharacterParts';
-    import type QuickCreateData from '../../../interfaces/QuickCreateData';
+    import type { Character5E, Item } from '../../../interfaces/5E/Character5E';
     import SimpleButton from '../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
     import SimpleProgressCircle from '../../SimpleProgressCircle.svelte';
+    import type QuickCreateCharacterParts from '../../../interfaces/5E/QuickCreateCharacterParts';
+    import type QuickCreateData from '../../../interfaces/5E/QuickCreateData';
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     
     let open: boolean = false;
     let selectedStepIndex: number = 0;
-    let characterTemplate: Partial<Character> = {};
+    let characterTemplate: Partial<Character5E> = {};
     let characterParts: Partial<QuickCreateCharacterParts> = {};
 
     let creationSteps = [

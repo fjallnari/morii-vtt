@@ -1,13 +1,13 @@
 <script lang="ts">
-    import type { Character } from "../../../interfaces/Character";
+    import type { Character5E } from "../../../interfaces/5E/Character5E";
     import type GameData from "../../../interfaces/GameData";
     import type MessageData from "../../../interfaces/MessageData";
     import { socket } from "../../../stores";
-    import { getASModifier } from "../../../util/util";
+    import { calc5EModifier } from "../../../util/util";
     import RowBoxWithLabel from "../../RowBoxWithLabel.svelte";
     import Initiative5E from "./Initiative5E.svelte";
 
-    export let gameData: GameData;
+    export let gameData: Omit<GameData, 'characters'> & { characters: Character5E[] };
 
     $socket.on('chat-message', (messageData: MessageData) => {
         if(messageData.skillCheckInfo?.skillName === 'initiative') {
@@ -28,8 +28,8 @@
         }        
     });
 
-    const getPassivePerception = (character: Character) => {
-        return 10 + getASModifier(character.ability_scores, 'WIS') + (character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception').proficiency * ~~character.prof_bonus);
+    const getPassivePerception = (character: Character5E) => {
+        return 10 + calc5EModifier(character.ability_scores['WIS']?.value) + (character.ability_scores['WIS'].skills.find(skill => skill.name === 'perception').proficiency * ~~character.prof_bonus);
     }
 </script>
 

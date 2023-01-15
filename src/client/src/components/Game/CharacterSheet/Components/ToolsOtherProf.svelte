@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Character, OtherProf, Tool } from "../../../../interfaces/Character";
+    import type { Character5E, OtherProf, Tool } from "../../../../interfaces/5E/Character5E";
     import { modifyCharacter } from '../../../../stores';
     import OtherProfDetail from "./OtherProfDetail.svelte";
     import { nanoid } from 'nanoid/non-secure';
@@ -9,7 +9,7 @@
     import { tooltip } from "@svelte-plugins/tooltips";
     import { capitalize } from "../../../../util/util";
 
-    export let character: Character;
+    export let character: Character5E;
     let currentFilter = 0;
 
     const addNewProf = () => {

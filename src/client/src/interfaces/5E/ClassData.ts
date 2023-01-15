@@ -1,4 +1,4 @@
-import type { Attack, Spell } from "./Character"
+import type { Attack, Spell } from "./Character5E"
 
 type LevelsRecord = Record<number, string>;
 

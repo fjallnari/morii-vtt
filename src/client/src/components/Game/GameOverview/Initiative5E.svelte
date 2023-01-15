@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type InitiativeData from "../../../interfaces/InitiativeData";
+    import type InitiativeData from "../../../interfaces/5E/InitiativeData";
     import { nanoid } from "nanoid/non-secure";
     import { dndzone, SOURCES, TRIGGERS	 } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';

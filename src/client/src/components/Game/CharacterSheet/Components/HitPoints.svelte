@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { Character } from "../../../../interfaces/Character";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
     import { modifyCharacter } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import HpBar from "./HpBar.svelte";
 
-    export let character: Character;
+    export let character: Character5E;
     
     const correctHP = () => {
         character.hp_current = ~~character.hp_current > ~~character.hp_max ? character.hp_max : character.hp_current;

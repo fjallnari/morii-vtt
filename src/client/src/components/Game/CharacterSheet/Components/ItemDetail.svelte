@@ -1,7 +1,7 @@
 <script lang="ts">
     import { addNewResource, createNewAttack, modifyCharacter } from '../../../../stores';
     import { slide, fade } from 'svelte/transition';
-    import type { Character, Item } from '../../../../interfaces/Character';
+    import type { Character5E, Item } from '../../../../interfaces/5E/Character5E';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
@@ -9,7 +9,7 @@
     import CUSTOM_ICONS from '../../../../enum/SVGCustomIcons';
 
     export let item: Item;
-    export let character: Character;
+    export let character: Character5E;
     let isOpen = false;
 
     const deleteItem = () => {

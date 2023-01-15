@@ -1,7 +1,5 @@
 <script lang="ts">
-    import type RaceData from "../../../interfaces/RaceData";
-    import type QuickCreateData from "../../../interfaces/QuickCreateData";
-    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
+    import type RaceData from "../../../interfaces/5E/RaceData";
     import BoxWithInfo from '../../BoxWithInfo.svelte';
     import RowBoxWithLabel from '../../RowBoxWithLabel.svelte';
     import InPlaceEdit from '../../InPlaceEdit.svelte';
@@ -12,6 +10,8 @@
     import SKILLS from '../../../enum/Skills';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
     import SimpleSegmentChoice from "../../SimpleSegmentChoice.svelte";
+    import type QuickCreateCharacterParts from "../../../interfaces/5E/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/5E/QuickCreateData";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

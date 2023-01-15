@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { Character, Resource } from "../../../../interfaces/Character";
+    import type { Character5E, Resource } from "../../../../interfaces/5E/Character5E";
     import { addNewResource, modifyCharacter } from '../../../../stores';
     import { nanoid } from "nanoid/non-secure";
     import ResourceDetail from "./ResourceDetail.svelte";
     import Icon from "@iconify/svelte";
 
-    export let character: Character;
+    export let character: Character5E;
 
     addNewResource.set((customName: string = '', customAmount: string = '', itemID: string = '') => {
         if (character.resources.length === 4) {

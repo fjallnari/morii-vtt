@@ -1,6 +1,6 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
-    import type ClassData from '../../../interfaces/ClassData';
+    import type ClassData from '../../../interfaces/5E/ClassData';
 
     export let selectedClass: ClassData;
 

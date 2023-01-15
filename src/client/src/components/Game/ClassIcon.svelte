@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getClassIcon } from "../../util/util";
 
-    export let characterClasses: string | undefined;
+    export let characterClasses: string | undefined = undefined;
 
 </script>
 

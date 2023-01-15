@@ -1,9 +1,9 @@
 <script lang="ts">
     import { modifyCharacter } from "../../../../stores";
-    import type { Character } from "../../../../interfaces/Character";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
     import Icon from "@iconify/svelte";
 
-    export let character: Character;
+    export let character: Character5E;
 
 </script>
 

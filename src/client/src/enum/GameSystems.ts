@@ -4,11 +4,11 @@ import QuickCreateSheet from "../components/Game/QCreate/QuickCreateSheet.svelte
 import CopyExistingSheet from "../components/Game/CopyExistingSheet.svelte";
 import ImportJsonSheet from "../components/Game/ImportJsonSheet.svelte";
 import InnerOverview5E from "../components/Game/GameOverview/InnerOverview5E.svelte";
-import SpecificSettings5E from "../components/Game/CharacterSheet/SpecificSettings5E.svelte";
 import CharacterSheetSettings from "../components/Game/CharacterSheet/CharacterSheetSettings.svelte";
-import CharacterSheetCore5E from "../components/Game/CharacterSheet/CharacterSheetCore5E.svelte";
-import CharacterSheetBio5E from "../components/Game/CharacterSheet/CharacterSheetBio5E.svelte";
-import CharacterSheetSpells5E from "../components/Game/CharacterSheet/CharacterSheetSpells5E.svelte";
+import CharacterSheetCore5E from "../components/Game/CharacterSheet/5E/CharacterSheetCore5E.svelte";
+import CharacterSheetBio5E from "../components/Game/CharacterSheet/5E/CharacterSheetBio5E.svelte";
+import CharacterSheetSpells5E from "../components/Game/CharacterSheet/5E/CharacterSheetSpells5E.svelte";
+import SpecificSettings5E from "../components/Game/CharacterSheet/5E/SpecificSettings5E.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {

@@ -11,7 +11,7 @@
     import BoxWithChips from '../../BoxWithChips.svelte';
     import SKILLS from '../../../enum/Skills';
     import Svelecte from 'svelecte/src/Svelecte.svelte';
-    import SegmentedChoice from "../../SegmentedChoice.svelte";
+    import SimpleSegmentChoice from "../../SimpleSegmentChoice.svelte";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -93,7 +93,7 @@
         <BoxWithChips bind:chipsArray={selectedRace.tools_prof} label='Tool Proficiencies' let:index={index} gridArea='tools-prof' blankChip={{ name: '' }}>
             <div class="chip">
                 {#if selectedRace.tools_prof[index].options}
-                    <SegmentedChoice bind:options={selectedRace.tools_prof[index].options} bind:final={selectedRace.tools_prof[index].name}></SegmentedChoice>
+                    <SimpleSegmentChoice bind:options={selectedRace.tools_prof[index].options} bind:final={selectedRace.tools_prof[index].name}></SimpleSegmentChoice>
                 {:else}
                     <InPlaceEdit bind:value={selectedRace.tools_prof[index].name} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
                 {/if}

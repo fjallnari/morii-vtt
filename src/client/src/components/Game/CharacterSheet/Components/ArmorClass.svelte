@@ -2,6 +2,8 @@
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
 
     export let value: string;
+    export let tooltip: string = undefined;
+    
 </script>
 
 
@@ -11,7 +13,7 @@
         boxLabel="Armor Class"
         editWidth="2em"
         editHeight="2em"
-        tooltip="Base unarmored AC is 10 + DEX modifier. Can be modified by wearing armor, by certain class features or otherwise.">
+        tooltip={tooltip}>
     </InPlaceEditBox>
 </div>
 

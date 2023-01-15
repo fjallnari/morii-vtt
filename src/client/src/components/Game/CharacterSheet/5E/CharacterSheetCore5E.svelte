@@ -1,21 +1,21 @@
 <script lang="ts">
-    import type { Character } from '../../../interfaces/Character';
-    import InPlaceEditBox from '../../InPlaceEditBox.svelte';
-    import AbilityScores from './Components/AbilityScores.svelte';
-    import ArmorClass from './Components/ArmorClass.svelte';
-    import Attacks from './Components/Attacks.svelte';
-    import CharacterSheetMenu from './Components/CharSheetMenu.svelte';
-    import DeathSaves from './Components/DeathSaves.svelte';
-    import Exhaustion from './Components/Exhaustion.svelte';
-    import Features from './Components/Features.svelte';
-    import HitDice from './Components/HitDice.svelte';
-    import HitPoints from './Components/HitPoints.svelte';
-    import ProfBonusInspiration from './Components/ProfBonusInspiration.svelte';
-    import Speed from './Components/Speed.svelte';
-    import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
-    import Inventory from './Components/Inventory.svelte';
-    import Resources from './Components/Resources.svelte';
-    import XP_LEVELS from '../../../enum/XpPerLevel';
+    import XP_LEVELS from "../../../../enum/XpPerLevel";
+    import type { Character } from "../../../../interfaces/Character";
+    import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
+    import AbilityScores from "../Components/AbilityScores.svelte";
+    import ArmorClass from "../Components/ArmorClass.svelte";
+    import Attacks from "../Components/Attacks.svelte";
+    import CharSheetMenu from "../Components/CharSheetMenu.svelte";
+    import DeathSaves from "../Components/DeathSaves.svelte";
+    import Exhaustion from "../Components/Exhaustion.svelte";
+    import Features from "../Components/Features.svelte";
+    import HitDice from "../Components/HitDice.svelte";
+    import HitPoints from "../Components/HitPoints.svelte";
+    import Inventory from "../Components/Inventory.svelte";
+    import ProfBonusInspiration from "../Components/ProfBonusInspiration.svelte";
+    import Resources from "../Components/Resources.svelte";
+    import Speed from "../Components/Speed.svelte";
+    import ToolsOtherProf from "../Components/ToolsOtherProf.svelte";
 
     export let character: Character;
 
@@ -51,7 +51,10 @@
 
     <div class="character-stats">
         <div class="armor-class">
-            <ArmorClass bind:value={character.armor_class}></ArmorClass>
+            <ArmorClass 
+                bind:value={character.armor_class} 
+                tooltip="Base unarmored AC is 10 + DEX modifier. Can be modified by wearing armor, by certain class features or otherwise.">
+            </ArmorClass>
         </div>
 
         <div class="speed">
@@ -95,7 +98,7 @@
         <Features bind:character={character}></Features>
     </div>
 
-    <CharacterSheetMenu></CharacterSheetMenu>
+    <CharSheetMenu></CharSheetMenu>
 </tab-container>
 
 

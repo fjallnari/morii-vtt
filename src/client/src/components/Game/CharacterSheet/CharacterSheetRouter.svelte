@@ -4,7 +4,6 @@
     import { params } from "svelte-spa-router";
     import axios from "axios";
     import GAME_SYSTEMS from "../../../enum/GameSystems";
-    import CharacterSheetSettings from "./CharacterSheetSettings.svelte";
     
     export let character: Character;
 

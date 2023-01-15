@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { Character } from "../../../interfaces/Character";
-    import BioTextareaBox from "../../BioTextareaBox.svelte";
-    import InPlaceEditBox from "../../InPlaceEditBox.svelte";
-    import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
+    import type { Character } from "../../../../interfaces/Character";
+    import BioTextareaBox from "../../../BioTextareaBox.svelte";
+    import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
+    import CharacterSheetMenu from "../Components/CharSheetMenu.svelte";
 
     export let character: Character;
 

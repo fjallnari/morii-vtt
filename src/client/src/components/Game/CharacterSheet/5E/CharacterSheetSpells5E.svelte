@@ -1,12 +1,12 @@
 <script lang="ts">
-    import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
+    import CharacterSheetMenu from "../Components/CharSheetMenu.svelte";
     import { nanoid } from 'nanoid/non-secure'
-    import type { Character, Spell } from "../../../interfaces/Character";
-    import Spellcasting from "./Components/Spellcasting.svelte";
-    import InPlaceEditBox from "../../InPlaceEditBox.svelte";
-    import BoxWithList from "../../BoxWithList.svelte";
-    import SpellDetail from "./Components/SpellDetail.svelte";
-    import { modifyCharacter } from "../../../stores";
+    import type { Character, Spell } from "../../../../interfaces/Character";
+    import Spellcasting from "../Components/Spellcasting.svelte";
+    import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
+    import BoxWithList from "../../../BoxWithList.svelte";
+    import SpellDetail from "../Components/SpellDetail.svelte";
+    import { modifyCharacter } from "../../../../stores";
 
     export let character: Character;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { modifyCharacter } from "../../../stores";
-    import type { Character } from "../../../interfaces/Character";
+    import { modifyCharacter } from "../../../../stores";
+    import type { Character } from "../../../../interfaces/Character";
     import Icon from "@iconify/svelte";
 
     export let character: Character;

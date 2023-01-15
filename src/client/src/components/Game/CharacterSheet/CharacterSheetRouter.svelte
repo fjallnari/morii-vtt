@@ -1,13 +1,10 @@
 <script lang="ts">
     import { formatModifier, getASModifier, modifyCharacter, ownerSocketID, selectedCharacter, selectedCharacterTab, sendSkillCheck, socket, user, userIDPairs } from "../../../stores";
-    import CharacterSheetBio from "./CharacterSheetBio.svelte";
-    import CharacterSheetCore from "./CharacterSheetCore.svelte";
-    import CharacterSheetSettings from "./CharacterSheetSettings.svelte";
-    import CharacterSheetSpells from "./CharacterSheetSpells.svelte";
     import type { Character } from "../../../interfaces/Character";
     import { params } from "svelte-spa-router";
     import axios from "axios";
     import GAME_SYSTEMS from "../../../enum/GameSystems";
+    import CharacterSheetSettings from "./CharacterSheetSettings.svelte";
     
     export let character: Character;
 
@@ -52,8 +49,8 @@
 
     
     selectedCharacterTab.set(0);
-    const characterSheetTabs = GAME_SYSTEMS[$user.gameData.system].characterSheetTabs;
+    const characterSheetTabs = GAME_SYSTEMS[$user?.gameData?.system].characterSheetTabs;
 
 </script>
 
-<svelte:component this={characterSheetTabs[$selectedCharacterTab]} bind:character={character}></svelte:component>
+<svelte:component this={characterSheetTabs[$selectedCharacterTab].component} bind:character={character}></svelte:component>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import CharacterSheetMenu from "./Components/CharSheetMenu.svelte";
-    import { modifyCharacter, selectedCharacter, user, socket, ownerSocketID, userIDPairs } from "../../../stores";
+    import { selectedCharacter, user, socket, ownerSocketID, userIDPairs } from "../../../stores";
     import Dialog, { Content, Actions } from '@smui/dialog';
     import { params, replace } from "svelte-spa-router";
     import type { Character } from "../../../interfaces/Character";
@@ -8,7 +8,8 @@
     import SimpleButton from "../../SimpleButton.svelte";
     import ANIMALS from "../../../enum/SVGAnimals";
     import axios from "axios";
-    import Icon from "@iconify/svelte";
+    import ClassIcon from "../ClassIcon.svelte";
+    import GAME_SYSTEMS from "../../../enum/GameSystems";
 
     export let character: Character;
 
@@ -57,7 +58,11 @@
 <tab-container>
     <div class="settings">
         <div class="settings-tab">
-            <h4>General</h4>
+            <h4>Character settings</h4>
+            <line-div class="class-decal">
+                <ClassIcon characterClasses={character.classes}></ClassIcon>
+                <p>{character.name && character.name !== '' ? character.name : '???'}</p>
+            </line-div>
             <line-div>
                 <div>Created by: </div>
                 <div class="player-tag">
@@ -67,22 +72,9 @@
                     <div>{playerObj.username}</div>
                 </div>
             </line-div>
-
-            <line-div>
-                <div>Show Encumbrance</div>
-                <sendable on:click={() => { character.settings.use_encumbrance = !character.settings.use_encumbrance; $modifyCharacter(); }} on:keyup={() => {}}>
-                    <Icon class="big-icon" icon="mdi:{character.settings.use_encumbrance ? 'checkbox-marked': 'checkbox-blank-outline'}" />
-                </sendable>
-            </line-div>
-            <line-div>
-                <div>Show Spell Components</div>
-                <sendable on:click={() => { character.settings.use_spell_components = !character.settings.use_spell_components; $modifyCharacter(); }} on:keyup={() => {}}>
-                    <Icon class="big-icon" icon="mdi:{character.settings.use_spell_components ? 'checkbox-marked': 'checkbox-blank-outline'}" />
-                </sendable>
-            </line-div>
+            <svelte:component this={GAME_SYSTEMS[$user?.gameData?.system].specificSettings} character={character}/>
         </div>
         <div class="settings-tab">
-            <h4>CRUD Settings</h4>
             <SimpleButton value='Export sheet to JSON' icon="mdi:code-json" onClickFn={exportToJSON}></SimpleButton>
             <SimpleButton value='Delete Character' 
                 icon="material-symbols:delete-sweep" 
@@ -141,19 +133,6 @@
         gap: 1em;
     }
 
-    line-div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 0.5em;
-    }
-
-    line-div > div {
-        font-family: Athiti;
-        text-transform: uppercase;
-        font-size: 1.2em;
-    }
-
     h4 {
         text-transform: uppercase;
         font-size: 2em;
@@ -161,9 +140,34 @@
         font-family: Montserrat;
     }
 
+    :global(.settings-tab line-div) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    :global(.settings-tab line-div > div) {
+        font-family: Athiti;
+        text-transform: uppercase;
+        font-size: 1.2em;
+    }
+
+    .class-decal {
+        background-color: var(--clr-box-bg-normal);
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        padding: 0em 1em 0em 0em;
+    }
+
+    .class-decal p {
+        font-size: 1.4em;
+    }
+
     :global(.settings-tab simple-button) {
         font-size: 1.25em;
-        padding: 0.5em 0em;
+        padding: 0.5em;
+        width: fit-content;
     }
 
     :global(.mdc-dialog__actions) {

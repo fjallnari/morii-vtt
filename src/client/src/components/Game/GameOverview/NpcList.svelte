@@ -1,8 +1,8 @@
 <script lang="ts">
     import type GameData from '../../../interfaces/GameData';
     import { selectedCharacter } from '../../../stores';
-    import { getClassIcon } from '../../../util/util';
     import BoxWithList from '../../BoxWithList.svelte';
+    import ClassIcon from '../ClassIcon.svelte';
 
     export let gameData: GameData;
     export let createMenuEnabled: boolean;
@@ -12,12 +12,7 @@
     <div class="npc-list" slot='list'>
         {#each gameData.npcs as npc}
             <box class="npc-main-container" on:click={() => selectedCharacter.set(npc)} on:keyup={() => {}}>
-                <class-icon>
-                    <img id="main-class" src="../static/class-icons/{getClassIcon(npc.classes)[0]}.svg" alt="class-icon">
-                    {#if getClassIcon(npc.classes).length > 2}
-                        <img id="multi-class" src="../static/class-icons/{getClassIcon(npc.classes)[2]}.svg" alt="class-icon">
-                    {/if}
-                </class-icon>
+                <ClassIcon characterClasses={npc.classes}></ClassIcon>
                 <div class="npc-name">
                     {npc.name ? npc.name : '---'}
                 </div>
@@ -46,26 +41,6 @@
         grid-template-areas: 
             "npc-class-icon npc-name";
         cursor: pointer;
-    }
-
-    class-icon{ grid-area: npc-class-icon;
-        position: relative;
-        border-radius: 25%;
-        width: 5em;
-        height: 5em;  
-    }
-
-    #main-class {
-        width: 100%;
-        height: 100%;
-    }
-
-    #multi-class {
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-        width: 3em;
-        height: 3em;
     }
 
     .npc-name { grid-area: npc-name;

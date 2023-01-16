@@ -70,20 +70,20 @@ const GAME_SYSTEMS = {
             OWNER_STANDARD_OVERVIEW
         ]
     },
-    // 'Cairn': {
-    //     characterSheetTabs: [
-    //         {
-    //             color: '#A7C284',
-    //             icon: 'mdi:home',
-    //             component:  CharacterSheetCoreCairn
-    //         },
-    //         SETTINGS_TAB
-    //     ],
-    //     creationOptions: [],
-    //     gameTabs: [
-    //         OWNER_STANDARD_OVERVIEW
-    //     ]
-    // }
+    'Cairn': {
+        characterSheetTabs: [
+            {
+                color: '#A7C284',
+                icon: 'mdi:home',
+                component:  CharacterSheetCoreCairn
+            },
+            SETTINGS_TAB
+        ],
+        creationOptions: [],
+        gameTabs: [
+            OWNER_STANDARD_OVERVIEW
+        ]
+    }
 }
 
 export default GAME_SYSTEMS;

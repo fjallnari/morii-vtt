@@ -4,13 +4,34 @@ import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mon
 import { MONSTERS } from "../../../enum/srd/MONSTERS";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
-import { MonsterData } from "../../../interfaces/srd/MonsterData";
 import UserDB from "../../../interfaces/UserDB";
 import logger from "../../../logger";
 import { simplifyPlayerInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
 
 export default class GameController extends RouteController {
+
+    private async get5ESpecificData(campaignInfo: Campaign) {
+        // get all monsters 
+        const monstersObj = await getIdsFromCollection(campaignInfo.monsters, 'monsters');
+        const cleanMonsters = monstersObj?.map( monster => Object.assign(monster, { id: monster._id.toString() }));
+
+        return {
+            monsters: cleanMonsters ?? [],
+            monsters_SRD: MONSTERS.map(monster => { 
+                return { 
+                    id: monster.id, 
+                    name: monster.name, 
+                    cr: monster.challenge.split(' (')[0], 
+                    type: monster.meta.split(' ')[1].replace(',', '') 
+                }
+            }), 
+            initiative: { 
+                topID: '', 
+                order: [] 
+            }
+        }
+    }
 
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
@@ -31,11 +52,7 @@ export default class GameController extends RouteController {
         const npcsObj = <Character[]> await getIdsFromCollection(campaignInfo.npcs, 'characters');
         const cleanNpcs = npcsObj.map(npc => Object.assign(npc, {_id: npc._id.toString(), playerID: npc.playerID.toString()}));
 
-        // get all monsters 
-        const monstersObj = await getIdsFromCollection(campaignInfo.monsters, 'monsters');
-        const cleanMonsters = monstersObj?.map( monster => Object.assign(monster, { id: monster._id.toString() }));
-
-        const initiativeTemplate = { topID: '', order: [] };
+        const specific5EData = campaignInfo.system === 'D&D 5E' ? await this.get5ESpecificData(campaignInfo) : {};
 
         return {
             id: campaignInfo._id,
@@ -45,16 +62,7 @@ export default class GameController extends RouteController {
             characters: cleanCharacters,
             players: simpleUsers,
             npcs: cleanNpcs,
-            monsters: cleanMonsters ?? [],
-            monsters_SRD: MONSTERS.map(monster => { 
-                return { 
-                    id: monster.id, 
-                    name: monster.name, 
-                    cr: monster.challenge.split(' (')[0], 
-                    type: monster.meta.split(' ')[1].replace(',', '') 
-                }
-            }), 
-            initiative: initiativeTemplate
+            ... specific5EData
         }
 
     }

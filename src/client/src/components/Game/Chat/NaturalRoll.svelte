@@ -3,8 +3,13 @@
 
     export let naturalRoll: NaturalRoll;
     export let dieType: number;
+
+    enum RESULT_COLOR {
+        SUCCESS = '#A7C284',
+        FAILURE = '#EFA48B'
+    }
     
-    $: critColor = naturalRoll.value === dieType ? '#A7C284' : naturalRoll.value === 1 ? '#EFA48B' : 'inherit';
+    $: critColor = naturalRoll.value === dieType ? RESULT_COLOR.SUCCESS : naturalRoll.value === 1 ? RESULT_COLOR.FAILURE : 'inherit';
 
 </script>
 

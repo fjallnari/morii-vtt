@@ -8,11 +8,15 @@
     export let boxColor: string = 'normal';
     export let valueBoxStyle = 'default';
     export let labelClass: string = 'default-label';
+    export let clickable: boolean = false;
+    export let onClickFn = () => {};
 
 </script>
 
 <row-box-with-label>
-    <box class="row-box-value{valueBoxStyle === 'ac' ? ' ac-value': ''}" style="width:{valueWidth}; height: {valueHeight}; font-size: {valueFontSize}; background-color: var(--clr-box-bg-{boxColor});">
+    <box class="row-box-value{valueBoxStyle === 'ac' ? ' ac-value': ''}" style="width:{valueWidth}; height: {valueHeight}; font-size: {valueFontSize}; background-color: var(--clr-box-bg-{boxColor}); cursor: {clickable ? 'pointer': ''}"
+        on:click={() => onClickFn()} on:keyup={() => {}}
+    >
         <slot></slot>
     </box>
     <box class="row-box-label {labelClass}" style="font-size: {labelFontSize}; background-color: var(--clr-box-bg-{boxColor});">

@@ -3,7 +3,7 @@
     import type { Character5E } from "../../../../interfaces/5E/Character5E";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import AbilityScores from "../Components/AbilityScores.svelte";
-    import ArmorClass from "../Components/ArmorClass.svelte";
+    import Armor from "../Components/Armor.svelte";
     import Attacks from "../Components/Attacks.svelte";
     import CharSheetMenu from "../Components/CharSheetMenu.svelte";
     import DeathSaves from "../Components/DeathSaves.svelte";
@@ -51,10 +51,11 @@
 
     <div class="character-stats">
         <div class="armor-class">
-            <ArmorClass 
-                bind:value={character.armor_class} 
+            <Armor 
+                bind:value={character.armor_class}
+                label={"Armor Class"}
                 tooltip="Base unarmored AC is 10 + DEX modifier. Can be modified by wearing armor, by certain class features or otherwise.">
-            </ArmorClass>
+            </Armor>
         </div>
 
         <div class="speed">
@@ -181,23 +182,6 @@
     }
 
     .armor-class { grid-area: armor-class; }
-
-    .armor-class :global(box) {
-        width: 5em;
-        height: 5em;
-        border: 0.5em solid transparent;
-        border-radius: 50% 50% 50% 50% / 12% 12% 70% 70%;
-    }
-
-    .armor-class :global(box .box-main-text) {
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-
-    .armor-class :global(box .box-label) {
-        width: 5em;
-        margin-bottom: -0.25em;
-    }
 
     .speed { grid-area: speed; 
         display: flex;

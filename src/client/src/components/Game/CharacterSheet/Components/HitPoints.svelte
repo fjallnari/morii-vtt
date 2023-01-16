@@ -24,7 +24,7 @@
     <InPlaceEditBox bind:value={character.hp_temp} boxLabel="Temp" inlineStyle="margin-bottom: 0.5em;" editWidth="2em" editHeight="2em"></InPlaceEditBox>
 </div>
 <box class="hp-main-box">
-    <HpBar character={character}></HpBar>
+    <HpBar currentHP={~~character.hp_current} maxHP={~~character.hp_max} tempHP={~~character.hp_temp}></HpBar>
     <div class="current-hp-text">
         <InPlaceEdit bind:value={character.hp_current} editWidth="2em" editHeight="2em" on:submit={() => { correctHP(); $modifyCharacter(); }}/>
     </div>

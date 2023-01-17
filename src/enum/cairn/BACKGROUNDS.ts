@@ -1,0 +1,1 @@
+export const BACKGROUNDS = [ 'Alchemist', 'Blacksmith', 'Burglar', 'Butcher', 'Carpenter', 'Cleric', 'Gambler', 'Gravedigger', 'Herbalist', 'Hunter', 'Magician', 'Mercenary', 'Merchant', 'Miner', 'Outlaw', 'Performer', 'Pickpocket', 'Smuggler', 'Servant', 'Ranger' ];

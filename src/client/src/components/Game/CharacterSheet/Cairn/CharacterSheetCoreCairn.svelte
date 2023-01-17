@@ -43,7 +43,11 @@
 </script>
 
 <tab-container class="cairn-character">
-    <box class="character-basic-info"></box>
+    <div class="character-basic-info">
+        <InPlaceEditBox bind:value={character.name} boxLabel="Character Name" inlineStyle="flex-grow: 4;" editWidth="10em" valueFontSize="1.5em" />
+        <InPlaceEditBox bind:value={character.background} boxLabel="Background" inlineStyle="flex-grow: 3;" editWidth="6em" valueFontSize="1.5em" />
+        <InPlaceEditBox bind:value={character.age} boxLabel="Age" inlineStyle="flex-grow: 2;" editWidth="5em" valueFontSize="1.5em" />
+    </div>
 
     <div class="ability-scores">
         {#each Object.keys(character.ability_scores) as AS}
@@ -58,10 +62,21 @@
         {/each}
     </div>
 
-    <box class="traits"></box>
-    <box class="inventory"></box>
+    <!-- <div class="traits">
+        {#each Object.keys(character.traits) as trait}
+            <InPlaceEditBox 
+                bind:value={character.traits[trait]} 
+                boxLabel={trait} 
+                editWidth="10rem"
+                editHeight="2rem"
+                valueFontSize="1.5em"
+                inlineStyle="width: 33%; height: auto;"
+            />
+        {/each}
+    </div> -->
 
-    <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes; margin: 0.75em 0.75em 0.75em 0em;" label="Notes" />
+    <BioTextareaBox bind:charAttribute={character.appearance} inlineStyle="grid-area: traits; margin: 0.75em 0.75em 0em 0em;" label="Appearance" />
+    <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes; margin: 0em 0.75em 0.75em 0em;" label="Notes" />
 
     <div class="rest">
         <SimpleButton value='Quick rest' 
@@ -71,8 +86,7 @@
         />
         <SimpleButton value='Full night' 
             icon="mdi:bed" 
-            iconWidth='1.25em' 
-            type="primary"
+            iconWidth='1.25em'
             onClickFn={() => characterSleep()}
         />
     </div>
@@ -104,6 +118,9 @@
             <Icon icon="{character.deprived ? 'mdi:sleep': ''}" />
         </RowBoxWithLabel>
     </div>
+
+    <box class="inventory"></box>
+
     <CharSheetMenu></CharSheetMenu>
 </tab-container>
 
@@ -112,21 +129,21 @@
     tab-container {
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1.5fr 1fr 0.5fr 1fr 1fr 1fr; 
-        grid-template-rows: 1.5fr 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr; 
+        grid-template-rows: 1fr 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr; 
         gap: 0.5em;
         grid-template-areas: 
-            "character-basic-info character-basic-info character-basic-info character-basic-info character-basic-info character-basic-info notes notes notes"
-            "ability-scores ability-scores ability-scores hp deprived coins notes notes notes"
-            "ability-scores ability-scores ability-scores hp armor coins notes notes notes"
+            "character-basic-info character-basic-info character-basic-info character-basic-info character-basic-info character-basic-info traits traits traits"
+            "ability-scores ability-scores ability-scores hp deprived coins traits traits traits"
+            "ability-scores ability-scores ability-scores hp armor coins traits traits traits"
             "ability-scores ability-scores ability-scores rest rest coins notes notes notes"
             "ability-scores ability-scores ability-scores inventory inventory inventory notes notes notes"
             "ability-scores ability-scores ability-scores inventory inventory inventory notes notes notes"
-            "traits traits traits inventory inventory inventory notes notes notes"
-            "traits traits traits inventory inventory inventory notes notes notes"
-            "traits traits traits inventory inventory inventory notes notes notes"
-            "traits traits traits inventory inventory inventory notes notes notes"
-            "traits traits traits inventory inventory inventory notes notes notes"
-            "traits traits traits char-sheet-menu char-sheet-menu char-sheet-menu notes notes notes"; 
+            ". . . inventory inventory inventory notes notes notes"
+            ". . . inventory inventory inventory notes notes notes"
+            ". . . inventory inventory inventory notes notes notes"
+            ". . . inventory inventory inventory notes notes notes"
+            ". . . inventory inventory inventory notes notes notes"
+            ". . . char-sheet-menu char-sheet-menu char-sheet-menu notes notes notes"; 
     }
 
     :global(.cairn-character .box-label) {
@@ -135,6 +152,9 @@
 
     .character-basic-info { grid-area: character-basic-info; 
         margin: 0.75em 0em 0em 0.75em;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5em;
     }
 
     .ability-scores { grid-area: ability-scores; 
@@ -170,6 +190,9 @@
 
     .traits { grid-area: traits; 
         margin: 0em 0em 0.75em 0.75em;
+        display: flex;
+        flex-flow: wrap;
+        gap: 0.5em;
     }
 
     .inventory { grid-area: inventory; 

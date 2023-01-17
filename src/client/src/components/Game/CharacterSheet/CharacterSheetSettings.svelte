@@ -72,7 +72,7 @@
                     <div>{playerObj.username}</div>
                 </div>
             </line-div>
-            <svelte:component this={GAME_SYSTEMS[$user?.gameData?.system].specificSettings} character={character}/>
+            <svelte:component this={GAME_SYSTEMS[$user?.gameData?.system].specificSettings} bind:character={character}/>
         </div>
         <div class="settings-tab">
             <SimpleButton value='Export sheet to JSON' icon="mdi:code-json" onClickFn={exportToJSON}></SimpleButton>
@@ -122,7 +122,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        gap: 2em;
+        gap: 1em;
     }
 
     .settings > div {

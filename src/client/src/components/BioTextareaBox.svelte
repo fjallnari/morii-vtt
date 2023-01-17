@@ -4,13 +4,14 @@
     export let charAttribute: string;
     export let styleClass: string = "";
     export let inlineStyle: string = "";
+    export let textFontSize: string = "1em";
     export let label: string = styleClass;
     export let socketModifyEnabled = true;
 
 </script>
 
 <box class="{styleClass} box-with-label" style={inlineStyle}>
-    <textarea class='{charAttribute ? '' : 'placeholder'}' on:change={() => socketModifyEnabled ? $modifyCharacter() : {}} bind:value={charAttribute}></textarea>
+    <textarea class='{charAttribute ? '' : 'placeholder'}' style={`font-size: ${textFontSize};`} on:change={() => socketModifyEnabled ? $modifyCharacter() : {}} bind:value={charAttribute}></textarea>
     <div class="box-justify-filler"></div>
     <div class="box-label">
         { label ? label : styleClass }

@@ -1,0 +1,3 @@
+export const NAMES_FEMALE = ['Agune', 'Beatrice', 'Breagan', 'Bronwyn', 'Cannora', 'Drelil', 'Elgile', 'Esme', 'Griya', 'Henaine', 'Lirann', 'Lirathil', 'Lisabeth', 'Moralil', 'Morgwen', 'Sybil', 'Theune', 'Wenain', 'Ygwal', 'Yslen']
+export const NAMES_MALE = ['Arwel', 'Bevan', 'Boroth', 'Borrid', 'Breagle', 'Breglor', 'Canhoreal', 'Emrys', 'Ethex', 'Gringle', 'Grinwit', 'Gruwid', 'Gruwth', 'Gwestin', 'Mannog', 'Melnax', 'Orthax', 'Triunein', 'Wenlan', 'Yirmeor']
+export const SURNAMES = ['Abernathy', 'Addercap', 'Burl', 'Candlewick', 'Cormick', 'Crumwaller', 'Dunswallow', 'Getri', 'Glass', 'Harkness', 'Harper', 'Loomer', 'Malksmilk', 'Smythe', 'Sunderman', 'Swinney', 'Thatcher', 'Tolmen', 'Weaver', 'Wolder']

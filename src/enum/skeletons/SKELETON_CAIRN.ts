@@ -15,6 +15,7 @@ export const SKELETON_CAIRN = {
         reputation: '',
         misfortunes: ''
     },
+    appearance: '',
 
     armor: '',
     hp: '',

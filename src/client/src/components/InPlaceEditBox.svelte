@@ -43,5 +43,8 @@
 </box>
 
 <style>
+    .box-with-label {
+        position: relative;
+    }
     
 </style>

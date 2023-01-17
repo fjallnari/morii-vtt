@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mongo";
+import { CAIRN_DATA } from "../../../enum/cairn/CAIRN_DATA";
 import { MONSTERS } from "../../../enum/srd/MONSTERS";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
@@ -9,7 +10,13 @@ import logger from "../../../logger";
 import { simplifyPlayerInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
 
-export default class GameController extends RouteController {
+export default class GetGameController extends RouteController {
+
+    private SYSTEM_SPECIFIC_DATA: Record<string, (campaignInfo: Campaign) => Promise<object>> = {
+        "D&D 5E": this.get5ESpecificData,
+        "Cairn": this.getCairnSpecificData
+    }
+
 
     private async get5ESpecificData(campaignInfo: Campaign) {
         // get all monsters 
@@ -33,6 +40,10 @@ export default class GameController extends RouteController {
         }
     }
 
+    private async getCairnSpecificData(_: Campaign) {
+        return { cairn: CAIRN_DATA };
+    }
+
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
         const campaignInfo = <Campaign> await campaignsCollection?.findOne({ _id: campaignID });
@@ -52,7 +63,7 @@ export default class GameController extends RouteController {
         const npcsObj = <Character[]> await getIdsFromCollection(campaignInfo.npcs, 'characters');
         const cleanNpcs = npcsObj.map(npc => Object.assign(npc, {_id: npc._id.toString(), playerID: npc.playerID.toString()}));
 
-        const specific5EData = campaignInfo.system === 'D&D 5E' ? await this.get5ESpecificData(campaignInfo) : {};
+        const specificSystemData = await this.SYSTEM_SPECIFIC_DATA[campaignInfo.system](campaignInfo);
 
         return {
             id: campaignInfo._id,
@@ -62,7 +73,7 @@ export default class GameController extends RouteController {
             characters: cleanCharacters,
             players: simpleUsers,
             npcs: cleanNpcs,
-            ... specific5EData
+            ... specificSystemData
         }
 
     }

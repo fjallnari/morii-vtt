@@ -10,6 +10,7 @@ import CharacterSheetBio5E from "../components/Game/CharacterSheet/5E/CharacterS
 import CharacterSheetSpells5E from "../components/Game/CharacterSheet/5E/CharacterSheetSpells5E.svelte";
 import SpecificSettings5E from "../components/Game/CharacterSheet/5E/SpecificSettings5E.svelte";
 import CharacterSheetCoreCairn from "../components/Game/CharacterSheet/Cairn/CharacterSheetCoreCairn.svelte";
+import SpecificSettingsCairn from "../components/Game/CharacterSheet/Cairn/SpecificSettingsCairn.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {
@@ -80,6 +81,7 @@ const GAME_SYSTEMS = {
             SETTINGS_TAB
         ],
         creationOptions: [],
+        specificSettings: SpecificSettingsCairn,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW
         ]

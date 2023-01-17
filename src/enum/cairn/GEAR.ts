@@ -1,0 +1,22 @@
+export const GEAR = [
+    'Air Bladder', 
+    'Antitoxin', 
+    'Cart (+4 slots, bulky)', 
+    'Chain (10ft)', 
+    'Dowsing Rod', 
+    'Fire Oil', 
+    'Grappling Hook', 
+    'Large Sack', 
+    'Large Trap', 
+    'Lockpicks', 
+    'Manacles', 
+    'Pick', 
+    'Pole (10ft)', 
+    'Pulley', 
+    'Repellent', 
+    'Rope (25ft)', 
+    'Spirit Ward', 
+    'Spyglass', 
+    'Tinderbox', 
+    'Wolfsbane'
+]

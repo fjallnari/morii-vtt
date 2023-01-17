@@ -30,6 +30,7 @@ export interface CharacterCairn extends CharacterGeneric {
     deprived: boolean,
 
     traits: CharacterTraitsCairn,
+    appearance: string,
     ability_scores: Record<string, AbilityScoreCairn>,
     coins: Record<string, string>,
     notes: string

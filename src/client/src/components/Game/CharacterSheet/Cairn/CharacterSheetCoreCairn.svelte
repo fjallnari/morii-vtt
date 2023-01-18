@@ -3,13 +3,16 @@
     import type { CharacterCairn } from "../../../../interfaces/Cairn/CharacterCairn";
     import { modifyCharacter } from "../../../../stores";
     import BioTextareaBox from "../../../BioTextareaBox.svelte";
+    import BoxWithList from "../../../BoxWithList.svelte";
     import BoxWithMax from "../../../BoxWithMax.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
+    import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
     import Armor from "../Components/Armor.svelte";
     import CharSheetMenu from "../Components/CharSheetMenu.svelte";
     import HpBox from "../Components/HpBox.svelte";
+    import ItemDetailCairn from "./ItemDetailCairn.svelte";
 
     export let character: CharacterCairn;
 
@@ -37,6 +40,10 @@
 
     const characterSleep = () => {
         // clear all fatigue
+        character.inventory = character.inventory.filter(item => item.type !== 'fatigue');
+    }
+
+    const addItem = () => {
 
     }
 
@@ -61,19 +68,6 @@
         </div>
         {/each}
     </div>
-
-    <!-- <div class="traits">
-        {#each Object.keys(character.traits) as trait}
-            <InPlaceEditBox 
-                bind:value={character.traits[trait]} 
-                boxLabel={trait} 
-                editWidth="10rem"
-                editHeight="2rem"
-                valueFontSize="1.5em"
-                inlineStyle="width: 33%; height: auto;"
-            />
-        {/each}
-    </div> -->
 
     <BioTextareaBox bind:charAttribute={character.appearance} inlineStyle="grid-area: traits; margin: 0.75em 0.75em 0em 0em;" label="Appearance" />
     <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes; margin: 0em 0.75em 0.75em 0em;" label="Notes" />
@@ -119,7 +113,16 @@
         </RowBoxWithLabel>
     </div>
 
-    <box class="inventory"></box>
+    <BoxWithList label='Inventory' inlineStyle='grid-area: inventory;' addNewListItem={addItem}>
+        <div class='inventory-settings' slot='filter-menu'>
+            Stuff       
+        </div>
+        <div class="item-list" slot='list'>
+            {#each character.inventory as item, index}
+                <ItemDetailCairn bind:item />
+            {/each}
+        </div>
+    </BoxWithList>
 
     <CharSheetMenu></CharSheetMenu>
 </tab-container>
@@ -188,14 +191,17 @@
         text-align: left;
     }
 
-    .traits { grid-area: traits; 
-        margin: 0em 0em 0.75em 0.75em;
+    .inventory-settings {
         display: flex;
-        flex-flow: wrap;
-        gap: 0.5em;
+        justify-content: center;
     }
 
-    .inventory { grid-area: inventory; 
+    .item-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.25em;
     }
 
     .armor { grid-area: armor; 

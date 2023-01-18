@@ -18,6 +18,13 @@ export interface CharacterTraitsCairn {
     misfortunes: string,
 }
 
+export interface ItemCairn {
+    name?: string,
+    type: string,
+    bulky?: boolean,
+    damage?: string,
+    description?: string
+}
 
 export interface CharacterCairn extends CharacterGeneric {
     name: string,
@@ -29,9 +36,10 @@ export interface CharacterCairn extends CharacterGeneric {
     hp_max: string,
     deprived: boolean,
 
-    traits: CharacterTraitsCairn,
     appearance: string,
     ability_scores: Record<string, AbilityScoreCairn>,
     coins: Record<string, string>,
-    notes: string
+    notes: string,
+    slots: string,
+    inventory: ItemCairn[]
 }

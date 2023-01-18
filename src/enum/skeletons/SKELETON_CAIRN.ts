@@ -2,19 +2,6 @@ export const SKELETON_CAIRN = {
     name: '',
     background: '',
     age: '',
-
-    traits: {
-        physique: '',
-        skin: '',
-        hair: '',
-        face: '',
-        speech: '',
-        clothing: '',
-        virtue: '',
-        vice: '',
-        reputation: '',
-        misfortunes: ''
-    },
     appearance: '',
 
     armor: '',
@@ -42,5 +29,33 @@ export const SKELETON_CAIRN = {
         sp: '',
         cp: '',
     },
-    notes: ''
+    notes: '',
+    inventory: [
+        {
+            name: 'Torch',
+            type: 'item'
+        },
+        {
+            name: 'Three days’ rations',
+            type: 'item'
+        },
+        {
+            name: 'Spear',
+            type: 'weapon',
+            damage: 'd8'
+        },
+        {
+            name: 'Brigandine (1 Armor, bulky)',
+            type: 'armor',
+            bulky: true
+        },
+        {
+            type: 'fatigue'
+        },
+        {
+            name: 'Visual Illusion',
+            type: 'spellbook',
+            description: 'A silent, immobile, room-sized illusion of your choice appears.'
+        },
+    ]
 }

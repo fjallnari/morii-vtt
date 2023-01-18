@@ -1,5 +1,6 @@
-import type { Attack } from "./5E/Character5E";
-import type ClassData from "./5E/ClassData";
+
+import type { Attack } from "./Character5E";
+import type ClassData from "./ClassData";
 import type { QCAbilityScores } from "./QCAbilityScores";
 import type { QCAsGenInfo } from "./QCAsGenInfo";
 import type QCBioData from "./QCBioData";

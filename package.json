@@ -47,7 +47,7 @@
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "jsonwebtoken": "^9.0.0",
-    "luxon": "^2.3.1",
+    "luxon": "^2.5.2",
     "mongodb": "^4.3.1",
     "nanoid": "^3.0.0",
     "pino": "^8.7.0",

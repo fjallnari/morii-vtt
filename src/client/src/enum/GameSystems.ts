@@ -28,7 +28,6 @@ const SETTINGS_TAB = {
     component:  CharacterSheetSettings
 };
 
-
 const GAME_SYSTEMS = {
     'D&D 5E': {
         characterSheetTabs: [
@@ -80,7 +79,7 @@ const GAME_SYSTEMS = {
             },
             SETTINGS_TAB
         ],
-        creationOptions: [],
+        creationOptions: [ CopyExistingSheet ],
         specificSettings: SpecificSettingsCairn,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW

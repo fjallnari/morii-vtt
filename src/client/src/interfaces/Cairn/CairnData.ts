@@ -1,8 +1,10 @@
+import type { ItemCairn } from "./CharacterCairn"
+
 export default interface CairnData {
     gear: string[],
     tools: string[],
     trinkets: string[],
-    spellbooks: string[],
+    spellbooks: Partial<ItemCairn>[],
     backgrounds: string[],
     scars: string[],
     names: {

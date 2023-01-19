@@ -3,13 +3,17 @@
 
     export let naturalRoll: NaturalRoll;
     export let dieType: number;
+    export let diceAccent: 'roll-over' | 'roll-under' = 'roll-over';
 
-    enum RESULT_COLOR {
+    enum OUTCOMES {
         SUCCESS = '#A7C284',
         FAILURE = '#EFA48B'
     }
+
+    // $: outcomeColors = [OUTCOMES.SUCCESS, OUTCOMES.FAILURE];
+    // $: resultColors = diceAccent === 'roll-over' ? outcomeColors : outcomeColors.reverse();
     
-    $: critColor = naturalRoll.value === dieType ? RESULT_COLOR.SUCCESS : naturalRoll.value === 1 ? RESULT_COLOR.FAILURE : 'inherit';
+    $: critColor = naturalRoll.value === dieType ? OUTCOMES.SUCCESS : naturalRoll.value === 1 ? OUTCOMES.FAILURE : 'inherit';
 
 </script>
 

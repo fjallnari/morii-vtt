@@ -2,7 +2,7 @@
     import Icon from '@iconify/svelte';
     import Dialog from '@smui/dialog';
     import axios from 'axios';
-    import type { Character5E } from '../../interfaces/5E/Character5E';
+    import type CharacterAny from '../../interfaces/CharacterAny';
     import { user } from '../../stores';
     import { getClassIcon } from '../../util/util';
     import SimpleButton from '../SimpleButton.svelte';
@@ -10,12 +10,12 @@
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     let open: boolean;
-    let selectedCharacter: Character5E = undefined;
+    let selectedCharacter: CharacterAny = undefined;
 
     const getUserCharacters = async () => {
         try {
             const response = await axios.get('/api/characters');
-            return (response.data.characters as Character5E[]).filter(character => character.system === $user?.gameData?.system);
+            return (response.data.characters as CharacterAny[]).filter(character => character.system === $user?.gameData?.system);
 		}
 		catch (err) {
             console.log(err);      

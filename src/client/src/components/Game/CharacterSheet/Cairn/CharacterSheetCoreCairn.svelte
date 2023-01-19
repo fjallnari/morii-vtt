@@ -271,6 +271,7 @@
         display: flex;
         justify-content: space-evenly;
         gap: 0.5em;
+        white-space: nowrap;
     }
 
     .coins { grid-area: coins; 

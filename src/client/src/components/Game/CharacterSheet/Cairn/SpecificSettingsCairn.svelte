@@ -97,7 +97,8 @@
             name: `${cairn.names.female.concat(cairn.names.male).random()} ${cairn.names.surnames.random()}`,
             background: cairn.backgrounds.random(),
             appearance: appearance,
-            inventory: getRandomInventory()
+            inventory: getRandomInventory(),
+            deprived: false,
         });
 
         for (const stat of stats) {

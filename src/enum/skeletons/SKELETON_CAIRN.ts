@@ -39,24 +39,6 @@ export const SKELETON_CAIRN = {
         {
             name: 'Three days’ rations',
             type: 'item'
-        },
-        {
-            name: 'Spear',
-            type: 'weapon',
-            damage: 'd8'
-        },
-        {
-            name: 'Brigandine (1 Armor, bulky)',
-            type: 'armor',
-            bulky: true
-        },
-        {
-            type: 'fatigue'
-        },
-        {
-            name: 'Visual Illusion',
-            type: 'spellbook',
-            description: 'A silent, immobile, room-sized illusion of your choice appears.'
-        },
+        }
     ],   
 }

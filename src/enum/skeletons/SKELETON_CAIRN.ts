@@ -30,6 +30,7 @@ export const SKELETON_CAIRN = {
         cp: '',
     },
     notes: '',
+    slots: '10',
     inventory: [
         {
             name: 'Torch',
@@ -57,5 +58,5 @@ export const SKELETON_CAIRN = {
             type: 'spellbook',
             description: 'A silent, immobile, room-sized illusion of your choice appears.'
         },
-    ]
+    ],   
 }

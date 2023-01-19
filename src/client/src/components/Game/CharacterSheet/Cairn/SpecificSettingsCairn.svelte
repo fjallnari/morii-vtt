@@ -46,12 +46,12 @@
 
     const rollStat = (name: string, formula: string) => {
         statRollID = `${name}~~~${nanoid(16)}`;
-        $sendSkillCheck(0, `Roll for ${name} ~ ${formula}`, `${character.name.split(' ')[0]}`, '-', '', statRollID, formula);
+        $sendSkillCheck(0, `roll for ${name} | ${formula}`, `${character.name.split(' ')[0]}`, '-', '', statRollID, formula);
     }
 
     const rollAbilityScore = (tag: string) => {
         abilityRollID = nanoid(16);
-        $sendSkillCheck(0, `Roll for ${tag} ~ 3d6`, `${character.name.split(' ')[0]}`, '-', '', `${tag}-${abilityRollID}`, '3d6');
+        $sendSkillCheck(0, `roll for ${tag} | 3d6`, `${character.name.split(' ')[0]}`, '-', '', `${tag}-${abilityRollID}`, '3d6');
     }
 
     $socket.on('chat-message', (incomingMessage: MessageData) => {

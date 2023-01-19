@@ -1,8 +1,9 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
+    import Svelecte from "svelecte/src/Svelecte.svelte";
     import { slide } from "svelte/transition";
     import type { ItemCairn } from "../../../../interfaces/Cairn/CharacterCairn";
-    import { modifyCharacter } from "../../../../stores";
+    import { modifyCharacter, selectedCharacter, sendSkillCheck } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
 
@@ -11,7 +12,7 @@
     export let textareaHeight: string = '10em';
     export let editWidth: string = '18rem';
     export let editHeight: string = '1.5rem';
-    export let deleteItem: () => void = () => {};
+    export let deleteItem: (item: ItemCairn) => void = () => {};
     export let onSubmitFn: () => void = $modifyCharacter;
 
     let isOpen: boolean = false;
@@ -20,11 +21,25 @@
         'item': 'mdi:cube',
         'armor': 'mdi:shield-half-full',
         'weapon': 'mdi:sword',
-        'fatigue': 'mdi:sleep',
         'spellbook': 'mdi:fire'
     }
 
+    let itemTypeIndex = Object.keys(itemTypeIcons).indexOf(item.type);
+    let oldTypeIndex = itemTypeIndex;
+
     $: itemIcon = itemTypeIcons[item.type];
+    
+    $: if (itemTypeIndex !== oldTypeIndex && item.type !== 'fatigue') {
+        oldTypeIndex = Object.keys(itemTypeIcons).indexOf(item.type);
+        item.type = Object.keys(itemTypeIcons)[itemTypeIndex] ?? item.type;
+        onSubmitFn();
+    }
+
+    const rollAttack = () => {
+        if (item.damage && item.damage !== '') {
+            $sendSkillCheck(0, `${item.name.toLowerCase()} | damage (${item.damage})`, `${$selectedCharacter?.name.split(' ')[0]}`, '-', '', '', item.damage);
+        }
+    }
 
 </script>
 
@@ -32,17 +47,26 @@
     {#if item.type === 'fatigue'}
         <div class="fatigue">
             <div class="fatigue-title">FATIGUE</div>
+            <sendable class="fatigue-remove" on:click={() => deleteItem(item)} on:keyup={() => {}}>
+                <Icon class="medi-icon" icon='mdi:close'/>
+            </sendable>
         </div>
     {:else}
         <div class="item-summary">
-            <sendable class="item-type-icon">
-                <Icon class="medi-icon" icon={itemIcon} />
-            </sendable>
+            {#if item.type === 'weapon'}
+                <sendable class="item-type-icon" on:click={() => rollAttack()} on:keyup={() => {}}>
+                    <Icon class="medi-icon" icon={itemIcon} />
+                </sendable>
+            {:else}
+                <div class="item-type-icon">
+                    <Icon class="medi-icon" icon={itemIcon} />
+                </div>
+            {/if}
             <div class="item-name">
                 <InPlaceEdit bind:value={item.name} editWidth={editWidth} editHeight={editHeight} on:submit={() => onSubmitFn()}/>
             </div>
             <div class="item-bulky">
-                <sendable on:click={() => { item.bulky = !item.bulky; onSubmitFn()}} on:keyup={() => {}}>
+                <sendable on:click={() => { item.bulky = !item.bulky; onSubmitFn();}} on:keyup={() => {}}>
                     <Icon class="medi-icon" icon="{item.bulky ? 'mdi:weight': 'mdi:feather'}" />
                 </sendable>
             </div>
@@ -52,9 +76,23 @@
         </div>
     {/if}
     {#if isOpen}
+        <div class="single-detail-line">
+            <div class="line-title">Item type: </div>
+            <div class="item-type-select">
+                <Svelecte
+                    options={Object.keys(itemTypeIcons)}
+                    placeholder='---'
+                    bind:value={itemTypeIndex}>
+                </Svelecte>
+            </div>
+            {#if item.type === 'weapon'}
+                <div class="line-title">Damage:</div>
+                <InPlaceEdit bind:value={item.damage} editWidth='2em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+            {/if}
+        </div>
         <div class="details" transition:slide|local>
             <textarea style='height: {textareaHeight};' on:change={() => onSubmitFn()} bind:value={item.description}></textarea>
-            <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem()}></SimpleButton>
+            <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem(item)}></SimpleButton>
         </div>
     {/if}
 </box>
@@ -70,16 +108,7 @@
     .item-main-container {
         background-color: var(--clr-box-bg-light);
     }
-
-    .fatigue {
-        display: grid; 
-        grid-template-columns: 2fr 20fr 2fr; 
-        grid-template-rows: 2fr; 
-        gap: 0.5em;
-        padding: 0.5em 0em;
-        grid-template-areas: ". fatigue-title ."
-    }
-
+    
     .striped {
         background: repeating-linear-gradient( 45deg, 
             var(--clr-box-bg-light), 
@@ -89,8 +118,21 @@
         );
     }
 
+    .fatigue {
+        display: grid; 
+        grid-template-columns: 1fr 20fr 2fr; 
+        grid-template-rows: 2fr; 
+        gap: 0.5em;
+        padding: 0.5em 0em;
+        grid-template-areas: ". fatigue-title fatigue-remove"
+    }
+
     .fatigue-title { grid-area: fatigue-title; 
         font-weight: var(--semi-bold);
+    }
+
+    .fatigue-remove { grid-area: fatigue-remove; 
+        justify-content: center;
     }
 
     .item-summary {
@@ -149,10 +191,20 @@
         gap: 0.4em;
         font-weight: 400;
         font-family: Quicksand;
+        padding: 0.5em;
     }
 
     .single-detail-line div {
         font-size: 1em;
+    }
+
+    .line-title {
+        font-family: Athiti;
+        font-weight: var(--semi-bold);
+    }
+
+    .item-type-select {
+        width: 30%;
     }
 
 </style>

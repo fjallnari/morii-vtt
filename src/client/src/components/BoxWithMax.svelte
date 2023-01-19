@@ -5,6 +5,9 @@
     export let currentValue: string;
     export let maxValue: string;
     export let label: string;
+    export let maxLabel: string = 'Max';
+    export let sendable: boolean = false;
+    export let sendFce: () => void = () => {};
     export let onSubmitFce = $modifyCharacter;
 
 </script>
@@ -16,7 +19,7 @@
         </div>
         <div class="box-justify-filler"></div>
         <div class="box-label">
-            Max
+            {maxLabel}
         </div>
     </box>
     <box class="current-value-box box-with-label">
@@ -24,9 +27,16 @@
             <InPlaceEdit bind:value={currentValue} editWidth="2em" editHeight="2em" on:submit={() => onSubmitFce()}/>
         </div>
         <div class="box-justify-filler"></div>
-        <div class="box-label">
-            {label}
-        </div>
+        {#if sendable}
+            <sendable class="box-label" on:click={() => sendFce()} on:keyup={() => {}}>
+                {label}
+            </sendable>
+        {:else}
+            <div class="box-label">
+                {label}
+            </div>
+        {/if}
+
     </box>
 </box-with-max>
 

@@ -274,6 +274,16 @@
 		fill: var(--clr-accent-normal);
 	}
 
+	/* unvisited link */
+	:global(a:link) {
+		color: var(--clr-text);
+	}
+	
+	/* visited link */
+	:global(a:visited) {
+		color: var(--clr-accent-light);
+	}
+
     :global(.box-with-label) {
         flex-grow: 1;
         height: 100%;

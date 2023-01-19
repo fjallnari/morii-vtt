@@ -6,14 +6,16 @@
     import SimpleIconButton from '../SimpleIconButton.svelte';
     import SimpleTextfield from '../SimpleTextfield.svelte';
     import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
+    import GAME_SYSTEMS from '../../enum/GameSystems';
+    import Svelecte from 'svelecte/src/Svelecte.svelte';
 
-    const gameSystems = ["D&D 5E"];
+    const gameSystems = Object.keys(GAME_SYSTEMS);
     let campaignName: string = "";
-    let gameSystem: string = gameSystems[0];
+    let gameSystemIndex: number = undefined;
     let inProgress: boolean = false;
 
     const createCampaign = async () => {
-        if (! campaignName) {
+        if (! campaignName || typeof gameSystemIndex !== "number") {
             return;
         }
         try {
@@ -22,7 +24,7 @@
 
             const response = await axios.post('/api/create-campaign', {
                 campaignName: campaignName,
-                gameSystem: gameSystem
+                gameSystem: gameSystems[gameSystemIndex]
             });
 
             // "live-reloading" to see the newly added campaign instantly without the need to hard reload
@@ -54,7 +56,12 @@
 {#if !inProgress}
     <div class="create-campaign-content">
         <SimpleTextfield bind:value={campaignName} placeholder="Name" icon="mdi:folder-text"></SimpleTextfield>
-        <SimpleTextfield bind:value={gameSystem} placeholder="Game System" icon="iconoir:hexagon-dice" disabled></SimpleTextfield>
+        <Svelecte 
+            options={gameSystems}
+            placeholder='Game System'
+            bind:value={gameSystemIndex}>
+        </Svelecte>
+        <!-- <SimpleTextfield bind:value={gameSystem} placeholder="Game System" icon="iconoir:hexagon-dice" disabled></SimpleTextfield> -->
         <SimpleButton value="Create!" type="green" onClickFn={createCampaign}></SimpleButton>
     </div>
 {:else}
@@ -66,9 +73,6 @@
 <div id="cancel-button">
     <SimpleIconButton icon="mdi:close" width="1.5em" onClickFn={() => campaignNewActive.set(! $campaignNewActive)}></SimpleIconButton>
 </div>
-
-
-
 
 <style>
     .create-campaign-content {
@@ -86,6 +90,10 @@
         margin-top: 3rem;
         padding: 0.5rem 0em;
         font-size: 1.2em;
+    }
+
+    :global(.create-campaign-content .svelecte) {
+        width: 100%;
     }
 
     #cancel-button {

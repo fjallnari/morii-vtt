@@ -1,21 +1,22 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-    import type { AbilitySkill, Character } from "../../../../interfaces/Character";
-    import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from "../../../../stores";
+    import type { AbilitySkill, Character5E } from "../../../../interfaces/5E/Character5E";
+    import { formatModifier, modifyCharacter, sendSkillCheck } from "../../../../stores";
+    import { calc5EModifier } from "../../../../util/util";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
 
-    export let character: Character;
+    export let character: Character5E;
 
     const getSkill = (AS: string, skillName: string) => {
         return character.ability_scores[AS].skills.find(skill => skill.name === skillName);
     }
 
     const getSkillModifier = (AS: string, skill: AbilitySkill) => {
-        return $getASModifier(AS) + (skill.proficiency * ~~character.prof_bonus);
+        return calc5EModifier(character.ability_scores[AS]?.value) + (skill.proficiency * ~~character.prof_bonus);
     }
 
     const getSavingThrowModifier = (AS: string) => {
-        return $getASModifier(AS) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
+        return calc5EModifier(character.ability_scores[AS]?.value) + (character.ability_scores[AS].saving_throw ? ~~character.prof_bonus : 0);
     }
 
     
@@ -28,7 +29,7 @@
     <div class="ability-score-container">
         <div class="ability-score-info">
             <box class="ability-score-modifier">
-                {$formatModifier($getASModifier(AS))}
+                {$formatModifier(calc5EModifier(character.ability_scores[AS]?.value))}
             </box>
 
             <div class="ability-score-value">
@@ -80,11 +81,17 @@
             <box class="additional-skill-box">
                 <div class="box-with-label">
                     <div class="box-main-text">
-                        {$formatModifier($getASModifier('DEX') + ~~character.initiative_bonus)}
+                        {$formatModifier(calc5EModifier(character.ability_scores['DEX']?.value) + ~~character.initiative_bonus)}
                     </div>
                     <div class="box-justify-filler"></div>
                     <sendable class="box-label" 
-                        on:click={() => $sendSkillCheck(($getASModifier('DEX') + ~~character.initiative_bonus), `initiative`, character.name, character._id)} on:keyup={() => {}}
+                        on:click={() => $sendSkillCheck(
+                            calc5EModifier(character.ability_scores['DEX']?.value) + ~~character.initiative_bonus, 
+                            `initiative`, 
+                            character.name,
+                            character._id)
+                        }
+                        on:keyup={() => {}}
                     >
                         Initiative
                     </sendable>

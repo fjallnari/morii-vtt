@@ -1,5 +1,5 @@
-import type { Attack, Feature, Item, OtherProf, Spell, Tool } from "../interfaces/Character";
-import type { AttributeVTTES, CharacterVTTES } from "../interfaces/CharacterVTTES";
+import type { Attack, Feature, Item, OtherProf, Spell, Tool } from "../interfaces/5E/Character5E";
+import type { AttributeVTTES, CharacterVTTES } from "../interfaces/5E/Character5EVTTES";
 import { nanoid } from 'nanoid/non-secure';
 
 /**

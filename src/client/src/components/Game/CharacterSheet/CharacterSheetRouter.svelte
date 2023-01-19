@@ -1,21 +1,18 @@
 <script lang="ts">
-    import { formatModifier, getASModifier, modifyCharacter, ownerSocketID, selectedCharacter, selectedCharacterTab, sendSkillCheck, socket, user, userIDPairs } from "../../../stores";
-    import CharacterSheetBio from "./CharacterSheetBio.svelte";
-    import CharacterSheetCore from "./CharacterSheetCore.svelte";
-    import CharacterSheetSettings from "./CharacterSheetSettings.svelte";
-    import CharacterSheetSpells from "./CharacterSheetSpells.svelte";
-    import type { Character } from "../../../interfaces/Character";
+    import { modifyCharacter, ownerSocketID, selectedCharacterTab,socket, user, userIDPairs } from "../../../stores";
     import { params } from "svelte-spa-router";
     import axios from "axios";
+    import GAME_SYSTEMS from "../../../enum/GameSystems";
+    import type CharacterAny from "../../../interfaces/CharacterAny";
     
-    export let character: Character;
+    export let character: CharacterAny;
 
-    $socket.on('change-character', (modifiedCharacter: Character) => {
+    $socket.on('change-character', (modifiedCharacter) => {
         if ($user._id === $user.gameData.owner) {return}
         character = modifiedCharacter;
     });
 
-    $socket.on('delete-character', (_: Character, isNPC: boolean) => {
+    $socket.on('delete-character', (_, isNPC: boolean) => {
         if ($user._id === $user.gameData.owner) {return}
         character = undefined;
     });
@@ -40,19 +37,10 @@
             console.log(err);
         }
 	})
-
-    /**
-     * 
-     * @param AS - ability score tag, e.g. 'WIS', 'DEX', 'STR' ...
-     */
-    getASModifier.set((AS: string) => {
-        return (~~(character.ability_scores[AS] ? character.ability_scores[AS].value : 0) - 10) / 2 >> 0;
-    });
-
     
     selectedCharacterTab.set(0);
-    const tabsComponents = [CharacterSheetCore, CharacterSheetBio, CharacterSheetSpells, CharacterSheetSettings];
+    const characterSheetTabs = GAME_SYSTEMS[$user?.gameData?.system].characterSheetTabs;
 
 </script>
 
-<svelte:component this={tabsComponents[$selectedCharacterTab]} bind:character={character}></svelte:component>
+<svelte:component this={characterSheetTabs[$selectedCharacterTab].component} bind:character={character}></svelte:component>

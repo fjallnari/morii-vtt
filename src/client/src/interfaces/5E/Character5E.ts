@@ -1,8 +1,9 @@
+import type CharacterGeneric from "../CharacterGeneric"
+
 export interface AbilitySkill {
     name: string,
     proficiency: number,
 }
-
 
 export interface AbilityScore {
     name: string,
@@ -26,7 +27,6 @@ export interface Attack {
     versatile_active: boolean,
     item_id?: string,
     weapon_type?: string // 'Simple weapons || Martial weapons
-    //// properties: number[] // only property ids are saved, e.g. 0 ~ Ammunition
 }
 
 export interface Item {
@@ -107,10 +107,7 @@ export interface CharacterSettings {
     use_spell_components: boolean
 }
 
-export interface Character {
-    _id: string,
-    playerID: string,
-
+export interface Character5E extends CharacterGeneric {
     // core tab    
     name: string,
     classes: string,

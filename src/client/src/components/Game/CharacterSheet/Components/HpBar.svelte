@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type { Character } from "../../../../interfaces/Character";
-
-    export let character: Character;
+    export let currentHP: number;
+    export let maxHP: number;
+    export let tempHP: number = 0;
 
 </script>
 
 <div class="hp-bar">
-    <div class="hp-bar-indicator">{`${(~~character.hp_current + ~~character.hp_temp)/~~character.hp_max * 100 >> 0}%`}</div>
-    <div class="hp-bar-fill" style="width: {~~character.hp_current/~~character.hp_max * 100 >> 0}%;"></div>
-    <div class="hp-bar-temp-fill" style="width: {~~character.hp_temp/~~character.hp_max * 100 >> 0}%;"></div>
+    <div class="hp-bar-indicator">{`${(currentHP + tempHP)/maxHP * 100 >> 0}%`}</div>
+    <div class="hp-bar-fill" style="width: {currentHP/maxHP * 100 >> 0}%;"></div>
+    <div class="hp-bar-temp-fill" style="width: {tempHP/maxHP * 100 >> 0}%;"></div>
 </div>
 
 <style>

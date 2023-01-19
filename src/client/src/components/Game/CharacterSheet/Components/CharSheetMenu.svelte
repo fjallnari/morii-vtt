@@ -1,14 +1,9 @@
 <script lang="ts">
-    import { selectedCharacterTab } from '../../../../stores';
+    import GAME_SYSTEMS from '../../../../enum/GameSystems';
+    import { selectedCharacterTab, user } from '../../../../stores';
     import SimpleIconButton from '../../../SimpleIconButton.svelte';
 
-    const TABS = [
-        { color: '#A7C284', icon: 'mdi:home' },
-        { color: '#DBD8B3', icon: 'mdi:script-text' },
-        { color: '#EFA48B', icon: 'mdi:fire' },
-        { color: '#9DB5B2', icon: 'mdi:cog' },
-    ]
-
+    const TABS = GAME_SYSTEMS[$user?.gameData?.system].characterSheetTabs;
 
 </script>
 
@@ -20,7 +15,6 @@
             onClickFn={() => selectedCharacterTab.set(index)}>
         </SimpleIconButton>
     {/each}
-    
 </div>
 
 <style>

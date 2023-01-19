@@ -1,4 +1,4 @@
-import type { Feature } from "./Character";
+import type { Feature } from "./5E/Character5E";
 import type IDNameInterface from "./IDNameInterface";
 
 export interface QCAsGenInfo {

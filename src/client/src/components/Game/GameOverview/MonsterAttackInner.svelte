@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { MonsterTrait } from "../../../interfaces/MonsterData";
+    import type { MonsterTrait } from "../../../interfaces/5E/MonsterData";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import SimpleButton from "../../SimpleButton.svelte";
 

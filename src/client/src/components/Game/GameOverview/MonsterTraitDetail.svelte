@@ -1,16 +1,16 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import type { MonsterTrait } from "../../../interfaces/MonsterData";
+    import type { MonsterTrait } from "../../../interfaces/5E/MonsterData";
     import { messageMode, ownerSocketID, sendSkillCheck, socket, user } from "../../../stores";
 
     export let trait: MonsterTrait;
 
     const sendDamage = () => {
-        const opDict = { 'plus': '+' };
-        const dmgMatch = trait.attack_dmg.matchAll(/(?: (?<op>plus|or) [0-9]+ )*\((?<formula>[0-9]+d[0-9]+(?: [+−] [0-9]+)*)\)(?: (?:(?<type>[a-z]*) damage))*/gm);
+        const opDict = { 'plus': '+', 'taking': '+' };
+        const dmgMatch = trait.attack_dmg.matchAll(/(?: (?<op>plus|or|taking) [0-9]+ )*\((?<formula>[0-9]+d[0-9]+(?: [+−] [0-9]+)*)\)(?: (?:(?<type>[a-z]*) damage))*/gm);
         const dmgGroups = [ ... dmgMatch].map(match => match.groups);
 
-        const dmgFormula = dmgGroups.map(dmg => `${opDict[`${dmg.op}` ?? ''] ?? ''}${dmg.formula}`).join(' ');
+        const dmgFormula = dmgGroups.map(dmg => `${opDict[`${dmg.op}` ?? ''] ?? ''}${dmg.op === 'or' ? '' : dmg.formula}`).join(' ');
         const dmgType = dmgGroups.map(dmg => `${dmg.type}`).join(' + ');
 
         $sendSkillCheck(0, `${trait.name.toLowerCase().replace('.', '')} | ${dmgType} damage`, '', '-', '-', '-', dmgFormula);
@@ -44,7 +44,7 @@
 
 {#if !trait.attack_dmg}
     <p>
-        <sendable on:click={() => sendTrait()}>
+        <sendable on:click={() => sendTrait()} on:keyup={() => {}}>
             <em><strong>{trait.name ?? ''}</strong></em>
         </sendable>
         <em>{trait.subtitle ?? ''}</em>
@@ -55,15 +55,15 @@
     </p>
 {:else}
     <p>
-        <sendable on:click={() => { sendAttack(); sendDamage()}}>
+        <sendable on:click={() => { sendAttack(); sendDamage()}} on:keyup={() => {}}>
             <em><strong>{trait.name ?? ''}</strong></em>          
         </sendable>
-        <sendable on:click={() => sendAttack()}>
+        <sendable on:click={() => sendAttack()} on:keyup={() => {}}>
             <em>{trait.type ?? ''}</em>
         </sendable>
         {trait.attack_info}
-        <sendable on:click={() => sendDamage()}>
-            <em>{"Hit:"}</em>         
+        <sendable on:click={() => sendDamage()} on:keyup={() => {}}>
+            <em>{"Hit:"}</em>
         </sendable>
         {trait.attack_dmg}
         {trait?.content?.split('\n\n')[0] ?? ''}

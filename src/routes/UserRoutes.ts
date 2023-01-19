@@ -1,7 +1,7 @@
 import express from 'express';
 import verifyToken from "../middleware/auth";
 import DashboardController from '../controllers/Routes/UserAuth/DashboardController';
-import GameController from '../controllers/Routes/UserAuth/GameController';
+import GetGameController from '../controllers/Routes/UserAuth/GetGameController';
 import CreateCampaignController from '../controllers/Routes/UserAuth/CreateCampaignController';
 import JoinCampaignController from '../controllers/Routes/UserAuth/JoinCampaignController';
 import LeaveCampaignController from '../controllers/Routes/UserAuth/LeaveCampaignController';
@@ -23,7 +23,7 @@ router.get("/api/dashboard", verifyToken, async (req, res) => {
 });
 
 router.get("/api/game/:id", verifyToken, async (req, res) => {
-    await new GameController(req, res).handleRequest();
+    await new GetGameController(req, res).handleRequest();
 });
 
 router.get('/api/characters', verifyToken, async (req, res, next) => {

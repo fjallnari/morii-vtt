@@ -1,7 +1,7 @@
 <script lang="ts">
     import SKILLS from "../../../enum/Skills";
-    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import type QuickCreateCharacterParts from "../../../interfaces/5E/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/5E/QuickCreateData";
     import BioTextareaBox from "../../BioTextareaBox.svelte";
     import BoxWithChips from "../../BoxWithChips.svelte";
     import BoxWithList from "../../BoxWithList.svelte";

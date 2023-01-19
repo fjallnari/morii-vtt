@@ -9,6 +9,7 @@
     export let inlineStyle: string = '';
     export let editWidth: string = '';
     export let editHeight: string = '';
+    export let valueFontSize: string = 'inherit';
     export let onSubmitFce: () => void = () => $modifyCharacter();
     export let tooltip: string = undefined;
 
@@ -19,7 +20,8 @@
         <InPlaceEdit 
             bind:value={value} 
             editWidth={editWidth} 
-            editHeight={editHeight} 
+            editHeight={editHeight}
+            valueFontSize={valueFontSize}
             on:submit={() => { characterLimit !== 0 && value.length > characterLimit ? value = value.slice(0, characterLimit) : value; onSubmitFce()}}
         />
     </div>
@@ -41,5 +43,8 @@
 </box>
 
 <style>
+    .box-with-label {
+        position: relative;
+    }
     
 </style>

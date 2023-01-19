@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { Character } from "../../../../interfaces/Character";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
     import { modifyCharacter } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import Icon from '@iconify/svelte';
 
-    export let character: Character;
+    export let character: Character5E;
 
 </script>
 

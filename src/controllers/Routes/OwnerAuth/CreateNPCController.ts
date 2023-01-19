@@ -2,7 +2,8 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
 import RouteController from "../RouteController";
-import { CHARACTER_SKELETON } from "../../../enum/CHARACTER_SKELETON";
+import Campaign from "../../../interfaces/Campaign";
+import CHARACTER_SKELETONS from "../../../enum/skeletons/CHARACTER_SKELETONS";
 
 
 export default class CreateNPCController extends RouteController {
@@ -15,8 +16,17 @@ export default class CreateNPCController extends RouteController {
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
             const usersCollection = <Collection<Document>> await getCollection('users');
             const charactersCollection = <Collection<Document>> await getCollection('characters');
+
+            const campaignObjectID = new ObjectId(campaignID);
+            const campaignObj = await campaignsCollection.findOne({_id: campaignObjectID}) as Campaign;
            
-            const newNPCObj = Object.assign({}, { _id: new ObjectId(), playerID: userID, ... CHARACTER_SKELETON, ... characterTemplate });
+            const newNPCObj = Object.assign({}, { 
+                _id: new ObjectId(),
+                playerID: userID,
+                system: campaignObj.system,
+                ... CHARACTER_SKELETONS[campaignObj.system] ?? {},
+                ... characterTemplate 
+            });
 
             const insertResult = await charactersCollection.insertOne(newNPCObj);
             const newCharacterID = insertResult.insertedId;

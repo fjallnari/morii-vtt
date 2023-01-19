@@ -2,13 +2,13 @@
     import { slide, fade } from 'svelte/transition';
     import { messageMode, modifyCharacter, ownerSocketID, socket, user } from '../../../../stores';
     import { params } from "svelte-spa-router";
-    import type { Character, Spell } from '../../../../interfaces/Character';
+    import type { Character5E, Spell } from '../../../../interfaces/5E/Character5E';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
 
     export let spell: Partial<Spell>;
-    export let character: Character = undefined;
+    export let character: Character5E = undefined;
     export let deleteSpellFce: () => void;
 
     let isOpen: boolean = false;

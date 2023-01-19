@@ -5,11 +5,11 @@
     import { push, replace } from "svelte-spa-router";
     import Chat from "../components/Game/Chat/Chat.svelte";
     import GameInfo from "../components/Game/GameInfo.svelte";
-    import CharacterHandler from "../components/Game/CharacterHandler.svelte";
     import type UserIDPair from "../interfaces/UserIDPair";
     import { nanoid } from "nanoid/non-secure";
     import LoadingCircle from "../components/LoadingCircle.svelte";
-    import OwnerGameRouter from "../components/Game/OwnerGameRouter.svelte";
+    import GameRouterOwner from "../components/Game/GameRouterOwner.svelte";
+    import GameRouterPlayer from "../components/Game/GameRouterPlayer.svelte";
 
     export let params: { id?: string } = {};
 
@@ -82,7 +82,8 @@
         entityID: string = '', 
         diceType = 'd20', 
         customID = nanoid(16),
-        customFormula: string = ''
+        customFormula: string = '',
+        diceAccent: 'roll-over' | 'roll-under' = 'roll-over'
     ) => {
         const messageText = customFormula === '' ? `/r ${diceType}${modifier !== 0 ? $formatModifier(modifier, "always"): ''}` : `/r ${customFormula}`;
 
@@ -97,7 +98,8 @@
             skillCheckInfo: {
                 characterName: charName,
                 skillName: skillName,
-                entityID: entityID
+                entityID: entityID,
+                diceAccent: diceAccent
             },
             gameID: params.id,
             ownerSocketID: $ownerSocketID,
@@ -116,9 +118,9 @@
         <!-- <GameGuide></GameGuide> -->
         <div class="character-sheet">
             {#if $user && $user._id === gameData.owner}
-                <OwnerGameRouter gameData={gameData}></OwnerGameRouter>
+                <GameRouterOwner gameData={gameData}></GameRouterOwner>
             {:else}
-                <CharacterHandler gameData={gameData}></CharacterHandler>
+                <GameRouterPlayer gameData={gameData}></GameRouterPlayer>
             {/if}
         </div>
         <div class="game-info">

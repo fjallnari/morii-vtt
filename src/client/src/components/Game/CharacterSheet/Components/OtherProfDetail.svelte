@@ -1,14 +1,14 @@
 <script lang="ts">
     import { modifyCharacter } from '../../../../stores';
     import { slide, fade } from 'svelte/transition';
-    import type { Character, OtherProf } from '../../../../interfaces/Character';
+    import type { Character5E, OtherProf } from '../../../../interfaces/5E/Character5E';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import SimpleButton from '../../../SimpleButton.svelte';
     import Icon from '@iconify/svelte';
     import PROF_TYPES from '../../../../enum/OtherProfTypes';
 
     export let other_prof: OtherProf;
-    export let character: Character;
+    export let character: Character5E;
     let isOpen: boolean = false;
 
     const deleteProf = () => {

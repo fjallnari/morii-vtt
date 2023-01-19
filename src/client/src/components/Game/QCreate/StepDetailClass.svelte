@@ -1,7 +1,5 @@
 <script lang="ts">
-    import type ClassData from "../../../interfaces/ClassData";
-    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import type ClassData from "../../../interfaces/5E/ClassData";
     import BoxWithChips from '../../BoxWithChips.svelte';
     import SKILLS from '../../../enum/Skills';
     import InPlaceEdit from '../../InPlaceEdit.svelte';
@@ -14,6 +12,8 @@
     import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
     import ABILITY_TAGS from "../../../enum/AbilityTags";
     import SimpleSlider from "../../SimpleSlider.svelte";
+    import type QuickCreateCharacterParts from "../../../interfaces/5E/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/5E/QuickCreateData";
 
     export let characterParts: Partial<QuickCreateCharacterParts>;
     export let quickCreateData: Partial<QuickCreateData>;

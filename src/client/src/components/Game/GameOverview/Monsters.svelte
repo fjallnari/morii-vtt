@@ -4,13 +4,13 @@
     import Svelecte from "svelecte/src/Svelecte.svelte";
     import axios from "axios";
     import MonsterDetail from "./MonsterDetail.svelte";
-    import type MonsterSimple from "../../../interfaces/MonsterSimple";
     import Icon from "@iconify/svelte";
     import { capitalize } from "../../../util/util";
     import { messageMode, user } from "../../../stores";
-    import type { MonsterData } from "../../../interfaces/MonsterData";
+    import type { MonsterData } from "../../../interfaces/5E/MonsterData";
     import type GameData from "../../../interfaces/GameData";
     import { params } from "svelte-spa-router";
+    import type MonsterSimple from "../../../interfaces/5E/MonsterSimple";
 
     export let gameData: GameData;
 

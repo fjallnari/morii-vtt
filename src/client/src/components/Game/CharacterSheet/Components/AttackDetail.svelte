@@ -1,20 +1,21 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
-    import { formatModifier, getASModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
+    import { formatModifier, modifyCharacter, sendSkillCheck } from '../../../../stores';
     import { slide, fade } from 'svelte/transition';
-    import type { Attack, Character } from '../../../../interfaces/Character';
+    import type { Attack, Character5E } from '../../../../interfaces/5E/Character5E';
     import InPlaceEdit from '../../../InPlaceEdit.svelte';
     import ABILITY_TAGS from '../../../../enum/AbilityTags';
     import SimpleButton from '../../../SimpleButton.svelte';
     import CUSTOM_ICONS from '../../../../enum/SVGCustomIcons';
+    import { calc5EModifier } from '../../../../util/util';
 
     export let attack: Attack;
-    export let character: Character;
+    export let character: Character5E;
     let isOpen = false;
 
     const getAttackFormula = () => {
-        return $formatModifier(
-            (attack.atk_ability !== '---' && attack.atk_ability !== '' ? ~~$getASModifier(attack.atk_ability) : 0) + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus
+        return $formatModifier((attack.atk_ability !== '---' && attack.atk_ability !== '' ? calc5EModifier(character.ability_scores[attack.atk_ability]?.value) : 0)
+            + ~~attack.atk_bonus + (attack.atk_proficiency ? 1 : 0) * ~~character.prof_bonus
         );
     }
 
@@ -26,7 +27,7 @@
     }
 
     const getUnbiasedModifier = (abilityTag: string) => {
-        return (abilityTag !== '---' && abilityTag !== '' ? ~~$getASModifier(abilityTag) : 0);
+        return (abilityTag !== '---' && abilityTag !== '' ? calc5EModifier(character.ability_scores[abilityTag]?.value) : 0);
     } 
 
     const getDmgModifier = (abilityTag: string) => {

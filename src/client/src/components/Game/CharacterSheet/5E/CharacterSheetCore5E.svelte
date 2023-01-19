@@ -1,23 +1,23 @@
 <script lang="ts">
-    import type { Character } from '../../../interfaces/Character';
-    import InPlaceEditBox from '../../InPlaceEditBox.svelte';
-    import AbilityScores from './Components/AbilityScores.svelte';
-    import ArmorClass from './Components/ArmorClass.svelte';
-    import Attacks from './Components/Attacks.svelte';
-    import CharacterSheetMenu from './Components/CharSheetMenu.svelte';
-    import DeathSaves from './Components/DeathSaves.svelte';
-    import Exhaustion from './Components/Exhaustion.svelte';
-    import Features from './Components/Features.svelte';
-    import HitDice from './Components/HitDice.svelte';
-    import HitPoints from './Components/HitPoints.svelte';
-    import ProfBonusInspiration from './Components/ProfBonusInspiration.svelte';
-    import Speed from './Components/Speed.svelte';
-    import ToolsOtherProf from './Components/ToolsOtherProf.svelte';
-    import Inventory from './Components/Inventory.svelte';
-    import Resources from './Components/Resources.svelte';
-    import XP_LEVELS from '../../../enum/XpPerLevel';
+    import XP_LEVELS from "../../../../enum/XpPerLevel";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
+    import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
+    import AbilityScores from "../Components/AbilityScores.svelte";
+    import Armor from "../Components/Armor.svelte";
+    import Attacks from "../Components/Attacks.svelte";
+    import CharSheetMenu from "../Components/CharSheetMenu.svelte";
+    import DeathSaves from "../Components/DeathSaves.svelte";
+    import Exhaustion from "../Components/Exhaustion.svelte";
+    import Features from "../Components/Features.svelte";
+    import HitDice from "../Components/HitDice.svelte";
+    import HitPoints from "../Components/HitPoints.svelte";
+    import Inventory from "../Components/Inventory.svelte";
+    import ProfBonusInspiration from "../Components/ProfBonusInspiration.svelte";
+    import Resources from "../Components/Resources.svelte";
+    import Speed from "../Components/Speed.svelte";
+    import ToolsOtherProf from "../Components/ToolsOtherProf.svelte";
 
-    export let character: Character;
+    export let character: Character5E;
 
 </script>
 
@@ -51,7 +51,11 @@
 
     <div class="character-stats">
         <div class="armor-class">
-            <ArmorClass bind:value={character.armor_class}></ArmorClass>
+            <Armor 
+                bind:value={character.armor_class}
+                label={"Armor Class"}
+                tooltip="Base unarmored AC is 10 + DEX modifier. Can be modified by wearing armor, by certain class features or otherwise.">
+            </Armor>
         </div>
 
         <div class="speed">
@@ -95,7 +99,7 @@
         <Features bind:character={character}></Features>
     </div>
 
-    <CharacterSheetMenu></CharacterSheetMenu>
+    <CharSheetMenu></CharSheetMenu>
 </tab-container>
 
 
@@ -103,7 +107,7 @@
     tab-container {  display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 2fr 2fr 1fr; 
-        gap: 0.5em 0.5em;
+        gap: 0.5em;
         grid-template-areas: 
             "character-name character-basic-info character-basic-info"
             "ability-scores-bonuses character-stats other-prof-languages"
@@ -178,23 +182,6 @@
     }
 
     .armor-class { grid-area: armor-class; }
-
-    .armor-class :global(box) {
-        width: 5em;
-        height: 5em;
-        border: 0.5em solid transparent;
-        border-radius: 50% 50% 50% 50% / 12% 12% 70% 70%;
-    }
-
-    .armor-class :global(box .box-main-text) {
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-
-    .armor-class :global(box .box-label) {
-        width: 5em;
-        margin-bottom: -0.25em;
-    }
 
     .speed { grid-area: speed; 
         display: flex;

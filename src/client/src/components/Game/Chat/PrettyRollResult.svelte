@@ -14,7 +14,7 @@
                 {#if typeof splitRoll !== 'string'}
                     ( 
                     {#each splitRoll.rolls as naturalRoll, index}
-                        <NaturalRoll naturalRoll={naturalRoll} dieType={~~splitRoll.dieType}></NaturalRoll>
+                        <NaturalRoll naturalRoll={naturalRoll} dieType={~~splitRoll.dieType} diceAccent={message.skillCheckInfo?.diceAccent}></NaturalRoll>
                         {#if index !== splitRoll.rolls.length - 1}
                             {' + '}
                         {/if}

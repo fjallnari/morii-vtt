@@ -1,4 +1,4 @@
-import Character from "../interfaces/Character";
+import Character from "../../interfaces/Character";
 
 // 0 ~= not proficient, 1 ~= proficient, 2 ~= expertise
 enum PROFICIENCY {
@@ -7,7 +7,7 @@ enum PROFICIENCY {
     EXP
 }
 
-export const CHARACTER_SKELETON: Omit<Character, '_id' | 'playerID'> = {
+export const SKELETON_5E: Omit<Character, '_id' | 'playerID'> = {
     name: '',
     classes: '',
     xp: '',

@@ -6,6 +6,9 @@ export const validateClassName = (className: string) => {
 }
 
 export const getClassIcon = (characterClasses: string) => {
+    if (! characterClasses) {
+        return ["class-default"];
+    }
     const classesArray = characterClasses.split(' ').map(charClass => charClass.toLowerCase());
     return classesArray.length <= 2 ? [validateClassName(classesArray[0])] : classesArray.map(charClass => validateClassName(charClass));
 }
@@ -14,9 +17,9 @@ export const capitalize = (text: string) => {
     return text.replace(/^./, str => str.toUpperCase());
 }
 
-export const getASModifier = ((abilityScores: any, AS: string) => {
-    return (~~(abilityScores[AS] ? abilityScores[AS].value : 0) - 10) / 2 >> 0;
-});
+export const calc5EModifier = (value: string | undefined) => {
+    return (~~(value ?? 0) - 10) / 2 >> 0;
+}
 
 export const convertValueToASMod = (value: string) => {
     return (~~value - 10) / 2 >> 0;

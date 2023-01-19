@@ -1,21 +1,21 @@
 <script lang="ts">
     import ABILITY_TAGS from "../../../enum/AbilityTags";
-    import type ClassData from "../../../interfaces/ClassData";
-    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../../interfaces/QuickCreateData";
+    import type ClassData from "../../../interfaces/5E/ClassData";
     import MarkdownBoxText from ".././MarkdownBoxText.svelte";
     import { findHighestPossibleValue, validateClassName } from "../../../util/util";
     import BoxWithList from "../../BoxWithList.svelte";
-    import type { Spell } from "../../../interfaces/Character";
+    import type { Spell } from "../../../interfaces/5E/Character5E";
     import SpellDetail from ".././CharacterSheet/Components/SpellDetail.svelte";
     import Svelecte from 'svelecte/src/Svelecte.svelte';
-    import type { ClassSpellcasting } from "../../../interfaces/ClassData";
+    import type { ClassSpellcasting } from "../../../interfaces/5E/ClassData";
     import { SPELLS_BY_LEVEL_BLANK } from "../../../enum/SpellsByLevelBlank";
     import SimpleButton from "../../SimpleButton.svelte";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
     import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
     import { nanoid } from "nanoid/non-secure";
     import SimpleSlider from "../../SimpleSlider.svelte";
+    import type QuickCreateCharacterParts from "../../../interfaces/5E/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/5E/QuickCreateData";
  
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;

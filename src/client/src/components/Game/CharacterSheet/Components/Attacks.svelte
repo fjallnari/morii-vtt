@@ -1,11 +1,11 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
     import { nanoid } from 'nanoid/non-secure'
-    import type { Attack, Character } from '../../../../interfaces/Character';
+    import type { Attack, Character5E } from '../../../../interfaces/5E/Character5E';
     import { createNewAttack, modifyCharacter } from '../../../../stores';
     import AttackDetail from "./AttackDetail.svelte";
 
-    export let character: Character;
+    export let character: Character5E;
 
     createNewAttack.set((customName: string = '', itemID: string = '') => {
         const attackObjSkeleton: Attack = {

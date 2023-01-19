@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
-    import type { ClassResource } from '../../../interfaces/ClassData';
-    import type ClassData from '../../../interfaces/ClassData';
+    import type { ClassResource } from '../../../interfaces/5E/ClassData';
+    import type ClassData from '../../../interfaces/5E/ClassData';
     import { findHighestPossibleValue } from '../../../util/util';
     import ResourceDetail from '../CharacterSheet/Components/ResourceDetail.svelte';
 

@@ -1,17 +1,17 @@
 <script lang="ts">
-    import type QuickCreateCharacterParts from "../../../interfaces/QuickCreateCharacterParts";
-    import type QuickCreateData from "../../../interfaces/QuickCreateData";
     import { formatModifier, messageMode, sendSkillCheck, socket } from "../../../stores";
     import InPlaceEdit from "../../InPlaceEdit.svelte";
-    import { findHighestPossibleValue, getASModifier, getRandomIndex } from "../../../util/util";
+    import { calc5EModifier, findHighestPossibleValue, getRandomIndex } from "../../../util/util";
     import ChipsDndZone from ".././ChipsDndZone.svelte";
     import type MessageData from "../../../interfaces/MessageData";
     import { nanoid } from "nanoid/non-secure";
     import BoxWithList from "../../BoxWithList.svelte";
     import SimpleAccordionDetail from ".././SimpleAccordionDetail.svelte";
     import MarkdownBoxText from ".././MarkdownBoxText.svelte";
-    import type { QCAbilityScores } from "../../../interfaces/QCAbilityScores";
     import Icon from "@iconify/svelte";
+    import type QuickCreateCharacterParts from "../../../interfaces/5E/QuickCreateCharacterParts";
+    import type QuickCreateData from "../../../interfaces/5E/QuickCreateData";
+    import type { QCAbilityScores } from "../../../interfaces/5E/QCAbilityScores";
 
     export let characterParts: QuickCreateCharacterParts;
     export let quickCreateData: QuickCreateData;
@@ -192,7 +192,7 @@
             <ability-score-line>
                 <div class="as-final-info">
                     <box class="ability-score-modifier">
-                        {$formatModifier(getASModifier(abilityScores, AS))}
+                        {$formatModifier(calc5EModifier(abilityScores[AS]?.value))}
                     </box>
     
                     <box class="ability-score-value box-with-label">

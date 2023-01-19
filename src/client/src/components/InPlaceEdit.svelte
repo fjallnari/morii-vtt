@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte'
 
-    export let value: any = '', required = true, editWidth: string = 'inherit', editHeight: string = 'inherit', defaultValue:string = '---';
+    export let value: any = '', required = true, editWidth: string = 'inherit', editHeight: string = 'inherit', defaultValue: string = '---', valueFontSize = '1em';
 
     const dispatch = createEventDispatcher();
     let editing = false, original: string;
@@ -43,10 +43,10 @@
 
 {#if editing}
     <form on:submit|preventDefault={submit} on:keydown={keydown}>
-        <input style="width: {editWidth}; height: {editHeight};" bind:value on:blur={submit} {required} use:focus/>
+        <input style="width: {editWidth}; height: {editHeight}; font-size: {valueFontSize};" bind:value on:blur={submit} {required} use:focus/>
     </form>
 {:else}
-    <div class="text-display" on:click={() => edit()} on:keyup={() => {}}>
+    <div class="text-display" style="font-size: {valueFontSize};" on:click={() => edit()} on:keyup={() => {}}>
         {value && (typeof value === 'string') && value.trim() ? value : defaultValue}
     </div>
 {/if}

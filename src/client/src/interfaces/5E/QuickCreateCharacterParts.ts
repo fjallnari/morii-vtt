@@ -1,4 +1,3 @@
-
 import type { Attack } from "./Character5E";
 import type ClassData from "./ClassData";
 import type { QCAbilityScores } from "./QCAbilityScores";

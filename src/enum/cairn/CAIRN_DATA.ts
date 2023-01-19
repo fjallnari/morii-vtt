@@ -1,7 +1,6 @@
 import { BACKGROUNDS } from "./BACKGROUNDS";
 import { GEAR } from "./GEAR";
 import { NAMES_FEMALE, NAMES_MALE, SURNAMES } from "./NAMES_CAIRN";
-import { PRINCIPLES } from "./PRINCIPLES";
 import { RULES_SUMMARY } from "./RULES_SUMMARY";
 import { SCARS } from "./SCARS";
 import { SPELLBOOKS } from "./SPELLBOOKS";

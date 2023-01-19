@@ -27,7 +27,9 @@
 
 <div class="message-content">
     <div class="sender-info">
-        {message.senderInfo.username}{message.skillCheckInfo ? characterName : ''}
+        <div class="sender-name">
+            {message.senderInfo.username}{message.skillCheckInfo ? characterName : ''}
+        </div>
         {#if message.senderInfo._id === $user.gameData?.owner}
             <Icon class="big-icon" icon="mdi:crown" color="var(--clr-icon-owner)" />    
         {/if}
@@ -65,7 +67,7 @@
 
 <style>
     .message-content {  display: grid;
-        grid-template-columns: 0.5fr 3fr 1fr;
+        grid-template-columns: minmax(0, 0.5fr) minmax(0, 3fr) minmax(0, 1fr);
         grid-template-rows: 0.01fr 2fr;
         grid-auto-flow: row;
         width: 26em;
@@ -81,6 +83,12 @@
         align-items: center;
         font-family: Montserrat;
         gap: 0.5em;
+    }
+
+    .sender-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .message-ext-info {

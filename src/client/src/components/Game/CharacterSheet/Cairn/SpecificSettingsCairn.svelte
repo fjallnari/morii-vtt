@@ -30,7 +30,7 @@
             'Plate (3 Armor, bulky)'
         ].random();
 
-        return armor ? { name: armor, type: 'armor', bulky: armor.includes('bulky')} : undefined;
+        return armor ? { name: armor, type: 'armor', bulky: armor.includes('bulky'), armor: armor.match(/[0-9] Armor/g)[0].split(' ')[0]} : undefined;
     }
 
     const getRandomWeapon = () => {
@@ -45,8 +45,8 @@
 
     const getHelmetShield = (): ItemCairn[] => {
         const helmetShield = {
-            'helmet': { name: 'Helmet (+1 Armor)', type: 'armor' },
-            'shield': { name: 'Shield (+1 Armor)', type: 'armor' },
+            'helmet': { name: 'Helmet (+1 Armor)', type: 'armor', armor: '1' },
+            'shield': { name: 'Shield (+1 Armor)', type: 'armor', armor: '1' },
         }
 
         return [
@@ -92,13 +92,18 @@
 
     const rerollCharacter = () => {
         const appearance = `You have a ${getTrait('physique')} physique, ${getTrait('skin')} skin, ${getTrait('hair')} hair, and a ${getTrait('face')} face. You speak in a ${getTrait('speech')} manner and wear ${getTrait('clothing')} clothing. You are ${getTrait('vice')} yet ${getTrait('virtue')}, and are generally regarded as a ${getTrait('reputation')}. You have had the misfortune of being ${getTrait('misfortunes')}.`
+        const inventory = getRandomInventory();
 
         character = Object.assign(character, {
             name: `${cairn.names.female.concat(cairn.names.male).random()} ${cairn.names.surnames.random()}`,
             background: cairn.backgrounds.random(),
             appearance: appearance,
-            inventory: getRandomInventory(),
+            inventory: inventory,
             deprived: false,
+            armor: inventory.reduce(
+                (acc, item) => acc + (item.armor ? ~~item.armor : 0),
+                0
+            ).toString(),
         });
 
         for (const stat of stats) {
@@ -136,14 +141,14 @@
                     character.coins.gp = incomingMessage.rollResult.total.toString();
                     break;
             }
-        }
 
-        const idTag = incomingMessage.messageID.slice(0, 3);
+            const idTag = incomingMessage.messageID.slice(0, 3);
         
-        if (Object.keys(character.ability_scores).includes(idTag)){
-            character.ability_scores[idTag].current = character.ability_scores[idTag].max = incomingMessage.rollResult.total.toString();
-            $modifyCharacter();
-            return;
+            if (Object.keys(character.ability_scores).includes(idTag)){
+                character.ability_scores[idTag].current = character.ability_scores[idTag].max = incomingMessage.rollResult.total.toString();
+                $modifyCharacter();
+                return;
+            }
         }
     });
 

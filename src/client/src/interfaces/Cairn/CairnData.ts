@@ -6,7 +6,10 @@ export default interface CairnData {
     trinkets: string[],
     spellbooks: Partial<ItemCairn>[],
     backgrounds: string[],
-    scars: string[],
+    scars: { 
+        name: string, 
+        description: string 
+    }[],
     names: {
         male: string[],
         female: string[],
@@ -23,5 +26,7 @@ export default interface CairnData {
         vice: string[],
         reputation: string[],
         misfortunes: string[],
-    }
+    },
+    rules_basic: string,
+    rules_combat: string
 }

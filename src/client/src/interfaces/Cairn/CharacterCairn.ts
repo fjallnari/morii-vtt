@@ -23,6 +23,7 @@ export interface ItemCairn {
     type: string,
     bulky?: boolean,
     damage?: string,
+    armor?: string,
     description?: string
 }
 

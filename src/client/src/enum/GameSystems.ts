@@ -11,6 +11,7 @@ import CharacterSheetSpells5E from "../components/Game/CharacterSheet/5E/Charact
 import SpecificSettings5E from "../components/Game/CharacterSheet/5E/SpecificSettings5E.svelte";
 import CharacterSheetCoreCairn from "../components/Game/CharacterSheet/Cairn/CharacterSheetCoreCairn.svelte";
 import SpecificSettingsCairn from "../components/Game/CharacterSheet/Cairn/SpecificSettingsCairn.svelte";
+import CharacterSheetRulesCairn from "../components/Game/CharacterSheet/Cairn/CharacterSheetRulesCairn.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {
@@ -74,8 +75,13 @@ const GAME_SYSTEMS = {
         characterSheetTabs: [
             {
                 color: '#A7C284',
-                icon: 'mdi:home',
+                icon: 'mdi:shield-account',
                 component:  CharacterSheetCoreCairn
+            },
+            {
+                color: '#DBD8B3',
+                icon: 'mdi:book-open-page-variant',
+                component:  CharacterSheetRulesCairn
             },
             SETTINGS_TAB
         ],

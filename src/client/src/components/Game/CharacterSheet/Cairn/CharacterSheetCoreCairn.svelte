@@ -164,7 +164,7 @@
             iconWidth='1.25em'
             onClickFn={() => characterSleep()}
         />
-        <SimpleButton value='Restore ability' 
+        <SimpleButton value='Week’s rest'
             icon="mdi:bottle-tonic-plus" 
             iconWidth='1.25em'
             onClickFn={() => restoreAbility()}

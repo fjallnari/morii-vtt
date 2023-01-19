@@ -1,6 +1,8 @@
 import { BACKGROUNDS } from "./BACKGROUNDS";
 import { GEAR } from "./GEAR";
 import { NAMES_FEMALE, NAMES_MALE, SURNAMES } from "./NAMES_CAIRN";
+import { PRINCIPLES } from "./PRINCIPLES";
+import { RULES_SUMMARY } from "./RULES_SUMMARY";
 import { SCARS } from "./SCARS";
 import { SPELLBOOKS } from "./SPELLBOOKS";
 import { TOOLS } from "./TOOLS";
@@ -19,5 +21,7 @@ export const CAIRN_DATA = {
         female: NAMES_FEMALE,
         surnames: SURNAMES
     },
-    traits: TRAITS
+    traits: TRAITS,
+    rules_basic: RULES_SUMMARY[0],
+    rules_combat: RULES_SUMMARY[1]
 }

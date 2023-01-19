@@ -1,4 +1,4 @@
-import type ClassData from "./5E/ClassData";
+import type ClassData from "./ClassData";
 import type { QCAbilityScores } from "./QCAbilityScores";
 import type RaceData from "./RaceData";
 

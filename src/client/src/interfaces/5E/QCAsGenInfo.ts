@@ -1,5 +1,6 @@
-import type { Feature } from "./5E/Character5E";
-import type IDNameInterface from "./IDNameInterface";
+import type IDNameInterface from "../IDNameInterface";
+import type { Feature } from "./Character5E";
+
 
 export interface QCAsGenInfo {
     baseArray: number[], 

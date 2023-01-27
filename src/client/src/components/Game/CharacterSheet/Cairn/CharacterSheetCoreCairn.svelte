@@ -43,6 +43,7 @@
     const characterSleep = () => {
         // clear all fatigue
         character.inventory = character.inventory.filter(item => item.type !== 'fatigue');
+        characterRest();
         $modifyCharacter();
     }
 
@@ -56,6 +57,7 @@
         for (const AS in character.ability_scores) {
             character.ability_scores[AS].current = character.ability_scores[AS].max;
         }
+        characterSleep();
         $modifyCharacter();
     }
 

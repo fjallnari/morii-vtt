@@ -4,8 +4,8 @@
     import { selectedCharacter, selectedGameTab, user } from '../../stores';
     import SimpleIconButton from '../SimpleIconButton.svelte';
     import { Tooltip } from "@svelte-plugins/tooltips";
-    import GAME_SYSTEMS from "../../enum/GameSystems";
     import type GameTab from "../../interfaces/GameTab";
+    import GAME_SYSTEMS from "../../enum/GameSystems";
 
     export let gameData: GameData;
 

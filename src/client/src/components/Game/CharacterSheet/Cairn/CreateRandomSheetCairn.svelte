@@ -4,14 +4,15 @@
     import { nanoid } from "nanoid/non-secure";
     import { params } from "svelte-spa-router";
     import type { CharacterCairn, ItemCairn } from "../../../../interfaces/Cairn/CharacterCairn";
-    import type CharacterAny from "../../../../interfaces/CharacterAny";
+    import type { CharacterAny } from "../../../../interfaces/CharacterAny";
     import type MessageData from "../../../../interfaces/MessageData";
     import { modifyCharacter, selectedCharacter, sendSkillCheck, socket, user } from "../../../../stores";
+    import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import LoadingCircle from "../../../LoadingCircle.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
+    import SimpleToggle from "../../../SimpleToggle.svelte";
 
     const cairn = $user.gameData.cairn;
-    const ROLLS_NEEDED = 6;
 
     export let character: Partial<CharacterCairn> = {};
     export let rerollExistingSheet: boolean = false;
@@ -22,6 +23,7 @@
     let rollArrayIds: string[] = [];
     let newStats: Partial<CharacterCairn> = {};
     let rollsCount: number = 0;
+    let rollsNeeded = 6;
     let inProgress = false;
 
     let stats = [
@@ -29,6 +31,30 @@
         { name: 'HP', formula: '1d6' },
         { name: 'gold', formula: '3d6' }
     ];
+
+    let rollOptions = {
+        everything: true,
+        subOptions: {
+            name: {
+                name: 'Name',
+                rollEnabled: false,
+                custom: ''
+            },
+            background: {
+                name: 'Background',
+                rollEnabled: false,
+                custom: ''
+            },
+            ability_scores: {
+                name: 'Ability Scores',
+                rollEnabled: false,
+            },
+            other: {
+                name: 'Other (Age, HP, Gold)',
+                rollEnabled: false,
+            },
+        }
+    }
 
     const getRandomArmor = (): ItemCairn | undefined => {
         const armor = [
@@ -65,7 +91,6 @@
         ].random();
     }
 
-    // TODO ~ add spell descriptions
     const getRandomSpellbook = (): ItemCairn => {
         const spellbook = cairn.spellbooks.random();
         return { name: spellbook.name, type: 'spellbook', description: spellbook.description };
@@ -73,7 +98,7 @@
 
     const getRandomItem = (rollTable: string[]) => {
         const item = rollTable.random();
-        return { name: item, type: 'item', bulky: item.includes('bulky')}
+        return { name: item, type: 'item', bulky: item.includes('bulky'), stacks: item.includes('stacks')}
     }
 
     const getBonusItem = () => {
@@ -106,6 +131,9 @@
         if (inProgress) { return }
         inProgress = true;
 
+        const name = rollOptions.everything || rollOptions.subOptions.name.rollEnabled ? 
+            `${cairn.names.female.concat(cairn.names.male).random()} ${cairn.names.surnames.random()}`: rollOptions.subOptions.name.custom;
+        const background = rollOptions.everything || rollOptions.subOptions.background.rollEnabled ? cairn.backgrounds.random() : rollOptions.subOptions.background.custom;
         const appearance = `You have a ${getTrait('physique')} physique, ${getTrait('skin')} skin, ${getTrait('hair')} hair, and a ${getTrait('face')} face. You speak in a ${getTrait('speech')} manner and wear ${getTrait('clothing')} clothing. You are ${getTrait('vice')} yet ${getTrait('virtue')}, and are generally regarded as a ${getTrait('reputation')}. You have had the misfortune of being ${getTrait('misfortunes')}.`
         const inventory = getRandomInventory();
 
@@ -114,8 +142,8 @@
         }
 
         character = Object.assign(character, {
-            name: `${cairn.names.female.concat(cairn.names.male).random()} ${cairn.names.surnames.random()}`,
-            background: cairn.backgrounds.random(),
+            name: name,
+            background: background,
             appearance: appearance,
             inventory: inventory,
             deprived: false,
@@ -128,8 +156,7 @@
         // this is split so the new character name updates before stats are rolled
         character = Object.assign(character, {
             ... await rollAllStats()
-        })
-
+        });
 
         if (!rerollExistingSheet) {
             createCharacter(character);
@@ -140,6 +167,7 @@
             $modifyCharacter();
         }
         inProgress = false;
+        randomSheetDialogOpen = true;
     }
 
     const rollStat = (name: string, formula: string) => {
@@ -151,15 +179,20 @@
     const rollAllStats = async () => {
         rollArrayIds = [];
         rollsCount = 0;
+        rollsNeeded = rollOptions.everything ? 6 : [rollOptions.subOptions.other, rollOptions.subOptions.ability_scores].reduce((acc, option) => acc + (option.rollEnabled ? 3 : 0), 0);
 
-        for (const stat of stats) {
-            rollStat(stat.name, stat.formula);
+        if (rollOptions.everything || rollOptions.subOptions.other.rollEnabled) {
+            for (const stat of stats) {
+                rollStat(stat.name, stat.formula);
+            }
         }
 
-        Object.assign(newStats, { ability_scores: character.ability_scores } );
+        if (rollOptions.everything || rollOptions.subOptions.ability_scores.rollEnabled) {
+            Object.assign(newStats, { ability_scores: character.ability_scores } );
 
-        for (const AS in character.ability_scores) {
-            rollStat(AS, '3d6');
+            for (const AS in character.ability_scores) {
+                rollStat(AS, '3d6');
+            }
         }
 
         return await circleCheck() as object;
@@ -172,7 +205,7 @@
     const circleCheck = async (recursionLayer = 0, checkRecursionLimit = 20) => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                if (rollsCount >= ROLLS_NEEDED) {
+                if (rollsCount >= rollsNeeded) {
                     resolve(newStats);
                 }
                 else {
@@ -255,9 +288,27 @@
             <div class="rd-title">
                 <h3>Create random character</h3>
             </div>
-            <div class="rd-content">
-
-            </div>
+            <dialog-content class="rd-content">
+                <line-div>
+                    <SimpleToggle bind:checked={rollOptions.everything}></SimpleToggle>
+                    <h4>Roll for everything</h4>
+                </line-div>
+                {#if !rollOptions.everything}
+                    {#each Object.keys(rollOptions.subOptions) as subOption}
+                        <line-div>
+                            <div class="sub-option-padding"></div>
+                            <SimpleToggle bind:checked={rollOptions.subOptions[subOption].rollEnabled}></SimpleToggle>
+                            <h4>{rollOptions.subOptions[subOption].name}</h4>
+                            {#if !rollOptions.subOptions[subOption].rollEnabled && typeof rollOptions.subOptions[subOption].custom === 'string'}
+                                <div class="custom-option">
+                                    <div class="option-delimiter">:</div>
+                                    <InPlaceEdit bind:value={rollOptions.subOptions[subOption].custom} editWidth='10em' editHeight='2em' on:submit={() => {}}/>
+                                </div>
+                            {/if}
+                        </line-div>
+                    {/each}
+                {/if}
+            </dialog-content>
             <div class="rd-buttons">
                 <SimpleButton 
                     value='Cancel' 
@@ -311,15 +362,45 @@
     }
 
     .rd-content { grid-area: rd-content; 
+        display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        align-items: baseline;
+        gap: 0.5em;
+        overflow: hidden;
     }
 
     .rd-content h4 {
-        font-family: Quicksand;
-        font-size: large;
+        font-family: Athiti;
+        font-size: 1.1em;
         font-weight: 400;
         margin: 0em;
         align-self: center;
+        text-transform: uppercase;
+    }
+    
+    .rd-content .custom-option {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25em;
+        font-family: Quicksand;
+    }
+
+    line-div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    .sub-option-padding {
+        padding-right: 1rem;
+    }
+
+    .option-delimiter {
+        margin-left: -0.4em;
+        font-weight: var(--semi-bold);
     }
 
     :global(.rd-buttons simple-button) {

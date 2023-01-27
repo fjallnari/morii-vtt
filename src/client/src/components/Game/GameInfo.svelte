@@ -66,15 +66,16 @@
 
     .game-info h3 {
         text-transform: uppercase;
-        font-size: 2em;
+        font-size: 1.5em;
         font-weight: 100;
         font-family: Montserrat;
-        width: 8em;
+        width: 15rem;
         text-align: left;
         text-overflow: ellipsis;
         overflow: hidden;
         padding-left: 1em;
         margin: 0.5em 0em;
+        white-space: nowrap;
     }
 
     .game-info .icon-bar {

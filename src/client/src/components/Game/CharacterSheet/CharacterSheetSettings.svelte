@@ -64,15 +64,15 @@
                 <p>{character.name && character.name !== '' ? character.name : '???'}</p>
             </line-div>
             <line-div>
-                <div>Created by: </div>
+                <div class="settings-text">Created by: </div>
                 <div class="player-tag">
                     <pfp style="background-color: #{playerObj.settings.pfpColor};">
                         {@html `${ANIMALS[playerObj.settings.pfpID] ?? ANIMALS['default']}`}
                     </pfp>
-                    <div>{playerObj.username}</div>
+                    <div class="settings-text">{playerObj.username}</div>
                 </div>
             </line-div>
-            <svelte:component this={GAME_SYSTEMS[$user?.gameData?.system].specificSettings} bind:character={character}/>
+            <svelte:component this={GAME_SYSTEMS[$user?.gameData?.system]?.specificSettings} bind:character={character}/>
         </div>
         <div class="settings-tab">
             <SimpleButton value='Export sheet to JSON' icon="mdi:code-json" onClickFn={exportToJSON}></SimpleButton>
@@ -147,7 +147,7 @@
         gap: 0.5em;
     }
 
-    :global(.settings-tab line-div > div) {
+    :global(.settings-text) {
         font-family: Athiti;
         text-transform: uppercase;
         font-size: 1.2em;
@@ -164,7 +164,7 @@
         font-size: 1.4em;
     }
 
-    :global(.settings-tab simple-button) {
+    :global(.settings-tab > simple-button, .settings-tab line-div > simple-button) {
         font-size: 1.25em;
         padding: 0.5em;
         width: fit-content;

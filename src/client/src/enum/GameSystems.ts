@@ -12,6 +12,7 @@ import SpecificSettings5E from "../components/Game/CharacterSheet/5E/SpecificSet
 import CharacterSheetCoreCairn from "../components/Game/CharacterSheet/Cairn/CharacterSheetCoreCairn.svelte";
 import SpecificSettingsCairn from "../components/Game/CharacterSheet/Cairn/SpecificSettingsCairn.svelte";
 import CharacterSheetRulesCairn from "../components/Game/CharacterSheet/Cairn/CharacterSheetRulesCairn.svelte";
+import CreateRandomSheetCairn from "../components/Game/CharacterSheet/Cairn/CreateRandomSheetCairn.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {
@@ -85,7 +86,7 @@ const GAME_SYSTEMS = {
             },
             SETTINGS_TAB
         ],
-        creationOptions: [ CopyExistingSheet ],
+        creationOptions: [ CreateRandomSheetCairn, CopyExistingSheet ],
         specificSettings: SpecificSettingsCairn,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW

@@ -14,6 +14,7 @@ import GetQuickCreateDataController from '../controllers/Routes/UserAuth/GetQuic
 import GetInviteController from '../controllers/Routes/UserAuth/GetInviteController';
 import GetSpells from '../controllers/Routes/UserAuth/GetSpells';
 import GetMonster from '../controllers/Routes/UserAuth/GetMonster';
+import GetSkelletonController from '../controllers/Routes/UserAuth/GetSkeletonController';
 
 const router = express.Router();
 
@@ -40,6 +41,10 @@ router.get('/api/spells', verifyToken, async (req, res, next) => {
 
 router.get('/api/monsters/:id', verifyToken, async (req, res, next) => {
     await new GetMonster(req, res).handleRequest();
+});
+
+router.get('/api/character-skeleton/:id', verifyToken, async (req, res, next) => {
+    await new GetSkelletonController(req, res).handleRequest();
 });
 
 router.post('/api/create-campaign', verifyToken, async (req, res, next) => {

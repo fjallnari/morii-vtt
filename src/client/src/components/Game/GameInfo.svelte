@@ -4,8 +4,8 @@
     import { selectedCharacter, selectedGameTab, user } from '../../stores';
     import SimpleIconButton from '../SimpleIconButton.svelte';
     import { Tooltip } from "@svelte-plugins/tooltips";
-    import GAME_SYSTEMS from "../../enum/GameSystems";
     import type GameTab from "../../interfaces/GameTab";
+    import GAME_SYSTEMS from "../../enum/GameSystems";
 
     export let gameData: GameData;
 
@@ -66,15 +66,16 @@
 
     .game-info h3 {
         text-transform: uppercase;
-        font-size: 2em;
+        font-size: 1.5em;
         font-weight: 100;
         font-family: Montserrat;
-        width: 8em;
+        width: 15rem;
         text-align: left;
         text-overflow: ellipsis;
         overflow: hidden;
         padding-left: 1em;
         margin: 0.5em 0em;
+        white-space: nowrap;
     }
 
     .game-info .icon-bar {

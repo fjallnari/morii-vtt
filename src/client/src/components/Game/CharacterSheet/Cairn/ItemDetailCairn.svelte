@@ -67,7 +67,7 @@
             </div>
             <div class="item-bulky">
                 <sendable on:click={() => {(!item.stacks && !item.bulky) ? item.bulky = true : (!item.stacks && item.bulky) ? (item.stacks = true, item.bulky = false) : (item.stacks = false, item.bulky = false); onSubmitFn();}} on:keyup={() => {}}>
-                    <Icon class="medi-icon" icon="{item.stacks ? 'mid:card-multiple' : item.bulky ? 'mdi:weight': 'mdi:feather'}" />
+                    <Icon class="medi-icon" icon="{item.stacks ? 'mdi:card-multiple' : item.bulky ? 'mdi:weight': 'mdi:feather'}" />
                 </sendable>
             </div>
             <sendable class="item-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>

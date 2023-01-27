@@ -7,7 +7,7 @@
     "build-server": "tsc --outDir dist",
     "build-client": "cd src/client && yarn build-prod && cd ../..",
     "server-dev": "ts-node-dev src/index.ts | npx pino-pretty",
-    "run-stack-dev": "yarn build-client && yarn start-server-dev",
+    "run-stack-dev": "yarn build-client && yarn server-dev",
     "dev-client": "cd src/client && yarn dev",
     "debug-dev": "DEBUG=* yarn server-dev",
     "build-prod": "yarn install --frozen-lockfile && yarn build-client && yarn build-server",

@@ -9,7 +9,6 @@
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
-    import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
     import Armor from "../Components/Armor.svelte";
     import CharSheetMenu from "../Components/CharSheetMenu.svelte";
     import HpBox from "../Components/HpBox.svelte";
@@ -81,10 +80,20 @@
         return stackable <= unstackable ? 0 : stackable - unstackable;
     }
 
-    $: filledSlotsCount = character.inventory.reduce(
-        (acc, item) => acc + (item.bulky ? 2 : item.stacks ? 0 : 1),
-        0
-    ) + stackItems();
+    const checkOverEncumbered = () => {
+        if (filledSlotsCount >= ~~character.slots) {
+            character.hp = "0";
+        }
+    }
+
+    let filledSlotsCount: number = 0;
+    $: {
+        filledSlotsCount = character.inventory.reduce(
+            (acc, item) => acc + (item.bulky ? 2 : item.stacks ? 0 : 1),
+            0
+        ) + stackItems();
+        checkOverEncumbered();
+    }
 
 </script>
 

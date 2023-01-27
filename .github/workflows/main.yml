@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cloning repo
+      uses: actions/checkout@v3
+      with:
+          fetch-depth: 0
+
+    - name: Push to Dokku
+      uses: dokku/github-action@master
+      with:
+          ssh_private_key: '${{ secrets.SSH_PRIVATE_KEY }}'
+          git_remote_url: '${{ secrets.DOKKU_REMOTE_URL }}'

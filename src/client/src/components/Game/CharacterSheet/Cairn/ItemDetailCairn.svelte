@@ -28,7 +28,7 @@
     let oldTypeIndex = itemTypeIndex;
 
     $: itemIcon = itemTypeIcons[item.type];
-    
+
     $: if (itemTypeIndex !== oldTypeIndex && item.type !== 'fatigue') {
         oldTypeIndex = Object.keys(itemTypeIcons).indexOf(item.type);
         item.type = Object.keys(itemTypeIcons)[itemTypeIndex] ?? item.type;
@@ -66,8 +66,8 @@
                 <InPlaceEdit bind:value={item.name} editWidth={editWidth} editHeight={editHeight} on:submit={() => onSubmitFn()}/>
             </div>
             <div class="item-bulky">
-                <sendable on:click={() => { item.bulky = !item.bulky; onSubmitFn();}} on:keyup={() => {}}>
-                    <Icon class="medi-icon" icon="{item.bulky ? 'mdi:weight': 'mdi:feather'}" />
+                <sendable on:click={() => {(!item.stacks && !item.bulky) ? item.bulky = true : (!item.stacks && item.bulky) ? (item.stacks = true, item.bulky = false) : (item.stacks = false, item.bulky = false); onSubmitFn();}} on:keyup={() => {}}>
+                    <Icon class="medi-icon" icon="{item.stacks ? 'mdi:card-multiple' : item.bulky ? 'mdi:weight': 'mdi:feather'}" />
                 </sendable>
             </div>
             <sendable class="item-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
@@ -108,60 +108,60 @@
     .item-main-container {
         background-color: var(--clr-box-bg-light);
     }
-    
+
     .striped {
-        background: repeating-linear-gradient( 45deg, 
-            var(--clr-box-bg-light), 
-            var(--clr-box-bg-light) 10px, 
-            var(--clr-accent-darker) 10px, 
-            var(--clr-accent-darker) 20px 
+        background: repeating-linear-gradient( 45deg,
+            var(--clr-box-bg-light),
+            var(--clr-box-bg-light) 10px,
+            var(--clr-accent-darker) 10px,
+            var(--clr-accent-darker) 20px
         );
     }
 
     .fatigue {
-        display: grid; 
-        grid-template-columns: 1fr 20fr 2fr; 
-        grid-template-rows: 2fr; 
+        display: grid;
+        grid-template-columns: 1fr 20fr 2fr;
+        grid-template-rows: 2fr;
         gap: 0.5em;
         padding: 0.5em 0em;
         grid-template-areas: ". fatigue-title fatigue-remove"
     }
 
-    .fatigue-title { grid-area: fatigue-title; 
+    .fatigue-title { grid-area: fatigue-title;
         font-weight: var(--semi-bold);
     }
 
-    .fatigue-remove { grid-area: fatigue-remove; 
+    .fatigue-remove { grid-area: fatigue-remove;
         justify-content: center;
     }
 
     .item-summary {
-        display: grid; 
-        grid-template-columns: 1fr 1fr 20fr 1fr 1fr; 
-        grid-template-rows: 2fr; 
+        display: grid;
+        grid-template-columns: 1fr 1fr 20fr 1fr 1fr;
+        grid-template-rows: 2fr;
         gap: 0.5em;
         padding: 0.5em 0em;
         grid-template-areas: "item-type-icon . item-name item-bulky item-menu"
     }
 
-    .item-type-icon { grid-area: item-type-icon; 
+    .item-type-icon { grid-area: item-type-icon;
         margin-left: 0.5em;
     }
 
-    .item-bulky { grid-area: item-bulky; 
+    .item-bulky { grid-area: item-bulky;
         border-right: 1px solid var(--clr-text);
         padding-right: 0.5em;
         gap: 0.25em;
     }
 
-    .item-name { grid-area: item-name; 
+    .item-name { grid-area: item-name;
         font-size: 1.1em;
         font-weight: 400;
         font-family: Quicksand;
         text-align: center;
     }
 
-    .item-menu { grid-area: item-menu; 
+    .item-menu { grid-area: item-menu;
         margin-right: 0.5em;
     }
 

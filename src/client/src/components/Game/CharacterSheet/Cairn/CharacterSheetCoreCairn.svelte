@@ -9,7 +9,6 @@
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
-    import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
     import Armor from "../Components/Armor.svelte";
     import CharSheetMenu from "../Components/CharSheetMenu.svelte";
     import HpBox from "../Components/HpBox.svelte";
@@ -43,6 +42,7 @@
     const characterSleep = () => {
         // clear all fatigue
         character.inventory = character.inventory.filter(item => item.type !== 'fatigue');
+        characterRest();
         $modifyCharacter();
     }
 
@@ -56,6 +56,7 @@
         for (const AS in character.ability_scores) {
             character.ability_scores[AS].current = character.ability_scores[AS].max;
         }
+        characterSleep();
         $modifyCharacter();
     }
 
@@ -73,10 +74,26 @@
         $sendSkillCheck(0, `${AS} save | success <= ${character.ability_scores[AS].current}`, `${character.name.split(' ')[0]}`, '-', 'd20', '', '', 'roll-under');
     }
 
-    $: filledSlotsCount = character.inventory.reduce(
-        (acc, item) => acc + (item.stacks ? 0 : item.bulky ? 2 : 1),
-        0
-    );
+    const stackItems = () => {
+        let stackable = character.inventory.filter((item) => item.stacks).length;
+        let unstackable = character.inventory.length - stackable;
+        return stackable <= unstackable ? 0 : stackable - unstackable;
+    }
+
+    const checkOverEncumbered = () => {
+        if (filledSlotsCount >= ~~character.slots) {
+            character.hp = "0";
+        }
+    }
+
+    let filledSlotsCount: number = 0;
+    $: {
+        filledSlotsCount = character.inventory.reduce(
+            (acc, item) => acc + (item.bulky ? 2 : item.stacks ? 0 : 1),
+            0
+        ) + stackItems();
+        checkOverEncumbered();
+    }
 
 </script>
 
@@ -113,7 +130,7 @@
             <InPlaceEdit bind:value={character.slots} editWidth='2em' editHeight='2em' on:submit={() => $modifyCharacter()}/>
         </RowBoxWithLabel>
         <RowBoxWithLabel label='Filled slots' wantBorder={filledSlotsCount >= ~~character.slots}>
-            {filledSlotsCount}
+            {filledSlotsCount > ~~character.slots ? ~~character.slots : filledSlotsCount }
         </RowBoxWithLabel>
     </div>
 

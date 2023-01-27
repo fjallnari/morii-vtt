@@ -17,16 +17,16 @@
     let statRollID: string = '';
 
     let stats = [
-        { name: 'age', formula: '2d20+10' }, 
+        { name: 'age', formula: '2d20+10' },
         { name: 'HP', formula: '1d6' },
         { name: 'gold', formula: '3d6' }
     ];
 
     const getRandomArmor = (): ItemCairn | undefined => {
         const armor = [
-            ...Array(3).fill(undefined), 
-            ...Array(11).fill('Brigandine (1 Armor, bulky)'), 
-            ...Array(5).fill('Chainmail (2 Armor, bulky)'), 
+            ...Array(3).fill(undefined),
+            ...Array(11).fill('Brigandine (1 Armor, bulky)'),
+            ...Array(5).fill('Chainmail (2 Armor, bulky)'),
             'Plate (3 Armor, bulky)'
         ].random();
 
@@ -65,7 +65,7 @@
 
     const getRandomItem = (rollTable: string[]) => {
         const item = rollTable.random();
-        return { name: item, type: 'item', bulky: item.includes('bulky')}
+        return { name: item, type: 'item', bulky: item.includes('bulky'), stacks: item.includes('stacks')}
     }
 
     const getBonusItem = () => {
@@ -79,7 +79,7 @@
 
     const getRandomInventory = (): ItemCairn[] =>  {
         let items: ItemCairn[] | undefined = [
-            { name: 'Torch', type: 'item' }, 
+            { name: 'Torch', type: 'item' },
             { name: 'Three days’ rations', type: 'item'},
             getRandomArmor(),
             getRandomWeapon(),
@@ -143,7 +143,7 @@
             }
 
             const idTag = incomingMessage.messageID.slice(0, 3);
-        
+
             if (Object.keys(character.ability_scores).includes(idTag)){
                 character.ability_scores[idTag].current = character.ability_scores[idTag].max = incomingMessage.rollResult.total.toString();
                 $modifyCharacter();

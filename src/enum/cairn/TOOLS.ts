@@ -1,1 +1,1 @@
-export const TOOLS = ['Bellows', 'Bucket', 'Caltrops', 'Chalk', 'Chisel', 'Cook Pots', 'Crowbar', 'Drill (Manual)', 'Fishing Rod', 'Glue', 'Grease', 'Hammer', 'Hour Glass', 'Metal File', 'Nails', 'Net', 'Saw', 'Sealant', 'Shovel', 'Tongs'];
+export const TOOLS = ['Bellows', 'Bucket (stacks)', 'Caltrops', 'Chalk', 'Chisel', 'Cook Pots', 'Crowbar', 'Drill (Manual)', 'Fishing Rod', 'Glue (stacks)', 'Grease', 'Hammer', 'Hour Glass', 'Metal File (stacks)', 'Nails (stacks)', 'Net (stacks)', 'Saw', 'Sealant', 'Shovel', 'Tongs'];

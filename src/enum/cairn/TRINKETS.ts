@@ -1,1 +1,1 @@
-export const TRINKETS = ['Bottle', 'Card Deck', 'Dice Set', 'Face Paint', 'Fake Jewels', 'Horn', 'Incense', 'Instrument', 'Lens', 'Marbles', 'Mirror', 'Perfume', 'Quill & Ink', 'Salt Pack', 'Small Bell', 'Soap', 'Sponge', 'Tar Pot', 'Twine', 'Whistle'];
+export const TRINKETS = ['Bottle', 'Card Deck (stacks)', 'Dice Set (stacks)', 'Face Paint', 'Fake Jewels (stacks)', 'Horn', 'Incense (stacks)', 'Instrument', 'Lens', 'Marbles (stacks)', 'Mirror', 'Perfume', 'Quill & Ink', 'Salt Pack (stacks)', 'Small Bell', 'Soap (stacks)', 'Sponge', 'Tar Pot', 'Twine (stacks)', 'Whistle'];

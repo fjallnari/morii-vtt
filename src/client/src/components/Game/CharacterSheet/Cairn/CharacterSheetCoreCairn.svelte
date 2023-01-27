@@ -73,10 +73,16 @@
         $sendSkillCheck(0, `${AS} save | success <= ${character.ability_scores[AS].current}`, `${character.name.split(' ')[0]}`, '-', 'd20', '', '', 'roll-under');
     }
 
+    const stackItems = () => {
+        let stackable = character.inventory.filter((item) => item.stacks).length;
+        let unstackable = character.inventory.length - stackable;
+        return stackable <= unstackable ? 0 : stackable - unstackable;
+    }
+
     $: filledSlotsCount = character.inventory.reduce(
-        (acc, item) => acc + (item.stacks ? 0 : item.bulky ? 2 : 1),
+        (acc, item) => acc + (item.bulky ? 2 : item.stacks ? 0 : 1),
         0
-    );
+    ) + stackItems();
 
 </script>
 
@@ -113,7 +119,7 @@
             <InPlaceEdit bind:value={character.slots} editWidth='2em' editHeight='2em' on:submit={() => $modifyCharacter()}/>
         </RowBoxWithLabel>
         <RowBoxWithLabel label='Filled slots' wantBorder={filledSlotsCount >= ~~character.slots}>
-            {filledSlotsCount}
+            {filledSlotsCount > ~~character.slots ? ~~character.slots : filledSlotsCount }
         </RowBoxWithLabel>
     </div>
 

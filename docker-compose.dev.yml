@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+    server:
+        container_name: morii-server
+        tty: true
+        image: node:16.8.0
+        user: node
+        ports:
+            - "3000:3000"
+        volumes:
+            - .:/app
+            - node-16:/home/node/.npm
+        working_dir: "/app"
+        environment:
+            TZ: "Europe/Prague"
+        command: |
+            bash -c "
+                sleep 3 &&
+                yarn install --frozen-lockfile &&
+                yarn run-stack-dev
+            "
+    client:
+        build: ./src/client
+        user: node
+        ports: 
+            - "8080:8080"
+            - "35729:35729"
+        container_name: morii-client
+        volumes:
+            - .:/app
+        restart: always
+        tty: true
+        command: |
+            bash -c "
+                sleep 3 &&
+                cd src/client
+                yarn install --frozen-lockfile &&
+                yarn dev
+            "
+    mongo:
+        image: mongo
+        container_name: morii-mongo
+        restart: unless-stopped
+        env_file: .env
+        volumes:
+            - morii-mongo:/data/db
+        ports:
+            - "27017:27017"
+        command: --quiet --logpath /dev/null # sweet silence
+
+networks:
+    default:
+        driver: bridge
+
+volumes:
+    node-16:
+        external: true
+    morii-mongo:
+        external: true

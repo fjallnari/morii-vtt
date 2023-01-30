@@ -17,7 +17,6 @@ export class ArmorCairn {
 export const ARMORS: Record<string, Partial<ItemCairn>> = {
     ... new ArmorCairn({ name: 'Shield', armor: '+1' }).record,
     ... new ArmorCairn({ name: 'Helmet', armor: '+1' }).record,
-    ... new ArmorCairn({ name: 'Gauntlets', armor: '+1' }).record,
     ... new ArmorCairn({ name: 'Gambeson', armor: '+1' }).record,
     ... new ArmorCairn({ name: 'Brigandine', armor: '1', bulky: true }).record,
     ... new ArmorCairn({ name: 'Chainmail', armor: '2', bulky: true }).record,

@@ -15,47 +15,6 @@
     import SimpleIconButton from "../../../SimpleIconButton.svelte";
     import SimpleSegmentChoice from "../../../SimpleSegmentChoice.svelte";
 
-    // TODO: replace with actual gear packages
-    const MOCK_GEAR: { name: string, items: Partial<ItemCairn>[]}[]  = [
-        {
-            name: 'Cleric',
-            items: [
-                {
-                    name: 'War Hammer (d10, bulky)',
-                    type: 'weapon',
-                    damage: 'd10',
-                    bulky: true
-                },
-                {
-                    name: 'Chainmail (2 Armor, bulky)',
-                    type: 'armor',
-                    armor: '2',
-                    bulky: true
-                },
-                {
-                    name: 'Gauntlets (+1 Armor)',
-                    type: 'armor',
-                    armor: '+1',
-                    bulky: false
-                },
-                {
-                    name: 'Cleansing Blade (d6)',
-                    type: 'weapon',
-                    damage: 'd6',
-                    bulky: false
-                },
-                {
-                    name: 'Holy Symbol',
-                    type: 'item'
-                },
-                {
-                    name: 'Cloak of the Order',
-                    type: 'item'
-                }
-            ]
-        }
-    ]
-
     const cairn = $user.gameData.cairn;
 
     export let character: Partial<CharacterCairn> = {};
@@ -243,9 +202,9 @@
         else if (genOptions.other.selectedOption === 'blank') {
             Object.assign(newStats, {
                 age: '',
-                hp: '', 
+                hp: '',
                 hp_max: '',
-                coins: { 
+                coins: {
                     gp: '',
                     sp: '',
                     cp: ''
@@ -343,7 +302,7 @@
             genOptions[optionKey].selectedOption = undefined;
             genOptions[optionKey].custom = genOptions[optionKey].custom ? '' : undefined;
         }
-             
+
         randomSheetDialogOpen = true;
     }
 
@@ -388,8 +347,8 @@
                                     </div>
                                     <SimpleIconButton icon="mdi:autorenew" width="1.5em" onClickFn={() => genOptions[optionKey].selectedOption = undefined} />
                                 {:else if genOptions[optionKey].selectedOption === 'gear'}
-                                    <Svelecte 
-                                        options={MOCK_GEAR}
+                                    <Svelecte
+                                        options={cairn.gear_packages}
                                         valueAsObject
                                         placeholder='Gear Package'
                                         bind:value={genOptions.inventory.gearPackage}
@@ -410,7 +369,7 @@
                     {/if}
                 {:else}
                     <div class="random-gen-rules">
-                        
+
                     </div>
                 {/if}
             </dialog-content>

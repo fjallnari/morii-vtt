@@ -27,7 +27,7 @@
     let inProgress = false;
 
     let stats = [
-        { name: 'age', formula: '2d20+10' }, 
+        { name: 'age', formula: '2d20+10' },
         { name: 'HP', formula: '1d6' },
         { name: 'gold', formula: '3d6' }
     ];
@@ -58,9 +58,9 @@
 
     const getRandomArmor = (): Partial<ItemCairn> | undefined => {
         const armorName = [
-            ...Array(3).fill(undefined), 
-            ...Array(11).fill('Brigandine'), 
-            ...Array(5).fill('Chainmail'), 
+            ...Array(3).fill(undefined),
+            ...Array(11).fill('Brigandine'),
+            ...Array(5).fill('Chainmail'),
             'Plate'
         ].random();
 
@@ -109,7 +109,7 @@
 
     const getRandomInventory = (): ItemCairn[] =>  {
         let items: ItemCairn[] | undefined = [
-            { name: 'Torch', type: 'item' }, 
+            { name: 'Torch', type: 'item' },
             { name: 'Three days’ rations', type: 'item'},
             getRandomArmor(),
             getRandomWeapon(),
@@ -121,17 +121,18 @@
     }
 
     const getTrait = (traitName: string) => {
-        return cairn.traits[traitName].random().toLowerCase();
+        return cairn.traits[traitName].random();
     }
 
     const rerollCharacter = async (sheetTemplate: Partial<CharacterCairn>) => {
         if (inProgress) { return }
         inProgress = true;
 
-        const name = rollOptions.everything || rollOptions.subOptions.name.rollEnabled ? 
+        const name = rollOptions.everything || rollOptions.subOptions.name.rollEnabled ?
             `${cairn.names.female.concat(cairn.names.male).random()} ${cairn.names.surnames.random()}`: rollOptions.subOptions.name.custom;
         const background = rollOptions.everything || rollOptions.subOptions.background.rollEnabled ? cairn.backgrounds.random() : rollOptions.subOptions.background.custom;
-        const appearance = `You have a ${getTrait('physique')} physique, ${getTrait('skin')} skin, ${getTrait('hair')} hair, and a ${getTrait('face')} face. You speak in a ${getTrait('speech')} manner and wear ${getTrait('clothing')} clothing. You are ${getTrait('vice')} yet ${getTrait('virtue')}, and are generally regarded as a ${getTrait('reputation')}. You have had the misfortune of being ${getTrait('misfortunes')}.`
+        const appearance = `You have ${getTrait('physique')} physique, ${getTrait('skin')} skin, ${getTrait('hair')} hair, and ${getTrait('face')} face. You speak in a ${getTrait('speech')} manner and wear ${getTrait('clothing')} clothing. You are ${getTrait('vice')} yet ${getTrait('virtue')}, and are generally regarded as ${getTrait('reputation')}. You have had the misfortune of being ${getTrait('misfortunes')}.`
+
         const inventory = getRandomInventory();
 
         if (!rerollExistingSheet) {
@@ -211,7 +212,7 @@
                         circleCheck();
                     }
                     else {
-                        resolve({});         
+                        resolve({});
                     }
                 }
             }, 200);
@@ -244,7 +245,7 @@
             }
 
             rollsCount += 1;
-        }       
+        }
     });
 
     const getSheetTemplate = async () => {
@@ -263,9 +264,9 @@
 
 </script>
 
-<SimpleButton 
-    value='{rerollExistingSheet ? 'Re-roll character': 'Create random'}' 
-    icon="mdi:dice-multiple" 
+<SimpleButton
+    value='{rerollExistingSheet ? 'Re-roll character': 'Create random'}'
+    icon="mdi:dice-multiple"
     iconWidth='1.25em'
     type='primary'
     onClickFn={() => {randomSheetDialogOpen = true}}>
@@ -307,19 +308,19 @@
                 {/if}
             </dialog-content>
             <div class="rd-buttons">
-                <SimpleButton 
-                    value='Cancel' 
-                    icon="mdi:cancel" 
+                <SimpleButton
+                    value='Cancel'
+                    icon="mdi:cancel"
                     iconWidth='1.25em'
                     onClickFn={() => randomSheetDialogOpen = false}>
                 </SimpleButton>
-                <SimpleButton 
-                    value='Create' 
+                <SimpleButton
+                    value='Create'
                     icon="mdi:create"
                     type="primary"
                     iconWidth='1.25em'
                     onClickFn={() => rerollCharacter(sheetTemplate)}>
-                </SimpleButton> 
+                </SimpleButton>
             </div>
         </div>
     {/await}
@@ -328,11 +329,11 @@
 <style>
 
     .random-character-dialog {
-        display: grid; 
-        grid-template-columns: 1fr 1fr 1fr; 
-        grid-template-rows: 0.4fr 2.2fr 0.4fr; 
-        gap: 1em; 
-        grid-template-areas: 
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 0.4fr 2.2fr 0.4fr;
+        gap: 1em;
+        grid-template-areas:
             "rd-title rd-title rd-title"
             "rd-content rd-content rd-content"
             "rd-buttons rd-buttons rd-buttons";
@@ -358,7 +359,7 @@
         margin: 0.5em;
     }
 
-    .rd-content { grid-area: rd-content; 
+    .rd-content { grid-area: rd-content;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -375,7 +376,7 @@
         align-self: center;
         text-transform: uppercase;
     }
-    
+
     .rd-content .custom-option {
         display: flex;
         justify-content: center;
@@ -404,7 +405,7 @@
         padding: 0.4rem 0em;
     }
 
-    .rd-buttons { grid-area: rd-buttons; 
+    .rd-buttons { grid-area: rd-buttons;
         gap: 1em;
     }
 
@@ -422,5 +423,5 @@
         max-width: 5em;
         padding: 0.2em 0.4em;
     }
-        
+
 </style>

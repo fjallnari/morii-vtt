@@ -21,7 +21,9 @@ services:
                 yarn run-stack-dev
             "
     client:
-        build: ./src/client
+        build: 
+            context: ./src/client
+            dockerfile: dev.Dockerfile
         user: node
         ports: 
             - "8080:8080"

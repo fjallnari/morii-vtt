@@ -1,12 +1,12 @@
 export const TRAITS = {
-    physique: ['Athletic', 'Brawny', 'Flabby', 'Lanky', 'Rugged', 'Scrawny', 'Short', 'Statuesque', 'Stout', 'Towering'],
-    skin: ['Birthmark', 'Dark', 'Elongated', 'Pockmarked', 'Rosy', 'Round', 'Soft', 'Tanned', 'Tattooed', 'Weathered'],
-    hair: ['Bald', 'Braided', 'Curly', 'Filthy', 'Frizzy', 'Long', 'Luxurious', 'Oily', 'Wavy', 'Wispy'],
-    face: ['Bony', 'Broken', 'Chiseled', 'Elongated', 'Pale', 'Perfect', 'Rat-like', 'Sharp', 'Square', 'Sunken'],
-    speech: ['Blunt', 'Booming', 'Cryptic', 'Droning', 'Formal', 'Gravelly', 'Precise', 'Squeaky', 'Stuttering', 'Whispery'],
-    clothing: ['Antique', 'Bloody', 'Elegant', 'Filthy', 'Foreign', 'Frayed', 'Frumpy', 'Livery', 'Rancid', 'Soiled'],
-    virtue: ['Ambitious', 'Cautious', 'Courageous', 'Disciplined', 'Gregarious', 'Honorable', 'Humble', 'Merciful', 'Serene', 'Tolerant'],
-    vice: ['Aggressive', 'Bitter', 'Craven', 'Deceitful', 'Greedy', 'Lazy', 'Nervous', 'Rude', 'Vain', 'Vengeful'],
-    reputation: ['Ambitious', 'Boor', 'Dangerous', 'Entertainer', 'Honest', 'Loafer', 'Oddball', 'Repulsive', 'Respected', 'Wise'],
-    misfortunes: ['Abandoned', 'Addicted', 'Blackmailed', 'Condemned', 'Cursed', 'Defrauded', 'Demoted', 'Discredited', 'Disowned', 'Exiled']
+    physique: ['an athletic', 'a brawny', 'a flabby', 'a lanky', 'a rugged', 'a scrawny', 'a short', 'a statuesque', 'a stout', 'a towering'],
+    skin: ['a birthmark on your', 'dark', 'elongated', 'pockmarked', 'rosy', 'round', 'soft', 'tanned', 'tattooed', 'weathered'],
+    hair: ['bald', 'braided', 'curly', 'filthy', 'frizzy', 'long', 'luxurious', 'oily', 'wavy', 'wispy'],
+    face: ['a bony', 'a broken', 'a chiseled', 'an elongated', 'a pale', 'a perfect', 'a ratlike', 'a sharp', 'a square', 'a sunken'],
+    speech: ['blunt', 'booming', 'cryptic', 'droning', 'formal', 'gravelly', 'precise', 'squeaky', 'stuttering', 'whispery'],
+    clothing: ['antique', 'bloody', 'elegant', 'filthy', 'foreign', 'frayed', 'frumpy', 'livery', 'rancid', 'soiled'],
+    virtue: ['ambitious', 'cautious', 'courageous', 'disciplined', 'gregarious', 'honorable', 'humble', 'merciful', 'serene', 'tolerant'],
+    vice: ['aggressive', 'bitter', 'craven', 'deceitful', 'greedy', 'lazy', 'nervous', 'rude', 'vain', 'vengeful'],
+    reputation: ['ambitious', 'a boor', 'dangerous', 'an entertainer', 'honest', 'a loafer', 'an oddball', 'repulsive', 'respected', 'wise'],
+    misfortunes: ['abandoned', 'addicted', 'blackmailed', 'condemned', 'cursed', 'defrauded', 'demoted', 'discredited', 'disowned', 'exiled']
 }

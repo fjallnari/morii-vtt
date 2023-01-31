@@ -56,15 +56,15 @@
         }
     }
 
-    const getRandomArmor = (): ItemCairn | undefined => {
-        const armor = [
+    const getRandomArmor = (): Partial<ItemCairn> | undefined => {
+        const armorName = [
             ...Array(3).fill(undefined), 
-            ...Array(11).fill('Brigandine (1 Armor, bulky)'), 
-            ...Array(5).fill('Chainmail (2 Armor, bulky)'), 
-            'Plate (3 Armor, bulky)'
+            ...Array(11).fill('Brigandine'), 
+            ...Array(5).fill('Chainmail'), 
+            'Plate'
         ].random();
 
-        return armor ? { name: armor, type: 'armor', bulky: armor.includes('bulky'), armor: armor.match(/[0-9] Armor/g)[0].split(' ')[0]} : undefined;
+        return cairn.armors[armorName] ?? undefined;
     }
 
     const getRandomWeapon = () => {
@@ -78,17 +78,14 @@
     }
 
     const getHelmetShield = (): ItemCairn[] => {
-        const helmetShield = {
-            'helmet': { name: 'Helmet (+1 Armor)', type: 'armor', armor: '1' },
-            'shield': { name: 'Shield (+1 Armor)', type: 'armor', armor: '1' },
-        }
-
-        return [
+        const helmetShield = [
             ...Array(14).fill([]),
-            ...Array(3).fill([helmetShield['helmet']]),
-            ...Array(3).fill([helmetShield['shield']]),
-            [helmetShield['helmet']].concat(helmetShield['shield'])
+            ...Array(3).fill(['Helmet']),
+            ...Array(3).fill(['Shield']),
+            ['Helmet', 'Shield']
         ].random();
+
+        return helmetShield.map((item: string) => cairn.armors[item]);
     }
 
     const getRandomSpellbook = (): ItemCairn => {

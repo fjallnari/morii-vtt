@@ -1,3 +1,4 @@
+import { ARMORS } from "./ARMORS";
 import { BACKGROUNDS } from "./BACKGROUNDS";
 import { GEAR } from "./GEAR";
 import { NAMES_FEMALE, NAMES_MALE, SURNAMES } from "./NAMES_CAIRN";
@@ -13,6 +14,7 @@ export const CAIRN_DATA = {
     tools: TOOLS,
     trinkets: TRINKETS,
     spellbooks: SPELLBOOKS,
+    armors: ARMORS,
     backgrounds: BACKGROUNDS,
     scars: SCARS,
     names: {

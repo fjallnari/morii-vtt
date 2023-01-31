@@ -1,0 +1,207 @@
+{
+  "$ref": "#/definitions/CharacterCairn",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AbilityScoreCairn": {
+      "additionalProperties": false,
+      "properties": {
+        "current": {
+          "type": "string"
+        },
+        "max": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "current",
+        "max"
+      ],
+      "type": "object"
+    },
+    "CharacterCairn": {
+      "additionalProperties": false,
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "ability_scores": {
+          "additionalProperties": {
+            "$ref": "#/definitions/AbilityScoreCairn"
+          },
+          "type": "object"
+        },
+        "age": {
+          "type": "string"
+        },
+        "appearance": {
+          "type": "string"
+        },
+        "armor": {
+          "type": "string"
+        },
+        "background": {
+          "type": "string"
+        },
+        "classes": {
+          "type": "string"
+        },
+        "coins": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "deprived": {
+          "type": "boolean"
+        },
+        "hp": {
+          "type": "string"
+        },
+        "hp_max": {
+          "type": "string"
+        },
+        "inventory": {
+          "items": {
+            "$ref": "#/definitions/ItemCairn"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "playerID": {
+          "type": "string"
+        },
+        "slots": {
+          "type": "string"
+        },
+        "system": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "ability_scores",
+        "age",
+        "appearance",
+        "armor",
+        "background",
+        "coins",
+        "deprived",
+        "hp",
+        "hp_max",
+        "inventory",
+        "name",
+        "notes",
+        "playerID",
+        "slots",
+        "system"
+      ],
+      "type": "object"
+    },
+    "CharacterGeneric": {
+      "additionalProperties": false,
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "classes": {
+          "type": "string"
+        },
+        "playerID": {
+          "type": "string"
+        },
+        "system": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "playerID",
+        "system"
+      ],
+      "type": "object"
+    },
+    "CharacterTraitsCairn": {
+      "additionalProperties": false,
+      "properties": {
+        "clothing": {
+          "type": "string"
+        },
+        "face": {
+          "type": "string"
+        },
+        "hair": {
+          "type": "string"
+        },
+        "misfortunes": {
+          "type": "string"
+        },
+        "physique": {
+          "type": "string"
+        },
+        "reputation": {
+          "type": "string"
+        },
+        "skin": {
+          "type": "string"
+        },
+        "speech": {
+          "type": "string"
+        },
+        "vice": {
+          "type": "string"
+        },
+        "virtue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "physique",
+        "skin",
+        "hair",
+        "face",
+        "speech",
+        "clothing",
+        "virtue",
+        "vice",
+        "reputation",
+        "misfortunes"
+      ],
+      "type": "object"
+    },
+    "ItemCairn": {
+      "additionalProperties": false,
+      "properties": {
+        "armor": {
+          "type": "string"
+        },
+        "bulky": {
+          "type": "boolean"
+        },
+        "damage": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "stacks": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    }
+  }
+}

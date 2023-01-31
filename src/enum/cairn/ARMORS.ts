@@ -1,16 +1,25 @@
 import { ItemCairn } from "../../interfaces/CharacterCairn";
 
-const createArmor = (name: string, armor: string, bulky: boolean = false): Record<string, Partial<ItemCairn>> => {
-    const prettyArmorName = `${name} (${armor} Armor${bulky ? ', bulky': ''})`;
-    return {[name]: { name: prettyArmorName, type: 'armor', bulky: bulky, armor: armor }};
+export class ArmorCairn {
+    public record: Record<string, Partial<ItemCairn>>;
+
+    constructor ({ name, armor, bulky }: { name: string, armor: string, bulky?: boolean }) {
+        const prettyName = `${name} (${armor} Armor${bulky ? ', bulky': ''})`;
+        this.record = {[name]: { name: prettyName, type: 'armor', bulky, armor: armor }};
+        return this;
+    }
+
+    public getItem() {
+        return this.record[Object.keys(this.record)[0]];
+    }
 }
 
 export const ARMORS: Record<string, Partial<ItemCairn>> = {
-    ... createArmor('Shield', '+1'),
-    ... createArmor('Helmet', '+1'),
-    ... createArmor('Gauntlets', '+1'),
-    ... createArmor('Gambeson', '+1'),
-    ... createArmor('Brigandine', '1', true),
-    ... createArmor('Chainmail', '2', true),
-    ... createArmor('Plate', '3', true),
+    ... new ArmorCairn({ name: 'Shield', armor: '+1' }).record,
+    ... new ArmorCairn({ name: 'Helmet', armor: '+1' }).record,
+    ... new ArmorCairn({ name: 'Gauntlets', armor: '+1' }).record,
+    ... new ArmorCairn({ name: 'Gambeson', armor: '+1' }).record,
+    ... new ArmorCairn({ name: 'Brigandine', armor: '1', bulky: true }).record,
+    ... new ArmorCairn({ name: 'Chainmail', armor: '2', bulky: true }).record,
+    ... new ArmorCairn({ name: 'Plate', armor: '3', bulky: true }).record,
 }

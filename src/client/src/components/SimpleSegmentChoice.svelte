@@ -1,5 +1,7 @@
 <script lang="ts">
-    import Icon from "@iconify/svelte";
+    import { capitalize } from "../util/util";
+
+
 
     export let options: string[];
     export let final: string;
@@ -14,7 +16,7 @@
             </div>
         {/if}
         <box class='chip selectable {final === option ? 'selected': ''}' on:click={() => {final = option}} on:keyup={() => {}}>
-            {option}
+            {capitalize(option)}
         </box>
     {/each}
 </segmented-choice>

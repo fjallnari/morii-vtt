@@ -2,6 +2,7 @@
     import Dialog from "@smui/dialog/src/Dialog.svelte";
     import axios from "axios";
     import { nanoid } from "nanoid/non-secure";
+    import Svelecte from "svelecte/src/Svelecte.svelte";
     import { params } from "svelte-spa-router";
     import type { CharacterCairn, ItemCairn } from "../../../../interfaces/Cairn/CharacterCairn";
     import type { CharacterAny } from "../../../../interfaces/CharacterAny";
@@ -10,7 +11,42 @@
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import LoadingCircle from "../../../LoadingCircle.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
-    import SimpleToggle from "../../../SimpleToggle.svelte";
+    import SimpleChip from "../../../SimpleChip.svelte";
+    import SimpleIconButton from "../../../SimpleIconButton.svelte";
+    import SimpleSegmentChoice from "../../../SimpleSegmentChoice.svelte";
+
+    // TODO: replace with actual gear packages
+    const MOCK_GEAR: { name: string, items: Partial<ItemCairn>[]}[]  = [
+        {
+            name: 'Cleric',
+            items: [
+                {
+                    name: 'War Hammer (d10, bulky)'
+                    // ...
+                },
+                {
+                    name: 'Chainmail (2 Armor, bulky)',
+                    // ...
+                },
+                {
+                    name: 'Gauntlets (+1 Armor)',
+                    // ...
+                },
+                {
+                    name: 'Cleansing Blade (d6)',
+                    // ...
+                },
+                {
+                    name: 'Holy Symbol',
+                    // ...
+                },
+                {
+                    name: 'Cloak of the Order',
+                    // ...
+                }
+            ]
+        }
+    ]
 
     const cairn = $user.gameData.cairn;
 
@@ -23,8 +59,8 @@
     let rollArrayIds: string[] = [];
     let newStats: Partial<CharacterCairn> = {};
     let rollsCount: number = 0;
-    let rollsNeeded = 6;
-    let inProgress = false;
+    let rollsNeeded: number = 6;
+    let inProgress: boolean = false;
 
     let stats = [
         { name: 'age', formula: '2d20+10' },
@@ -32,28 +68,38 @@
         { name: 'gold', formula: '3d6' }
     ];
 
-    let rollOptions = {
-        everything: true,
-        subOptions: {
-            name: {
-                name: 'Name',
-                rollEnabled: false,
-                custom: ''
-            },
-            background: {
-                name: 'Background',
-                rollEnabled: false,
-                custom: ''
-            },
-            ability_scores: {
-                name: 'Ability Scores',
-                rollEnabled: false,
-            },
-            other: {
-                name: 'Other (Age, HP, Gold)',
-                rollEnabled: false,
-            },
-        }
+    let selectedMetaOption = 'All random';
+    $: everythingRandom = selectedMetaOption === 'All random';
+
+    let genOptions = {
+        name: {
+            name: 'Name',
+            options: ['random', 'custom'],
+            selectedOption: undefined,
+            custom: ''
+        },
+        background: {
+            name: 'Background',
+            options: ['random', 'custom'],
+            selectedOption: undefined,
+            custom: ''
+        },
+        ability_scores: {
+            name: 'Ability Scores',
+            options: ['random', 'blank'],
+            selectedOption: undefined,
+        },
+        other: {
+            name: 'Other (Age, HP, Gold)',
+            options: ['random', 'blank'],
+            selectedOption: undefined,
+        },
+        inventory: {
+            name: 'Inventory',
+            options: ['random', 'gear'],
+            selectedOption: undefined,
+            gearPackage: undefined
+        },
     }
 
     const getRandomArmor = (): Partial<ItemCairn> | undefined => {
@@ -128,12 +174,12 @@
         if (inProgress) { return }
         inProgress = true;
 
-        const name = rollOptions.everything || rollOptions.subOptions.name.rollEnabled ?
-            `${cairn.names.female.concat(cairn.names.male).random()} ${cairn.names.surnames.random()}`: rollOptions.subOptions.name.custom;
-        const background = rollOptions.everything || rollOptions.subOptions.background.rollEnabled ? cairn.backgrounds.random() : rollOptions.subOptions.background.custom;
+        const name = everythingRandom || genOptions.name.selectedOption === 'random' ?
+            `${cairn.names.female.concat(cairn.names.male).random()} ${cairn.names.surnames.random()}`: genOptions.name.custom ?? '';
+        const background = everythingRandom || genOptions.background.selectedOption === 'random' ? cairn.backgrounds.random() : genOptions.background.custom ?? '';
         const appearance = `You have ${getTrait('physique')} physique, ${getTrait('skin')} skin, ${getTrait('hair')} hair, and ${getTrait('face')} face. You speak in a ${getTrait('speech')} manner and wear ${getTrait('clothing')} clothing. You are ${getTrait('vice')} yet ${getTrait('virtue')}, and are generally regarded as ${getTrait('reputation')}. You have had the misfortune of being ${getTrait('misfortunes')}.`
 
-        const inventory = getRandomInventory();
+        const inventory = everythingRandom || genOptions.inventory.selectedOption === 'random' ? getRandomInventory() : genOptions.inventory.gearPackage?.items ?? [];
 
         if (!rerollExistingSheet) {
             character = sheetTemplate ?? {};
@@ -164,8 +210,9 @@
             selectedCharacter.set(character as CharacterAny);
             $modifyCharacter();
         }
+
         inProgress = false;
-        randomSheetDialogOpen = true;
+        randomSheetDialogOpen = false;
     }
 
     const rollStat = (name: string, formula: string) => {
@@ -177,19 +224,39 @@
     const rollAllStats = async () => {
         rollArrayIds = [];
         rollsCount = 0;
-        rollsNeeded = rollOptions.everything ? 6 : [rollOptions.subOptions.other, rollOptions.subOptions.ability_scores].reduce((acc, option) => acc + (option.rollEnabled ? 3 : 0), 0);
+        rollsNeeded = everythingRandom ? 6 : [genOptions.other, genOptions.ability_scores].reduce((acc, option) => acc + (option.selectedOption === 'random' ? 3 : 0), 0);
 
-        if (rollOptions.everything || rollOptions.subOptions.other.rollEnabled) {
+        if (everythingRandom || genOptions.other.selectedOption === 'random') {
             for (const stat of stats) {
                 rollStat(stat.name, stat.formula);
             }
         }
 
-        if (rollOptions.everything || rollOptions.subOptions.ability_scores.rollEnabled) {
+        else if (genOptions.other.selectedOption === 'blank') {
+            Object.assign(newStats, {
+                age: '',
+                hp: '', 
+                hp_max: '',
+                coins: { 
+                    gp: '',
+                    sp: '',
+                    cp: ''
+                }
+            });
+        }
+
+        if (everythingRandom || genOptions.ability_scores.selectedOption === 'random') {
             Object.assign(newStats, { ability_scores: character.ability_scores } );
 
             for (const AS in character.ability_scores) {
                 rollStat(AS, '3d6');
+            }
+        }
+        else if (genOptions.ability_scores.selectedOption === 'blank') {
+            Object.assign(newStats, { ability_scores: character.ability_scores } );
+
+            for (const AS in newStats.ability_scores) {
+                newStats.ability_scores[AS] = { current: '', max: ''};
             }
         }
 
@@ -262,6 +329,16 @@
         return {};
     }
 
+    const openRandomSheetDialog = () => {
+        selectedMetaOption = 'All random';
+        for (const optionKey in genOptions) {
+            genOptions[optionKey].selectedOption = undefined;
+            genOptions[optionKey].custom = genOptions[optionKey].custom ? '' : undefined;
+        }
+             
+        randomSheetDialogOpen = true;
+    }
+
 </script>
 
 <SimpleButton
@@ -269,12 +346,12 @@
     icon="mdi:dice-multiple"
     iconWidth='1.25em'
     type='primary'
-    onClickFn={() => {randomSheetDialogOpen = true}}>
+    onClickFn={() => openRandomSheetDialog()}>
 </SimpleButton>
 
 <Dialog
     bind:open={randomSheetDialogOpen}
-    surface$style="padding: 1em 2em; height: 35em; width: 30em;"
+    surface$style="padding: 1em 2em; height: 40em; width: 32em;"
 >
     {#await getSheetTemplate()}
         <div class="loading-container">
@@ -287,24 +364,46 @@
                 <h3>Create random character</h3>
             </div>
             <dialog-content class="rd-content">
-                <line-div>
-                    <SimpleToggle bind:checked={rollOptions.everything}></SimpleToggle>
-                    <h4>Roll for everything</h4>
-                </line-div>
-                {#if !rollOptions.everything}
-                    {#each Object.keys(rollOptions.subOptions) as subOption}
-                        <line-div>
-                            <div class="sub-option-padding"></div>
-                            <SimpleToggle bind:checked={rollOptions.subOptions[subOption].rollEnabled}></SimpleToggle>
-                            <h4>{rollOptions.subOptions[subOption].name}</h4>
-                            {#if !rollOptions.subOptions[subOption].rollEnabled && typeof rollOptions.subOptions[subOption].custom === 'string'}
-                                <div class="custom-option">
-                                    <div class="option-delimiter">:</div>
-                                    <InPlaceEdit bind:value={rollOptions.subOptions[subOption].custom} editWidth='10em' editHeight='2em' on:submit={() => {}}/>
-                                </div>
-                            {/if}
-                        </line-div>
+                <div class="meta-choice">
+                    <SimpleSegmentChoice options={["All random", "Custom"]} bind:final={selectedMetaOption}></SimpleSegmentChoice>
+                </div>
+                {#if !everythingRandom}
+                    {#each Object.keys(genOptions) as optionKey}
+                        <div class="single-choice">
+                            <div class="choice-title">
+                                <h4>{genOptions[optionKey].name}:</h4>
+                            </div>
+                            <div class="choice-options">
+                                {#if genOptions[optionKey].selectedOption === 'custom'}
+                                    <div class="custom-edit" style="min-width: 10em;">
+                                        <InPlaceEdit bind:value={genOptions[optionKey].custom} editWidth='10em' editHeight='2em' on:submit={() => {}} />
+                                    </div>
+                                    <SimpleIconButton icon="mdi:autorenew" width="1.5em" onClickFn={() => genOptions[optionKey].selectedOption = undefined} />
+                                {:else if genOptions[optionKey].selectedOption === 'gear'}
+                                    <Svelecte 
+                                        options={MOCK_GEAR}
+                                        valueAsObject
+                                        placeholder='Gear Package'
+                                        bind:value={genOptions.inventory.gearPackage}
+                                    />
+                                    <SimpleIconButton icon="mdi:autorenew" width="1.5em" onClickFn={() => genOptions[optionKey].selectedOption = genOptions.inventory.gearPackage = undefined} />
+                                {:else}
+                                    <SimpleSegmentChoice options={genOptions[optionKey].options} bind:final={genOptions[optionKey].selectedOption} />
+                                {/if}
+                            </div>
+                        </div>
                     {/each}
+                    {#if genOptions.inventory.gearPackage}
+                        <div class="gear-package-items">
+                            {#each genOptions.inventory.gearPackage?.items ?? [] as item}
+                                <SimpleChip value={item.name}></SimpleChip>
+                            {/each}
+                        </div>
+                    {/if}
+                {:else}
+                    <div class="random-gen-rules">
+                        
+                    </div>
                 {/if}
             </dialog-content>
             <div class="rd-buttons">
@@ -339,6 +438,7 @@
             "rd-buttons rd-buttons rd-buttons";
         min-height: 0;
         height: 100%;
+        font-family: Quicksand;
     }
 
     .random-character-dialog > div {
@@ -363,43 +463,58 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        align-items: baseline;
+        align-items: center;
         gap: 0.5em;
         overflow: hidden;
     }
 
     .rd-content h4 {
-        font-family: Athiti;
-        font-size: 1.1em;
-        font-weight: 400;
+        font-family: Quicksand;
+        font-size: 1em;
         margin: 0em;
         align-self: center;
         text-transform: uppercase;
-    }
-
-    .rd-content .custom-option {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.25em;
-        font-family: Quicksand;
-    }
-
-    line-div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 0.5em;
-    }
-
-    .sub-option-padding {
-        padding-right: 1rem;
-    }
-
-    .option-delimiter {
-        margin-left: -0.4em;
         font-weight: var(--semi-bold);
     }
+
+    .meta-choice {
+        font-size: 1.1rem;
+        margin-bottom: 0.5em;
+    }
+
+    .single-choice {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 1em;
+        grid-template-areas:
+            "choice-title choice-options";
+        width: 100%;
+    }
+
+    .choice-title {
+        grid-area: choice-title;
+        display: flex;
+    }
+
+    .choice-options {
+        grid-area: choice-options;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .gear-package-items {
+        display: flex;
+        justify-content: center;
+        flex-flow: wrap;
+        gap: 0.5em;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        padding-bottom: 4px;
+        margin-top: 0.5em;
+    }
+
 
     :global(.rd-buttons simple-button) {
         padding: 0.4rem 0em;

@@ -68,7 +68,7 @@
     
     item {
         display: grid; 
-        grid-template-columns: 1fr 1fr 6fr 1fr; 
+        grid-template-columns: 10fr 2fr 1fr; 
         grid-template-rows: 1fr 1fr; 
         gap: 0.1em;
         width: 85%;
@@ -79,8 +79,8 @@
         background-color: transparent;
         
         grid-template-areas: 
-            "title title padding-div icon"
-            "subtitle subtitle . icon";
+            "title . icon"
+            "subtitle . icon";
     }
 
     item:hover {

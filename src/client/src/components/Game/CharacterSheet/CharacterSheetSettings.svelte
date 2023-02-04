@@ -123,6 +123,7 @@
         justify-content: flex-start;
         align-items: center;
         gap: 1em;
+        position: relative;
     }
 
     .settings > div {

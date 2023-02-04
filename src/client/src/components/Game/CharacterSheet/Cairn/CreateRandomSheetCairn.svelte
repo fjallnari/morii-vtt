@@ -21,28 +21,36 @@
             name: 'Cleric',
             items: [
                 {
-                    name: 'War Hammer (d10, bulky)'
-                    // ...
+                    name: 'War Hammer (d10, bulky)',
+                    type: 'weapon',
+                    damage: 'd10',
+                    bulky: true
                 },
                 {
                     name: 'Chainmail (2 Armor, bulky)',
-                    // ...
+                    type: 'armor',
+                    armor: '2',
+                    bulky: true
                 },
                 {
                     name: 'Gauntlets (+1 Armor)',
-                    // ...
+                    type: 'armor',
+                    armor: '+1',
+                    bulky: false
                 },
                 {
                     name: 'Cleansing Blade (d6)',
-                    // ...
+                    type: 'weapon',
+                    damage: 'd6',
+                    bulky: false
                 },
                 {
                     name: 'Holy Symbol',
-                    // ...
+                    type: 'item'
                 },
                 {
                     name: 'Cloak of the Order',
-                    // ...
+                    type: 'item'
                 }
             ]
         }

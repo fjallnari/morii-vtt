@@ -41,6 +41,23 @@
         }
     }
 
+    const checkItemState = () => {
+        const STATE0 = !item.bulky && !item.stacks && !item.slotless
+        const STATE1 = item.bulky && !item.stacks && !item.slotless
+        const STATE2 = !item.bulky && item.stacks && !item.slotless
+        if (STATE0) {
+            item.bulky = true
+        } else if (STATE1) {
+            item.bulky = false;
+            item.stacks = true;
+        } else if (STATE2) {
+            item.stacks = false;
+            item.slotless = true;
+        } else {
+            item.slotless = false;
+        }
+    }
+
 </script>
 
 <box class="item-main-container {item.type === "fatigue" ? 'striped' : ''}">
@@ -66,8 +83,8 @@
                 <InPlaceEdit bind:value={item.name} editWidth={editWidth} editHeight={editHeight} on:submit={() => onSubmitFn()}/>
             </div>
             <div class="item-bulky">
-                <sendable on:click={() => {(!item.stacks && !item.bulky) ? item.bulky = true : (!item.stacks && item.bulky) ? (item.stacks = true, item.bulky = false) : (item.stacks = false, item.bulky = false); onSubmitFn();}} on:keyup={() => {}}>
-                    <Icon class="medi-icon" icon="{item.stacks ? 'mdi:card-multiple' : item.bulky ? 'mdi:weight': 'mdi:feather'}" />
+                <sendable on:click={() => {checkItemState(); onSubmitFn();}} on:keyup={() => {}}>
+                    <Icon class="medi-icon" icon="{item.stacks ? 'mdi:card-multiple' : item.bulky ? 'mdi:weight': item.slotless ? 'mdi:checkbox-blank-off-outline' : 'mdi:feather'}" />
                 </sendable>
             </div>
             <sendable class="item-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>

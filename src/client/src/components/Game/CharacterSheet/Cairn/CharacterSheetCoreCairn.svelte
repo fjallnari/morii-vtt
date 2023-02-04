@@ -76,7 +76,7 @@
 
     const stackItems = () => {
         let stackable = character.inventory.filter((item) => item.stacks).length;
-        let unstackable = character.inventory.length - stackable;
+        let unstackable = character.inventory.filter((item) => !item.stacks && !item.slotless).length;
         return stackable <= unstackable ? 0 : stackable - unstackable;
     }
 
@@ -89,7 +89,7 @@
     let filledSlotsCount: number = 0;
     $: {
         filledSlotsCount = character.inventory.reduce(
-            (acc, item) => acc + (item.bulky ? 2 : item.stacks ? 0 : 1),
+            (acc, item) => acc + (item.bulky ? 2 : item.stacks || item.slotless ? 0 : 1),
             0
         ) + stackItems();
         checkOverEncumbered();

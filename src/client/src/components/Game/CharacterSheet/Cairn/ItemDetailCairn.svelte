@@ -1,16 +1,17 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import Svelecte from "svelecte/src/Svelecte.svelte";
+    import { params } from "svelte-spa-router";
     import { slide } from "svelte/transition";
     import type { ItemCairn } from "../../../../interfaces/Cairn/CharacterCairn";
-    import { modifyCharacter, selectedCharacter, sendSkillCheck } from "../../../../stores";
+    import { messageMode, modifyCharacter, ownerSocketID, selectedCharacter, sendSkillCheck, socket, user } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
 
     export let item: ItemCairn;
 
     export let textareaHeight: string = '10em';
-    export let editWidth: string = '18rem';
+    export let editWidth: string = '15rem';
     export let editHeight: string = '1.5rem';
     export let deleteItem: (item: ItemCairn) => void = () => {};
     export let onSubmitFn: () => void = $modifyCharacter;
@@ -21,7 +22,8 @@
         'item': 'mdi:cube',
         'armor': 'mdi:shield-half-full',
         'weapon': 'mdi:sword',
-        'spellbook': 'mdi:fire'
+        'spellbook': 'mdi:fire',
+        'relic': 'mdi:lightning-bolt'
     }
 
     let itemTypeIndex = Object.keys(itemTypeIcons).indexOf(item.type);
@@ -33,12 +35,6 @@
         oldTypeIndex = Object.keys(itemTypeIcons).indexOf(item.type);
         item.type = Object.keys(itemTypeIcons)[itemTypeIndex] ?? item.type;
         onSubmitFn();
-    }
-
-    const rollAttack = () => {
-        if (item.damage && item.damage !== '') {
-            $sendSkillCheck(0, `${item.name.toLowerCase()} | damage (${item.damage})`, `${$selectedCharacter?.name.split(' ')[0]}`, '-', '', '', item.damage);
-        }
     }
 
     const checkItemState = () => {
@@ -58,6 +54,30 @@
         }
     }
 
+    const rollAttack = () => {
+        if (item.damage && item.damage !== '') {
+            $sendSkillCheck(0, `${item.name.toLowerCase()} | damage (${item.damage})`, `${$selectedCharacter?.name.split(' ')[0]}`, '-', '', '', item.damage);
+        }
+    }
+
+    const sendItem = () => {
+        $socket.emit('chat-message', {
+            senderInfo: {
+                _id: $user._id, 
+                username: $user.username,
+                settings: $user.settings,
+            }, 
+            messageText: `#### ${item.name ?? ''}\n${item.description ?? ''}`,
+            skillCheckInfo: {
+                characterName: $selectedCharacter?.name,
+                skillName: ''
+            },
+            gameID: $params.id,
+            ownerSocketID: $ownerSocketID,
+            messageMode: $messageMode
+        });
+    }
+
 </script>
 
 <box class="item-main-container {item.type === "fatigue" ? 'striped' : ''}">
@@ -69,14 +89,28 @@
             </sendable>
         </div>
     {:else}
-        <div class="item-summary">
-            {#if item.type === 'weapon'}
-                <sendable class="item-type-icon" on:click={() => rollAttack()} on:keyup={() => {}}>
+        <div class="item-summary {item.type === 'relic' ? "relic-grid" : 'normal-grid'}">
+            {#if ['weapon', 'spellbook', 'relic'].includes(item.type)}
+                <sendable class="item-type-icon" on:click={() => item.type === 'weapon' ? rollAttack() : sendItem()} on:keyup={() => {}}>
                     <Icon class="medi-icon" icon={itemIcon} />
                 </sendable>
             {:else}
                 <div class="item-type-icon">
                     <Icon class="medi-icon" icon={itemIcon} />
+                </div>
+            {/if}
+            {#if item.type === 'relic'}
+                <div class="item-charges">
+                    {#if ~~item.charges_max > 6}
+                        <InPlaceEdit bind:value={item.charges} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>/
+                        <InPlaceEdit bind:value={item.charges_max} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+                    {:else}
+                        {#each Array.from({ length: ~~item.charges_max }, (_, i) => i + 1) as charge_level}
+                            <icon class="charge-level-icon" on:click={() => { item.charges = charge_level === ~~item.charges ? '0' : charge_level.toString(); $modifyCharacter()}} on:keyup={() => {}}>
+                                <Icon width='1em' icon='mdi:{charge_level > ~~item.charges ? 'circle-off-outline' : 'checkbox-blank-circle-outline'}' />
+                            </icon>
+                        {/each}
+                    {/if}
                 </div>
             {/if}
             <div class="item-name">
@@ -105,6 +139,10 @@
             {#if item.type === 'weapon'}
                 <div class="line-title">Damage:</div>
                 <InPlaceEdit bind:value={item.damage} editWidth='2em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+            {:else if item.type === 'relic'}
+                <div class="line-title">Charges:</div>
+                <InPlaceEdit bind:value={item.charges} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>/
+                <InPlaceEdit bind:value={item.charges_max} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
             {/if}
         </div>
         <div class="details" transition:slide|local>
@@ -154,11 +192,19 @@
 
     .item-summary {
         display: grid;
-        grid-template-columns: 1fr 1fr 20fr 1fr 1fr;
-        grid-template-rows: 2fr;
         gap: 0.5em;
+        grid-template-rows: 2fr;
         padding: 0.5em 0em;
+    }
+
+    .item-summary.normal-grid {
+        grid-template-columns: 1fr 1fr minmax(0, 20fr) 1fr 1fr;
         grid-template-areas: "item-type-icon . item-name item-bulky item-menu"
+    }
+
+    .item-summary.relic-grid {
+        grid-template-columns: 1fr 6fr minmax(0, 20fr) 4fr 1fr 1fr;
+        grid-template-areas: "item-type-icon item-charges item-name . item-bulky item-menu"
     }
 
     .item-type-icon { grid-area: item-type-icon;
@@ -169,6 +215,21 @@
         border-right: 1px solid var(--clr-text);
         padding-right: 0.5em;
         gap: 0.25em;
+    }
+
+    .item-charges { grid-area: item-charges;
+        display: flex;
+        justify-content: flex-start !important;
+        align-items: center;
+        flex-flow: wrap;
+        width: 100%;
+    }
+
+    .charge-level-icon {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .item-name { grid-area: item-name;

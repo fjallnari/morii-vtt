@@ -26,7 +26,9 @@ export interface ItemCairn {
     slotless?: boolean,
     damage?: string,
     armor?: string,
-    description?: string
+    charges?: string,
+    charges_max?: string,
+    description?: string,
 }
 
 export interface CharacterCairn extends CharacterGeneric {

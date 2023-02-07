@@ -74,6 +74,14 @@
         $sendSkillCheck(0, `${AS} save | success <= ${character.ability_scores[AS].current}`, `${character.name.split(' ')[0]}`, '-', 'd20', '', '', 'roll-under');
     }
 
+    const recalculateArmor = () => {
+        character.armor = character.inventory.reduce(
+                (acc, item) => acc + (item.armor ? ~~item.armor : 0),
+                0
+        ).toString();
+        $modifyCharacter();
+    }
+
     const stackItems = () => {
         let stackable = character.inventory.filter((item) => item.stacks).length;
         let unstackable = character.inventory.filter((item) => !item.stacks && !item.slotless).length;
@@ -165,7 +173,7 @@
     <BoxWithList label='Inventory' inlineStyle='grid-area: inventory;' addNewListItem={addItem}>
         <div class="item-list" slot='list'>
             {#each character.inventory as item, index}
-                <ItemDetailCairn bind:item deleteItem={deleteItem}/>
+                <ItemDetailCairn bind:item deleteItem={deleteItem} recalculateArmor={recalculateArmor}/>
             {/each}
         </div>
     </BoxWithList>

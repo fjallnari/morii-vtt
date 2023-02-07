@@ -15,6 +15,7 @@
     export let editHeight: string = '1.5rem';
     export let deleteItem: (item: ItemCairn) => void = () => {};
     export let onSubmitFn: () => void = $modifyCharacter;
+    export let recalculateArmor: () => void;
 
     let isOpen: boolean = false;
 
@@ -139,6 +140,9 @@
             {#if item.type === 'weapon'}
                 <div class="line-title">Damage:</div>
                 <InPlaceEdit bind:value={item.damage} editWidth='2em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+            {:else if item.type === 'armor'}
+                <div class="line-title">Armor:</div>
+                <InPlaceEdit bind:value={item.armor} editWidth='2em' editHeight='1.5em' on:submit={() => recalculateArmor()}/>
             {:else if item.type === 'relic'}
                 <div class="line-title">Charges:</div>
                 <InPlaceEdit bind:value={item.charges} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>/

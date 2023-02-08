@@ -89,7 +89,7 @@
     }
 
     const checkOverEncumbered = () => {
-        if (filledSlotsCount >= ~~character.slots) {
+        if (filledSlotsCount >= ~~character.slots && !character.manual_encumbrance) {
             character.hp = "0";
         }
     }
@@ -137,7 +137,7 @@
         <RowBoxWithLabel label='Total slots'>
             <InPlaceEdit bind:value={character.slots} editWidth='2em' editHeight='2em' on:submit={() => $modifyCharacter()}/>
         </RowBoxWithLabel>
-        <RowBoxWithLabel label='Filled slots' wantBorder={filledSlotsCount >= ~~character.slots}>
+        <RowBoxWithLabel label='Filled slots' wantBorder={filledSlotsCount >= ~~character.slots && !character.manual_encumbrance}>
             {filledSlotsCount > ~~character.slots ? ~~character.slots : filledSlotsCount }
         </RowBoxWithLabel>
     </div>

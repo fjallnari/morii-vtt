@@ -4,6 +4,8 @@
     import CopyToClipboard from 'svelte-copy-to-clipboard';
     import SimpleButton from "../../../SimpleButton.svelte";
     import SimpleSnackbar from "../../../SimpleSnackbar.svelte";
+    import Icon from "@iconify/svelte";
+    import { modifyCharacter } from "../../../../stores";
 
     let copySnackbar: SimpleSnackbar;
 
@@ -35,6 +37,12 @@ ${character.inventory.map((item, index) => {
 </script>
 
 <line-div class="cairn-settings">
+    <line-div>
+        <div>Manual over-encumbrance</div>
+        <sendable on:click={() => { character.manual_encumbrance = !character.manual_encumbrance; $modifyCharacter(); }} on:keyup={() => {}}>
+            <Icon class="big-icon" icon="mdi:{character.manual_encumbrance ? 'checkbox-marked': 'checkbox-blank-outline'}" />
+        </sendable>
+    </line-div>
     <CreateRandomSheetCairn bind:character={character} rerollExistingSheet={true}></CreateRandomSheetCairn>
     <CopyToClipboard text={getASCIICharacter()} let:copy on:copy={() => copySnackbar.open("success")}>
         <SimpleButton value="Copy ASCII character" icon="mdi:content-copy" iconWidth='1em' type="default" onClickFn={() => copy()}></SimpleButton>

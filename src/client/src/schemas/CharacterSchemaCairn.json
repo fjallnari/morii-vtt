@@ -66,6 +66,9 @@
           },
           "type": "array"
         },
+        "manual_encumbrance": {
+          "type": "boolean"
+        },
         "name": {
           "type": "string"
         },
@@ -83,7 +86,6 @@
         }
       },
       "required": [
-        "_id",
         "ability_scores",
         "age",
         "appearance",
@@ -96,7 +98,6 @@
         "inventory",
         "name",
         "notes",
-        "playerID",
         "slots",
         "system"
       ],
@@ -182,6 +183,12 @@
         "bulky": {
           "type": "boolean"
         },
+        "charges": {
+          "type": "string"
+        },
+        "charges_max": {
+          "type": "string"
+        },
         "damage": {
           "type": "string"
         },
@@ -190,6 +197,9 @@
         },
         "name": {
           "type": "string"
+        },
+        "slotless": {
+          "type": "boolean"
         },
         "stacks": {
           "type": "boolean"

@@ -107,6 +107,9 @@
     "Character": {
       "additionalProperties": false,
       "properties": {
+        "system": {
+          "type": "string"
+        },
         "ability_scores": {
           "additionalProperties": {
             "$ref": "#/definitions/AbilityScore"

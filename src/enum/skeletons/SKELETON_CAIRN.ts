@@ -31,6 +31,7 @@ export const SKELETON_CAIRN = {
     },
     notes: '',
     slots: '10',
+    slots_filled: '0',
     inventory: [
         {
             name: 'Torch',

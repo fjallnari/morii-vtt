@@ -81,6 +81,9 @@
         "slots": {
           "type": "string"
         },
+        "slots_filled": {
+          "type": "string"
+        },
         "system": {
           "type": "string"
         }

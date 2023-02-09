@@ -2,7 +2,6 @@ import Monsters from "../components/Game/GameOverview/Monsters.svelte";
 import GameOverview from "../components/Game/GameOverview/GameOverview.svelte";
 import QuickCreateSheet from "../components/Game/QCreate/QuickCreateSheet.svelte";
 import CopyExistingSheet from "../components/Game/CopyExistingSheet.svelte";
-import ImportJsonSheet from "../components/Game/ImportJsonSheet.svelte";
 import InnerOverview5E from "../components/Game/GameOverview/InnerOverview5E.svelte";
 import CharacterSheetSettings from "../components/Game/CharacterSheet/CharacterSheetSettings.svelte";
 import CharacterSheetCore5E from "../components/Game/CharacterSheet/5E/CharacterSheetCore5E.svelte";
@@ -13,6 +12,8 @@ import CharacterSheetCoreCairn from "../components/Game/CharacterSheet/Cairn/Cha
 import SpecificSettingsCairn from "../components/Game/CharacterSheet/Cairn/SpecificSettingsCairn.svelte";
 import CharacterSheetRulesCairn from "../components/Game/CharacterSheet/Cairn/CharacterSheetRulesCairn.svelte";
 import CreateRandomSheetCairn from "../components/Game/CharacterSheet/Cairn/CreateRandomSheetCairn.svelte";
+import ImportJsonSheet5E from "../components/Game/CharacterSheet/5E/ImportJsonSheet5E.svelte";
+import ImportJsonSheetCairn from "../components/Game/CharacterSheet/Cairn/ImportJsonSheetCairn.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {
@@ -50,7 +51,7 @@ const GAME_SYSTEMS = {
             },
             SETTINGS_TAB
         ],
-        creationOptions: [ QuickCreateSheet, CopyExistingSheet, ImportJsonSheet ],
+        creationOptions: [ QuickCreateSheet, CopyExistingSheet, ImportJsonSheet5E ],
         innerOverview: InnerOverview5E,
         specificSettings: SpecificSettings5E,
         gameTabs: [
@@ -86,7 +87,7 @@ const GAME_SYSTEMS = {
             },
             SETTINGS_TAB
         ],
-        creationOptions: [ CreateRandomSheetCairn, CopyExistingSheet ],
+        creationOptions: [ CreateRandomSheetCairn, CopyExistingSheet, ImportJsonSheetCairn ],
         specificSettings: SpecificSettingsCairn,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW

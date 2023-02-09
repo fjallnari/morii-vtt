@@ -10,6 +10,7 @@
     import ClassIcon from "../ClassIcon.svelte";
     import GAME_SYSTEMS from "../../../enum/GameSystems";
     import type CharacterAny from "../../../interfaces/CharacterAny";
+    import { toSnakeCase } from "../../../util/util";
 
     export let character: CharacterAny;
 
@@ -46,7 +47,7 @@
 
     const exportToJSON = () => {
         const characterNoIDs = (({ _id, playerID, ...other }) => other)(character);
-        downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? character.name : 'untitled'}-mvtt.json`);
+        downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? toSnakeCase(character.name) : 'untitled'}_${toSnakeCase(character.system)}.morii.json`);
     }
     
 

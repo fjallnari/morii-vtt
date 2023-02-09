@@ -1,7 +1,8 @@
 <script lang="ts">
+    import GAME_SYSTEMS from "../../../enum/GameSystems";
     import type GameData from "../../../interfaces/GameData";
     import { selectedCharacter } from "../../../stores";
-    import ClassIcon from "../ClassIcon.svelte";
+    import CharacterBadge5E from "../CharacterSheet/5E/CharacterBadge5E.svelte";
 
     export let gameData: GameData;
 </script>
@@ -13,12 +14,12 @@
             <h3>No characters found</h3>
         {:else}
             {#each gameData.characters as character}
-                <li class="character-item" on:click={() => selectedCharacter.set(character)} on:keyup={() => {}}>
-                    <ClassIcon characterClasses={character.classes}></ClassIcon>
-                    <div class="character-name">
-                        {character.name}
-                    </div>
-                </li>
+                <div class="character-badge-box" on:click={() => selectedCharacter.set(character)} on:keyup={() => {}}>
+                    <svelte:component 
+                        this={GAME_SYSTEMS[gameData.system].characterBadge ?? CharacterBadge5E}
+                        bind:character={character}
+                    />
+                </div>
             {/each}
         {/if}
     </div>
@@ -48,13 +49,7 @@
         padding: 4px 1em 4px 1em;
     }
 
-    .character-item {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0.2em;
-
+    .character-badge-box {
         width: 10em;
         height: 10em;
         cursor: pointer;
@@ -62,11 +57,6 @@
         background-color:var(--clr-box-bg-normal);
         box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
         border-radius: 4px;
-    }
-    
-    .character-name {
-        font-family: Quicksand;
-        font-size: 1.2em;
     }
 
     h3 {

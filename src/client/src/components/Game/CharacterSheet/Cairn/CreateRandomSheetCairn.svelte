@@ -81,13 +81,13 @@
     }
 
     const getRandomWeapon = () => {
-        const weapon = [
-            ...Array(5).fill(['Dagger (d6 damage)', 'Cudgel (d6 damage)', 'Staff (d6 damage)'].random()),
-            ...Array(9).fill(['Sword (d8 damage)', 'Mace (d8 damage)', 'Axe (d8 damage)'].random()),
-            ...Array(5).fill(['Longbow (d8 damage, bulky)', 'Crossbow (d8 damage, bulky)', 'Sling (d4 damage)'].random()),
-            ['Halberd (d10 damage, bulky)', 'War Hammer (d10 damage, bulky)', 'Battleaxe (d10 damage, bulky)'].random()
+        const weaponName = [
+            ...Array(5).fill(['Dagger', 'Cudgel', 'Staff'].random()),
+            ...Array(9).fill(['Sword', 'Mace', 'Axe'].random()),
+            ...Array(5).fill(['Longbow', 'Crossbow', 'Sling'].random()),
+            ['Halberd', 'War Hammer', 'Battleaxe'].random()
         ].random();
-        return { name: weapon.split('(')[0].trim(), type: 'weapon', bulky: weapon.includes('bulky'), damage: weapon.match(/d[0-9]+/g)[0] };
+        return cairn.weapons[weaponName] ?? undefined;
     }
 
     const getHelmetShield = (): ItemCairn[] => {

@@ -9,6 +9,7 @@ import { SPELLBOOKS } from "./SPELLBOOKS";
 import { TOOLS } from "./TOOLS";
 import { TRAITS } from "./TRAITS";
 import { TRINKETS } from "./TRINKETS";
+import { WEAPONS } from "./WEAPONS";
 
 export const CAIRN_DATA = {
     gear: GEAR,
@@ -17,6 +18,7 @@ export const CAIRN_DATA = {
     trinkets: TRINKETS,
     spellbooks: SPELLBOOKS,
     armors: ARMORS,
+    weapons: WEAPONS,
     backgrounds: BACKGROUNDS,
     scars: SCARS,
     names: {

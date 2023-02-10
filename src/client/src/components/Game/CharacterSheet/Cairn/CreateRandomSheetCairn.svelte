@@ -156,10 +156,10 @@
             name: name,
             background: background,
             appearance: appearance,
-            inventory: inventory,
+            inventory: inventory.filter(item => item),
             deprived: false,
             armor: inventory.reduce(
-                (acc, item) => acc + (item.armor ? ~~item.armor : 0),
+                (acc, item) => acc + (item?.armor ? ~~item?.armor : 0),
                 0
             ).toString(),
         });
@@ -363,7 +363,7 @@
                     {#if genOptions.inventory.gearPackage}
                         <div class="gear-package-items">
                             {#each genOptions.inventory.gearPackage?.items ?? [] as item}
-                                <SimpleChip value={item.name}></SimpleChip>
+                                <SimpleChip value={item?.name}></SimpleChip>
                             {/each}
                         </div>
                     {/if}

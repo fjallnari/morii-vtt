@@ -16,6 +16,7 @@ import ImportJsonSheet5E from "../components/Game/CharacterSheet/5E/ImportJsonSh
 import ImportJsonSheetCairn from "../components/Game/CharacterSheet/Cairn/ImportJsonSheetCairn.svelte";
 import CharacterBadge5E from "../components/Game/CharacterSheet/5E/CharacterBadge5E.svelte";
 import CharacterBadgeCairn from "../components/Game/CharacterSheet/Cairn/CharacterBadgeCairn.svelte";
+import InnerOverviewCairn from "../components/Game/GameOverview/InnerOverviewCairn.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {
@@ -91,6 +92,7 @@ const GAME_SYSTEMS = {
             SETTINGS_TAB
         ],
         creationOptions: [ CreateRandomSheetCairn, CopyExistingSheet, ImportJsonSheetCairn ],
+        innerOverview: InnerOverviewCairn,
         specificSettings: SpecificSettingsCairn,
         characterBadge: CharacterBadgeCairn,
         gameTabs: [

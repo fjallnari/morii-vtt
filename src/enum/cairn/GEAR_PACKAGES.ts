@@ -3,14 +3,16 @@ import { ArmorCairn, ARMORS } from "./ARMORS"
 import { WeaponCairn, WEAPONS } from "./WEAPONS"
 import { SPELLBOOKS } from "./SPELLBOOKS"
 
-const createItem = ({ name, description, bulky, stacks }: {
+const createItem = ({ name, type, description, bulky, stacks, charges }: {
     name: string,
+    type?: string,
     description?: string,
     bulky?: boolean,
     stacks?: boolean,
+    charges?: string
 }
 ): ItemCairn => {
-    return { name: name, type: 'item', description: description, bulky, stacks: stacks, };
+    return { name: name, type: type ?? 'item', description: description, bulky, stacks: stacks, charges: charges, charges_max: charges };
 }
 
 const getRandomSpellbook = (): ItemCairn => {
@@ -114,8 +116,8 @@ export const GEAR_PACKAGES: { name: string, items: Partial<ItemCairn>[] }[] = [
             getRandomSpellbook(),
             getRandomSpellbook(),
             createItem({ name: "Ragged Clothing", description: "hidden pockets" }),
-            createItem({ name: "Leycap", description: "1 use. Anyone ingesting this green-flecked mushroom loses a Fatigue, but is then required to make a WIL save to avoid its addictive properties. A fail leaves the PC deprived and unable to focus until they can eat another leycap, providing only a brief reprieve from the addiction." }),
-            createItem({ name: "Leycap", description: "1 use. Anyone ingesting this green-flecked mushroom loses a Fatigue, but is then required to make a WIL save to avoid its addictive properties. A fail leaves the PC deprived and unable to focus until they can eat another leycap, providing only a brief reprieve from the addiction." })
+            createItem({ name: "Leycap", type: 'relic', charges: '1', description: "1 use. Anyone ingesting this green-flecked mushroom loses a Fatigue, but is then required to make a WIL save to avoid its addictive properties. A fail leaves the PC deprived and unable to focus until they can eat another leycap, providing only a brief reprieve from the addiction." }),
+            createItem({ name: "Leycap", type: 'relic', charges: '1', description: "1 use. Anyone ingesting this green-flecked mushroom loses a Fatigue, but is then required to make a WIL save to avoid its addictive properties. A fail leaves the PC deprived and unable to focus until they can eat another leycap, providing only a brief reprieve from the addiction." })
         ],
     },
     {

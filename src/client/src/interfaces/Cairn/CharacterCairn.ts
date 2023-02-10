@@ -46,6 +46,7 @@ export interface CharacterCairn extends CharacterGeneric {
     coins: Record<string, string>,
     notes: string,
     slots: string,
+    slots_filled?: string,
     inventory: ItemCairn[],
     manual_encumbrance?: boolean,
 }

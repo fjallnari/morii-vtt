@@ -14,6 +14,9 @@ import CharacterSheetRulesCairn from "../components/Game/CharacterSheet/Cairn/Ch
 import CreateRandomSheetCairn from "../components/Game/CharacterSheet/Cairn/CreateRandomSheetCairn.svelte";
 import ImportJsonSheet5E from "../components/Game/CharacterSheet/5E/ImportJsonSheet5E.svelte";
 import ImportJsonSheetCairn from "../components/Game/CharacterSheet/Cairn/ImportJsonSheetCairn.svelte";
+import CharacterBadge5E from "../components/Game/CharacterSheet/5E/CharacterBadge5E.svelte";
+import CharacterBadgeCairn from "../components/Game/CharacterSheet/Cairn/CharacterBadgeCairn.svelte";
+import InnerOverviewCairn from "../components/Game/GameOverview/InnerOverviewCairn.svelte";
 
 
 const OWNER_STANDARD_OVERVIEW = {
@@ -54,6 +57,7 @@ const GAME_SYSTEMS = {
         creationOptions: [ QuickCreateSheet, CopyExistingSheet, ImportJsonSheet5E ],
         innerOverview: InnerOverview5E,
         specificSettings: SpecificSettings5E,
+        characterBadge: CharacterBadge5E,
         gameTabs: [
             // {
             //     id: 'combat',
@@ -88,7 +92,9 @@ const GAME_SYSTEMS = {
             SETTINGS_TAB
         ],
         creationOptions: [ CreateRandomSheetCairn, CopyExistingSheet, ImportJsonSheetCairn ],
+        innerOverview: InnerOverviewCairn,
         specificSettings: SpecificSettingsCairn,
+        characterBadge: CharacterBadgeCairn,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW
         ]

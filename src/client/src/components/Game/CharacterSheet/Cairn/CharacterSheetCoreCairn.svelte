@@ -100,7 +100,9 @@
             (acc, item) => acc + (item.bulky ? 2 : item.stacks || item.slotless ? 0 : 1),
             0
         ) + stackItems();
+        character.slots_filled = filledSlotsCount.toString();
         checkOverEncumbered();
+        $modifyCharacter();
     }
 
 </script>

@@ -471,6 +471,10 @@
         align-items: center;
     }
 
+    :global(.choice-options > .svelecte-control) {
+        --sv-dropdown-height: 10em !important;
+    }
+
     .gear-package-items {
         display: flex;
         justify-content: center;

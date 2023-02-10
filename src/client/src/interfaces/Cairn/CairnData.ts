@@ -1,3 +1,4 @@
+import type CairnGearPackage from "./CairnGearPackage"
 import type { ItemCairn } from "./CharacterCairn"
 
 export default interface CairnData {
@@ -30,4 +31,5 @@ export default interface CairnData {
     },
     rules_basic: string,
     rules_combat: string,
+    gear_packages: CairnGearPackage[]
 }

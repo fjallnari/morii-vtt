@@ -4,7 +4,7 @@ export class ArmorCairn {
     public record: Record<string, Partial<ItemCairn>>;
 
     constructor ({ name, armor, bulky }: { name: string, armor: string, bulky?: boolean }) {
-        const prettyName = `${name} (${armor} Armor${bulky ? ', bulky': ''})`;
+        const prettyName = `${name} (${armor} Armor)`;
         this.record = {[name]: { name: prettyName, type: 'armor', bulky, armor: armor }};
         return this;
     }

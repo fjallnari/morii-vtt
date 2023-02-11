@@ -102,7 +102,6 @@
         ) + stackItems();
         character.slots_filled = filledSlotsCount.toString();
         checkOverEncumbered();
-        $modifyCharacter();
     }
 
 </script>

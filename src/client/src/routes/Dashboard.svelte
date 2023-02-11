@@ -147,6 +147,7 @@
                 <div class="invite-info">
                     <div class="invite-info-main-line">
                         <div class="campaign-name">{inviteInfo?.campaignName ?? '???'}</div>
+                        <div class="system">({inviteInfo?.system ?? '???'})</div>
                         <div class="owner-name">{`by ${inviteInfo?.ownerName ?? '???'}`}</div>
                     </div>
                     {#if inviteInfo?.needsPassword}
@@ -222,7 +223,7 @@
         grid-auto-flow: row;
         grid-template-areas:
             "header header header header"
-            "invite-info invite-info invite-info invite-info "
+            "invite-info invite-info invite-info invite-info"
             "reject-inv reject-inv accept-inv accept-inv";
     }
 
@@ -269,6 +270,11 @@
     .owner-name {
         text-transform: lowercase;
         font-weight: 200;
+    }
+
+    .system {
+        color: gray;
+        font-weight: 200;        
     }
 
     .join-placeholder {

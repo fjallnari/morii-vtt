@@ -27,7 +27,12 @@ export default class GetInviteController extends RouteController {
             const ownerObj = await getUserObj(campaignObj.owner);
 
             logger.info({ inviteCode, status: 200 }, ` succesffully sent data for invite-code '${inviteCode}'`);
-            return this.res.status(200).send({ campaignName: campaignObj.name, ownerName: ownerObj.username, needsPassword: inviteObj.password && inviteObj.password !== ''});
+            return this.res.status(200).send({ 
+                campaignName: campaignObj.name, 
+                ownerName: ownerObj.username, 
+                system: campaignObj.system, 
+                needsPassword: inviteObj.password && inviteObj.password !== ''
+            });
         }
         catch (error) {
             logger.info({ error, inviteCode, status: 500 }, `failed getting invite-code data`);

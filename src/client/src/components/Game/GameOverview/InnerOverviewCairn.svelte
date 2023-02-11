@@ -8,10 +8,9 @@
 </script>
 
 <div class="inner-overview-container">
-    <div class="monsters">
+    <!-- <div class="monsters">
         <h3>Monsters</h3>
-    </div>
-    <div class="add-monster"></div>
+    </div> -->
 </div>
 
 <style>

@@ -27,6 +27,7 @@ def convert_monster_to_json(lines):
     return {"name": monster[0].replace('#', '').strip(), "stats": stats, "description": description}
 
 def get_monsters_as_arr(directory = INPUT_DIR):
+    print(f'Generating Cairn monsters > {OUTPUT_PATH}')
     monsters_array = []
     for filename in os.scandir(directory):
         if filename.is_file() and filename.name.endswith('.md'):
@@ -39,4 +40,4 @@ def get_monsters_as_arr(directory = INPUT_DIR):
 
 
 if __name__ == "__main__":
-    print(get_monsters_as_arr())
+    get_monsters_as_arr()

@@ -145,3 +145,7 @@ dist
 # generated jsons
 
 MONSTERS.json
+
+# cairn input .md monsters
+
+cairn_monsters

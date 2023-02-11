@@ -12,7 +12,7 @@ except ModuleNotFoundError:
 ## transforms 5E SRD monsters data json into a more consistent format
 ## https://gist.github.com/tkfu/9819e4ac6d529e225e9fc58b358c3479
 
-INPUT_PATH = 'monsters_input.json'
+INPUT_PATH = 'monsters_5e_input.json'
 OUTPUT_PATH = 'MONSTERS.json'
 ABILITY_TAGS = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
 FIELDS_TO_DELETE = [f"{ability}_mod" for ability in ABILITY_TAGS]

@@ -12,12 +12,12 @@
 
     const edit = () => {
         editing = true;
+        original = value;
     }
 
     const submit = () => {
-        if (value != original) {
+        if (value !== original) {
             dispatch('submit', value);
-            original = value;
         }
             
         editing = false;

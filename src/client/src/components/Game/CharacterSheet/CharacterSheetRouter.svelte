@@ -17,7 +17,8 @@
         character = undefined;
     });
 
-    modifyCharacter.set(async () => {
+    // the 'debug' variable can be used to track different character sheet changes
+    modifyCharacter.set(async (debug: string = '') => {
         try {
             // don't send socket emit if the character is an npc
             if ($user.gameData.owner !== character.playerID) {
@@ -28,6 +29,8 @@
                     $socket.emit('change-character', { receiverSocketID: receiverSocketID, roomID: $params.id, character: character });
                 }
             }
+            
+            // console.log(`modifying character: ${debug} at ${new Date().toISOString()}`);
 
             await axios.post('/api/modify-character', {
                 modifiedCharacter: character,

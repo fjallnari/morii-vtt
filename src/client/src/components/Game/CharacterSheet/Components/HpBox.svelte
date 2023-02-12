@@ -10,6 +10,7 @@
 
     const correctHP = () => {
         currentHP = ~~currentHP > ~~maxHP ? maxHP : currentHP;
+        $modifyCharacter('hp');
     }
     
 </script>
@@ -18,8 +19,8 @@
 <box class="hp-main-box">
     <HpBar currentHP={~~currentHP} maxHP={~~maxHP} tempHP={~~tempHP}></HpBar>
     <div class="current-hp-text">
-        <InPlaceEdit bind:value={currentHP} editWidth="2em" editHeight="2em" on:submit={() => { correctHP(); $modifyCharacter(); }}/>
-        /<InPlaceEdit bind:value={maxHP} editWidth="2em" editHeight="2em" on:submit={() => { correctHP(); $modifyCharacter(); }}/>
+        <InPlaceEdit bind:value={currentHP} editWidth="2em" editHeight="2em" on:submit={() => correctHP()}/>
+        /<InPlaceEdit bind:value={maxHP} editWidth="2em" editHeight="2em" on:submit={() => correctHP()}/>
     </div>
     <div class="box-label hp-footer">
         {label}

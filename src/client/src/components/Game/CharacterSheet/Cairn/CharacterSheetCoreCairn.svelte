@@ -35,7 +35,7 @@
         // heal hp to max
         if (!character.deprived) {
             character.hp = character.hp_max;
-            $modifyCharacter();
+            $modifyCharacter('short-rest');
         }
     }
 
@@ -43,12 +43,12 @@
         // clear all fatigue
         character.inventory = character.inventory.filter(item => item.type !== 'fatigue');
         characterRest();
-        $modifyCharacter();
+        $modifyCharacter('sleep');
     }
 
     const addFatigue = () => {
         character.inventory = character.inventory.concat([{ type: 'fatigue' }]);
-        $modifyCharacter();
+        $modifyCharacter('add-fatigue');
     }
 
     const restoreAbility = () => {
@@ -57,17 +57,16 @@
             character.ability_scores[AS].current = character.ability_scores[AS].max;
         }
         characterSleep();
-        $modifyCharacter();
+        $modifyCharacter('week-rest');
     }
 
     const addItem = () => {
         character.inventory = character.inventory.concat([{ name: '', type: 'item' }]);
-        $modifyCharacter();
     }
 
     const deleteItem = (item: ItemCairn) => {
         character.inventory = character.inventory.filter(itemIter => itemIter !== item);
-        $modifyCharacter();
+        $modifyCharacter('delete-item');
     }
 
     const sendAbilitySave = (AS: string) => {
@@ -79,7 +78,7 @@
                 (acc, item) => acc + (item.armor ? ~~item.armor : 0),
                 0
         ).toString();
-        $modifyCharacter();
+        $modifyCharacter('armor-recalc');
     }
 
     const stackItems = () => {
@@ -165,7 +164,7 @@
         <RowBoxWithLabel
             label='Deprived'
             clickable
-            onClickFn={() => { character.deprived = !character.deprived; $modifyCharacter() }}
+            onClickFn={() => { character.deprived = !character.deprived; $modifyCharacter('deprived') }}
         >
             <Icon icon="{character.deprived ? 'mdi:sleep': ''}" />
         </RowBoxWithLabel>

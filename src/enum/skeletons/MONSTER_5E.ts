@@ -1,6 +1,6 @@
-import { MonsterData } from "../interfaces/srd/MonsterData";
+import { MonsterData } from "../../interfaces/srd/MonsterData";
 
-export const MONSTER_BLANK: Omit<MonsterData, 'id'> = {
+export const MONSTER_5E: Omit<MonsterData, 'id'> = {
     is_custom: true,
     source: "custom",
     name: "???",

@@ -1,7 +1,8 @@
 import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
-import { MONSTER_BLANK } from "../../../enum/MONSTER_BLANK";
+import MONSTER_SKELETON from "../../../enum/skeletons/MONSTER_SKELETONS";
+import Campaign from "../../../interfaces/Campaign";
 import RouteController from "../RouteController";
 
 
@@ -14,12 +15,14 @@ export default class AddMonsterController extends RouteController {
             const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
             const monstersCollection = <Collection<Document>> await getCollection('monsters');
 
-            const monsterObj = Object.assign({... MONSTER_BLANK}, monsterTemplate);
+            const campaignObj = <Campaign> await campaignsCollection.findOne({_id: new ObjectId(campaignID)});
+
+            const monsterObj = Object.assign({... MONSTER_SKELETON[campaignObj.system]}, monsterTemplate);
 
             const monsterInsertResult = await monstersCollection.insertOne(monsterObj);
             const newMonsterID = monsterInsertResult.insertedId;
 
-            const monsterWithID = Object.assign(monsterObj, { id: newMonsterID.toString() });
+            const monsterWithID = Object.assign(monsterObj, { id: newMonsterID.toString(), system: campaignObj.system});
 
             await campaignsCollection.updateOne({_id: new ObjectId(campaignID)}, {$push: { monsters: newMonsterID }});
 

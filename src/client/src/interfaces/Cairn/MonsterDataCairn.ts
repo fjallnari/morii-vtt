@@ -1,5 +1,6 @@
-export default interface MonsterDataCairn {
-    name: string,
+import type MonsterGeneric from "../MonsterGeneric";
+
+export default interface MonsterDataCairn extends MonsterGeneric {
     stats: string,
-    description: string
+    description: string,
 }

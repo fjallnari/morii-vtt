@@ -1,6 +1,7 @@
 <script lang="ts">
-    import type { CharacterCairn } from "../../../interfaces/Cairn/CharacterCairn";
-    import type GameData from "../../../interfaces/GameData";
+    import type { CharacterCairn } from "../../../../interfaces/Cairn/CharacterCairn";
+    import type GameData from "../../../../interfaces/GameData";
+    import MonstersCairn from "./MonstersCairn.svelte";
 
 
     export let gameData: Omit<GameData, 'characters'> & { characters: CharacterCairn[] };
@@ -8,9 +9,9 @@
 </script>
 
 <div class="inner-overview-container">
-    <!-- <div class="monsters">
-        <h3>Monsters</h3>
-    </div> -->
+    <div class="monsters">
+        <MonstersCairn cairn={gameData.cairn}></MonstersCairn>
+    </div>
 </div>
 
 <style>

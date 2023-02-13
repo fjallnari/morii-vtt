@@ -1,3 +1,5 @@
+import type MonsterGeneric from "../MonsterGeneric"
+
 export interface MonsterTrait {
     name?: string,
     subtitle?: string,
@@ -7,11 +9,7 @@ export interface MonsterTrait {
     attack_dmg?: string
 }
 
-export interface MonsterData {
-    id: string,
-    is_custom?: boolean,
-    source?: string,
-    name: string,
+export interface MonsterData extends MonsterGeneric {
     meta: string,
     ability_scores: Record<string, string>,
     armor_class: string,

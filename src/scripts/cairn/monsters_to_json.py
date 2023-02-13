@@ -1,6 +1,12 @@
 import json
 import os
 
+try: 
+    from nanoid import generate
+except ModuleNotFoundError:
+    print('nanoid not found, falling back to uuid4')
+    from uuid import uuid4 as generate
+
 INPUT_DIR = 'cairn_monsters'
 OUTPUT_PATH = 'monsters.json'
 
@@ -24,7 +30,7 @@ def convert_monster_to_json(lines):
     stats = monster[2].strip()
     description = ''.join(monster[4:]).strip()
     
-    return {"name": monster[0].replace('#', '').strip(), "stats": stats, "description": description}
+    return {"name": monster[0].replace('#', '').strip(), "stats": stats, "description": description, "id": generate(size=10)}
 
 def get_monsters_as_arr(directory = INPUT_DIR):
     print(f'Generating Cairn monsters > {OUTPUT_PATH}')

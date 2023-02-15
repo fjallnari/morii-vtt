@@ -12,16 +12,6 @@ INPUT_DIR = 'cairn_monsters'
 OUTPUT_PATH = 'monsters.json'
 COMPLEX_STATS_RE = r"(?P<hp>[0-9]+) HP,(?: (?P<armor>[0-9]+) Armor,)*(?: (?P<str>[0-9]+) STR,)*(?: (?P<dex>[0-9]+) DEX,)*(?: (?P<wil>[0-9]+) WIL(?:,)?)*(?: )?(?P<attacks>(?:[a-zA-Z -]*(?: )?\([^\(\)]+\)(?:,| or)*)*)(?P<special>.*)"
 
-
-# ! fixes in original Cairn SRD needed 
-# Great White Shark: replace . (dot) with ,
-# Warper: has WILL instead of WIL
-# Giant Scorpion: has MIND instead of WIL
-# Cat, Sabre-Toothed Tiger: flipped STR tag and actual value
-# MINOR ISSUES
-# Fire Beetle, Catoplebas: missing space between attack name and dmg
-# Green Dragon, Blue Dragon, Giant Octopus, Treant, Warper, Flame Lizard, Griffon, Bone Construct, Hydra, Fire Elemental, Wood Troll, Roc: missing italics for blast
-
 def load_source(path):
     source_file = open(path, "r")
     lines = source_file.readlines()

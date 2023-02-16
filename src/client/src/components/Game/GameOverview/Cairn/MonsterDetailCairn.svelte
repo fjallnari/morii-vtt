@@ -1,12 +1,13 @@
 <script lang="ts">
     import axios from "axios";
     import { params } from "svelte-spa-router";
-    import { user } from "../../../../stores";
+    import { sendSkillCheck, user } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import SimpleIconButton from "../../../SimpleIconButton.svelte";
     import type MonsterDataCairn from "../../../../interfaces/Cairn/MonsterDataCairn";
     import SvelteMarkdown from "svelte-markdown";
     import HtmlRendererOverride from "../../../HTMLRendererOverride.svelte";
+    import Icon from "@iconify/svelte";
 
     export let monster: MonsterDataCairn;
     export let addMonster: (monsterTemplate?: {}) => Promise<MonsterDataCairn>;
@@ -72,6 +73,18 @@
 		}
     }
 
+    const sendAttack = (attack: string) => {
+        const splitAttack = attack.split('(');
+        let damage = splitAttack[1]?.replace(')', '');
+        let name = `${splitAttack[0]} (${damage})`;
+
+        if (damage.includes(',')) {
+            damage = damage.split(',')[0];
+        }
+        
+        $sendSkillCheck(0, `${monster.name.toLowerCase()} | ${name}`, '', '-', '-', '-', damage);
+    }
+
 </script>
 
 <monster-detail>
@@ -105,11 +118,78 @@
         </div>
     </div>
     <div class="stats cairn-monster-markdown">
+        <div class="stats-line">
+            <div class="single-stat">
+                <div class="stat-text">
+                    {#if editModeON}
+                        <InPlaceEdit bind:value={monster.hp} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
+                    {:else}
+                        {monster.hp ?? '0'}
+                    {/if}
+                </div>
+                <Icon class="medi-icon" icon="mdi:heart" color="var(--clr-contrast-normal)" />
+            </div>
+            {#if monster.armor && monster.armor !== ""}
+                <div class="single-stat">
+                    <div class="stat-text">
+                        {#if editModeON}
+                            <InPlaceEdit bind:value={monster.armor} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
+                        {:else}
+                            {monster.armor ?? '0'}
+                        {/if}
+                    </div>
+                    <Icon class="medi-icon" icon="mdi:shield-half-full" color="gray" />
+                </div>
+            {/if}
+            <div class="divider">|</div>
+            {#each ['str', 'dex', 'wil'] as ability}
+                <div class="single-stat">
+                    <div class="stat-text">
+                        {#if editModeON}
+                            <InPlaceEdit bind:value={monster[ability]} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
+                        {:else}
+                            {monster[ability] ?? '10'}
+                        {/if}
+                    </div>
+                    <strong>{ability.toUpperCase()}</strong>
+                </div>                    
+            {/each}
+            {#if (monster.special && monster.special !== "") || editModeON}
+                <div class="divider">|</div>
+                <div class="single-stat">
+                    <div class="stat-text">
+                        {#if editModeON}
+                            <InPlaceEdit bind:value={monster.special} editWidth="10rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
+                        {:else}
+                            {monster.special}
+                        {/if}
+                    </div>
+                </div>
+            {/if}
+        </div>
+        <div class="stats-line">
+            {#each monster.attacks ?? [] as attack}
+                {#if editModeON}
+                    <div class="single-stat">
+                        <div class="stat-text">
+                            <InPlaceEdit bind:value={attack} editWidth="10rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
+                        </div>
+                        <Icon class="medi-icon" icon="mdi:sword" />
+                    </div>       
+                {:else}
+                    <sendable class="single-stat" on:click={() => sendAttack(attack)} on:keyup={() => {}}>
+                        <div class="stat-text">
+                            {attack}
+                        </div>
+                        <Icon class="medi-icon" icon="mdi:sword" />
+                    </sendable>
+                {/if}
+            {/each}
+        </div>
         {#if editModeON}
-            <textarea style="height: 6em; margin: 0.5em 0em;" bind:value={monster.stats} on:change={() => editMonster()}></textarea>
-            <textarea style="height: 100%;" bind:value={monster.description} on:change={() => editMonster()}></textarea>
+            <!-- <textarea style="height: 6em; margin: 0.5em 0em;" bind:value={monster.stats} on:change={() => editMonster()}></textarea> -->
+            <textarea class="description-edit" bind:value={monster.description} on:change={() => editMonster()}></textarea>
         {:else}
-            <SvelteMarkdown source={monster.stats ?? '???'} renderers={{html: HtmlRendererOverride}}/>
             <SvelteMarkdown source={monster.description ?? '???'} renderers={{html: HtmlRendererOverride}}/>
         {/if}
 
@@ -172,12 +252,42 @@
         width: 100%;
     }
 
+    .stats-line {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        padding-top: 0.1em;
+        flex-flow: wrap;
+        text-align: center;
+    }
+
+    .single-stat {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5em;
+        padding-left: 0.5em;
+        font-family: Athiti;
+        white-space: nowrap;
+    }
+
+    .divider {
+        padding-left: 0.5em;
+    }
+
     :global(.cairn-monster-markdown > p) {
         margin: 0.5em 0.25em;
     }
 
-    :global(.cairn-monster-markdown > ul) {
+    /* :global(.cairn-monster-markdown > ul) {
         margin: 0em;
+    } */
+
+    .description-edit {
+        height: 100%;
+        margin-top: 0.5em;
     }
 
 </style>

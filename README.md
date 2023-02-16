@@ -5,8 +5,9 @@ Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently su
 - **Campaign Management** - Create, destroy and join campaigns, invite/kick players
 - **Live Games** - See/edit your character sheet, send messages to fellow players, roll some dice
 - **Game Overview for GMs** - All character/NPC sheets in one place with system specific useful info
-- **Character sheets** - All the things you would expect from digital character sheets, fully incorporated rolling and more
+- **Character Sheets** - All the things you would expect from digital character sheets, fully incorporated rolling and more
 - **Import/Export** - Import/export your characters into simple .json files or between campaigns.
+- **Language Module** - Transcribe message into a fantasy language (supports elvish, dwarvish and gnomish)
 
 ### Systems
 
@@ -17,8 +18,8 @@ Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently su
 - **GM Overview** - Includes initiative tracker and simple ordered views of characters' armor class and passive perceptions
 
 #### Cairn
-- **Character reroll** - Create new random character instantly, with all the rolling done for you
-
+- **Character Reroll** - Create new random character instantly, with as much rolling as you want. Also supports the Cairn optional gear packages.
+- **GM Overview** - Includes basic stats overview of all PCs and separate monsters view with all Cairn SRD monsters
 ---
 
 **With all that aside**, this project is still actively developed, and as such expect some rough edges here and there. If you have any issues, encounter bugs, or have some general feedback etc., feel free to [start a new issue](https://github.com/Ashmogh/morii-vtt/issues/new) or [reach out directly over Discord](https://discord.com/invite/MhKxwkRpEU).

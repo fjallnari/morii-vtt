@@ -8,6 +8,7 @@
     import SvelteMarkdown from "svelte-markdown";
     import HtmlRendererOverride from "../../../HTMLRendererOverride.svelte";
     import Icon from "@iconify/svelte";
+    import SimpleButton from "../../../SimpleButton.svelte";
 
     export let monster: MonsterDataCairn;
     export let addMonster: (monsterTemplate?: {}) => Promise<MonsterDataCairn>;
@@ -75,7 +76,7 @@
 
     const sendAttack = (attack: string) => {
         const splitAttack = attack.split('(');
-        let damage = splitAttack[1]?.replace(')', '');
+        let damage = splitAttack[1]?.replace(')', '') ?? '';
         let name = `${splitAttack[0]} (${damage})`;
 
         if (damage.includes(',')) {
@@ -83,6 +84,20 @@
         }
         
         $sendSkillCheck(0, `${monster.name.toLowerCase()} | ${name}`, '', '-', '-', '-', damage);
+    }
+
+    const sendAbility = (ability: string) => {
+        $sendSkillCheck(0, `${monster.name.toLowerCase()} | ${ability} save | success <= ${monster[ability]}`, '', '-', 'd20', '', '', 'roll-under');
+    }
+
+    const addAttack = async () => {
+        monster.attacks = monster.attacks.concat(['']);
+        editMonster();
+    }
+
+    const deleteAttack = async (indexToRemove: number) => {
+        monster.attacks = monster.attacks.filter((_, index) => index != indexToRemove);
+        editMonster();
     }
 
 </script>
@@ -129,7 +144,7 @@
                 </div>
                 <Icon class="medi-icon" icon="mdi:heart" color="var(--clr-contrast-normal)" />
             </div>
-            {#if monster.armor && monster.armor !== ""}
+            {#if monster.armor && monster.armor !== "" || editModeON}
                 <div class="single-stat">
                     <div class="stat-text">
                         {#if editModeON}
@@ -143,23 +158,28 @@
             {/if}
             <div class="divider">|</div>
             {#each ['str', 'dex', 'wil'] as ability}
-                <div class="single-stat">
-                    <div class="stat-text">
-                        {#if editModeON}
+                {#if editModeON}
+                    <div class="single-stat">
+                        <div class="stat-text">
                             <InPlaceEdit bind:value={monster[ability]} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
-                        {:else}
+                        </div>
+                        <strong>{ability.toUpperCase()}</strong>
+                    </div>       
+                {:else}
+                    <sendable class="single-stat" on:click={() => sendAbility(ability)} on:keyup={() => {}}>
+                        <div class="stat-text">
                             {monster[ability] ?? '10'}
-                        {/if}
-                    </div>
-                    <strong>{ability.toUpperCase()}</strong>
-                </div>                    
+                        </div>
+                        <strong>{ability.toUpperCase()}</strong>
+                    </sendable>
+                {/if}        
             {/each}
             {#if (monster.special && monster.special !== "") || editModeON}
                 <div class="divider">|</div>
                 <div class="single-stat">
                     <div class="stat-text">
                         {#if editModeON}
-                            <InPlaceEdit bind:value={monster.special} editWidth="10rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
+                            <InPlaceEdit bind:value={monster.special} editWidth="12rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
                         {:else}
                             {monster.special}
                         {/if}
@@ -168,13 +188,16 @@
             {/if}
         </div>
         <div class="stats-line">
-            {#each monster.attacks ?? [] as attack}
+            {#each monster.attacks ?? [] as attack, index}
                 {#if editModeON}
                     <div class="single-stat">
                         <div class="stat-text">
-                            <InPlaceEdit bind:value={attack} editWidth="10rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
+                            <InPlaceEdit bind:value={attack} editWidth="12rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
                         </div>
-                        <Icon class="medi-icon" icon="mdi:sword" />
+                        <sendable on:click={() => deleteAttack(index)} on:keyup={() => {}}>
+                            <Icon class="medi-icon" icon="mdi:delete" color="var(--clr-contrast-normal)" />
+                        </sendable>
+
                     </div>       
                 {:else}
                     <sendable class="single-stat" on:click={() => sendAttack(attack)} on:keyup={() => {}}>
@@ -187,6 +210,15 @@
             {/each}
         </div>
         {#if editModeON}
+            <div class="button-wrapper">
+                <SimpleButton
+                    value={`Add attack`} 
+                    icon="mdi:sword" 
+                    iconClass='medi-icon'
+                    type="primary" 
+                    onClickFn={() => addAttack()}>
+                </SimpleButton>
+            </div>
             <!-- <textarea style="height: 6em; margin: 0.5em 0em;" bind:value={monster.stats} on:change={() => editMonster()}></textarea> -->
             <textarea class="description-edit" bind:value={monster.description} on:change={() => editMonster()}></textarea>
         {:else}
@@ -288,6 +320,11 @@
     .description-edit {
         height: 100%;
         margin-top: 0.5em;
+    }
+
+    .button-wrapper {
+        width: 40%;
+        margin: 0.5em;
     }
 
 </style>

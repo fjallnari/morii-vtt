@@ -134,7 +134,7 @@
                     <div>Loading {monsterChosenSimple.name}...</div>
                 {:else}
                     <div>Choose a monster to view or </div>
-                    <SimpleButton value='View random monster' icon='mdi:dice' type='green' onClickFn={() => viewRandomMonster()}></SimpleButton>
+                    <SimpleButton value='View random monster' icon='mdi:dice' type='primary' onClickFn={() => viewRandomMonster()}></SimpleButton>
                 {/if}
             </div>
         {/if}

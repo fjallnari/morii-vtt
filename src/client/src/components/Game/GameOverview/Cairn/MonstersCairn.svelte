@@ -1,28 +1,24 @@
 <script lang="ts">
-    import SimpleButton from "../../SimpleButton.svelte";
-    import SimpleProgressCircle from "../../SimpleProgressCircle.svelte";
     import Svelecte from "svelecte/src/Svelecte.svelte";
     import axios from "axios";
-    import MonsterDetail from "./MonsterDetail.svelte";
     import Icon from "@iconify/svelte";
-    import { capitalize } from "../../../util/util";
-    import { messageMode, user } from "../../../stores";
-    import type { MonsterData } from "../../../interfaces/5E/MonsterData";
-    import type GameData from "../../../interfaces/GameData";
     import { params } from "svelte-spa-router";
-    import type MonsterSimple from "../../../interfaces/5E/MonsterSimple";
+    import { user } from "../../../../stores";
+    import SimpleButton from "../../../SimpleButton.svelte";
+    import SimpleProgressCircle from "../../../SimpleProgressCircle.svelte";
+    import type MonsterDataCairn from "../../../../interfaces/Cairn/MonsterDataCairn";
+    import type CairnData from "../../../../interfaces/Cairn/CairnData";
+    import MonsterDetailCairn from "./MonsterDetailCairn.svelte";
 
-    export let gameData: GameData;
+    export let cairn: CairnData;
 
-    let challengeFilterIndex = undefined;
-    let typeFilterIndex = undefined;
-    let monsterChosenSimple: MonsterSimple = undefined;
-    let monsterChosenObj: MonsterData = undefined;
+    let monsterChosenSimple: { id: string, name: string } = undefined;
+    let monsterChosenObj: MonsterDataCairn = undefined;
 
     // returns either array of simple id/name pairs of all monsters, or an array with single detailed monster
     const getMonsterData = async (monsterID: string = '') => {
         try {
-            const response = await axios.get(`/api/monsters/5e/${monsterID}`);
+            const response = await axios.get(`/api/monsters/cairn/${monsterID}`);
             return response.data;
         }
         catch (err) {
@@ -36,10 +32,16 @@
             const response = await axios.post('/api/add-monster', {
                 campaignID: $params.id,
                 monsterTemplate: monsterTemplate
-            });
+            });            
 
             const newMonster = response.data.monster;
-            user.set(Object.assign($user, { gameData: Object.assign($user.gameData, { monsters: $user.gameData.monsters.concat([newMonster])})}));
+            user.set(Object.assign($user, { 
+                gameData: Object.assign($user.gameData, {
+                    cairn: Object.assign($user.gameData.cairn, {
+                        monsters: $user.gameData.cairn.monsters.concat([newMonster])
+                    })
+                })
+            }));
 
             monsterChosenObj = newMonster;
             monsterChosenSimple = undefined;
@@ -61,34 +63,14 @@
         monsterChosenObj = undefined;
     }
 
-    const getCROptions = (monsterData: MonsterSimple[]) => {
-        return ['Any CR', ... Array.from(new Set(monsterData.map(monster => monster.cr))).sort((a, b) => {
-            if (a.includes('/') && b.includes('/')) {
-                return ~~b.split('/')[1] - ~~a.split('/')[1];
-            }
-            if (a === '0' || b === '0') {
-                return a === '0' ? -1 : 1;
-            }
-            return ~~a - ~~b;
-        })]
-    }
-
-    const getCreatureTypes = (monsterData: MonsterSimple[]) => {
-        return ['Any Type', ... Array.from(new Set(monsterData.map(monster => capitalize(monster.type))))];
-    }
-
-    const viewFavoriteMonster = (monsterToView: MonsterData) => {
-        challengeFilterIndex = undefined;
-        typeFilterIndex = undefined;
+    const viewFavoriteMonster = (monsterToView: MonsterDataCairn) => {
         monsterChosenSimple = undefined;
         monsterChosenObj = monsterToView;
     }
 
     const viewRandomMonster = () => {
-        challengeFilterIndex = undefined;
-        typeFilterIndex = undefined;
         monsterChosenObj = undefined;
-        monsterChosenSimple = gameData.monsters_SRD.random();  
+        monsterChosenSimple = cairn.monsters_SRD.random();  
     }
 
 </script>
@@ -98,25 +80,8 @@
     <monsters-content>
         <div class="add-srd-monster">
             <h3>Monsters</h3>
-            <div class="monster-filter">
-                <Icon class="big-icon" icon="mdi:filter-multiple" />
-                <Svelecte 
-                    options={getCROptions(gameData.monsters_SRD)}
-                    placeholder='CR'
-                    bind:value={challengeFilterIndex}>
-                </Svelecte>
-                <Svelecte 
-                    options={getCreatureTypes(gameData.monsters_SRD)}
-                    placeholder='Type'
-                    bind:value={typeFilterIndex}>
-                </Svelecte> 
-            </div>
             <Svelecte 
-                options={gameData.monsters_SRD.filter(monster => {
-                    const challengeFilter = challengeFilterIndex ? monster.cr === getCROptions(gameData.monsters_SRD)[challengeFilterIndex] : true;
-                    const typeFilter = typeFilterIndex ? monster.type === getCreatureTypes(gameData.monsters_SRD)[typeFilterIndex].toLowerCase() : true;
-                    return challengeFilter && typeFilter
-                })}
+                options={cairn.monsters_SRD}
                 valueAsObject
                 clearable
                 placeholder='All SRD monsters'
@@ -126,8 +91,6 @@
 
         <div class="monster-menu">
             <SimpleButton value='Add custom' icon="mdi:notebook-edit" onClickFn={() => addMonster()}></SimpleButton>
-            <SimpleButton value='Import' icon="mdi:notebook-plus" onClickFn={() => {}} disabled></SimpleButton>
-            <SimpleButton value='Export' icon="mdi:code-json" onClickFn={() => {}} disabled></SimpleButton>
         </div>
 
         <div class="favorites">
@@ -136,8 +99,8 @@
                 <h4>Favorites & Custom</h4>
             </div>
             <div class="favorites-list">
-                {#if $user && $user?.gameData?.monsters && $user?.gameData?.monsters.length !== 0}
-                    {#each $user?.gameData?.monsters as favMonster}
+                {#if $user && $user?.gameData?.cairn.monsters && $user?.gameData?.cairn.monsters.length !== 0}
+                    {#each $user?.gameData?.cairn.monsters as favMonster}
                         <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                         <box class="fav-monster-item {favMonster.id === monsterChosenObj?.id ? 'selected' : ''}"
                             on:click={() => viewFavoriteMonster(favMonster)} on:keyup={() => {}}
@@ -163,7 +126,7 @@
         </div>
 
         {#if monsterChosenObj}
-            <MonsterDetail bind:monster={monsterChosenObj} bind:monsterChosenObj={monsterChosenObj} addMonster={addMonster}></MonsterDetail>
+        <MonsterDetailCairn bind:monster={monsterChosenObj} bind:monsterChosenObj={monsterChosenObj} addMonster={addMonster} />
         {:else}
             <div class="placeholder-no-monster">
                 {#if monsterChosenSimple && !monsterChosenObj}
@@ -171,7 +134,7 @@
                     <div>Loading {monsterChosenSimple.name}...</div>
                 {:else}
                     <div>Choose a monster to view or </div>
-                    <SimpleButton value='View random monster' icon='mdi:dice' type='green' onClickFn={() => viewRandomMonster()}></SimpleButton>
+                    <SimpleButton value='View random monster' icon='mdi:dice' type='primary' onClickFn={() => viewRandomMonster()}></SimpleButton>
                 {/if}
             </div>
         {/if}
@@ -184,16 +147,16 @@
         height: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1.5fr 1.5fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr;
         gap: 1em;
         overflow: hidden;
         grid-template-areas: 
-            "add-srd-monster add-srd-monster monster-detail monster-detail monster-detail monster-detail monster-detail"
-            "monster-menu monster-menu monster-detail monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites monster-detail monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites monster-detail monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites monster-detail monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites monster-detail monster-detail monster-detail monster-detail monster-detail"; 
+            "add-srd-monster add-srd-monster add-srd-monster monster-detail monster-detail monster-detail monster-detail"
+            "monster-menu monster-menu monster-menu monster-detail monster-detail monster-detail monster-detail"
+            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
+            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
+            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
+            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"; 
     }
 
     h3 {
@@ -223,24 +186,12 @@
         width: 90%;
     }
 
-    .monster-filter {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5em;
-        position: relative;
-        z-index: 10;
-    }
-
     .favorites { grid-area: favorites; 
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         width: 100%;
         height: 95%;
-        margin-top: 1em;
         margin-bottom: 4px;
     }
 

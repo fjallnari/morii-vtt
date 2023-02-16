@@ -1,7 +1,6 @@
 import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection } from "../../../db/Mongo";
-import { MONSTER_BLANK } from "../../../enum/MONSTER_BLANK";
 import RouteController from "../RouteController";
 
 

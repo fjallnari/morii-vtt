@@ -145,6 +145,7 @@ dist
 # generated jsons
 
 MONSTERS.json
+monsters.json
 
 # cairn input .md monsters
 

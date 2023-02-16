@@ -39,7 +39,7 @@ router.get('/api/spells', verifyToken, async (req, res, next) => {
     await new GetSpells(req, res).handleRequest();
 });
 
-router.get('/api/monsters/:id', verifyToken, async (req, res, next) => {
+router.get('/api/monsters/:system/:id', verifyToken, async (req, res, next) => {
     await new GetMonster(req, res).handleRequest();
 });
 

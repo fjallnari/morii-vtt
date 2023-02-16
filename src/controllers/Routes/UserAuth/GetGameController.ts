@@ -2,6 +2,7 @@ import { Response } from "express";
 import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mongo";
 import { CAIRN_DATA } from "../../../enum/cairn/CAIRN_DATA";
+import { MONSTERS_CAIRN } from "../../../enum/cairn/MONSTERS_CAIRN";
 import { MONSTERS } from "../../../enum/srd/MONSTERS";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
@@ -40,8 +41,22 @@ export default class GetGameController extends RouteController {
         }
     }
 
-    private async getCairnSpecificData(_: Campaign) {
-        return { cairn: CAIRN_DATA };
+    private async getCairnSpecificData(campaignInfo: Campaign) {
+        const monstersObj = await getIdsFromCollection(campaignInfo.monsters, 'monsters');
+        const cleanMonsters = monstersObj?.map( monster => Object.assign(monster, { id: monster._id.toString() }));
+
+        return { 
+            cairn: {
+                monsters: cleanMonsters ?? [],
+                monsters_SRD: MONSTERS_CAIRN.map(monster => { 
+                    return { 
+                        id: monster.id, 
+                        name: monster.name,
+                    }
+                }),
+                ... CAIRN_DATA
+            } 
+        };
     }
 
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {

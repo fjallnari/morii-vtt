@@ -1,7 +1,7 @@
 <script lang="ts">
     import { params } from "svelte-spa-router";
-    import type { MonsterTrait } from "../../../interfaces/5E/MonsterData";
-    import { messageMode, ownerSocketID, sendSkillCheck, socket, user } from "../../../stores";
+    import type { MonsterTrait } from "../../../../interfaces/5E/MonsterData";
+    import { messageMode, ownerSocketID, sendSkillCheck, socket, user } from "../../../../stores";
 
     export let trait: MonsterTrait;
 

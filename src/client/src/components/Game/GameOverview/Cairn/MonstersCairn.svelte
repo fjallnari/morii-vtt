@@ -9,7 +9,7 @@
     import type MonsterDataCairn from "../../../../interfaces/Cairn/MonsterDataCairn";
     import type CairnData from "../../../../interfaces/Cairn/CairnData";
     import MonsterDetailCairn from "./MonsterDetailCairn.svelte";
-    import MonstersDragAndDrop from "./MonstersDragAndDrop.svelte";
+    import MonstersDragAndDrop from "../MonstersDragAndDrop.svelte";
 
     export let cairn: CairnData;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { MonsterTrait } from "../../../interfaces/5E/MonsterData";
-    import InPlaceEdit from "../../InPlaceEdit.svelte";
-    import SimpleButton from "../../SimpleButton.svelte";
+    import type { MonsterTrait } from "../../../../interfaces/5E/MonsterData";
+    import InPlaceEdit from "../../../InPlaceEdit.svelte";
+    import SimpleButton from "../../../SimpleButton.svelte";
 
     export let trait: MonsterTrait;
     export let deleteItem: () => void = () => {};

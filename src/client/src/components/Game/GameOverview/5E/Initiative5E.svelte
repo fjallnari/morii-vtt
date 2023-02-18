@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type InitiativeData from "../../../interfaces/5E/InitiativeData";
+    import type InitiativeData from "../../../../interfaces/5E/InitiativeData";
     import { nanoid } from "nanoid/non-secure";
     import { dndzone, SOURCES, TRIGGERS	 } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
-    import DeleteInitEntity from "./DeleteInitEntity.svelte";
-    import InPlaceEdit from "../../InPlaceEdit.svelte";
+    import DeleteInitEntity from "../DeleteInitEntity.svelte";
+    import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import { tooltip } from "@svelte-plugins/tooltips";
     import Icon from "@iconify/svelte";
     

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { Character5E } from "../../../interfaces/5E/Character5E";
-    import type GameData from "../../../interfaces/GameData";
-    import type MessageData from "../../../interfaces/MessageData";
-    import { socket } from "../../../stores";
-    import { calc5EModifier } from "../../../util/util";
-    import RowBoxWithLabel from "../../RowBoxWithLabel.svelte";
+    import type { Character5E } from "../../../../interfaces/5E/Character5E";
+    import type GameData from "../../../../interfaces/GameData";
+    import type MessageData from "../../../../interfaces/MessageData";
+    import { socket } from "../../../../stores";
+    import { calc5EModifier } from "../../../../util/util";
+    import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
     import Initiative5E from "./Initiative5E.svelte";
 
     export let gameData: Omit<GameData, 'characters'> & { characters: Character5E[] };

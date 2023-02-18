@@ -2,14 +2,14 @@
     import axios from "axios";
     import { stat } from "fs";
     import { params } from "svelte-spa-router";
-    import ABILITY_TAGS from "../../../enum/AbilityTags";
-    import type { MonsterData, MonsterTrait } from "../../../interfaces/5E/MonsterData";
-    import { formatModifier, messageMode, sendSkillCheck, user } from "../../../stores";
-    import { convertValueToASMod, toSnakeCase } from "../../../util/util";
-    import InPlaceEdit from "../../InPlaceEdit.svelte";
-    import SimpleButton from "../../SimpleButton.svelte";
-    import SimpleIconButton from "../../SimpleIconButton.svelte";
-    import SimpleAccordionDetail from "../SimpleAccordionDetail.svelte";
+    import ABILITY_TAGS from "../../../../enum/AbilityTags";
+    import type { MonsterData, MonsterTrait } from "../../../../interfaces/5E/MonsterData";
+    import { formatModifier, messageMode, sendSkillCheck, user } from "../../../../stores";
+    import { convertValueToASMod, toSnakeCase } from "../../../../util/util";
+    import InPlaceEdit from "../../../InPlaceEdit.svelte";
+    import SimpleButton from "../../../SimpleButton.svelte";
+    import SimpleIconButton from "../../../SimpleIconButton.svelte";
+    import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
     import MonsterAttackInner from "./MonsterAttackInner.svelte";
     import MonsterTraitDetail from "./MonsterTraitDetail.svelte";
 

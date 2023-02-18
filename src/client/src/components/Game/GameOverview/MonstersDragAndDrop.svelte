@@ -2,8 +2,8 @@
     import Icon from '@iconify/svelte';
     import { dndzone, SOURCES, TRIGGERS	 } from 'svelte-dnd-action';
     import { flip } from 'svelte/animate';
-    import type { MonsterData } from '../../../../interfaces/5E/MonsterData';
-    import type MonsterDataCairn from '../../../../interfaces/Cairn/MonsterDataCairn';
+    import type { MonsterData } from '../../../interfaces/5E/MonsterData';
+    import type MonsterDataCairn from '../../../interfaces/Cairn/MonsterDataCairn';
     import { createEventDispatcher } from 'svelte';
 
     export let items: (MonsterData | MonsterDataCairn)[];

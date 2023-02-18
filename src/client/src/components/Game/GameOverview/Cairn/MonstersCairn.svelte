@@ -9,6 +9,7 @@
     import type MonsterDataCairn from "../../../../interfaces/Cairn/MonsterDataCairn";
     import type CairnData from "../../../../interfaces/Cairn/CairnData";
     import MonsterDetailCairn from "./MonsterDetailCairn.svelte";
+    import MonstersDragAndDrop from "./MonstersDragAndDrop.svelte";
 
     export let cairn: CairnData;
 
@@ -63,9 +64,9 @@
         monsterChosenObj = undefined;
     }
 
-    const viewFavoriteMonster = (monsterToView: MonsterDataCairn) => {
+    const viewFavoriteMonster = (event) => {
         monsterChosenSimple = undefined;
-        monsterChosenObj = monsterToView;
+        monsterChosenObj = event.detail.monster;
     }
 
     const viewRandomMonster = () => {
@@ -73,12 +74,33 @@
         monsterChosenSimple = cairn.monsters_SRD.random();  
     }
 
+    const updateMonsters = async (event) => {
+        const updatedMonsters = event.detail.updatedMonsters;
+        try {
+            await axios.post('/api/update-monsters', {
+                campaignID: $params.id,
+                updatedMonsters: updatedMonsters
+            });
+
+            user.set(Object.assign($user, { 
+                gameData: Object.assign($user.gameData, {
+                    cairn: Object.assign($user.gameData.cairn, {
+                        monsters: updatedMonsters
+                    })
+                })
+            }));
+		}
+		catch (err) {
+            console.log(err);
+		}
+    }
+
 </script>
 
 
 <tab-container>
     <monsters-content>
-        <div class="add-srd-monster">
+        <div class="add-cairn-srd-monster">
             <h3>Monsters</h3>
             <Svelecte 
                 options={cairn.monsters_SRD}
@@ -98,31 +120,14 @@
                 <Icon class="big-icon" icon="material-symbols:star-rounded" color="var(--clr-icon-owner)"/>
                 <h4>Favorites & Custom</h4>
             </div>
-            <div class="favorites-list">
-                {#if $user && $user?.gameData?.cairn.monsters && $user?.gameData?.cairn.monsters.length !== 0}
-                    {#each $user?.gameData?.cairn.monsters as favMonster}
-                        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                        <box class="fav-monster-item {favMonster.id === monsterChosenObj?.id ? 'selected' : ''}"
-                            on:click={() => viewFavoriteMonster(favMonster)} on:keyup={() => {}}
-                            tabindex="0"
-                        >
-                            <div class="fav-monster-source">
-                                {#if favMonster?.source === "srd"}
-                                    <Icon class="big-icon" icon="material-symbols:star-rounded" />
-                                {:else}
-                                    <Icon class="big-icon" icon="mdi:notebook" />
-                                {/if}
-                            </div>
-                            <div class="fav-monster-name">{favMonster.name}</div>
-                            <div class="fav-monster-drag">
-                                <Icon class="big-icon" icon="material-symbols:drag-indicator" />
-                            </div>
-                        </box>
-                    {/each}
-                {:else}
-                    <p>No favorite monsters.</p>
-                {/if}
-            </div>
+            {#if $user && $user?.gameData?.cairn.monsters}
+                <MonstersDragAndDrop 
+                    items={$user?.gameData?.cairn.monsters}
+                    on:viewmonster={viewFavoriteMonster}
+                    on:updatemonsters={updateMonsters}
+                    chosenMonsterID={monsterChosenObj?.id}
+                />
+            {/if}
         </div>
 
         {#if monsterChosenObj}
@@ -165,12 +170,16 @@
         text-transform: uppercase;
     }
 
-    .add-srd-monster { grid-area: add-srd-monster; 
+    .add-cairn-srd-monster { grid-area: add-srd-monster; 
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin: 0em 2em;
         font-size: 1.2em;
+    }
+
+    :global(.add-cairn-srd-monster .svelecte){
+        max-height: 2em;
     }
 
     .monster-menu { grid-area: monster-menu; 
@@ -209,55 +218,6 @@
         font-family: Athiti;
         text-transform: uppercase;
         margin: 0;        
-    }
-
-    .favorites-list {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 0.4em;
-        width: 100%;
-        height: 100%;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        padding-bottom: 4px;
-    }
-
-    .fav-monster-item {
-        display: grid; 
-        grid-template-columns: 1fr 5fr 1fr; 
-        grid-template-rows: 1fr 1fr 1fr; 
-        gap: 0.5em;
-        padding: 0.4em 0em;
-        width: 90%;
-        cursor: pointer;
-        background-color: var(--clr-box-bg-light);
-        grid-template-areas: 
-            "fav-monster-source fav-monster-name fav-monster-drag"
-            "fav-monster-source fav-monster-name fav-monster-drag"
-            "fav-monster-source fav-monster-name fav-monster-drag"; 
-    }
-
-    .fav-monster-item.selected {
-        background-color: var(--clr-accent-dark);
-    }
-
-    .fav-monster-item > div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .fav-monster-drag { grid-area: fav-monster-drag; }
-
-    .fav-monster-name { grid-area: fav-monster-name; 
-        font-size: 1.2em;
-    }
-
-    .fav-monster-source { grid-area: fav-monster-source; 
-        font-family: Athiti;
-        font-weight: var(--semi-bold);
     }
 
     .placeholder-no-monster { grid-area: monster-detail;

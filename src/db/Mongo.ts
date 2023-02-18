@@ -89,7 +89,11 @@ export const getIdsFromCollection = async (ids: ObjectId[], collectionName: stri
     
     if (await collectionExists(collectionName, db)){
         const collection = db.collection(collectionName);
-        return collection.find({_id: {$in : ids}}, options).toArray();
+        return await collection.aggregate( [
+            { "$match" : { "_id" : { "$in" : ids } } }, 
+            { "$addFields" : { "__order" : { "$indexOfArray" : [ ids, "$_id" ] } } }, 
+            { "$sort" : { "__order" : 1 } } 
+        ]).toArray();
     };
 
     return;

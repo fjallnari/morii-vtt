@@ -11,6 +11,7 @@ import FavoriteMonsterController from '../controllers/Routes/OwnerAuth/FavoriteM
 import AddMonsterController from '../controllers/Routes/OwnerAuth/AddMonsterController';
 import RemoveMonsterController from '../controllers/Routes/OwnerAuth/RemoveMonsterController';
 import EditMonsterController from '../controllers/Routes/OwnerAuth/EditMonsterController';
+import UpdateMonstersController from '../controllers/Routes/OwnerAuth/UpdateMonstersController';
 
 const router = express.Router();
 
@@ -52,6 +53,10 @@ router.post('/api/remove-monster', verifyToken, verifyOwner, async (req, res) =>
 
 router.post('/api/edit-monster', verifyToken, verifyOwner, async (req, res) => {
     await new EditMonsterController(req, res).handleRequest();
+});
+
+router.post('/api/update-monsters', verifyToken, verifyOwner, async (req, res) => {
+    await new UpdateMonstersController(req, res).handleRequest();
 });
 
 export default router;

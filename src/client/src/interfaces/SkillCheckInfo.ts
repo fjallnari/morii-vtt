@@ -3,5 +3,6 @@ export default interface SkillCheckInfo {
     skillName: string,
     entityID: string,
     flag: string,
-    diceAccent: 'roll-over' | 'roll-under'
+    diceAccent: 'roll-over' | 'roll-under',
+    target: number
 }

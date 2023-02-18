@@ -87,7 +87,7 @@
     }
 
     const sendAbility = (ability: string) => {
-        $sendSkillCheck(0, `${monster.name.toLowerCase()} | ${ability} save | success <= ${monster[ability]}`, '', '-', 'd20', '', '', 'roll-under');
+        $sendSkillCheck(0, `${monster.name.toLowerCase()} | ${ability} save (<=${monster[ability]}) | `, '', '-', 'd20', '', '', '', 'roll-under', ~~monster[ability]);
     }
 
     const addAttack = async () => {

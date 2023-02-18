@@ -83,8 +83,9 @@
         diceType = 'd20', 
         customID = nanoid(16),
         customFormula: string = '',
-        flag = '',
-        diceAccent: 'roll-over' | 'roll-under' = 'roll-over'
+        flag: string = '',
+        diceAccent: 'roll-over' | 'roll-under' = 'roll-over',
+        target: number = 0
     ) => {
         const messageText = customFormula === '' ? `/r ${diceType}${modifier !== 0 ? $formatModifier(modifier, "always"): ''}` : `/r ${customFormula}`;
 
@@ -94,14 +95,15 @@
                 username: $user.username,
                 settings: $user.settings,
             }, 
-            messageText: messageText,
+            messageText,
             messageID: customID, 
             skillCheckInfo: {
                 characterName: charName,
-                skillName: skillName,
-                entityID: entityID,
-                flag: flag,
-                diceAccent: diceAccent
+                skillName,
+                entityID,
+                flag,
+                diceAccent,
+                target
             },
             gameID: params.id,
             ownerSocketID: $ownerSocketID,

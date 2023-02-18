@@ -4,10 +4,32 @@
 
     export let message: MessageData;
 
+    const isSuccess = (target: number, totalRoll: number, diceAccent: string) => {
+        return diceAccent === 'roll-under' && target >= totalRoll || diceAccent === 'roll-over' && target <= totalRoll;
+    }
+
+    enum OUTCOMES {
+        SUCCESS = '#A7C284',
+        FAILURE = '#EFA48B'
+    }
+
 </script>
 
 <div class="main-roll-block">
-    <em>{message.skillCheckInfo ? message.skillCheckInfo.skillName : `rolling ${message.rollResult.notation} =>`}</em>
+    <em>
+        {message.skillCheckInfo ? message.skillCheckInfo.skillName : `rolling ${message.rollResult.notation} =>`}
+        {#if message.skillCheckInfo?.target}
+            {#if isSuccess(message?.skillCheckInfo?.target, message?.rollResult?.total, message?.skillCheckInfo?.diceAccent)}
+                <em class="outcome" style="color: {OUTCOMES.SUCCESS}">
+                    SUCCESS
+                </em>
+            {:else}
+                <em class="outcome" style="color: {OUTCOMES.FAILURE}">
+                    FAILURE
+                </em>            
+            {/if}
+        {/if}
+    </em>
     <div class="roll-formula">
         <span>
             {#each message.rollResult.splitRolls as splitRoll}
@@ -54,6 +76,10 @@
         
         padding: 0.1em 0.4em;
         text-align: center;
+        font-weight: var(--semi-bold);
+    }
+
+    .outcome {
         font-weight: var(--semi-bold);
     }
 

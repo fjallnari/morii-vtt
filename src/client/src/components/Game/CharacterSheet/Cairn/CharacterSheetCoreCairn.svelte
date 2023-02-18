@@ -70,7 +70,7 @@
     }
 
     const sendAbilitySave = (AS: string) => {
-        $sendSkillCheck(0, `${AS} save | success <= ${character.ability_scores[AS].current}`, `${character.name.split(' ')[0]}`, '-', 'd20', '', '', 'roll-under');
+        $sendSkillCheck(0, `${AS} save (<=${character.ability_scores[AS].current}) | `, `${character.name.split(' ')[0]}`, '-', 'd20', '', '', '', 'roll-under', ~~character.ability_scores[AS].current);
     }
 
     const recalculateArmor = () => {

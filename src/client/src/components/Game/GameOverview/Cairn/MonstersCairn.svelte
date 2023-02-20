@@ -100,8 +100,10 @@
 
 <tab-container>
     <monsters-content>
-        <div class="add-cairn-srd-monster">
+        <div class="title">
             <h3>Monsters</h3>
+        </div>
+        <div class="add-cairn-srd-monster">
             <Svelecte 
                 options={cairn.monsters_SRD}
                 valueAsObject
@@ -112,7 +114,7 @@
         </div>
 
         <div class="monster-menu">
-            <SimpleButton value='Add custom' icon="mdi:notebook-edit" onClickFn={() => addMonster()}></SimpleButton>
+            <SimpleButton value='Add custom monster' icon="mdi:notebook-edit" onClickFn={() => addMonster()}></SimpleButton>
         </div>
 
         <div class="favorites">
@@ -152,16 +154,24 @@
         height: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 1em;
         overflow: hidden;
-        grid-template-areas: 
+        grid-template-areas:
+            "title title title title title title title"
             "add-srd-monster add-srd-monster add-srd-monster monster-detail monster-detail monster-detail monster-detail"
             "monster-menu monster-menu monster-menu monster-detail monster-detail monster-detail monster-detail"
             "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
             "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
             "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
             "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"; 
+    }
+
+    .title { grid-area: title;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
     }
 
     h3 {

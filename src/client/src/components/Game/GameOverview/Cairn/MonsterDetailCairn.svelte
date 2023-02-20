@@ -236,7 +236,6 @@
         grid-template-columns: 1fr 1fr 1fr 1fr; 
         grid-template-rows: 1fr 8fr; 
         gap: 0.5em;
-        margin-top: 1em;
         grid-template-areas: 
             "name name name name name"
             "stats stats stats stats stats"

@@ -4,12 +4,14 @@ import type { MonsterData } from "./5E/MonsterData";
 import type MonsterSimple from "./5E/MonsterSimple";
 import type CharacterAny from "./CharacterAny";
 import type CairnData from "./Cairn/CairnData";
+import type Invite from "./Invite";
 
 export default interface GameData {
     _id: string;
     owner: string;
     name: string;
     system: string;
+    invite?: Invite;
     characters: CharacterAny[];
     players: UserSimple[];
     npcs: CharacterAny[];

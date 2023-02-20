@@ -8,7 +8,7 @@ import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
 import UserDB from "../../../interfaces/UserDB";
 import logger from "../../../logger";
-import { simplifyPlayerInfo } from "../../../util/helpers";
+import { getInviteInfo, simplifyPlayerInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
 
 export default class GetGameController extends RouteController {
@@ -61,6 +61,8 @@ export default class GetGameController extends RouteController {
 
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
+        const invitesCollection = await getCollection('invites');
+
         const campaignInfo = <Campaign> await campaignsCollection?.findOne({ _id: campaignID });
 
         // get all character ids, if they exist (filters out all undefineds)
@@ -85,6 +87,7 @@ export default class GetGameController extends RouteController {
             owner: campaignInfo.owner.toString(),
             name: campaignInfo.name,
             system: campaignInfo.system,
+            invite: campaignInfo.invite ? await getInviteInfo(invitesCollection, campaignInfo.invite) : undefined,
             characters: cleanCharacters,
             players: simpleUsers,
             npcs: cleanNpcs,

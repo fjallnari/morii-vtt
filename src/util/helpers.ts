@@ -13,7 +13,8 @@ export const simplifyPlayerInfo = (player: UserDB) => {
     };
 }
 
-export const getInviteInfo = async (inviteCollection: Collection<Document>, inviteID: ObjectId) => {
+export const getInviteInfo = async (inviteCollection: Collection<Document> | undefined, inviteID: ObjectId) => {
+    if (!inviteCollection) { return undefined }
     const inviteInfo = <Invite> await inviteCollection?.findOne({ _id: inviteID });
 
     return {

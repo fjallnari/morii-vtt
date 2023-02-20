@@ -18,6 +18,7 @@
     export let iconClass: string = '';
     export let iconWidth: string = '';
     export let iconHeight: string = iconWidth;
+    export let inlineStyle: string = '';
 
     const BUTTON_TYPES: Record<ButtonType, ButtonColors> = {
         'default': {
@@ -43,7 +44,7 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <simple-button
     style:active=""
-    style="--bg-color:{BUTTON_TYPES[type].bg_color}; --active-bg-color:{BUTTON_TYPES[type].active_bg_color};"
+    style="--bg-color:{BUTTON_TYPES[type].bg_color}; --active-bg-color:{BUTTON_TYPES[type].active_bg_color};{inlineStyle}"
     {disabled}
     on:click={() => onClickFn()}
     on:keydown={(event) => {if (event.key === 'Enter') {onClickFn();}}}

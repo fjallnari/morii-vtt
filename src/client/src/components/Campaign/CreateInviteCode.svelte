@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { selectedCampaign } from '../../stores';
+    import { selectedCampaign, user } from '../../stores';
     import Dialog from '@smui/dialog';
     import axios from 'axios';
     import CopyToClipboard from 'svelte-copy-to-clipboard';
@@ -9,27 +9,42 @@
     import SimpleProgressCircle from '../SimpleProgressCircle.svelte';
     import SimpleSnackbar from '../SimpleSnackbar.svelte';
     import Icon from '@iconify/svelte';
+    import type Invite from '../../interfaces/Invite';
+    import { params } from 'svelte-spa-router';
+
+    export let invite: Invite;
+    export let inGameInvite: boolean = false;
 
     let open = false;
     let codeWasCopied = false;
     let password: string = "";
     let inProgress = false; 
-
     let inviteSnackbar: SimpleSnackbar;
+
+    $: inviteLink = `${new URL("/?#/", window.location.href)}?invite=${invite?.invite_code}`;
 
     const createInviteCode = async () => {
         try {
             inProgress = true;
             const response = await axios.post('/api/create-invite-code', {
-                campaignID: $selectedCampaign._id,
+                campaignID: $selectedCampaign?._id ?? $params.id,
                 password: password
             });
             
             // "Live-reloads" campaign invites
             if (response.status === 200) {
-                selectedCampaign.set(Object.assign($selectedCampaign, {
-                    invite: response.data.invite
-                }));
+                if (inGameInvite) {
+                    user.set(Object.assign($user, { 
+                        gameData: Object.assign($user.gameData, {
+                            invite: response.data.invite
+                        })
+                    }));
+                }
+                else {
+                    selectedCampaign.set(Object.assign($selectedCampaign, {
+                        invite: response.data.invite
+                    }));
+                }
             }
             inProgress = false;
         }
@@ -42,14 +57,23 @@
         try {
             inProgress = true;
             const response = await axios.post('/api/remove-invite-code', {
-                campaignID: $selectedCampaign._id
+                campaignID: $selectedCampaign?._id ?? $params.id
             });
             
             // "Live-reloads" campaign invites
             if (response.status === 200) {
-                selectedCampaign.set(Object.assign($selectedCampaign, {
-                    invite: ""
-                }));
+                if (inGameInvite) {
+                    user.set(Object.assign($user, { 
+                        gameData: Object.assign($user.gameData, {
+                            invite: ""
+                        })
+                    }));
+                }
+                else {
+                    selectedCampaign.set(Object.assign($selectedCampaign, {
+                        invite: ""
+                    }));
+                }
             }
             codeWasCopied = false;
             inProgress = false;
@@ -59,17 +83,29 @@
         }
     }
 
-    $: inviteLink = `${new URL("/?#/", window.location.href)}?invite=${$selectedCampaign?.invite?.invite_code}`;
+    const openDialog = () => {
+        codeWasCopied = false; 
+        open = true;
+    }
 
 </script>
 
-
-<SimpleIconButton 
-    icon="mdi:invite"
-    onClickFn={() => {codeWasCopied = false; open = true}}
-    color='#DBD8B3'
->
-</SimpleIconButton>
+{#if inGameInvite}
+    <SimpleButton value='Invite players'
+        icon="mdi:invite"
+        iconWidth='1.25em'
+        type="primary"
+        inlineStyle="width: fit-content; padding: 0.5em;"
+        onClickFn={() => openDialog()}
+    />
+{:else}
+    <SimpleIconButton 
+        icon="mdi:invite"
+        onClickFn={() => openDialog()}
+        color='#DBD8B3'
+    >
+    </SimpleIconButton>
+{/if}
 
 <Dialog
     bind:open
@@ -78,11 +114,11 @@
     surface$style="width: 30em; max-width: calc(100vw - 32px);"
 >
     <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-    <h3 id="simple-title">Invite Players to {$selectedCampaign.name}</h3>
+    <h3 id="simple-title">Invite Players to {$selectedCampaign?.name ?? $user?.gameData?.name}</h3>
     <div class="dialog-content">
         {#if inProgress}
             <SimpleProgressCircle></SimpleProgressCircle>
-        {:else if ! $selectedCampaign.invite}
+        {:else if !invite}
             <div id="generate-code-div">
                 <SimpleTextfield type="password" bind:value={password} placeholder="Password" icon="mdi:lock"></SimpleTextfield>
                 <SimpleIconButton icon="mdi:invite" color="#DBD8B3" onClickFn={() => createInviteCode()}></SimpleIconButton>
@@ -90,11 +126,11 @@
             <p id="invite-tooltip">Generates new invite code. Password is optional.</p>
         {:else}
             <div class="invite-card">
-                <CopyToClipboard text={$selectedCampaign.invite.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
+                <CopyToClipboard text={invite?.invite_code} on:copy={() => {codeWasCopied = true}} let:copy>
                     <div class="invite-code icon-ripple" on:click={copy} on:keyup={() => {}}>
                         <Icon class="big-icon" icon={`mdi:${codeWasCopied ? "check" : "content-copy"}`} />
-                        <p>{$selectedCampaign.invite.invite_code}</p>
-                        <Icon class="big-icon" icon={`material-symbols:${$selectedCampaign.invite.has_password ? "password" : "no-encryption"}`} />
+                        <p>{invite?.invite_code}</p>
+                        <Icon class="big-icon" icon={`material-symbols:${invite?.has_password ? "password" : "no-encryption"}`} />
                     </div>
                 </CopyToClipboard>
                 <SimpleIconButton icon="mdi:delete" color="#FF6A60" width="1.5em" onClickFn={() => removeInviteCode()}></SimpleIconButton>

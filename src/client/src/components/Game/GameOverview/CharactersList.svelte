@@ -1,7 +1,8 @@
 <script lang="ts">
     import GAME_SYSTEMS from "../../../enum/GameSystems";
     import type GameData from "../../../interfaces/GameData";
-    import { selectedCharacter } from "../../../stores";
+    import { selectedCharacter, user } from "../../../stores";
+    import CreateInviteCode from "../../Campaign/CreateInviteCode.svelte";
     import CharacterBadge5E from "../CharacterSheet/5E/CharacterBadge5E.svelte";
 
     export let gameData: GameData;
@@ -10,8 +11,13 @@
 <div class="characters-container">
     <h3 class="title">Characters</h3>
     <div class="character-list">
-        {#if gameData.characters.length === 0}
-            <h3>No characters found</h3>
+        {#if gameData.players.length === 0}
+            <div class="invite-container">
+                <CreateInviteCode invite={$user?.gameData?.invite} inGameInvite></CreateInviteCode>
+                <h3>There are currently no players in this campaign.</h3>
+            </div>
+        {:else if gameData.characters.length === 0}
+            <h3>No player characters found</h3>
         {:else}
             {#each gameData.characters as character}
                 <div class="character-badge-box" on:click={() => selectedCharacter.set(character)} on:keyup={() => {}}>
@@ -67,6 +73,13 @@
 
     .title { grid-area: title;
         font-size: 1.5em;
+    }
+
+    .invite-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
 </style>

@@ -41,7 +41,7 @@
         >
         </SimpleIconButton>
         {#if $user._id === $selectedCampaign.owner._id}
-            <CreateInviteCode></CreateInviteCode>
+            <CreateInviteCode invite={$selectedCampaign?.invite}></CreateInviteCode>
             <CampaignDelete></CampaignDelete>
         {:else}
             <CampaignLeave></CampaignLeave>

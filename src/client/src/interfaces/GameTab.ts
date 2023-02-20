@@ -3,5 +3,6 @@ export default interface GameTab {
     tooltip: string,
     color: string,
     icon: string,
-    access: 'any' | 'owner' | 'player'
+    access: 'any' | 'owner' | 'player',
+    component: unknown
 }

@@ -17,9 +17,40 @@ import ImportJsonSheetCairn from "../components/Game/CharacterSheet/Cairn/Import
 import CharacterBadge5E from "../components/Game/CharacterSheet/5E/CharacterBadge5E.svelte";
 import CharacterBadgeCairn from "../components/Game/CharacterSheet/Cairn/CharacterBadgeCairn.svelte";
 import InnerOverviewCairn from "../components/Game/GameOverview/Cairn/InnerOverviewCairn.svelte";
+import type GameTab from "../interfaces/GameTab";
 
 
-const OWNER_STANDARD_OVERVIEW = {
+interface CharacterSheetTab {
+    color: string,
+    icon: string, // iconify string
+    component: unknown // svelte component
+}
+
+export interface GameSystem {
+    // used both for both the tabs and the tab-switching icons in CharSheetMenu
+    // SETTINGS_TAB should always be included
+    characterSheetTabs: CharacterSheetTab[],
+
+    // array of Svelte components, CopyExistingSheet should work for any system, others are system-specific
+    // dialogs are recommended for anything more complex
+    creationOptions: unknown[],
+
+    // Svelte component, this is the bottom-right part of GM's game overview (anything other than PCs, and NPCs), system-specific
+    innerOverview: unknown,
+
+    // Svelte component, middle part of character sheet settings (between the user tag and the delete button)
+    specificSettings: unknown,
+
+    // Svelte component, system-specific, the CharacterBadge5E can be used as an placeholder
+    characterBadge: unknown,
+
+    // manages all game tabs, both the icon-switchers in GameInfo and the components themselves
+    // should have OWNER_STANDARD_OVERVIEW included
+    gameTabs: GameTab[]
+}
+
+// unless the system has very specific needs, each game system should have this included
+const OWNER_STANDARD_OVERVIEW: GameTab = {
     id: 'default',
     tooltip: 'Overview',
     color: '#A7C284',
@@ -28,13 +59,14 @@ const OWNER_STANDARD_OVERVIEW = {
     component: GameOverview
 };
 
-const SETTINGS_TAB = {
+// should be included in every system under 'characterSheetTabs'
+const SETTINGS_TAB: CharacterSheetTab = {
     color: '#9DB5B2',
     icon: 'mdi:cog',
     component:  CharacterSheetSettings
 };
 
-const GAME_SYSTEMS = {
+const GAME_SYSTEMS: Record<string, GameSystem> = {
     'D&D 5E': {
         characterSheetTabs: [
             {

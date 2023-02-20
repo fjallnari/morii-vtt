@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { tooltip } from "@svelte-plugins/tooltips";
 
     export let label: string = '';
     export let valueWidth: string = '2em';
@@ -11,6 +12,7 @@
     export let wantBorder: boolean = false;
     export let borderColor: string = 'var(--clr-contrast-dark)'
     export let clickable: boolean = false;
+    export let tooltipText: string = undefined;
     export let onClickFn = () => {};
 
 </script>
@@ -21,9 +23,27 @@
     >
         <slot></slot>
     </box>
-    <box class="row-box-label {labelClass}{wantBorder ? ' bordered': ''}" style="font-size: {labelFontSize}; background-color: var(--clr-box-bg-{boxColor});">
-        {label}
-    </box>
+    {#if tooltipText}
+        <box class="row-box-label {labelClass}{wantBorder ? ' bordered': ''}" 
+            style="font-size: {labelFontSize}; background-color: var(--clr-box-bg-{boxColor});"
+            use:tooltip={{
+                content: `${tooltipText}`,
+                theme: 'blurred', 
+                position: 'bottom', 
+                animation: 'fade',
+                arrow: false,
+                autoPosition: true
+            }}
+        >
+            {label}
+        </box>
+    {:else}
+        <box class="row-box-label {labelClass}{wantBorder ? ' bordered': ''}" 
+            style="font-size: {labelFontSize}; background-color: var(--clr-box-bg-{boxColor});"
+        >
+            {label}
+        </box>
+    {/if}
 </row-box-with-label>
 
 <style>
@@ -32,6 +52,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
+        position: relative;
     }
 
     .row-box-value {
@@ -57,6 +78,7 @@
         padding-right: 0.75em;
         overflow: hidden;
         text-overflow: ellipsis;
+        position: unset !important;
     }
 
     .default-label {

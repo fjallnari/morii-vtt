@@ -137,7 +137,11 @@
         <RowBoxWithLabel label='Total slots'>
             <InPlaceEdit bind:value={character.slots} editWidth='2em' editHeight='2em' on:submit={() => $modifyCharacter()}/>
         </RowBoxWithLabel>
-        <RowBoxWithLabel label='Filled slots' wantBorder={filledSlotsCount >= ~~character.slots && !character.manual_encumbrance}>
+        <RowBoxWithLabel 
+            label='Filled slots'
+            tooltipText='Filling all total item slots reduces a PC to 0 HP.'
+            wantBorder={filledSlotsCount >= ~~character.slots && !character.manual_encumbrance}
+        >
             {filledSlotsCount > ~~character.slots ? ~~character.slots : filledSlotsCount }
         </RowBoxWithLabel>
     </div>
@@ -164,6 +168,7 @@
         <RowBoxWithLabel
             label='Deprived'
             clickable
+            tooltipText="Deprived PCs cannot recover HP. If deprived for more than a day, they add a Fatigue to inventory."
             onClickFn={() => { character.deprived = !character.deprived; $modifyCharacter('deprived') }}
         >
             <Icon icon="{character.deprived ? 'mdi:sleep': ''}" />

@@ -32,7 +32,8 @@
                 content={tooltip} 
                 theme="blurred" 
                 position='bottom' 
-                animation='slide'
+                animation='fade'
+                arrow={false}
             >
                 {boxLabel}
             </Tooltip>

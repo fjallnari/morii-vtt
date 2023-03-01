@@ -14,6 +14,7 @@
     export let editWidth: string = '15rem';
     export let editHeight: string = '1.5rem';
     export let deleteItem: (item: ItemCairn) => void = () => {};
+    export let moveItem: (itemToMove: ItemCairn, indexDiff: number) => void = () => {};
     export let onSubmitFn: () => void = $modifyCharacter;
     export let recalculateArmor: () => void;
 
@@ -129,6 +130,15 @@
     {/if}
     {#if isOpen}
         <div class="single-detail-line">
+            <div class="item-ordering">
+                <sendable on:click={() => moveItem(item, 1)} on:keyup={() => {}}>
+                    <Icon class="big-icon" icon="mdi:arrow-down-thick" />
+                </sendable>
+                <Icon class="medi-icon" icon="mdi:circle-small"></Icon>
+                <sendable on:click={() => moveItem(item, -1)} on:keyup={() => {}}>
+                    <Icon class="big-icon" icon="mdi:arrow-up-thick" />
+                </sendable>
+            </div>
             <div class="line-title">Item type: </div>
             <div class="item-type-select">
                 <Svelecte
@@ -270,7 +280,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 0.4em;
+        gap: 0.5em;
         font-weight: 400;
         font-family: Quicksand;
         padding: 0.5em;
@@ -287,6 +297,12 @@
 
     .item-type-select {
         width: 30%;
+    }
+
+    .item-ordering {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
 </style>

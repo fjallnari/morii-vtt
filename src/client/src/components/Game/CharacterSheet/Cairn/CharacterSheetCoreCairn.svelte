@@ -69,6 +69,19 @@
         $modifyCharacter('delete-item');
     }
 
+    const moveItem = (itemToMove: ItemCairn, indexDiff: number) => {
+        const currentIndex = character.inventory.findIndex(item => item === itemToMove);
+        // prevent out of bounds errors
+        if (indexDiff === -1 && currentIndex === 0 || indexDiff === 1 && currentIndex === character.inventory.length - 1) {
+            return;
+        }
+
+        [character.inventory[currentIndex], character.inventory[currentIndex + indexDiff]] = [
+            character.inventory[currentIndex + indexDiff], character.inventory[currentIndex]
+        ];
+        $modifyCharacter('move-item');
+    }
+
     const sendAbilitySave = (AS: string) => {
         $sendSkillCheck(0, `${AS} save (<=${character.ability_scores[AS].current}) | `, `${character.name.split(' ')[0]}`, '-', 'd20', '', '', '', 'roll-under', ~~character.ability_scores[AS].current);
     }
@@ -178,7 +191,11 @@
     <BoxWithList label='Inventory' inlineStyle='grid-area: inventory;' addNewListItem={addItem}>
         <div class="item-list" slot='list'>
             {#each character.inventory as item, index}
-                <ItemDetailCairn bind:item deleteItem={deleteItem} recalculateArmor={recalculateArmor}/>
+                <ItemDetailCairn 
+                    bind:item deleteItem={deleteItem} 
+                    recalculateArmor={recalculateArmor}
+                    moveItem={moveItem}
+                />
             {/each}
         </div>
     </BoxWithList>

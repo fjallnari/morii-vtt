@@ -1,6 +1,9 @@
 <script lang="ts">
+    import axios from "axios";
+    import { params } from "svelte-spa-router";
     import GAME_SYSTEMS from "../../../enum/GameSystems";
     import type GameData from "../../../interfaces/GameData";
+    import { user } from "../../../stores";
     import CharactersList from "./CharactersList.svelte";
     import CreateNpc from "./CreateNpc.svelte";
     import NpcList from "./NpcList.svelte";
@@ -8,6 +11,25 @@
     export let gameData: GameData;
 
     let createMenuEnabled: boolean = gameData?.npcs?.length === 0 ? true : false;
+
+    const updateNpcs = async (event) => {
+        const updatedNpcs = event.detail.updatedNpcs;
+        try {
+            await axios.post('/api/update-npcs', {
+                campaignID: $params.id,
+                updatedNpcs
+            });
+
+            user.set(Object.assign($user, { 
+                gameData: Object.assign($user.gameData, {
+                    npcs: updatedNpcs
+                })
+            }));
+		}
+		catch (err) {
+            console.log(err);
+		}
+    }
 
 </script>
 
@@ -19,7 +41,11 @@
         {#if createMenuEnabled}
             <CreateNpc gameData={gameData} bind:createMenuEnabled={createMenuEnabled}></CreateNpc>
         {:else}
-            <NpcList gameData={gameData} bind:createMenuEnabled={createMenuEnabled}></NpcList>
+            <NpcList
+                bind:gameData={gameData}
+                bind:createMenuEnabled={createMenuEnabled}
+                on:updatenpcs={updateNpcs}
+            />
         {/if}
     </div>
     <div class="inner-views">

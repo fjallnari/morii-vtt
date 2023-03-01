@@ -4,13 +4,13 @@ services:
     server:
         container_name: morii-server
         tty: true
-        image: node:16.8.0
+        image: node:18
         user: node
         ports:
             - "3000:3000"
         volumes:
             - .:/app
-            - node-16:/home/node/.npm
+            - node-18:/home/node/.npm
         working_dir: "/app"
         environment:
             TZ: "Europe/Prague"
@@ -56,7 +56,7 @@ networks:
         driver: bridge
 
 volumes:
-    node-16:
+    node-18:
         external: true
     morii-mongo:
         external: true

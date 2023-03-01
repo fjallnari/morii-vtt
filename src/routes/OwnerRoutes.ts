@@ -12,6 +12,7 @@ import AddMonsterController from '../controllers/Routes/OwnerAuth/AddMonsterCont
 import RemoveMonsterController from '../controllers/Routes/OwnerAuth/RemoveMonsterController';
 import EditMonsterController from '../controllers/Routes/OwnerAuth/EditMonsterController';
 import UpdateMonstersController from '../controllers/Routes/OwnerAuth/UpdateMonstersController';
+import UpdateNpcsController from '../controllers/Routes/OwnerAuth/UpdateNpcsController';
 
 const router = express.Router();
 
@@ -33,6 +34,10 @@ router.post("/api/delete-campaign", verifyToken, verifyOwner, async (req, res) =
 
 router.post('/api/create-npc', verifyToken, verifyOwner, async (req, res) => {
     await new CreateNPCController(req, res).handleRequest();
+});
+
+router.post('/api/update-npcs', verifyToken, verifyOwner, async (req, res) => {
+    await new UpdateNpcsController(req, res).handleRequest();
 });
 
 router.post("/api/rename-campaign", verifyToken, verifyOwner, async (req, res) => {

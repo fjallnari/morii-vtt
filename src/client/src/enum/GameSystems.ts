@@ -23,7 +23,7 @@ import type GameTab from "../interfaces/GameTab";
 interface CharacterSheetTab {
     color: string,
     icon: string, // iconify string
-    component: unknown // svelte component
+    component: any // svelte component
 }
 
 export interface GameSystem {
@@ -33,16 +33,16 @@ export interface GameSystem {
 
     // array of Svelte components, CopyExistingSheet should work for any system, others are system-specific
     // dialogs are recommended for anything more complex
-    creationOptions: unknown[],
+    creationOptions: any[],
 
     // Svelte component, this is the bottom-right part of GM's game overview (anything other than PCs, and NPCs), system-specific
-    innerOverview: unknown,
+    innerOverview: any,
 
     // Svelte component, middle part of character sheet settings (between the user tag and the delete button)
-    specificSettings: unknown,
+    specificSettings: any,
 
     // Svelte component, system-specific, the CharacterBadge5E can be used as an placeholder
-    characterBadge: unknown,
+    characterBadge: any,
 
     // manages all game tabs, both the icon-switchers in GameInfo and the components themselves
     // should have OWNER_STANDARD_OVERVIEW included

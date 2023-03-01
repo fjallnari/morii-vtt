@@ -16,7 +16,7 @@
             });
 
             const newNpc = response.data.characterInfo;
-            gameData.npcs = gameData.npcs.concat([newNpc]);
+            gameData.npcs = gameData.npcs.concat([Object.assign(newNpc, { id: newNpc?._id })]);
             createMenuEnabled = false;
 		}
 		catch (err) {

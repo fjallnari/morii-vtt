@@ -17,6 +17,7 @@
     export let moveItem: (itemToMove: ItemCairn, indexDiff: number) => void = () => {};
     export let onSubmitFn: () => void = $modifyCharacter;
     export let recalculateArmor: () => void;
+    export let editingItemOrder: boolean = false;
 
     let isOpen: boolean = false;
 
@@ -91,7 +92,7 @@
             </sendable>
         </div>
     {:else}
-        <div class="item-summary {item.type === 'relic' ? "relic-grid" : 'normal-grid'}">
+        <div class="item-summary {editingItemOrder ? "edit-grid" : item.type === 'relic' ? "relic-grid" : 'normal-grid'}">
             {#if ['weapon', 'spellbook', 'relic'].includes(item.type)}
                 <sendable class="item-type-icon" on:click={() => item.type === 'weapon' ? rollAttack() : sendItem()} on:keyup={() => {}}>
                     <Icon class="medi-icon" icon={itemIcon} />
@@ -118,27 +119,30 @@
             <div class="item-name">
                 <InPlaceEdit bind:value={item.name} editWidth={editWidth} editHeight={editHeight} on:submit={() => onSubmitFn()}/>
             </div>
-            <div class="item-bulky">
-                <sendable on:click={() => {checkItemState(); onSubmitFn();}} on:keyup={() => {}}>
-                    <Icon class="medi-icon" icon="{item.stacks ? 'mdi:card-multiple' : item.bulky ? 'mdi:weight': item.slotless ? 'mdi:checkbox-blank-off-outline' : 'mdi:feather'}" />
+            {#if editingItemOrder}
+                <div class="item-ordering">
+                    <sendable on:click={() => moveItem(item, 1)} on:keyup={() => {}}>
+                        <Icon class="big-icon" icon="mdi:arrow-down-thick" />
+                    </sendable>
+                    <Icon class="medi-icon" icon="mdi:circle-small"></Icon>
+                    <sendable on:click={() => moveItem(item, -1)} on:keyup={() => {}}>
+                        <Icon class="big-icon" icon="mdi:arrow-up-thick" />
+                    </sendable>
+                </div>
+            {:else}
+                <div class="item-bulky">
+                    <sendable on:click={() => {checkItemState(); onSubmitFn();}} on:keyup={() => {}}>
+                        <Icon class="medi-icon" icon="{item.stacks ? 'mdi:card-multiple' : item.bulky ? 'mdi:weight': item.slotless ? 'mdi:checkbox-blank-off-outline' : 'mdi:feather'}" />
+                    </sendable>
+                </div>
+                <sendable class="item-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
+                    <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
                 </sendable>
-            </div>
-            <sendable class="item-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
-                <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
-            </sendable>
+            {/if}
         </div>
     {/if}
     {#if isOpen}
         <div class="single-detail-line">
-            <div class="item-ordering">
-                <sendable on:click={() => moveItem(item, 1)} on:keyup={() => {}}>
-                    <Icon class="big-icon" icon="mdi:arrow-down-thick" />
-                </sendable>
-                <Icon class="medi-icon" icon="mdi:circle-small"></Icon>
-                <sendable on:click={() => moveItem(item, -1)} on:keyup={() => {}}>
-                    <Icon class="big-icon" icon="mdi:arrow-up-thick" />
-                </sendable>
-            </div>
             <div class="line-title">Item type: </div>
             <div class="item-type-select">
                 <Svelecte
@@ -220,7 +224,19 @@
         grid-template-columns: 1fr 6fr minmax(0, 20fr) 4fr 1fr 1fr;
         grid-template-areas: "item-type-icon item-charges item-name . item-bulky item-menu"
     }
+    
+    .item-summary.edit-grid {
+        grid-template-columns: 1fr 1fr minmax(0, 20fr) 2fr;
+        grid-template-areas: "item-type-icon . item-name item-ordering"
+    }
 
+    .item-ordering { grid-area: item-ordering;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 0.5em;
+    }
+    
     .item-type-icon { grid-area: item-type-icon;
         margin-left: 0.5em;
     }
@@ -297,12 +313,6 @@
 
     .item-type-select {
         width: 30%;
-    }
-
-    .item-ordering {
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
 </style>

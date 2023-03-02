@@ -116,6 +116,8 @@
         checkOverEncumbered();
     }
 
+    let editingItemOrder = false;
+
 </script>
 
 <tab-container class="cairn-character">
@@ -195,6 +197,7 @@
                     bind:item deleteItem={deleteItem} 
                     recalculateArmor={recalculateArmor}
                     moveItem={moveItem}
+                    editingItemOrder={editingItemOrder}
                 />
             {/each}
         </div>
@@ -220,6 +223,12 @@
             icon="mdi:sleep"
             iconWidth='1.25em'
             onClickFn={() => addFatigue()}
+        />
+        <SimpleButton value={editingItemOrder ? "Save item order" : "Edit item order"}
+            icon="mdi:cube"
+            iconWidth='1.25em'
+            type={editingItemOrder ? "delete" : "default"}
+            onClickFn={() => editingItemOrder = !editingItemOrder}
         />
         <div class="license">
             <a href="https://cairnrpg.com/cairn-srd/">Cairn</a>, by Yochai Gal. <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA 4.0.</a>
@@ -345,6 +354,7 @@
     .license {
         font-size: 1rem;
         white-space: nowrap;
+        max-width: 100%;
     }
 
 </style>

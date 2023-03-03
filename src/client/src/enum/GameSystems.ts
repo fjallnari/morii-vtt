@@ -18,6 +18,7 @@ import CharacterBadge5E from "../components/Game/CharacterSheet/5E/CharacterBadg
 import CharacterBadgeCairn from "../components/Game/CharacterSheet/Cairn/CharacterBadgeCairn.svelte";
 import InnerOverviewCairn from "../components/Game/GameOverview/Cairn/InnerOverviewCairn.svelte";
 import type GameTab from "../interfaces/GameTab";
+import CharacterSheetCoreShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetCoreShadowdark.svelte";
 
 
 interface CharacterSheetTab {
@@ -36,10 +37,10 @@ export interface GameSystem {
     creationOptions: any[],
 
     // Svelte component, this is the bottom-right part of GM's game overview (anything other than PCs, and NPCs), system-specific
-    innerOverview: any,
+    innerOverview?: any,
 
     // Svelte component, middle part of character sheet settings (between the user tag and the delete button)
-    specificSettings: any,
+    specificSettings?: any,
 
     // Svelte component, system-specific, the CharacterBadge5E can be used as an placeholder
     characterBadge: any,
@@ -127,6 +128,23 @@ const GAME_SYSTEMS: Record<string, GameSystem> = {
         innerOverview: InnerOverviewCairn,
         specificSettings: SpecificSettingsCairn,
         characterBadge: CharacterBadgeCairn,
+        gameTabs: [
+            OWNER_STANDARD_OVERVIEW
+        ]
+    },
+    'Shadowdark': {
+        characterSheetTabs: [
+            {
+                color: '#A7C284',
+                icon: 'mdi:shield-account',
+                component:  CharacterSheetCoreShadowdark
+            },
+            SETTINGS_TAB
+        ],
+        creationOptions: [ CopyExistingSheet ],
+        //innerOverview: InnerOverviewCairn,
+        //specificSettings: SpecificSettingsCairn,
+        characterBadge: CharacterBadge5E,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW
         ]

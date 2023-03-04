@@ -20,23 +20,23 @@ export default class GetGameController extends RouteController {
 
 
     private async get5ESpecificData(campaignInfo: Campaign) {
-        // get all monsters 
+        // get all monsters
         const monstersObj = await getIdsFromCollection(campaignInfo.monsters, 'monsters');
         const cleanMonsters = monstersObj?.map( monster => Object.assign(monster, { id: monster._id.toString() }));
 
         return {
             monsters: cleanMonsters ?? [],
-            monsters_SRD: MONSTERS.map(monster => { 
-                return { 
-                    id: monster.id, 
-                    name: monster.name, 
-                    cr: monster.challenge.split(' (')[0], 
-                    type: monster.meta.split(' ')[1].replace(',', '') 
+            monsters_SRD: MONSTERS.map(monster => {
+                return {
+                    id: monster.id,
+                    name: monster.name,
+                    cr: monster.challenge.split(' (')[0],
+                    type: monster.meta.split(' ')[1].replace(',', '')
                 }
-            }), 
-            initiative: { 
-                topID: '', 
-                order: [] 
+            }),
+            initiative: {
+                topID: '',
+                order: []
             }
         }
     }
@@ -45,17 +45,17 @@ export default class GetGameController extends RouteController {
         const monstersObj = await getIdsFromCollection(campaignInfo.monsters, 'monsters');
         const cleanMonsters = monstersObj?.map( monster => Object.assign(monster, { id: monster._id.toString() }));
 
-        return { 
+        return {
             cairn: {
                 monsters: cleanMonsters ?? [],
-                monsters_SRD: MONSTERS_CAIRN.map(monster => { 
-                    return { 
-                        id: monster.id, 
+                monsters_SRD: MONSTERS_CAIRN.map(monster => {
+                    return {
+                        id: monster.id,
                         name: monster.name,
                     }
-                }),
+                }).sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)),
                 ... CAIRN_DATA
-            } 
+            }
         };
     }
 
@@ -104,18 +104,18 @@ export default class GetGameController extends RouteController {
         logger.info({ userID: user._id, campaignID: campaignIDString}, `attempting to get game data for campaign '${campaignIDString}'`);
         try {
             if (! user.campaigns.find( campaign => campaign.toString() === campaignIDString)) {
-                logger.info({ userID: user._id, campaignID: campaignIDString, status: 404 }, `failed getting game data; campaign was not found`); 
+                logger.info({ userID: user._id, campaignID: campaignIDString, status: 404 }, `failed getting game data; campaign was not found`);
                 return this.res.status(404).end();
             }
 
             const campaignID = new ObjectId(campaignIDString);
             const gameData = await this.getGameData(campaignID, user._id);
 
-            logger.info({ userID: user._id, campaignID: campaignIDString, status: 200 }, `succesfully sent game data for campaign '${campaignIDString}'`);    
+            logger.info({ userID: user._id, campaignID: campaignIDString, status: 200 }, `succesfully sent game data for campaign '${campaignIDString}'`);
             return this.res.status(200).send({ userInfo: {...simplifyPlayerInfo(user), gameData }});
         }
         catch (err) {
-            logger.info({ userID: user._id, campaignID: campaignIDString, status: 401 }, `failed getting game data for campaign '${campaignIDString}'`); 
+            logger.info({ userID: user._id, campaignID: campaignIDString, status: 401 }, `failed getting game data for campaign '${campaignIDString}'`);
             return this.res.status(401).end();
         }
     }

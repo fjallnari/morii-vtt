@@ -34,8 +34,8 @@
                 monsterID: monster.id
             });
 
-            user.set(Object.assign($user, { 
-                gameData: Object.assign($user.gameData, { 
+            user.set(Object.assign($user, {
+                gameData: Object.assign($user.gameData, {
                     cairn: Object.assign($user.gameData.cairn, {
                         monsters: $user.gameData.cairn.monsters.filter(monsterIter => monsterIter.id !== monster.id)
                     })
@@ -55,8 +55,8 @@
                 modifiedMonster: monster
             });
 
-            user.set(Object.assign($user, { 
-                gameData: Object.assign($user.gameData, { 
+            user.set(Object.assign($user, {
+                gameData: Object.assign($user.gameData, {
                     cairn: Object.assign($user.gameData.cairn, {
                         monsters: $user.gameData.cairn.monsters.map(monsterIter => {
                             if (monsterIter.id === monster.id) {
@@ -82,7 +82,7 @@
         if (damage.includes(',')) {
             damage = damage.split(',')[0];
         }
-        
+
         $sendSkillCheck(0, `${monster.name.toLowerCase()} | ${name}`, '', '-', '-', '-', damage);
     }
 
@@ -113,18 +113,18 @@
         </div>
         <div class="monster-menu">
             {#if monster.is_custom}
-                <SimpleIconButton 
-                    icon={`mdi:${editModeON ? 'content-save-edit': 'hammer-wrench'}`}
+                <SimpleIconButton
+                    icon={`mdi:${editModeON ? 'content-save-check': 'edit'}`}
                     color='var(--clr-accent-light)'
                     onClickFn={() => editModeON = !editModeON}>
                 </SimpleIconButton>
-                <SimpleIconButton 
+                <SimpleIconButton
                     icon='mdi:delete'
                     color='var(--clr-contrast-normal)'
                     onClickFn={() => removeMonster()}>
                 </SimpleIconButton>
             {:else}
-                <SimpleIconButton 
+                <SimpleIconButton
                     icon={`material-symbols:${isFavorite ? 'star-rounded': 'star-outline-rounded'}`}
                     color={isFavorite ? 'var(--clr-icon-owner)' : 'inherit'}
                     onClickFn={() => addMonsterToFavorites()}>
@@ -164,7 +164,7 @@
                             <InPlaceEdit bind:value={monster[ability]} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
                         </div>
                         <strong>{ability.toUpperCase()}</strong>
-                    </div>       
+                    </div>
                 {:else}
                     <sendable class="single-stat" on:click={() => sendAbility(ability)} on:keyup={() => {}}>
                         <div class="stat-text">
@@ -172,7 +172,7 @@
                         </div>
                         <strong>{ability.toUpperCase()}</strong>
                     </sendable>
-                {/if}        
+                {/if}
             {/each}
             {#if (monster.special && monster.special !== "") || editModeON}
                 <div class="divider">|</div>
@@ -198,7 +198,7 @@
                             <Icon class="medi-icon" icon="mdi:delete" color="var(--clr-contrast-normal)" />
                         </sendable>
 
-                    </div>       
+                    </div>
                 {:else}
                     <sendable class="single-stat" on:click={() => sendAttack(attack)} on:keyup={() => {}}>
                         <div class="stat-text">
@@ -212,10 +212,10 @@
         {#if editModeON}
             <div class="button-wrapper">
                 <SimpleButton
-                    value={`Add attack`} 
-                    icon="mdi:sword" 
+                    value={`Add attack`}
+                    icon="mdi:sword"
                     iconClass='medi-icon'
-                    type="primary" 
+                    type="primary"
                     onClickFn={() => addAttack()}>
                 </SimpleButton>
             </div>
@@ -232,27 +232,27 @@
     monster-detail { grid-area: monster-detail;
         width: 100%;
         height: 100%;
-        display: grid; 
-        grid-template-columns: 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1fr 8fr; 
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 8fr;
         gap: 0.5em;
-        grid-template-areas: 
+        grid-template-areas:
             "name name name name name"
             "stats stats stats stats stats"
     }
 
-    .name { grid-area: name; 
-        display: grid; 
-        grid-template-columns: 8fr 1fr; 
-        grid-template-rows: 1fr; 
+    .name { grid-area: name;
+        display: grid;
+        grid-template-columns: 8fr 1fr;
+        grid-template-rows: 1fr;
         gap: 0.25em;
         margin-right: 1em;
         border-bottom: 1px var(--clr-text) solid;
-        grid-template-areas: 
+        grid-template-areas:
             "monster-name monster-menu"
     }
 
-    .monster-name { grid-area: monster-name; 
+    .monster-name { grid-area: monster-name;
         display: flex;
         align-items: center;
         font-size: 1.2em;
@@ -261,14 +261,14 @@
         font-weight: 400;
     }
 
-    .monster-menu { grid-area: monster-menu; 
+    .monster-menu { grid-area: monster-menu;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 0.5em;
     }
 
-    .stats { grid-area: stats; 
+    .stats { grid-area: stats;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;

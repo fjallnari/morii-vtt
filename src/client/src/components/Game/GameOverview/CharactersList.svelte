@@ -3,7 +3,7 @@
     import type GameData from "../../../interfaces/GameData";
     import { selectedCharacter, user } from "../../../stores";
     import CreateInviteCode from "../../Campaign/CreateInviteCode.svelte";
-    import CharacterBadge5E from "../CharacterSheet/5E/CharacterBadge5E.svelte";
+    import CharacterBadge5E from "./5E/CharacterBadge5E.svelte";
 
     export let gameData: GameData;
 </script>

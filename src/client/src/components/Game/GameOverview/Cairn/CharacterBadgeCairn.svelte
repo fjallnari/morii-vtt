@@ -5,12 +5,16 @@
 
     export let character: CharacterCairn;
 
+    const displayDefaultIfEmpty = (stat: string, defaultStr: string = '0') => {
+        return stat && stat.trim() !== "" ? stat : defaultStr;
+    }
+
 </script>
 
 <character-badge>
     <div class="names">
         <div class="character-name">
-            {character.name}
+            {displayDefaultIfEmpty(character.name, '???')}
         </div>
         <div class="player-name">
             {$user?.gameData?.players.find(player => player._id === character.playerID)?.username}        
@@ -23,26 +27,26 @@
             <Icon class="medi-icon" icon="mdi:heart-broken" color='gray'/>
         {/if}
         <div class="stat-text">
-            {character.hp}/{character.hp_max}
+            {displayDefaultIfEmpty(character.hp)}/{displayDefaultIfEmpty(character.hp_max)}
         </div>
     </div>
     <div class="character-armor single-stat">
         <Icon class="medi-icon" icon="mdi:shield-half-full" />
         <div class="stat-text">
-            {character.armor ?? '0'}
+            {displayDefaultIfEmpty(character.armor)}
         </div>
     </div>
     <div class="character-slots single-stat">
         <Icon class="medi-icon" icon="mdi:cube" />
         <div class="stat-text">
-            {character.slots_filled ?? '?'}/{character.slots}
+            {displayDefaultIfEmpty(character.slots_filled, '??')}/{displayDefaultIfEmpty(character.slots)}
         </div>
     </div>
     <div class="character-ascores">
         {#each Object.keys(character.ability_scores) as abilityTag}
             <div class="single-stat">
                 <div class="ability-tag">{abilityTag}</div>
-                <div>{character.ability_scores[abilityTag].current}</div>
+                <div>{displayDefaultIfEmpty(character.ability_scores[abilityTag].current)}</div>
             </div>
         {/each}
     </div>

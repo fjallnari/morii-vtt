@@ -27,6 +27,26 @@ Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently su
 *(I)* As there are no subclasses/backgrounds under the OGL you will sadly still have to import these manually.
 
 
+## Dev Environment
+If you'd like to try Morii out on local/want to contribute, you will need the following variables in a `.env` file:
+```
+MONGO_INITDB_DATABASE=morii
+MONGO_URL=mongodb://mongo/morii-mongo?readPreference=primary
+
+JWT_SECRET='anything can be here for dev' ~ you can also use something like "openssl rand -base64 12"
+JWT_REFRESH_SECRET='same as JWT_SECRET, should be different for prod'
+```
+There is also a Docker dev setup which you can use so (Linux is recommended, WSL2 should work as well):
+- `./bin/start-dev.sh` ~ spins up a new docker container with separated client, server and MongoDB instances
+- `./bin/stop-dev.sh` ~ stops the container, you can also just Ctrl+C the running process, it calls this script to cleanly exit
+You might need to add the execution permission fro both of these, like so: `chmod +x <script>`.
+
+You can also manually spin your own MongoDB localhost instance and run MoriiVTT like this (Node 18 recommended):
+1. Create local docker MongoDB container ~ `docker run -d -p 27017:27017 -v ~/mongodb_data:/data/db --name morii-mongo-local mongo:latest`.
+2. Modify the `MONGO_URL` variable in `.env` to be `mongodb://localhost:27017`.
+3. Run either the full stack with `yarn run-stack-dev` OR in two separate terminals: `yarn server-dev` on root and `yarn dev` in `src/client`.
+
+
 ## 📝 Licenses
 -   **Notice of Open Game Content:** This project uses *open game content* under the [Open Gaming License, Version 1.0a](Legal.md).
 -   **Designation of Open Game Content:** This project contains classes, races, spells, equipment and general rules contained in SRD5 under the aforementioned OGL license.

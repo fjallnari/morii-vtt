@@ -39,7 +39,8 @@ JWT_REFRESH_SECRET='same as JWT_SECRET, should be different for prod'
 There is also a Docker dev setup which you can use so (Linux is recommended, WSL2 should work as well):
 - `./bin/start-dev.sh` ~ spins up a new docker container with separated client, server and MongoDB instances
 - `./bin/stop-dev.sh` ~ stops the container, you can also just Ctrl+C the running process, it calls this script to cleanly exit
-You might need to add the execution permission fro both of these, like so: `chmod +x <script>`.
+
+You might need to add the execution permission for both of these, like so: `chmod +x <script>`.
 
 You can also manually spin your own MongoDB localhost instance and run MoriiVTT like this (Node 18 recommended):
 1. Create local docker MongoDB container ~ `docker run -d -p 27017:27017 -v ~/mongodb_data:/data/db --name morii-mongo-local mongo:latest`.

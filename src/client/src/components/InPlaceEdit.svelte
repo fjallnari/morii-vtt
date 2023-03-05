@@ -39,6 +39,10 @@
         value = value.toString();
     }
 
+    const isTextNonEmpty = (text: string) => {
+        return text && (typeof text === 'string') && text.trim() !== '';
+    }
+
 </script>
 
 {#if editing}
@@ -46,8 +50,8 @@
         <input style="width: {editWidth}; height: {editHeight}; font-size: {valueFontSize};" bind:value on:blur={submit} {required} use:focus/>
     </form>
 {:else}
-    <div class="text-display" style="font-size: {valueFontSize};" on:click={() => edit()} on:keyup={() => {}}>
-        {value && (typeof value === 'string') && value.trim() ? value : defaultValue}
+    <div class="text-display{isTextNonEmpty(value) ? '' : ' placeholder'}" style="font-size: {valueFontSize};" on:click={() => edit()} on:keyup={() => {}}>
+        {isTextNonEmpty(value) ? value : defaultValue}
     </div>
 {/if}
 
@@ -70,6 +74,10 @@
 
     .text-display {
         border: 1px solid transparent;
+    }
+
+    .text-display.placeholder {
+        color: #8e8e8e;
     }
 
 </style>

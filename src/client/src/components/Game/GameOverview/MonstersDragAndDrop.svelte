@@ -5,6 +5,7 @@
     import type { MonsterData } from '../../../interfaces/5E/MonsterData';
     import type MonsterDataCairn from '../../../interfaces/Cairn/MonsterDataCairn';
     import { createEventDispatcher } from 'svelte';
+    import { getDefaultIfEmpty } from '../../../util/util';
 
     export let items: (MonsterData | MonsterDataCairn)[];
     export let chosenMonsterID: string;
@@ -72,7 +73,7 @@
                         <Icon class="big-icon" icon="mdi:notebook" />
                     {/if}
                 </span>
-                <span class="fav-monster-name">{favMonster.name}</span>
+                <span class="fav-monster-name">{getDefaultIfEmpty(favMonster.name, "???")}</span>
                 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                 <span class="fav-monster-drag handle"
                     tabindex={dragDisabled? 0 : -1} 

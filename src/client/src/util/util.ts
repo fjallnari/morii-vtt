@@ -91,3 +91,11 @@ export const int2roman = (original: number): string => {
       return roman;
     }, '');
 }
+
+export const isTextNonEmpty = (text: string) => {
+    return text && (typeof text === 'string') && text.trim() !== "";
+}
+
+export const getDefaultIfEmpty = (text: string, defaultStr: string = "0") => {
+    return isTextNonEmpty(text) ? text : defaultStr;
+}

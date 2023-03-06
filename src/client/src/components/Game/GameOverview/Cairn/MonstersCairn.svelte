@@ -133,7 +133,7 @@
         </div>
 
         {#if monsterChosenObj}
-        <MonsterDetailCairn bind:monster={monsterChosenObj} bind:monsterChosenObj={monsterChosenObj} addMonster={addMonster} />
+            <MonsterDetailCairn bind:monster={monsterChosenObj} bind:monsterChosenSimple addMonster={addMonster} />
         {:else}
             <div class="placeholder-no-monster">
                 {#if monsterChosenSimple && !monsterChosenObj}
@@ -158,7 +158,7 @@
         gap: 1em;
         overflow: hidden;
         grid-template-areas:
-            "title title title title title title title"
+            "title title title detail-title detail-title detail-title detail-title"
             "add-srd-monster add-srd-monster add-srd-monster monster-detail monster-detail monster-detail monster-detail"
             "monster-menu monster-menu monster-menu monster-detail monster-detail monster-detail monster-detail"
             "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"

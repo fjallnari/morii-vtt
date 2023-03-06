@@ -9,10 +9,11 @@
     import HtmlRendererOverride from "../../../HTMLRendererOverride.svelte";
     import Icon from "@iconify/svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
+    import { getDefaultIfEmpty } from "../../../../util/util";
 
     export let monster: MonsterDataCairn;
     export let addMonster: (monsterTemplate?: {}) => Promise<MonsterDataCairn>;
-    export let monsterChosenObj: MonsterDataCairn;
+    export let monsterChosenSimple: { id: string, name: string };
 
     let isFavorite: boolean = false;
     let editModeON: boolean = false;
@@ -41,7 +42,7 @@
                     })
                 })
             }));
-            monsterChosenObj = undefined;
+            monster = undefined;
 		}
 		catch (err) {
             console.log(err);
@@ -100,18 +101,24 @@
         editMonster();
     }
 
+    const closeDetailView = () => {
+        monsterChosenSimple = undefined;
+        monster = undefined;
+    }
+
 </script>
 
 <monster-detail>
     <div class="name">
         <div class="monster-name">
-            {#if editModeON}
-                <InPlaceEdit bind:value={monster.name} editWidth="15rem" editHeight="2rem" on:submit={() => editMonster()}/>
-            {:else}
-                {monster.name}
-            {/if}
+            <InPlaceEdit bind:value={monster.name} defaultValue="Name" editWidth="15rem" editHeight="2rem" on:submit={() => editMonster()}/>
         </div>
         <div class="monster-menu">
+            <SimpleIconButton
+                icon={`mdi:close`}
+                color='var(--clr-accent-normal)'
+                onClickFn={() => closeDetailView()}>
+            </SimpleIconButton>
             {#if monster.is_custom}
                 <SimpleIconButton
                     icon={`mdi:${editModeON ? 'content-save-check': 'edit'}`}
@@ -220,9 +227,9 @@
                 </SimpleButton>
             </div>
             <!-- <textarea style="height: 6em; margin: 0.5em 0em;" bind:value={monster.stats} on:change={() => editMonster()}></textarea> -->
-            <textarea class="description-edit" bind:value={monster.description} on:change={() => editMonster()}></textarea>
+            <textarea class="description-edit" bind:value={monster.description} placeholder="Description" on:change={() => editMonster()}></textarea>
         {:else}
-            <SvelteMarkdown source={monster.description ?? '???'} renderers={{html: HtmlRendererOverride}}/>
+            <SvelteMarkdown source={monster.description ?? 'Description'} renderers={{html: HtmlRendererOverride}}/>
         {/if}
 
     </div>

@@ -99,11 +99,12 @@
         justify-content: flex-start;
         align-items: center;
         gap: 0.4em;
-        width: 100%;
-        height: 100%;
+        width: inherit;
+        height: inherit;
         overflow-y: auto;
         scrollbar-width: thin;
         padding: 0px 0.5em 4px 0.5em;
+        overflow-y: auto;
     }
 
     .fav-monster-item {
@@ -112,7 +113,7 @@
         grid-template-rows: 1fr 1fr 1fr; 
         gap: 0.5em;
         padding: 0.4em 0em;
-        width: 90%;
+        width: 95%;
         cursor: pointer;
         background-color: var(--clr-box-bg-light);
         grid-template-areas: 

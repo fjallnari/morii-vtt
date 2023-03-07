@@ -9,20 +9,16 @@
     import HtmlRendererOverride from "../../../HTMLRendererOverride.svelte";
     import Icon from "@iconify/svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
-    import { getDefaultIfEmpty } from "../../../../util/util";
 
     export let monster: MonsterDataCairn;
     export let addMonster: (monsterTemplate?: {}) => Promise<MonsterDataCairn>;
     export let monsterChosenSimple: { id: string, name: string };
 
-    let isFavorite: boolean = false;
     let editModeON: boolean = false;
 
     // favorites and saves a monster
     const addMonsterToFavorites = async () => {
-        isFavorite = !isFavorite;
-
-        if (isFavorite && monster) {
+        if (monster) {
             const { id, ... cleanMonster } = Object.assign(monster, { source: 'srd' });
             await addMonster(cleanMonster);
         }
@@ -116,13 +112,13 @@
         <div class="monster-menu">
             <SimpleIconButton
                 icon={`mdi:close`}
-                color='var(--clr-accent-normal)'
+                color='var(--clr-accent-light)'
                 onClickFn={() => closeDetailView()}>
             </SimpleIconButton>
             {#if monster.is_custom}
                 <SimpleIconButton
                     icon={`mdi:${editModeON ? 'content-save-check': 'edit'}`}
-                    color='var(--clr-accent-light)'
+                    color='#A7C284'
                     onClickFn={() => editModeON = !editModeON}>
                 </SimpleIconButton>
                 <SimpleIconButton
@@ -132,8 +128,8 @@
                 </SimpleIconButton>
             {:else}
                 <SimpleIconButton
-                    icon={`material-symbols:${isFavorite ? 'star-rounded': 'star-outline-rounded'}`}
-                    color={isFavorite ? 'var(--clr-icon-owner)' : 'inherit'}
+                    icon={`mdi:star-add`}
+                    color={'var(--clr-icon-owner)'}
                     onClickFn={() => addMonsterToFavorites()}>
                 </SimpleIconButton>
             {/if}

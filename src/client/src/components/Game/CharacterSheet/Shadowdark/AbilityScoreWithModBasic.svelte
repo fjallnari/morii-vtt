@@ -4,7 +4,7 @@
 
     export let value: string;
     export let name: string;
-    export let convertValueToMod: (value: string) => number = (value) => { return ~~value} ;
+    export let convertValueToMod: (value: string) => number = (value) => { return ~~value } ;
 
 </script>
 
@@ -32,9 +32,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: fit-content;
-        height: fit-content;
+        width: 100%;
+        height: 100%;
         min-width: 0;
+        font-size: 1.2em;
     }
 
     .ability-score-modifier {
@@ -43,8 +44,8 @@
         justify-content: center;
         align-items: center;
 
-        height: 2.5em;
-        width: 2.5em;
+        height: 60%;
+        width: 40%;
         z-index: 2;
         margin-bottom: -1.2em;
 
@@ -54,8 +55,8 @@
     }
 
     .ability-score-value {
-        width: 5em;
-        height: 5em;
+        width: 60%;
+        height: 100%;
     }
 
     .ability-score-value :global(.box-main-text) {

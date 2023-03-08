@@ -36,5 +36,6 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
         'CHA': {
             value: '',
         },
-    }
+    },
+    notes: ''
 }

@@ -22,5 +22,5 @@ export interface CharacterShadowdark extends CharacterGeneric {
     hp_max: string,
 
     ability_scores: Record<string, AbilityScoreShadowdark>,
-    
+    notes: string    
 }

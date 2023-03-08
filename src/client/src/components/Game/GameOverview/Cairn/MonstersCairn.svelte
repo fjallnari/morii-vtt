@@ -10,11 +10,13 @@
     import type CairnData from "../../../../interfaces/Cairn/CairnData";
     import MonsterDetailCairn from "./MonsterDetailCairn.svelte";
     import MonstersDragAndDrop from "../MonstersDragAndDrop.svelte";
+    import CreateMonsterCairn from "./CreateMonsterCairn.svelte";
 
     export let cairn: CairnData;
 
     let monsterChosenSimple: { id: string, name: string } = undefined;
     let monsterChosenObj: MonsterDataCairn = undefined;
+    let createMenuEnabled: boolean = $user.gameData?.monsters?.length === 0 ? true : false;
 
     // returns either array of simple id/name pairs of all monsters, or an array with single detailed monster
     const getMonsterData = async (monsterID: string = '') => {
@@ -48,6 +50,7 @@
                 monsterChosenObj = newMonster;
                 monsterChosenSimple = undefined;
             }
+            createMenuEnabled = false;
             return newMonster;
 		}
 		catch (err) {
@@ -103,22 +106,24 @@
 <monsters-content>
     <div class="monsters">
         <h3 class="title">Monsters</h3>
-        <box class="monster-list">
-            {#if $user && $user?.gameData?.cairn.monsters}
-                <MonstersDragAndDrop 
-                    items={$user?.gameData?.cairn.monsters}
-                    on:viewmonster={viewFavoriteMonster}
-                    on:updatemonsters={updateMonsters}
-                    chosenMonsterID={monsterChosenObj?.id}
-                />
-            {/if}
-            <sendable class="add-new-item" on:click={() => addMonster()} on:keyup={() => {}}>
-                <Icon class="big-icon" icon="mdi:add" />
-            </sendable>
-        </box>
+        {#if createMenuEnabled}
+            <CreateMonsterCairn bind:createMenuEnabled {addMonster} {viewRandomMonster}/>
+        {:else}
+            <box class="monster-list">
+                {#if $user && $user?.gameData?.cairn.monsters}
+                    <MonstersDragAndDrop 
+                        items={$user?.gameData?.cairn.monsters}
+                        on:viewmonster={viewFavoriteMonster}
+                        on:updatemonsters={updateMonsters}
+                        chosenMonsterID={monsterChosenObj?.id}
+                    />
+                {/if}
+                <sendable class="add-new-item" on:click={() => createMenuEnabled = true} on:keyup={() => {}}>
+                    <Icon class="big-icon" icon="mdi:add" />
+                </sendable>
+            </box>
+        {/if}
     </div>
-
-
 
     <div class="detail-container">
         <h3 class="title">Monster detail</h3>
@@ -128,9 +133,9 @@
             <div class="placeholder-no-monster">
                 {#if monsterChosenSimple && !monsterChosenObj}
                     <SimpleProgressCircle></SimpleProgressCircle>
-                    <div>Loading {monsterChosenSimple.name}...</div>
+                    <div class="placeholder-text">Loading {monsterChosenSimple.name}...</div>
                 {:else}
-                    <div>Choose a monster to view or </div>
+                    <div class="placeholder-text">Choose a SRD monster to view:</div>
                     <div class="add-cairn-srd-monster">
                         <Svelecte
                             options={cairn.monsters_SRD}
@@ -139,10 +144,6 @@
                             placeholder='All SRD monsters'
                             bind:value={monsterChosenSimple}>
                         </Svelecte>
-                    </div>
-                    <div class="monster-menu">
-                        <SimpleButton value='Add custom monster' icon="mdi:notebook-edit" onClickFn={() => addMonster()}></SimpleButton>
-                        <SimpleButton value='View random monster' icon='mdi:dice' type='primary' onClickFn={() => viewRandomMonster()}></SimpleButton>
                     </div>
                 {/if}
             </div>
@@ -161,13 +162,13 @@
         font-family: Quicksand;
         overflow: hidden;
         grid-template-areas:
-            "monster-list monster-list monster-list detail-container detail-container detail-container detail-container"
-            "monster-list monster-list monster-list detail-container detail-container detail-container detail-container"
-            "monster-list monster-list monster-list detail-container detail-container detail-container detail-container"
-            "monster-list monster-list monster-list detail-container detail-container detail-container detail-container"
-            "monster-list monster-list monster-list detail-container detail-container detail-container detail-container"
-            "monster-list monster-list monster-list detail-container detail-container detail-container detail-container"
-            "monster-list monster-list monster-list detail-container detail-container detail-container detail-container"; 
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"; 
     }
 
     .title {
@@ -183,7 +184,7 @@
         text-transform: uppercase;
     }
 
-    .monsters { grid-area: monster-list; 
+    .monsters { grid-area: monsters; 
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -209,23 +210,11 @@
         justify-content: center;
         margin: 0em 2em;
         font-size: 1.2em;
+        width: 50%;
     }
 
     :global(.add-cairn-srd-monster .svelecte){
         max-height: 2em;
-    }
-
-    .monster-menu { grid-area: monster-menu; 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.4em;
-        gap: 0.5em;
-    }
-    
-    :global(.monster-menu > simple-button) {
-        width: 90%;
     }
 
     .detail-container { grid-area: detail-container;
@@ -238,16 +227,15 @@
     .placeholder-no-monster {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         gap: 1em;
         height: 100%;
         width: 100%;
     }
 
-    :global(.placeholder-no-monster simple-button) {
-        width: fit-content;
-        padding: 0.2em 1em;
+    .placeholder-text {
+        font-size: 1.2em;
     }
 
 </style>

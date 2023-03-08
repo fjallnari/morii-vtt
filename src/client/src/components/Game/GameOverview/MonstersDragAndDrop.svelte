@@ -68,9 +68,9 @@
             >
                 <span class="fav-monster-source">
                     {#if favMonster?.source === "srd"}
-                        <Icon class="big-icon" icon="material-symbols:star-rounded" />
-                    {:else}
                         <Icon class="big-icon" icon="mdi:notebook" />
+                    {:else}
+                        <Icon class="big-icon" icon="mdi:shape" />
                     {/if}
                 </span>
                 <span class="fav-monster-name">{getDefaultIfEmpty(favMonster.name, "???")}</span>
@@ -88,7 +88,7 @@
             </box>        
         {/each}
     {:else}
-        <p>No favorite monsters.</p>
+        <p>No saved monsters.</p>
     {/if}
 </section>
 
@@ -136,6 +136,7 @@
 
     .fav-monster-name { grid-area: fav-monster-name; 
         font-size: 1.2em;
+        overflow: hidden;
     }
 
     .fav-monster-source { grid-area: fav-monster-source; 

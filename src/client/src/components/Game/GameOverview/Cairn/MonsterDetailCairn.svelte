@@ -31,6 +31,8 @@
                 monsterID: monster.id
             });
 
+            const nextMonsterIndex = $user.gameData.cairn.monsters.findIndex(monsterIter => monsterIter.id === monster.id);
+
             user.set(Object.assign($user, {
                 gameData: Object.assign($user.gameData, {
                     cairn: Object.assign($user.gameData.cairn, {
@@ -38,7 +40,8 @@
                     })
                 })
             }));
-            monster = undefined;
+
+            monster = $user.gameData.cairn.monsters[nextMonsterIndex];
 		}
 		catch (err) {
             console.log(err);
@@ -128,8 +131,8 @@
                 </SimpleIconButton>
             {:else}
                 <SimpleIconButton
-                    icon={`mdi:star-add`}
-                    color={'var(--clr-icon-owner)'}
+                    icon={`mdi:notebook-plus`}
+                    color='#A7C284'
                     onClickFn={() => addMonsterToFavorites()}>
                 </SimpleIconButton>
             {/if}
@@ -262,6 +265,8 @@
         font-family: Montserrat;
         text-transform: uppercase;
         font-weight: 400;
+        overflow: hidden;
+        padding-left: 4px;
     }
 
     .monster-menu { grid-area: monster-menu;

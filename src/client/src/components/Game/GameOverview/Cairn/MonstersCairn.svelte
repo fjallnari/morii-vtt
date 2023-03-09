@@ -30,7 +30,7 @@
         return [];
     }
 
-    const addMonster = async (monsterTemplate = {}) => {
+    const addMonster: (monsterTemplate?: {}) => Promise<MonsterDataCairn> = async (monsterTemplate = {}) => {
 		try {
             const response = await axios.post('/api/add-monster', {
                 campaignID: $params.id,

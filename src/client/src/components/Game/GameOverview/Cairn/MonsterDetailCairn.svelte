@@ -110,31 +110,36 @@
 <monster-detail>
     <div class="name">
         <div class="monster-name">
-            <InPlaceEdit bind:value={monster.name} defaultValue="Name" editWidth="15rem" editHeight="2rem" on:submit={() => editMonster()}/>
+            <InPlaceEdit bind:value={monster.name} 
+                defaultValue="Name" 
+                editWidth="15rem" 
+                editHeight="2rem" 
+                on:submit={() => editMonster()}
+            />
         </div>
         <div class="monster-menu">
             <SimpleIconButton
                 icon={`mdi:close`}
                 color='var(--clr-accent-light)'
-                onClickFn={() => closeDetailView()}>
-            </SimpleIconButton>
+                onClickFn={() => closeDetailView()}
+            />
             {#if monster.is_custom}
                 <SimpleIconButton
                     icon={`mdi:${editModeON ? 'content-save-check': 'edit'}`}
                     color='#A7C284'
-                    onClickFn={() => editModeON = !editModeON}>
-                </SimpleIconButton>
+                    onClickFn={() => editModeON = !editModeON}
+                />
                 <SimpleIconButton
                     icon='mdi:delete'
                     color='var(--clr-contrast-normal)'
-                    onClickFn={() => removeMonster()}>
-                </SimpleIconButton>
+                    onClickFn={() => removeMonster()}
+                />
             {:else}
                 <SimpleIconButton
                     icon={`mdi:notebook-plus`}
                     color='#A7C284'
-                    onClickFn={() => addMonsterToFavorites()}>
-                </SimpleIconButton>
+                    onClickFn={() => addMonsterToFavorites()}
+                />
             {/if}
         </div>
     </div>
@@ -142,43 +147,42 @@
         <div class="stats-line">
             <div class="single-stat">
                 <div class="stat-text">
-                    {#if editModeON}
-                        <InPlaceEdit bind:value={monster.hp} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
-                    {:else}
-                        {monster.hp ?? '0'}
-                    {/if}
+                    <InPlaceEdit bind:value={monster.hp}
+                        defaultValue='0' 
+                        editWidth="2rem" 
+                        editHeight="1.5rem" 
+                        on:submit={() => editMonster()}
+                    />
                 </div>
                 <Icon class="medi-icon" icon="mdi:heart" color="var(--clr-contrast-normal)" />
             </div>
             {#if monster.armor && monster.armor !== "" || editModeON}
                 <div class="single-stat">
                     <div class="stat-text">
-                        {#if editModeON}
-                            <InPlaceEdit bind:value={monster.armor} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
-                        {:else}
-                            {monster.armor ?? '0'}
-                        {/if}
+                        <InPlaceEdit bind:value={monster.armor} 
+                            defaultValue='0' 
+                            editWidth="2rem" 
+                            editHeight="1.5rem" 
+                            on:submit={() => editMonster()}
+                        />
                     </div>
                     <Icon class="medi-icon" icon="mdi:shield-half-full" color="gray" />
                 </div>
             {/if}
             <div class="divider">|</div>
             {#each ['str', 'dex', 'wil'] as ability}
-                {#if editModeON}
-                    <div class="single-stat">
-                        <div class="stat-text">
-                            <InPlaceEdit bind:value={monster[ability]} editWidth="2rem" editHeight="1.5rem" on:submit={() => editMonster()}/>
-                        </div>
-                        <strong>{ability.toUpperCase()}</strong>
+                <div class="single-stat">
+                    <div class="stat-text">
+                        <InPlaceEdit bind:value={monster[ability]} 
+                            editWidth="2rem" 
+                            editHeight="1.5rem" 
+                            on:submit={() => editMonster()}
+                        />
                     </div>
-                {:else}
-                    <sendable class="single-stat" on:click={() => sendAbility(ability)} on:keyup={() => {}}>
-                        <div class="stat-text">
-                            {monster[ability] ?? '10'}
-                        </div>
+                    <sendable on:click={() => sendAbility(ability)} on:keyup={() => {}}>
                         <strong>{ability.toUpperCase()}</strong>
                     </sendable>
-                {/if}
+                </div>
             {/each}
             {#if (monster.special && monster.special !== "") || editModeON}
                 <div class="divider">|</div>
@@ -203,7 +207,6 @@
                         <sendable on:click={() => deleteAttack(index)} on:keyup={() => {}}>
                             <Icon class="medi-icon" icon="mdi:delete" color="var(--clr-contrast-normal)" />
                         </sendable>
-
                     </div>
                 {:else}
                     <sendable class="single-stat" on:click={() => sendAttack(attack)} on:keyup={() => {}}>
@@ -225,8 +228,12 @@
                     onClickFn={() => addAttack()}>
                 </SimpleButton>
             </div>
-            <!-- <textarea style="height: 6em; margin: 0.5em 0em;" bind:value={monster.stats} on:change={() => editMonster()}></textarea> -->
-            <textarea class="description-edit" bind:value={monster.description} placeholder="Description" on:change={() => editMonster()}></textarea>
+            <textarea 
+                class="description-edit" 
+                bind:value={monster.description}
+                placeholder="Description ~ You can use Markdown here!"
+                on:change={() => editMonster()}
+            />
         {:else}
             <SvelteMarkdown source={monster.description ?? 'Description'} renderers={{html: HtmlRendererOverride}}/>
         {/if}

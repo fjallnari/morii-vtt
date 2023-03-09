@@ -2,7 +2,7 @@ export const MONSTER_CAIRN = {
     name: "",
     traits: '',
     description: '',
-    hp: "0",
+    hp: "",
     str: "10",
     dex: "10",
     wil: "10",

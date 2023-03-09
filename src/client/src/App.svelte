@@ -199,16 +199,20 @@
         margin: 0em 0.3em;
     }
 
-    :global(sendable) {
+    :global(sendable, clickable) {
         cursor: pointer;
 		transition: color 100ms ease-in;
 		display: inline-grid;
 		align-self: center;
     }
 
-    :global(sendable:active) {
+    :global(sendable:active, clickable:active) {
         color: var(--clr-accent-normal);
     }
+
+	:global(sendable) {
+		text-decoration: underline gray;
+	}
 
     :global(textarea) {
         width: 100%;

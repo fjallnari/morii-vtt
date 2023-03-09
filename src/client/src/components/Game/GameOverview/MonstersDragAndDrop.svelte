@@ -5,6 +5,7 @@
     import type { MonsterData } from '../../../interfaces/5E/MonsterData';
     import type MonsterDataCairn from '../../../interfaces/Cairn/MonsterDataCairn';
     import { createEventDispatcher } from 'svelte';
+    import { getDefaultIfEmpty } from '../../../util/util';
 
     export let items: (MonsterData | MonsterDataCairn)[];
     export let chosenMonsterID: string;
@@ -67,12 +68,12 @@
             >
                 <span class="fav-monster-source">
                     {#if favMonster?.source === "srd"}
-                        <Icon class="big-icon" icon="material-symbols:star-rounded" />
-                    {:else}
                         <Icon class="big-icon" icon="mdi:notebook" />
+                    {:else}
+                        <Icon class="big-icon" icon="mdi:shape" />
                     {/if}
                 </span>
-                <span class="fav-monster-name">{favMonster.name}</span>
+                <span class="fav-monster-name">{getDefaultIfEmpty(favMonster.name, "???")}</span>
                 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                 <span class="fav-monster-drag handle"
                     tabindex={dragDisabled? 0 : -1} 
@@ -87,7 +88,7 @@
             </box>        
         {/each}
     {:else}
-        <p>No favorite monsters.</p>
+        <p>No saved monsters.</p>
     {/if}
 </section>
 
@@ -98,11 +99,12 @@
         justify-content: flex-start;
         align-items: center;
         gap: 0.4em;
-        width: 100%;
-        height: 100%;
+        width: inherit;
+        height: inherit;
         overflow-y: auto;
         scrollbar-width: thin;
         padding: 0px 0.5em 4px 0.5em;
+        overflow-y: auto;
     }
 
     .fav-monster-item {
@@ -111,7 +113,7 @@
         grid-template-rows: 1fr 1fr 1fr; 
         gap: 0.5em;
         padding: 0.4em 0em;
-        width: 90%;
+        width: 95%;
         cursor: pointer;
         background-color: var(--clr-box-bg-light);
         grid-template-areas: 
@@ -134,6 +136,7 @@
 
     .fav-monster-name { grid-area: fav-monster-name; 
         font-size: 1.2em;
+        overflow: hidden;
     }
 
     .fav-monster-source { grid-area: fav-monster-source; 

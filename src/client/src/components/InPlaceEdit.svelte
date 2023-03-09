@@ -1,5 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte'
+    import { getDefaultIfEmpty, isTextNonEmpty } from '../util/util';
 
     export let value: any = '', required = true, editWidth: string = 'inherit', editHeight: string = 'inherit', defaultValue: string = '---', valueFontSize = '1em';
 
@@ -39,10 +40,6 @@
         value = value.toString();
     }
 
-    const isTextNonEmpty = (text: string) => {
-        return text && (typeof text === 'string') && text.trim() !== '';
-    }
-
 </script>
 
 {#if editing}
@@ -51,7 +48,7 @@
     </form>
 {:else}
     <div class="text-display{isTextNonEmpty(value) ? '' : ' placeholder'}" style="font-size: {valueFontSize};" on:click={() => edit()} on:keyup={() => {}}>
-        {isTextNonEmpty(value) ? value : defaultValue}
+        {getDefaultIfEmpty(value, defaultValue)}
     </div>
 {/if}
 

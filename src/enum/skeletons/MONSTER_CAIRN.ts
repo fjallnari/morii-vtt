@@ -1,8 +1,8 @@
 export const MONSTER_CAIRN = {
-    name: "???",
-    traits: '???',
-    description: '???',
-    hp: "0",
+    name: "",
+    traits: '',
+    description: '',
+    hp: "",
     str: "10",
     dex: "10",
     wil: "10",

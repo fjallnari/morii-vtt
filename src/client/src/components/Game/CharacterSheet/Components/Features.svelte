@@ -38,12 +38,12 @@
 <box class="features-main-container">
     <div class="filter-menu">
         {#each ['all', 'racial', 'class', 'feat', 'background', 'other'] as featureType, index}
-            <sendable class="filter-names"
+            <clickable class="filter-names"
                 style="{currentFilter === index ? 'border-bottom: 1px solid var(--clr-accent-normal); padding-bottom: 0.2em;': ''}"
                 on:click={ () => { currentFilter = index;}} on:keyup={() => {}}
             >
                 {featureType}
-            </sendable>
+            </clickable>
         {/each}                
     </div>
     <div class="inside-box-list">
@@ -79,7 +79,7 @@
         padding-top: 0.5em;
     }
 
-    .filter-menu sendable {
+    .filter-menu clickable {
         cursor: pointer;
         transition-duration: 500ms;
         transition-property: border; 

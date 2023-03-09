@@ -38,18 +38,18 @@
         <div class="tool-name">
             <InPlaceEdit bind:value={tool.name} editWidth='7em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
-        <sendable class="tool-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
+        <clickable class="tool-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:{isOpen ? 'menu-open-rounded' : 'menu-rounded'}" />
-        </sendable>
+        </clickable>
     </div>
     {#if isOpen}
         <div class="details" transition:slide|local>
-            <sendable class="simple-detail-line" on:click={() => { tool.proficiency += 1 + (tool.proficiency === 2 ? -3 : 0); $modifyCharacter(); }} on:keyup={() => {}}>
+            <clickable class="simple-detail-line" on:click={() => { tool.proficiency += 1 + (tool.proficiency === 2 ? -3 : 0); $modifyCharacter(); }} on:keyup={() => {}}>
                 <Icon class="medi-icon" icon="mdi:{['hammer-screwdriver','checkbox-marked','flare'][tool.proficiency]}" />
                 <div class="select-ability-label box-label">
                     {['jack of all trades', 'proficient', 'expertise'][tool.proficiency]}
                 </div>
-            </sendable>
+            </clickable>
             <div class="simple-detail-line">
                 <select bind:value={tool.ability} on:change={() => $modifyCharacter()}>
                     <option value="" selected disabled hidden>---</option>

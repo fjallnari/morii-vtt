@@ -173,7 +173,8 @@
             {#each ['str', 'dex', 'wil'] as ability}
                 <div class="single-stat">
                     <div class="stat-text">
-                        <InPlaceEdit bind:value={monster[ability]} 
+                        <InPlaceEdit bind:value={monster[ability]}
+                            defaultValue='10'
                             editWidth="2rem" 
                             editHeight="1.5rem" 
                             on:submit={() => editMonster()}

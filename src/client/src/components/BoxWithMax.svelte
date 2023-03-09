@@ -77,6 +77,7 @@
 
     .current-value-box .box-label {
         font-size: 1.2em;
+        font-weight: var(--semi-bold);
     }
 
     .box-label {

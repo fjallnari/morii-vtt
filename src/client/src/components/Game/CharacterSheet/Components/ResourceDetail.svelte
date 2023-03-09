@@ -54,12 +54,12 @@
         </sendable>
     </div>
     <div class="back">
-        <sendable class="change-resource-type" on:click={changeResourceType} on:keyup={() => {}}>
+        <clickable class="change-resource-type" on:click={changeResourceType} on:keyup={() => {}}>
             <Icon class="resource-type-icon big-icon" icon="{resource.type && resource.type === 'simple' ? 'mdi:alpha-a' : 'mdi:ab-testing'}" />
             <div class="change-resource-type-label box-label">
                 {resource.type ?? 'complex'}
             </div>
-        </sendable>
+        </clickable>
         <SimpleButton value='Delete' type="delete" onClickFn={() => deleteFce(resource)}></SimpleButton>
         <sendable class="flip-card-icon" on:click={() => { isFlipped = false}} on:keyup={() => {}}>
             <Icon class="big-icon" icon="material-symbols:arrow-left-rounded" />

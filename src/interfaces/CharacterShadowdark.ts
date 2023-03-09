@@ -10,7 +10,7 @@ export interface CharacterShadowdark extends CharacterGeneric {
     title: string,
     alignment: string,
     deity: string,
-    luck: boolean,
+
 
     ancestry: string,
     class: string,
@@ -20,7 +20,10 @@ export interface CharacterShadowdark extends CharacterGeneric {
     ac: string,
     hp: string,
     hp_max: string,
+    luck: boolean,
+    coins: Record<string, string>,
+    notes: string,
+    languages: string[],
 
     ability_scores: Record<string, AbilityScoreShadowdark>,
-    notes: string    
 }

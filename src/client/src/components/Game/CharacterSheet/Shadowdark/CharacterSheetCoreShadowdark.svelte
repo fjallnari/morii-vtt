@@ -3,10 +3,13 @@
     import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
     import { modifyCharacter } from "../../../../stores";
     import BioTextareaBox from "../../../BioTextareaBox.svelte";
+    import BoxWithChips from "../../../BoxWithChips.svelte";
+    import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
     import Armor from "../Components/Armor.svelte";
     import CharSheetMenu from "../Components/CharSheetMenu.svelte";
+    import Coins from "../Components/Coins.svelte";
     import HpBox from "../Components/HpBox.svelte";
     import AbilityScoreWithModBasic from "./AbilityScoreWithModBasic.svelte";
 
@@ -61,7 +64,8 @@
             tooltip="10 + DEX modifier, unless you wear armor.">
         </Armor>
     </div>
-    <box class="coins"></box>
+
+    <Coins bind:coins={character.coins}/>
     
     <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes;" label="Notes" />
     
@@ -69,27 +73,31 @@
     <box class="gear"></box>
     <box class="talents"></box>
     <box class="spells"></box>
-    <box class="languages"></box>    
+
+    <BoxWithChips bind:chipsArray={character.languages} label='Languages' let:index={index}>
+        <InPlaceEdit bind:value={character.languages[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
+    </BoxWithChips>
+    
     <div class="license">This sheet is an independent product published under the Shadowdark RPG Third-Party License and is not affiliated with The Arcane Library, LLC. Shadowdark RPG © The Arcane Library, LLC.</div>
     <CharSheetMenu />
 </tab-container>
 
 <style>
     tab-container {  display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 0.5fr 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 0.75fr 0.75fr 1fr 1fr 1fr 1fr 1fr 1fr .5fr;
         gap: 0.75em;
         grid-auto-flow: row;
         grid-template-areas:
-            "char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info"
-            "ability-scores hp hp attacks attacks attacks talents talents talents"
-            "ability-scores hp hp attacks attacks attacks talents talents talents"
-            "ability-scores luck coins attacks attacks attacks talents talents talents"
-            "ability-scores armor coins gear gear gear spells spells spells"
-            "ability-scores notes notes gear gear gear spells spells spells"
-            "ability-scores notes notes gear gear gear spells spells spells"
-            "ability-scores notes notes gear gear gear languages languages languages"
-            "license license license char-sheet-menu char-sheet-menu char-sheet-menu languages languages languages";
+            "char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info"
+            "ability-scores luck hp hp attacks attacks attacks spells spells spells"
+            "ability-scores armor hp hp attacks attacks attacks spells spells spells"
+            "ability-scores languages languages coins attacks attacks attacks spells spells spells"
+            "ability-scores languages languages coins gear gear gear talents talents talents"
+            "ability-scores notes notes notes gear gear gear talents talents talents"
+            "ability-scores notes notes notes gear gear gear talents talents talents"
+            "ability-scores notes notes notes gear gear gear talents talents talents"
+            "license license license license char-sheet-menu char-sheet-menu char-sheet-menu talents talents talents";
     }
 
     :global(.shadowdark-character .box-label) {
@@ -114,7 +122,11 @@
 
     .hp { grid-area: hp; }
 
-    .luck { grid-area: luck; }
+    .luck { grid-area: luck; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     .armor { grid-area: armor; 
         display: flex;
@@ -122,18 +134,12 @@
         gap: 0.5em;
     }
 
-    .coins { grid-area: coins; }
-
-    .languages { grid-area: languages; 
-        margin: 0em 0.75em 0.75em 0em;
-    }
-
     .attacks { grid-area: attacks; }
 
     .gear { grid-area: gear; }
 
     .talents { grid-area: talents; 
-        margin-right: 0.75em;
+        margin: 0em 0.75em 0.75em 0em;
     }
 
     .spells { grid-area: spells; 

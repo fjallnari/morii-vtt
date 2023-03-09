@@ -16,6 +16,12 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
     ac: "",
     hp: "",
     hp_max: "",
+    coins: {
+        gp: '',
+        sp: '',
+        cp: '',
+    },
+    languages: [],
 
     ability_scores: { 
         'STR': {

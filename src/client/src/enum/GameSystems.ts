@@ -14,11 +14,11 @@ import CharacterSheetRulesCairn from "../components/Game/CharacterSheet/Cairn/Ch
 import CreateRandomSheetCairn from "../components/Game/CharacterSheet/Cairn/CreateRandomSheetCairn.svelte";
 import ImportJsonSheet5E from "../components/Game/CharacterSheet/5E/ImportJsonSheet5E.svelte";
 import ImportJsonSheetCairn from "../components/Game/CharacterSheet/Cairn/ImportJsonSheetCairn.svelte";
-import CharacterBadge5E from "../components/Game/CharacterSheet/5E/CharacterBadge5E.svelte";
 import CharacterBadgeCairn from "../components/Game/CharacterSheet/Cairn/CharacterBadgeCairn.svelte";
 import InnerOverviewCairn from "../components/Game/GameOverview/Cairn/InnerOverviewCairn.svelte";
 import type GameTab from "../interfaces/GameTab";
 import CharacterSheetCoreShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetCoreShadowdark.svelte";
+import CharacterBadgeGeneric from "../components/Game/GameOverview/CharacterBadgeGeneric.svelte";
 
 
 interface CharacterSheetTab {
@@ -90,7 +90,7 @@ const GAME_SYSTEMS: Record<string, GameSystem> = {
         creationOptions: [ QuickCreateSheet, CopyExistingSheet, ImportJsonSheet5E ],
         innerOverview: InnerOverview5E,
         specificSettings: SpecificSettings5E,
-        characterBadge: CharacterBadge5E,
+        characterBadge: CharacterBadgeGeneric,
         gameTabs: [
             // {
             //     id: 'combat',
@@ -144,7 +144,7 @@ const GAME_SYSTEMS: Record<string, GameSystem> = {
         creationOptions: [ CopyExistingSheet ],
         //innerOverview: InnerOverviewCairn,
         //specificSettings: SpecificSettingsCairn,
-        characterBadge: CharacterBadge5E,
+        characterBadge: CharacterBadgeGeneric,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW
         ]

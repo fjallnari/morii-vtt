@@ -1,14 +1,15 @@
 <script lang="ts">
-    import type { Character5E } from "../../../../interfaces/5E/Character5E";
-    import { user } from "../../../../stores";
-    import ClassIcon from "../../ClassIcon.svelte";
+    import type { Character5E } from "../../../interfaces/5E/Character5E";
+    import type CharacterAny from "../../../interfaces/CharacterAny";
+    import { user } from "../../../stores";
+    import ClassIcon from "../ClassIcon.svelte";
 
-    export let character: Character5E;
+    export let character: CharacterAny;
 
 </script>
 
 <character-badge>
-    <ClassIcon characterClasses={character.classes}></ClassIcon>
+    <ClassIcon character={character}></ClassIcon>
     <div class="character-name">
         {character.name}
     </div>

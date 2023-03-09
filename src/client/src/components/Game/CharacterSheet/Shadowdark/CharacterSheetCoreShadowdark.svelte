@@ -2,6 +2,7 @@
     import Icon from "@iconify/svelte";
     import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
     import { modifyCharacter } from "../../../../stores";
+    import { convertValueToASMod } from "../../../../util/util";
     import BioTextareaBox from "../../../BioTextareaBox.svelte";
     import BoxWithChips from "../../../BoxWithChips.svelte";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
@@ -14,12 +15,6 @@
     import AbilityScoreWithModBasic from "./AbilityScoreWithModBasic.svelte";
 
     export let character: CharacterShadowdark;
-
-    
-    const getSDModifier: (value: string) => number = (value: string) => {
-        // TODO
-        return ~~value + 2;
-    }
 
 </script>
 
@@ -40,13 +35,15 @@
             <AbilityScoreWithModBasic 
                 bind:value={character.ability_scores[AS].value} 
                 name={AS}
-                convertValueToMod={getSDModifier}
+                convertValueToMod={convertValueToASMod}
             />
         {/each}
     </div>
+
     <div class="hp">
         <HpBox bind:currentHP={character.hp} bind:maxHP={character.hp_max} label="Hit Points" />
-    </div>    
+    </div>
+
     <div class="luck">
         <RowBoxWithLabel
             label='Luck'
@@ -57,6 +54,7 @@
             <Icon icon="{character.luck ? 'mdi:auto-awesome': ''}" />
         </RowBoxWithLabel>
     </div>
+    
     <div class="armor">
         <Armor
             bind:value={character.ac}

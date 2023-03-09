@@ -77,7 +77,7 @@
                     animate:flip="{{ duration: flipDurationMs }}"
                 >
                     <span class="npc-icon">
-                        <img id="main-class" src="../static/class-icons/{getClassIcon(npc?.classes)[0]}.svg" alt="class-icon">
+                        <img id="main-class" src="../static/class-icons/{getClassIcon(npc?.classes ?? npc?.class, gameData.system)[0]}.svg" alt="class-icon">
                     </span>
                     <span class="npc-name">{npc.name && npc.name != "" ? npc.name : "???"}</span>
                     <!-- svelte-ignore a11y-no-noninteractive-tabindex -->

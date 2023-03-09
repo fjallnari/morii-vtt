@@ -5,10 +5,15 @@ export const validateClassName = (className: string) => {
     return CLASS_NAMES.includes(className) ? className : 'class-default';  
 }
 
-export const getClassIcon = (characterClasses: string) => {
+export const getClassIcon = (characterClasses: string, system: string = 'non-specific') => {
     if (! characterClasses) {
         return ["class-default"];
     }
+
+    if (system === "Shadowdark") {
+        return [{"thief": "rogue", "fighter": "fighter", "wizard": "wizard", "priest": "cleric"}[characterClasses.toLowerCase()] ?? ["class-default"]];
+    }
+
     const classesArray = characterClasses.split(' ').map(charClass => charClass.toLowerCase());
     return classesArray.length <= 2 ? [validateClassName(classesArray[0])] : classesArray.map(charClass => validateClassName(charClass));
 }

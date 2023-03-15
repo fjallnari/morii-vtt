@@ -7,6 +7,7 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
     alignment: "",
     deity: "",
     luck: false,
+    death_timer: "",
 
     ancestry: "",
     class: "",
@@ -22,6 +23,14 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
         cp: '',
     },
     languages: [],
+
+    attacks: [],
+    gear: [],
+    talents: [],
+    spells: [],
+    spell_ability: "",
+    filled_slots: "",
+    total_slots: "",
 
     ability_scores: { 
         'STR': {

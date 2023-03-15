@@ -41,10 +41,15 @@
     </div>
 
     <div class="hp">
-        <HpBox bind:currentHP={character.hp} bind:maxHP={character.hp_max} label="Hit Points" />
+        <HpBox 
+            bind:currentHP={character.hp} 
+            bind:maxHP={character.hp_max} 
+            label="Hit Points" 
+            showHPBar={false}
+        />
     </div>
 
-    <div class="luck">
+    <div class="death-luck">
         <RowBoxWithLabel
             label='Luck'
             clickable
@@ -52,6 +57,14 @@
             onClickFn={() => { character.luck = !character.luck; $modifyCharacter('luck-token') }}
         >
             <Icon icon="{character.luck ? 'mdi:auto-awesome': ''}" />
+        </RowBoxWithLabel>
+        <RowBoxWithLabel
+            label='Death timer'
+            clickable
+            tooltipText="Character is unconscious and dying if reduced to 0 HP - unless healed/stabilised they die in 1d4 + CON mod (min 1) turns."
+            onClickFn={() => { }}
+        >
+            <InPlaceEdit bind:value={character.death_timer} editWidth='2.5rem' editHeight='2.5rem' on:submit={() => {}}/>
         </RowBoxWithLabel>
     </div>
     
@@ -63,7 +76,7 @@
         </Armor>
     </div>
 
-    <Coins bind:coins={character.coins}/>
+    <!-- <Coins bind:coins={character.coins}/> -->
     
     <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes;" label="Notes" />
     
@@ -72,7 +85,7 @@
     <box class="talents"></box>
     <box class="spells"></box>
 
-    <BoxWithChips bind:chipsArray={character.languages} label='Languages' let:index={index}>
+    <BoxWithChips bind:chipsArray={character.languages} label='Languages' let:index={index} disableErrorPulse>
         <InPlaceEdit bind:value={character.languages[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
     </BoxWithChips>
     
@@ -82,21 +95,23 @@
 
 <style>
     tab-container {  display: grid;
-        grid-template-columns: 1fr 1fr 0.5fr 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-rows: 0.75fr 0.75fr 1fr 1fr 1fr 1fr 1fr 1fr .5fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 0.75fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr .5fr;
         gap: 0.75em;
         grid-auto-flow: row;
         grid-template-areas:
-            "char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info"
-            "ability-scores luck hp hp attacks attacks attacks spells spells spells"
-            "ability-scores armor hp hp attacks attacks attacks spells spells spells"
-            "ability-scores languages languages coins attacks attacks attacks spells spells spells"
-            "ability-scores languages languages coins gear gear gear talents talents talents"
-            "ability-scores notes notes notes gear gear gear talents talents talents"
-            "ability-scores notes notes notes gear gear gear talents talents talents"
-            "ability-scores notes notes notes gear gear gear talents talents talents"
-            "license license license license char-sheet-menu char-sheet-menu char-sheet-menu talents talents talents";
+            "char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info"
+            "ability-scores death-luck death-luck notes notes notes spells spells spells"
+            "ability-scores armor hp notes notes notes spells spells spells"
+            "ability-scores languages languages notes notes notes spells spells spells"
+            "ability-scores languages languages gear gear gear talents talents talents"
+            "ability-scores attacks attacks gear gear gear talents talents talents"
+            "ability-scores attacks attacks gear gear gear talents talents talents"
+            "ability-scores attacks attacks gear gear gear talents talents talents"
+            "license license license char-sheet-menu char-sheet-menu char-sheet-menu talents talents talents";
     }
+
+
 
     :global(.shadowdark-character .box-label) {
         font-size: 0.9em;
@@ -120,9 +135,9 @@
 
     .hp { grid-area: hp; }
 
-    .luck { grid-area: luck; 
+    .death-luck { grid-area: death-luck;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
     }
 

@@ -9,8 +9,8 @@
 </script>
 
 <class-icon>
-    <img id="main-class" src="../static/class-icons/{getClassIcon(characterClass, character.system)[0]}.svg" alt="class-icon">
-    {#if character.system === "D&D 5E" && getClassIcon(characterClass).length > 2}
+    <img id="main-class" src="../static/class-icons/{getClassIcon(characterClass, character?.system)[0]}.svg" alt="class-icon">
+    {#if character?.system === "D&D 5E" && getClassIcon(characterClass)?.length > 2}
         <img id="multi-class" src="../static/class-icons/{getClassIcon(characterClass)[2]}.svg" alt="class-icon">
     {/if}
 </class-icon>

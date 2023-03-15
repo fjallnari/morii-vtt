@@ -23,9 +23,19 @@ export interface CharacterShadowdark extends CharacterGeneric {
     hp: string,
     hp_max: string,
     luck: boolean,
+    death_timer: string,
     coins: Record<string, string>,
     notes: string,
     languages: string[],
+
+    // TODO
+    attacks: any[],
+    gear: any[],
+    talents: any[],
+    spells: any[],
+    spell_ability: string,
+    filled_slots: string,
+    total_slots: string,
 
     ability_scores: Record<string, AbilityScoreShadowdark>,
 }

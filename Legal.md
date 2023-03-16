@@ -54,4 +54,4 @@ The following text is the property of Wizards of the Coast, Inc. and is Copyrigh
 
 * System Reference Document 5.0 Copyright 2016, Wizards of the Coast, Inc.; Authors Mike Mearls, Jeremy Crawford, Chris Perkins, Rodney Thompson, Peter Lee, James Wyatt, Robert J. Schwalb, Bruce R. Cordell, Chris Sims, and Steve Townshend, based on original material by E. Gary Gygax and Dave Arneson.
 
-* The Morii VTT website is Copyright 2022, Ashmogh.
+* The MoriiVTT website is Copyright 2023, fjallnari.

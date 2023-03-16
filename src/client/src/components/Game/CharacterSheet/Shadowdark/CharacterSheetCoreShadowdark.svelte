@@ -1,10 +1,13 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
+    import { nanoid } from "nanoid/non-secure";
     import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
+    import type ItemShadowdark from "../../../../interfaces/Shadowdark/ItemShadowdark";
     import { modifyCharacter } from "../../../../stores";
     import { convertValueToASMod } from "../../../../util/util";
     import BioTextareaBox from "../../../BioTextareaBox.svelte";
     import BoxWithChips from "../../../BoxWithChips.svelte";
+    import BoxWithList from "../../../BoxWithList.svelte";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
@@ -13,8 +16,18 @@
     import Coins from "../Components/Coins.svelte";
     import HpBox from "../Components/HpBox.svelte";
     import AbilityScoreWithModBasic from "./AbilityScoreWithModBasic.svelte";
+    import ItemDetailShadowdark from "./ItemDetailShadowdark.svelte";
 
     export let character: CharacterShadowdark;
+
+    const addItem = () => {
+        character.gear = character.gear.concat([{id: nanoid(10), name: '', type: 'item' }]);
+    }
+
+    const deleteItem = (item: ItemShadowdark) => {
+        character.gear = character.gear.filter(itemIter => itemIter !== item);
+        $modifyCharacter('delete-item');
+    }
 
 </script>
 
@@ -79,9 +92,20 @@
     <!-- <Coins bind:coins={character.coins}/> -->
     
     <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes;" label="Notes" />
+
+    <div class="gear">
+        <BoxWithList label='Gear' addNewListItem={addItem}>
+            <div class="item-list" slot='list'>
+                {#each character.gear as item, index}
+                    <ItemDetailShadowdark
+                        bind:item deleteItem={deleteItem}
+                    />
+                {/each}
+            </div>
+        </BoxWithList>
+    </div>
     
     <box class="attacks"></box>
-    <box class="gear"></box>
     <box class="talents"></box>
     <box class="spells"></box>
 
@@ -99,33 +123,31 @@
         grid-template-rows: 0.75fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr .5fr;
         gap: 0.75em;
         grid-auto-flow: row;
+        box-sizing: border-box;
+        padding: 0.75em;
         grid-template-areas:
             "char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info"
             "ability-scores death-luck death-luck notes notes notes spells spells spells"
             "ability-scores armor hp notes notes notes spells spells spells"
             "ability-scores languages languages notes notes notes spells spells spells"
-            "ability-scores languages languages gear gear gear talents talents talents"
-            "ability-scores attacks attacks gear gear gear talents talents talents"
-            "ability-scores attacks attacks gear gear gear talents talents talents"
-            "ability-scores attacks attacks gear gear gear talents talents talents"
-            "license license license char-sheet-menu char-sheet-menu char-sheet-menu talents talents talents";
+            "ability-scores languages languages talents talents talents gear gear gear"
+            "ability-scores attacks attacks talents talents talents gear gear gear"
+            "ability-scores attacks attacks talents talents talents gear gear gear"
+            "ability-scores attacks attacks talents talents talents gear gear gear"
+            "license license license char-sheet-menu char-sheet-menu char-sheet-menu gear gear gear";
     }
-
-
 
     :global(.shadowdark-character .box-label) {
         font-size: 0.9em;
     }
 
     .char-basic-info { grid-area: char-basic-info; 
-        margin: 0.75em 0.75em 0em 0.75em;
         display: flex;
         flex-direction: row;
         gap: 0.5em;
     }
 
     .ability-scores { grid-area: ability-scores; 
-        margin-left: 0.75em;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -147,16 +169,25 @@
         gap: 0.5em;
     }
 
+    .gear { grid-area: gear;
+        width: 100%;
+        height: 100%;
+    }
+
+    .item-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.25em;
+    }
+
     .attacks { grid-area: attacks; }
 
-    .gear { grid-area: gear; }
-
     .talents { grid-area: talents; 
-        margin: 0em 0.75em 0.75em 0em;
     }
 
     .spells { grid-area: spells; 
-        margin-right: 0.75em;
     }
 
     .license { grid-area: license;
@@ -164,7 +195,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0em 0em 0.75em 0.75em; 
     }
 
 

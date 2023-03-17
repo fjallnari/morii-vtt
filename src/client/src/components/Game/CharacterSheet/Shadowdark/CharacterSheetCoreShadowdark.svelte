@@ -192,6 +192,7 @@
         justify-content: space-evenly;
         align-items: center;
         flex-wrap: wrap;
+        z-index: 10;
     }
 
     .slots { grid-area: slots;

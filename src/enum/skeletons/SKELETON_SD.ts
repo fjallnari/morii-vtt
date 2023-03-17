@@ -23,6 +23,7 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
         cp: '',
     },
     languages: [],
+    proficiencies: [],
 
     attacks: [],
     gear: [],
@@ -52,5 +53,8 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
             value: '',
         },
     },
-    notes: ''
+    notes: '',
+    shinies: '',
+    foes: '',
+    allies: ''
 }

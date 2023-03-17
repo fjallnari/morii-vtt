@@ -19,6 +19,7 @@ import InnerOverviewCairn from "../components/Game/GameOverview/Cairn/InnerOverv
 import type GameTab from "../interfaces/GameTab";
 import CharacterSheetCoreShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetCoreShadowdark.svelte";
 import CharacterBadgeGeneric from "../components/Game/GameOverview/CharacterBadgeGeneric.svelte";
+import CharacterSheetNotesShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetNotesShadowdark.svelte";
 
 
 interface CharacterSheetTab {
@@ -138,6 +139,11 @@ const GAME_SYSTEMS: Record<string, GameSystem> = {
                 color: '#A7C284',
                 icon: 'mdi:shield-account',
                 component:  CharacterSheetCoreShadowdark
+            },
+            {
+                color: '#DBD8B3',
+                icon: 'mdi:note-text',
+                component:  CharacterSheetNotesShadowdark
             },
             SETTINGS_TAB
         ],

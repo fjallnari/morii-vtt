@@ -22,8 +22,8 @@
         <HpBar currentHP={~~currentHP} maxHP={~~maxHP} tempHP={~~tempHP}></HpBar>
     {/if}
     <div class="current-hp-text" style={`font-size: ${showHPBar ? "1.5em": "2em"};`}>
-        <InPlaceEdit bind:value={currentHP} editWidth="2em" editHeight="2em" on:submit={() => correctHP()}/>
-        /<InPlaceEdit bind:value={maxHP} editWidth="2em" editHeight="2em" on:submit={() => correctHP()}/>
+        <InPlaceEdit bind:value={currentHP} editWidth="3rem" editHeight="3rem" on:submit={() => correctHP()}/>
+        /<InPlaceEdit bind:value={maxHP} editWidth="3rem" editHeight="3rem" on:submit={() => correctHP()}/>
     </div>
     <div class="box-label hp-footer">
         {label}

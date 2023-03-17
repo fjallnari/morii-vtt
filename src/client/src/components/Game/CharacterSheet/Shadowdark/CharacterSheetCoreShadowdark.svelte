@@ -8,6 +8,7 @@
     import BioTextareaBox from "../../../BioTextareaBox.svelte";
     import BoxWithChips from "../../../BoxWithChips.svelte";
     import BoxWithList from "../../../BoxWithList.svelte";
+    import BoxWithMax from "../../../BoxWithMax.svelte";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
@@ -17,6 +18,7 @@
     import HpBox from "../Components/HpBox.svelte";
     import AbilityScoreWithModBasic from "./AbilityScoreWithModBasic.svelte";
     import ItemDetailShadowdark from "./ItemDetailShadowdark.svelte";
+    import ProficienciesShadowdark from "./ProficienciesShadowdark.svelte";
 
     export let character: CharacterShadowdark;
 
@@ -73,7 +75,6 @@
         </RowBoxWithLabel>
         <RowBoxWithLabel
             label='Death timer'
-            clickable
             tooltipText="Character is unconscious and dying if reduced to 0 HP - unless healed/stabilised they die in 1d4 + CON mod (min 1) turns."
             onClickFn={() => { }}
         >
@@ -89,9 +90,26 @@
         </Armor>
     </div>
 
-    <!-- <Coins bind:coins={character.coins}/> -->
-    
-    <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes;" label="Notes" />
+    <div class="coins">
+        {#each Object.keys(character.coins) as coinType}
+            <InPlaceEditBox bind:value={character.coins[coinType]} boxLabel={coinType} valueFontSize="1.2em" editWidth="2em" editHeight="2em" />
+        {/each}
+    </div>
+
+    <div class="slots">
+        <RowBoxWithLabel
+            label='Slots'
+            onClickFn={() => {}}
+        >
+        <InPlaceEdit bind:value={character.total_slots} editWidth='2.5rem' editHeight='2.5rem' on:submit={() => {}}/>
+        </RowBoxWithLabel>
+        <RowBoxWithLabel
+            label='Filled slots'
+            onClickFn={() => { }}
+        >
+            <InPlaceEdit bind:value={character.filled_slots} editWidth='2.5rem' editHeight='2.5rem' on:submit={() => {}}/>
+        </RowBoxWithLabel>
+    </div>
 
     <div class="gear">
         <BoxWithList label='Gear' addNewListItem={addItem}>
@@ -109,9 +127,17 @@
     <box class="talents"></box>
     <box class="spells"></box>
 
+    <!-- <BoxWithChips bind:chipsArray={character.proficiencies} label='Weapons & Armor' gridArea="prof" let:index={index} disableErrorPulse>
+        <InPlaceEdit bind:value={character.proficiencies[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
+    </BoxWithChips>
+
     <BoxWithChips bind:chipsArray={character.languages} label='Languages' let:index={index} disableErrorPulse>
         <InPlaceEdit bind:value={character.languages[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
-    </BoxWithChips>
+    </BoxWithChips> -->
+
+    <div class="prof">
+        <ProficienciesShadowdark bind:character={character}/>
+    </div>
     
     <div class="license">This sheet is an independent product published under the Shadowdark RPG Third-Party License and is not affiliated with The Arcane Library, LLC. Shadowdark RPG © The Arcane Library, LLC.</div>
     <CharSheetMenu />
@@ -120,21 +146,23 @@
 <style>
     tab-container {  display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-rows: 0.75fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr .5fr;
+        grid-template-rows: 0.75fr 0.5fr 0.5fr 0.25fr 0.75fr 1.5fr 1.5fr 1fr 1fr 1fr .5fr;
         gap: 0.75em;
         grid-auto-flow: row;
         box-sizing: border-box;
         padding: 0.75em;
         grid-template-areas:
             "char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info char-basic-info"
-            "ability-scores death-luck death-luck notes notes notes spells spells spells"
-            "ability-scores armor hp notes notes notes spells spells spells"
-            "ability-scores languages languages notes notes notes spells spells spells"
-            "ability-scores languages languages talents talents talents gear gear gear"
-            "ability-scores attacks attacks talents talents talents gear gear gear"
-            "ability-scores attacks attacks talents talents talents gear gear gear"
-            "ability-scores attacks attacks talents talents talents gear gear gear"
-            "license license license char-sheet-menu char-sheet-menu char-sheet-menu gear gear gear";
+            "ability-scores attacks attacks armor death-luck death-luck spells spells spells"
+            "ability-scores attacks attacks armor slots slots spells spells spells"
+            "ability-scores attacks attacks hp slots slots spells spells spells"
+            "ability-scores attacks attacks hp coins coins spells spells spells"
+            "ability-scores attacks attacks gear gear gear spells spells spells"
+            "ability-scores prof prof gear gear gear talents talents talents"
+            "ability-scores prof prof gear gear gear talents talents talents"
+            "ability-scores prof prof gear gear gear talents talents talents"
+            "ability-scores prof prof gear gear gear talents talents talents"
+            "license license license char-sheet-menu char-sheet-menu char-sheet-menu talents talents talents";
     }
 
     :global(.shadowdark-character .box-label) {
@@ -157,9 +185,26 @@
 
     .hp { grid-area: hp; }
 
+    .prof { grid-area: prof; }
+
     .death-luck { grid-area: death-luck;
         display: flex;
         justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .slots { grid-area: slots;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .coins { grid-area: coins;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 0.5em;
         align-items: center;
     }
 

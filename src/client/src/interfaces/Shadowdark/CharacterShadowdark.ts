@@ -1,5 +1,6 @@
 import type AbilityScores from "../../components/Game/CharacterSheet/Components/AbilityScores.svelte";
 import type CharacterGeneric from "../CharacterGeneric";
+import type ProfShadowdark from "./ProfShadowdark";
 
 
 export interface AbilityScoreShadowdark {
@@ -25,8 +26,8 @@ export interface CharacterShadowdark extends CharacterGeneric {
     luck: boolean,
     death_timer: string,
     coins: Record<string, string>,
-    notes: string,
     languages: string[],
+    proficiencies: ProfShadowdark[],
 
     // TODO
     attacks: any[],
@@ -38,4 +39,10 @@ export interface CharacterShadowdark extends CharacterGeneric {
     total_slots: string,
 
     ability_scores: Record<string, AbilityScoreShadowdark>,
+
+    notes: string,
+    shinies: string,
+    foes: string,
+    allies: string
+
 }

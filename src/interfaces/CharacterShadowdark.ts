@@ -4,6 +4,13 @@ export interface AbilityScoreShadowdark {
     value: string
 }
 
+export interface ProfShadowdark {
+    id: string,
+    name: string,
+    type: number, // index of [OTHER, ARMOR, WEAPON, LANGUAGE, INSTRUMENT],
+    content: string
+}
+
 export interface CharacterShadowdark extends CharacterGeneric {
     name: string,
     background: string,
@@ -23,8 +30,8 @@ export interface CharacterShadowdark extends CharacterGeneric {
     luck: boolean,
     death_timer: string,
     coins: Record<string, string>,
-    notes: string,
     languages: string[],
+    proficiencies: ProfShadowdark[],
 
     // TODO
     attacks: any[],
@@ -35,6 +42,10 @@ export interface CharacterShadowdark extends CharacterGeneric {
     filled_slots: string,
     total_slots: string,
 
-
     ability_scores: Record<string, AbilityScoreShadowdark>,
+
+    notes: string,
+    shinies: string,
+    foes: string,
+    allies: string
 }

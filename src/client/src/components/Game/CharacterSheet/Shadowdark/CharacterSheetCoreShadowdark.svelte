@@ -31,6 +31,15 @@
         $modifyCharacter('delete-item');
     }
 
+    let filledSlotsCount: number = 0;
+    $: {
+        filledSlotsCount = character.gear.reduce(
+            (acc, item) => acc + ~~item.weight,
+            0
+        );
+        character.filled_slots = filledSlotsCount.toString();
+    }
+
 </script>
 
 <tab-container class="shadowdark-character">
@@ -107,7 +116,7 @@
             label='Filled slots'
             onClickFn={() => { }}
         >
-            <InPlaceEdit bind:value={character.filled_slots} editWidth='2.5rem' editHeight='2.5rem' on:submit={() => {}}/>
+            {character.filled_slots}
         </RowBoxWithLabel>
     </div>
 

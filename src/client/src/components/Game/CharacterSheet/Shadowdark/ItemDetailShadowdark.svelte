@@ -3,17 +3,18 @@
     import Svelecte from "svelecte/src/Svelecte.svelte";
     import { params } from "svelte-spa-router";
     import { slide } from "svelte/transition";
-    import type { ItemCairn } from "../../../../interfaces/Cairn/CharacterCairn";
+    import type ItemShadowdark from "../../../../interfaces/Shadowdark/ItemShadowdark";
     import { messageMode, modifyCharacter, ownerSocketID, selectedCharacter, sendSkillCheck, socket, user } from "../../../../stores";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
+    import SimpleIconButton from "../../../SimpleIconButton.svelte";
 
-    export let item: ItemCairn;
+    export let item: ItemShadowdark;
 
     export let textareaHeight: string = '10em';
     export let editWidth: string = '15rem';
     export let editHeight: string = '1.5rem';
-    export let deleteItem: (item: ItemCairn) => void = () => {};
+    export let deleteItem: (item: ItemShadowdark) => void = () => {};
     export let onSubmitFn: () => void = $modifyCharacter;
 
     let isOpen: boolean = false;
@@ -30,11 +31,25 @@
 
     $: itemIcon = itemTypeIcons[item.type];
 
-    $: if (itemTypeIndex !== oldTypeIndex && item.type !== 'fatigue') {
+    $: if (itemTypeIndex !== oldTypeIndex) {
         oldTypeIndex = Object.keys(itemTypeIcons).indexOf(item.type);
         item.type = Object.keys(itemTypeIcons)[itemTypeIndex] ?? item.type;
         onSubmitFn();
     }
+
+    // anything with a weight of two and more gets the 'mdi:weight icon'
+    // anything with a negative weight gets the same icon as weight 0
+    const getWeightIndex = (weight: number) => {
+        return weight > 2 ? 2 : weight <= 0 ? 0 : weight;
+    }
+
+    const changeWeight = () => {
+        const newWeight = ~~item.weight + 1;
+        item.weight = (newWeight > 2 ? 0 : newWeight < 0 ? 0: newWeight).toString();
+        onSubmitFn();
+    }
+
+    $: weightIcon = ["mdi:checkbox-blank-off-outline", "mdi:feather", "mdi:weight"][getWeightIndex(~~item.weight)];
 
 </script>
 
@@ -60,9 +75,9 @@
         <div class="item-name">
             <InPlaceEdit bind:value={item.name} editWidth={editWidth} editHeight={editHeight} on:submit={() => onSubmitFn()}/>
         </div>
-        <div class="item-bulky">
-            <sendable on:click={() => {onSubmitFn()}} on:keyup={() => {}}>
-                <Icon class="medi-icon" icon="mdi:feather" />
+        <div class="item-weight">
+            <sendable on:click={() => changeWeight()} on:keyup={() => {}}>
+                <Icon class="medi-icon" icon={weightIcon} />
             </sendable>
         </div>
         <sendable class="item-menu" on:click={() => { isOpen = !isOpen }} on:keyup={() => {}}>
@@ -79,12 +94,16 @@
                     bind:value={itemTypeIndex}>
                 </Svelecte>
             </div>
-            {#if item.type === 'consumable'}
+            <div class="line-title">Weight:</div>
+            <InPlaceEdit bind:value={item.weight} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
+        </div>
+        {#if item.type === 'consumable'}
+            <div class="single-detail-line">
                 <div class="line-title">Charges:</div>
                 <InPlaceEdit bind:value={item.charges} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>/
                 <InPlaceEdit bind:value={item.charges_max} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
-            {/if}
-        </div>
+            </div>
+        {/if}
         <div class="details" transition:slide|local>
             <textarea style='height: {textareaHeight};' on:change={() => onSubmitFn()} bind:value={item.description}></textarea>
             <SimpleButton value='Delete' type="delete" onClickFn={() => deleteItem(item)}></SimpleButton>
@@ -113,19 +132,19 @@
 
     .item-summary.normal-grid {
         grid-template-columns: 1fr 1fr minmax(0, 20fr) 1fr 1fr;
-        grid-template-areas: "item-type-icon . item-name item-bulky item-menu"
+        grid-template-areas: "item-type-icon . item-name item-weight item-menu"
     }
 
     .item-summary.consumable-grid {
         grid-template-columns: 1fr 6fr minmax(0, 20fr) 4fr 1fr 1fr;
-        grid-template-areas: "item-type-icon item-charges item-name . item-bulky item-menu"
+        grid-template-areas: "item-type-icon item-charges item-name . item-weight item-menu"
     }
     
     .item-type-icon { grid-area: item-type-icon;
         margin-left: 0.5em;
     }
 
-    .item-bulky { grid-area: item-bulky;
+    .item-weight { grid-area: item-weight;
         border-right: 1px solid var(--clr-text);
         padding-right: 0.5em;
         gap: 0.25em;

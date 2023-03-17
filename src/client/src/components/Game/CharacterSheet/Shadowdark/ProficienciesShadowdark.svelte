@@ -7,7 +7,7 @@
     import type ProfShadowdark from "../../../../interfaces/Shadowdark/ProfShadowdark";
     import { modifyCharacter } from "../../../../stores";
     import { capitalize } from "../../../../util/util";
-    import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
+    import SimpleEditChip from "./SimpleEditChip.svelte";
 
     export let character: CharacterShadowdark;
     let currentFilter = 0;
@@ -55,19 +55,16 @@
     </div>
     <div class="inside-box-list">
         {#each character.proficiencies.filter( prof => isSelectedType(currentFilter, prof.type)) as prof}
-            <SimpleAccordionDetail 
+            <SimpleEditChip 
                 bind:value={prof.name} 
-                bind:content={prof.content}
-                icon={PROF_TYPES[prof.type]?.icon}
-                editWidth='10rem'
-                textareaHeight='5rem'
-                deleteItem={() => deleteProf(prof)}>
-            </SimpleAccordionDetail>
+                icon={PROF_TYPES[prof.type]?.icon} 
+                deleteChip={() => deleteProf(prof)}
+            />
         {/each}
-        <sendable class="add-new-item" on:click={() => { addNewProf(); $modifyCharacter() }} on:keyup={() => {}}>
-            <Icon class="big-icon" icon="mdi:add" />
-        </sendable>
     </div>
+    <sendable class="add-new-item" on:click={() => { addNewProf(); $modifyCharacter() }} on:keyup={() => {}}>
+        <Icon class="big-icon" icon="mdi:add" />
+    </sendable>
     <div class="box-justify-filler"></div>
     <div class="box-label">
         Weapons/Armor/Languages
@@ -98,12 +95,15 @@
 
     .inside-box-list {
         display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        flex-direction: row;
         align-items: center;
-        gap: 0.25em;
-        scrollbar-width: thin;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5em;
         overflow-y: auto;
+        scrollbar-width: thin;
+        margin-bottom: 0.2em;
+        padding-bottom: 4px;
     }
 
     .filter-menu {
@@ -112,6 +112,7 @@
         align-items: center;
         gap: 0.2em;
         padding: 0.3em;
+        margin-bottom: 0.2em;
     }
 
     .add-new-item {

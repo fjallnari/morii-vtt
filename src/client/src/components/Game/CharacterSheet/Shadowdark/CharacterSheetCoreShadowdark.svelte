@@ -17,6 +17,7 @@
     import Coins from "../Components/Coins.svelte";
     import HpBox from "../Components/HpBox.svelte";
     import AbilityScoreWithModBasic from "./AbilityScoreWithModBasic.svelte";
+    import AttackDetailShadowdark from "./AttackDetailShadowdark.svelte";
     import ItemDetailShadowdark from "./ItemDetailShadowdark.svelte";
     import ProficienciesShadowdark from "./ProficienciesShadowdark.svelte";
 
@@ -131,8 +132,17 @@
             </div>
         </BoxWithList>
     </div>
-    
-    <box class="attacks"></box>
+
+    <div class="attacks">
+        <BoxWithList label='Attacks' addNewListItem={addItem}>
+            <div class="item-list" slot='list'>
+                {#each character.attacks as item, index}
+                    <AttackDetailShadowdark />
+                {/each}
+            </div>
+        </BoxWithList>
+    </div>
+
     <box class="talents"></box>
     <box class="spells"></box>
 

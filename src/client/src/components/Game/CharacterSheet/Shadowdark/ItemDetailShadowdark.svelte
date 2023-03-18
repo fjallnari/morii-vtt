@@ -23,7 +23,7 @@
         'item': 'mdi:cube',
         'armor': 'mdi:shield-half-full',
         'weapon': 'mdi:sword',
-        'consumable': 'mdi:lightning-bolt'
+        'resource': 'mdi:lightning-bolt'
     }
 
     let itemTypeIndex = Object.keys(itemTypeIcons).indexOf(item.type);
@@ -54,11 +54,11 @@
 </script>
 
 <box class="item-main-container">
-    <div class="item-summary {item.type === 'consumable' ? "consumable-grid" : 'normal-grid'}">
+    <div class="item-summary {item.type === 'resource' ? "resource-grid" : 'normal-grid'}">
         <div class="item-type-icon">
             <Icon class="medi-icon" icon={itemIcon} />
         </div>
-        {#if item.type === 'consumable'}
+        {#if item.type === 'resource'}
             <div class="item-charges">
                 {#if ~~item.charges_max > 6}
                     <InPlaceEdit bind:value={item.charges} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>/
@@ -97,7 +97,7 @@
             <div class="line-title">Weight:</div>
             <InPlaceEdit bind:value={item.weight} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
-        {#if item.type === 'consumable'}
+        {#if item.type === 'resource'}
             <div class="single-detail-line">
                 <div class="line-title">Charges:</div>
                 <InPlaceEdit bind:value={item.charges} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>/
@@ -135,7 +135,7 @@
         grid-template-areas: "item-type-icon . item-name item-weight item-menu"
     }
 
-    .item-summary.consumable-grid {
+    .item-summary.resource-grid {
         grid-template-columns: 1fr 6fr minmax(0, 20fr) 4fr 1fr 1fr;
         grid-template-areas: "item-type-icon item-charges item-name . item-weight item-menu"
     }

@@ -4,7 +4,8 @@
 
     export let value: string;
     export let name: string;
-    export let convertValueToMod: (value: string) => number = (value) => { return ~~value } ;
+    export let convertValueToMod: (value: string) => number = (value) => { return ~~value };
+    export let onClickFn: () => void = () => {};
 
 </script>
 
@@ -18,9 +19,11 @@
         <InPlaceEditBox
             bind:value
             boxLabel={name}
-            inlineStyle="flex-grow: 2;" 
-            editWidth="2em">
-        </InPlaceEditBox>
+            inlineStyle="flex-grow: 2;"
+            onClickFn={onClickFn}
+            editWidth="2em"
+            sendable={true}
+        />
     </div>
 </ability-score>
 

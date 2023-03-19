@@ -8,9 +8,15 @@
     export let tempHP: string = '0';
     export let label: string = 'Hit Points';
     export let showHPBar = true;
+    export let onDeathFn: () => void = () => {};
 
     const correctHP = () => {
         currentHP = ~~currentHP > ~~maxHP ? maxHP : currentHP;
+
+        if (currentHP !== '' && ~~currentHP <= 0) {
+            onDeathFn();
+        } 
+
         $modifyCharacter('hp');
     }
     

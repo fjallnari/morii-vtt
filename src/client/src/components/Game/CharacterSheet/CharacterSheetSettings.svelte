@@ -61,7 +61,7 @@
         <div class="settings-tab">
             <h4>Character settings</h4>
             <line-div class="class-decal">
-                <ClassIcon characterClasses={character.classes}></ClassIcon>
+                <ClassIcon character={character}></ClassIcon>
                 <p>{character.name && character.name !== '' ? character.name : '???'}</p>
             </line-div>
             <line-div>
@@ -106,7 +106,9 @@
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr; 
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr; 
-        gap: 0px 0px; 
+        gap: 0px 0px;
+        box-sizing: border-box;
+        padding: 0.75em;
         grid-template-areas: 
             "settings settings settings"
             "settings settings settings"

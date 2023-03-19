@@ -3,7 +3,7 @@
     import { nanoid } from "nanoid/non-secure";
     import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
     import type ItemShadowdark from "../../../../interfaces/Shadowdark/ItemShadowdark";
-    import { modifyCharacter } from "../../../../stores";
+    import { modifyCharacter, sendSkillCheck } from "../../../../stores";
     import { convertValueToASMod } from "../../../../util/util";
     import BioTextareaBox from "../../../BioTextareaBox.svelte";
     import BoxWithChips from "../../../BoxWithChips.svelte";
@@ -43,6 +43,14 @@
         character.filled_slots = filledSlotsCount.toString();
     }
 
+    const rollStatCheck = (AS: string) => {
+        $sendSkillCheck(convertValueToASMod(character.ability_scores[AS].value), `${AS} check`, character.name);
+    }
+
+    const rollDeathTimer = () => {
+        $sendSkillCheck(convertValueToASMod(character.ability_scores['CON'].value), `death timer | d4 + CON`, character.name, '-', 'd4')
+    }
+
 </script>
 
 <tab-container class="shadowdark-character">
@@ -63,6 +71,7 @@
                 bind:value={character.ability_scores[AS].value} 
                 name={AS}
                 convertValueToMod={convertValueToASMod}
+                onClickFn={() => rollStatCheck(AS)}
             />
         {/each}
     </div>
@@ -73,6 +82,7 @@
             bind:maxHP={character.hp_max} 
             label="Hit Points" 
             showHPBar={false}
+            onDeathFn={() => rollDeathTimer()}
         />
     </div>
 
@@ -88,7 +98,7 @@
         <RowBoxWithLabel
             label='Death timer'
             tooltipText="Character is unconscious and dying if reduced to 0 HP - unless healed/stabilised they die in 1d4 + CON mod (min 1) turns."
-            onClickFn={() => { }}
+            onClickFn={() => {}}
         >
             <InPlaceEdit bind:value={character.death_timer} editWidth='2.5rem' editHeight='2.5rem' on:submit={() => {}}/>
         </RowBoxWithLabel>

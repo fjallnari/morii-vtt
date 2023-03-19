@@ -194,7 +194,7 @@
 
 <style>
     tab-container {  display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 0.75fr 1.25fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 0.75fr 0.5fr 0.5fr 0.25fr 0.75fr 1.5fr 1.5fr 1fr 1fr 1fr .5fr;
         gap: 0.75em;
         grid-auto-flow: row;

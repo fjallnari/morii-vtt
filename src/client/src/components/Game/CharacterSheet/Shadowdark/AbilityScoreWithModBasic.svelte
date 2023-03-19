@@ -48,7 +48,7 @@
         align-items: center;
 
         height: 60%;
-        width: 40%;
+        width: 50%;
         z-index: 2;
         margin-bottom: -1.2em;
 
@@ -58,7 +58,7 @@
     }
 
     .ability-score-value {
-        width: 60%;
+        width: 80%;
         height: 100%;
     }
 

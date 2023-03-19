@@ -1,6 +1,5 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-
     import { tooltip } from "@svelte-plugins/tooltips";
     import { nanoid } from "nanoid/non-secure";
     import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
@@ -29,7 +28,7 @@
     }
 
     const PROF_TYPES = [
-        { name: 'OTHER', icon: 'mdi:atom' },
+        { name: 'OTHER', icon: 'mdi:scatter-plot' },
         { name: 'ARMOR', icon: 'mdi:shield-half-full' },
         { name: 'WEAPON', icon: 'mdi:sword' },
         { name: 'LANGUAGE', icon: 'mdi:translate' },

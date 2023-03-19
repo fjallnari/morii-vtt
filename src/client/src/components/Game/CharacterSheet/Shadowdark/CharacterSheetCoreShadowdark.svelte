@@ -12,6 +12,7 @@
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
+    import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
     import Armor from "../Components/Armor.svelte";
     import CharSheetMenu from "../Components/CharSheetMenu.svelte";
     import Coins from "../Components/Coins.svelte";
@@ -20,6 +21,7 @@
     import AttackDetailShadowdark from "./AttackDetailShadowdark.svelte";
     import ItemDetailShadowdark from "./ItemDetailShadowdark.svelte";
     import ProficienciesShadowdark from "./ProficienciesShadowdark.svelte";
+    import TalentsShadowdark from "./TalentsShadowdark.svelte";
 
     export let character: CharacterShadowdark;
 
@@ -121,6 +123,20 @@
         </RowBoxWithLabel>
     </div>
 
+    <div class="attacks">
+        <BoxWithList label='Attacks' addNewListItem={() => {}}>
+            <div class="item-list" slot='list'>
+                {#each character.attacks as item, index}
+                    <AttackDetailShadowdark />
+                {/each}
+            </div>
+        </BoxWithList>
+    </div>
+
+    <div class="prof">
+        <ProficienciesShadowdark bind:character={character}/>
+    </div>
+
     <div class="gear">
         <BoxWithList label='Gear' addNewListItem={addItem}>
             <div class="item-list" slot='list'>
@@ -133,30 +149,10 @@
         </BoxWithList>
     </div>
 
-    <div class="attacks">
-        <BoxWithList label='Attacks' addNewListItem={addItem}>
-            <div class="item-list" slot='list'>
-                {#each character.attacks as item, index}
-                    <AttackDetailShadowdark />
-                {/each}
-            </div>
-        </BoxWithList>
-    </div>
-
-    <box class="talents"></box>
     <box class="spells"></box>
 
-    <!-- <BoxWithChips bind:chipsArray={character.proficiencies} label='Weapons & Armor' gridArea="prof" let:index={index} disableErrorPulse>
-        <InPlaceEdit bind:value={character.proficiencies[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
-    </BoxWithChips>
-
-    <BoxWithChips bind:chipsArray={character.languages} label='Languages' let:index={index} disableErrorPulse>
-        <InPlaceEdit bind:value={character.languages[index]} editWidth='5rem' editHeight='1.5rem' on:submit={() => {}}/>
-    </BoxWithChips> -->
-
-    <div class="prof">
-        <ProficienciesShadowdark bind:character={character}/>
-    </div>
+    <TalentsShadowdark bind:talents={character.talents}/>
+    
     
     <div class="license">This sheet is an independent product published under the Shadowdark RPG Third-Party License and is not affiliated with The Arcane Library, LLC. Shadowdark RPG © The Arcane Library, LLC.</div>
     <CharSheetMenu />
@@ -249,9 +245,6 @@
 
     .attacks { grid-area: attacks; }
 
-    .talents { grid-area: talents; 
-    }
-
     .spells { grid-area: spells; 
     }
 
@@ -261,6 +254,7 @@
         justify-content: center;
         align-items: center;
     }
+
 
 
 </style>

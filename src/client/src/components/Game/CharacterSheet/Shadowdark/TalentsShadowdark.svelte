@@ -7,8 +7,9 @@
     import { tooltip } from "@svelte-plugins/tooltips";
     import { capitalize } from "../../../../util/util";
     import { modifyCharacter } from "../../../../stores";
+    import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
 
-    export let talents: TalentShadowdark[];
+    export let character: CharacterShadowdark;
     let currentFilter = 0;
 
     enum SOURCE_TYPES {
@@ -32,11 +33,11 @@
             content: ''
         }
 
-        talents = talents.concat([talentSkeleton]);
+        character.talents = character.talents.concat([talentSkeleton]);
     }
 
     const deleteTalent = (talentToDelete: TalentShadowdark) => {
-        talents = talents.filter(obj => obj.id !== talentToDelete.id);
+        character.talents = character.talents.filter(obj => obj.id !== talentToDelete.id);
         $modifyCharacter();
     }
 
@@ -59,12 +60,12 @@
         {/each}
     </div>   
     <div class="talents-list" slot='list'>
-        {#each talents.filter( talent => isSelectedType(currentFilter, talent.type)) as talent}
+        {#each character.talents.filter( talent => isSelectedType(currentFilter, talent.type)) as talent}
             <SimpleAccordionDetail
                 bind:value={talent.name} 
                 bind:content={talent.content}
                 icon={PROF_TYPES[talent.type]?.icon}
-                editWidth='8rem'
+                editWidth='15rem'
                 deleteItem={() => deleteTalent(talent)}>
             </SimpleAccordionDetail>
         {/each}
@@ -79,7 +80,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 0.25em;
+        gap: 0.3em;
     }
 
     .filter-menu {

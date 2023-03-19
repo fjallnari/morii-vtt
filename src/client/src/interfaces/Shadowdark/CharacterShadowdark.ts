@@ -1,7 +1,9 @@
 import type AbilityScores from "../../components/Game/CharacterSheet/Components/AbilityScores.svelte";
 import type CharacterGeneric from "../CharacterGeneric";
+import type { AttackShadowdark } from "./AttackShadowdark";
 import type ItemShadowdark from "./ItemShadowdark";
 import type ProfShadowdark from "./ProfShadowdark";
+import type TalentShadowdark from "./TalentShadowdark";
 
 
 export interface AbilityScoreShadowdark {
@@ -31,9 +33,9 @@ export interface CharacterShadowdark extends CharacterGeneric {
     proficiencies: ProfShadowdark[],
 
     // TODO
-    attacks: any[],
+    attacks: AttackShadowdark[],
     gear: ItemShadowdark[],
-    talents: any[],
+    talents: TalentShadowdark[],
     spells: any[],
     spell_ability: string,
     filled_slots: string,

@@ -1,6 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { nanoid } from "nanoid/non-secure";
+    import type { AttackShadowdark } from "../../../../interfaces/Shadowdark/AttackShadowdark";
     import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
     import type ItemShadowdark from "../../../../interfaces/Shadowdark/ItemShadowdark";
     import { modifyCharacter, sendSkillCheck } from "../../../../stores";
@@ -34,6 +35,12 @@
         $modifyCharacter('delete-item');
     }
 
+    const deleteAttack = (attack: AttackShadowdark) => {
+        character.attacks = character.attacks.filter(attackIter => attackIter !== attack);
+        // unlink attack from item
+        $modifyCharacter('delete-attack');
+    }
+
     let filledSlotsCount: number = 0;
     $: {
         filledSlotsCount = character.gear.reduce(
@@ -50,6 +57,25 @@
     const rollDeathTimer = () => {
         $sendSkillCheck(convertValueToASMod(character.ability_scores['CON'].value), `death timer | d4 + CON`, character.name, '-', 'd4')
     }
+
+    const addAttack = (customName: string = '', itemID: string = '') => {
+        const attackObjSkeleton: AttackShadowdark = {
+            id: nanoid(16),
+            name: customName,
+            type: 0,
+            stat: '',
+            atk_bonus: '',
+            range: '',
+            damage: '', // e.g. 1d6
+            versatile_die: '',
+            versatile_active: false,
+            item_id: itemID,
+            properties: ''
+        }
+
+        character.attacks = character.attacks.concat([attackObjSkeleton]);
+        return attackObjSkeleton.id;
+    };
 
 </script>
 
@@ -134,10 +160,10 @@
     </div>
 
     <div class="attacks">
-        <BoxWithList label='Attacks' addNewListItem={() => {}}>
+        <BoxWithList label='Attacks' addNewListItem={() => addAttack()}>
             <div class="item-list" slot='list'>
-                {#each character.attacks as item, index}
-                    <AttackDetailShadowdark />
+                {#each character.attacks as attack, index}
+                    <AttackDetailShadowdark bind:attack character={character} deleteAttack={deleteAttack}/>
                 {/each}
             </div>
         </BoxWithList>
@@ -151,17 +177,15 @@
         <BoxWithList label='Gear' addNewListItem={addItem}>
             <div class="item-list" slot='list'>
                 {#each character.gear as item, index}
-                    <ItemDetailShadowdark
-                        bind:item deleteItem={deleteItem}
-                    />
+                    <ItemDetailShadowdark bind:item deleteItem={deleteItem} />
                 {/each}
             </div>
         </BoxWithList>
     </div>
 
     <box class="spells"></box>
-
-    <TalentsShadowdark bind:talents={character.talents}/>
+    
+    <TalentsShadowdark bind:character={character}/>
     
     
     <div class="license">This sheet is an independent product published under the Shadowdark RPG Third-Party License and is not affiliated with The Arcane Library, LLC. Shadowdark RPG © The Arcane Library, LLC.</div>
@@ -250,7 +274,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        gap: 0.25em;
+        gap: 0.3em;
     }
 
     .attacks { grid-area: attacks; }

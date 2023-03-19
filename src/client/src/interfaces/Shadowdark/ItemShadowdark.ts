@@ -8,4 +8,5 @@ export default interface ItemShadowdark {
     charges?: string,
     charges_max?: string,
     description?: string,
+    attack_id?: string
 }

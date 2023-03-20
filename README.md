@@ -1,5 +1,5 @@
 # Morii VTT [![CI](https://github.com/fjallnari/morii-vtt/actions/workflows/main.yml/badge.svg)](https://github.com/fjallnari/morii-vtt/actions/workflows/main.yml)
-Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently supports D&D 5E and Cairn.
+Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently supports D&D 5E, Cairn and Shadowdark.
 
 ## Key Features
 - **Campaign Management** - Create, destroy and join campaigns, invite/kick players
@@ -20,9 +20,12 @@ Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently su
 #### Cairn
 - **Character Reroll** - Create new random character instantly, with as much rolling as you want. Also supports the Cairn optional gear packages.
 - **GM Overview** - Includes basic stats overview of all PCs and separate monsters view with all Cairn SRD monsters
+
+#### Shadowdark
+- Character sheet is done and available, rest of the features are being worked on - see [issue](https://github.com/fjallnari/morii-vtt/issues/127).
 ---
 
-**With all that aside**, this project is still actively developed, and as such expect some rough edges here and there. If you have any issues, encounter bugs, or have some general feedback etc., feel free to [start a new issue](https://github.com/fjallnari/morii-vtt/issues/new) or [reach out directly over Discord](https://discord.com/invite/MhKxwkRpEU).
+**With all that aside**, this project is still actively developed, and as such expect some rough edges here and there. If you have any issues, encounter bugs, want to contribute or have some general feedback etc., feel free to [start a new issue](https://github.com/fjallnari/morii-vtt/issues/new) or [reach out directly over Discord](https://discord.com/invite/MhKxwkRpEU).
 
 *(I)* As there are no subclasses/backgrounds under the OGL you will sadly still have to import these manually.
 

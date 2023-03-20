@@ -14,12 +14,12 @@ import CharacterSheetRulesCairn from "../components/Game/CharacterSheet/Cairn/Ch
 import CreateRandomSheetCairn from "../components/Game/CharacterSheet/Cairn/CreateRandomSheetCairn.svelte";
 import ImportJsonSheet5E from "../components/Game/CharacterSheet/5E/ImportJsonSheet5E.svelte";
 import ImportJsonSheetCairn from "../components/Game/CharacterSheet/Cairn/ImportJsonSheetCairn.svelte";
-import CharacterBadgeCairn from "../components/Game/CharacterSheet/Cairn/CharacterBadgeCairn.svelte";
 import InnerOverviewCairn from "../components/Game/GameOverview/Cairn/InnerOverviewCairn.svelte";
 import type GameTab from "../interfaces/GameTab";
 import CharacterSheetCoreShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetCoreShadowdark.svelte";
 import CharacterBadgeGeneric from "../components/Game/GameOverview/CharacterBadgeGeneric.svelte";
 import CharacterSheetNotesShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetNotesShadowdark.svelte";
+import CharacterBadgeCairn from "../components/Game/GameOverview/Cairn/CharacterBadgeCairn.svelte";
 
 
 interface CharacterSheetTab {

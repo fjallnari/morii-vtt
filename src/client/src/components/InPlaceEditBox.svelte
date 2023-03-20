@@ -11,7 +11,9 @@
     export let editHeight: string = '';
     export let valueFontSize: string = 'inherit';
     export let onSubmitFce: () => void = () => $modifyCharacter();
+    export let onClickFn: () => void = () => {};
     export let tooltip: string = undefined;
+    export let sendable: boolean = false;
 
 </script>
 
@@ -26,21 +28,27 @@
         />
     </div>
     <div class="box-justify-filler"></div>
-    <div class="box-label">
-        {#if tooltip}
-            <Tooltip 
-                content={tooltip} 
-                theme="blurred" 
-                position='bottom' 
-                animation='fade'
-                arrow={false}
-            >
+    {#if !sendable}
+        <div class="box-label">
+            {#if tooltip}
+                <Tooltip 
+                    content={tooltip} 
+                    theme="blurred" 
+                    position='bottom' 
+                    animation='fade'
+                    arrow={false}
+                >
+                    {boxLabel}
+                </Tooltip>
+            {:else}
                 {boxLabel}
-            </Tooltip>
-        {:else}
+            {/if}
+        </div>
+    {:else}
+        <sendable class="box-label" on:click={() => onClickFn()} on:keyup={() => {}}>
             {boxLabel}
-        {/if}
-    </div>
+        </sendable>
+    {/if}
 </box>
 
 <style>

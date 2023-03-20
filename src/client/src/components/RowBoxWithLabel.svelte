@@ -79,6 +79,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         position: unset !important;
+        white-space: nowrap;
     }
 
     .default-label {

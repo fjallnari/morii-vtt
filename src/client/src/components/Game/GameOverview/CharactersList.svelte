@@ -3,7 +3,7 @@
     import type GameData from "../../../interfaces/GameData";
     import { selectedCharacter, user } from "../../../stores";
     import CreateInviteCode from "../../Campaign/CreateInviteCode.svelte";
-    import CharacterBadge5E from "./5E/CharacterBadge5E.svelte";
+    import CharacterBadgeGeneric from "./CharacterBadgeGeneric.svelte";
 
     export let gameData: GameData;
 </script>
@@ -22,7 +22,7 @@
             {#each gameData.characters as character}
                 <div class="character-badge-box" on:click={() => selectedCharacter.set(character)} on:keyup={() => {}}>
                     <svelte:component 
-                        this={GAME_SYSTEMS[gameData.system].characterBadge ?? CharacterBadge5E}
+                        this={GAME_SYSTEMS[gameData.system].characterBadge ?? CharacterBadgeGeneric}
                         bind:character={character}
                     />
                 </div>

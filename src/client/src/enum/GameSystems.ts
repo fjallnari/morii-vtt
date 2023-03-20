@@ -14,10 +14,12 @@ import CharacterSheetRulesCairn from "../components/Game/CharacterSheet/Cairn/Ch
 import CreateRandomSheetCairn from "../components/Game/CharacterSheet/Cairn/CreateRandomSheetCairn.svelte";
 import ImportJsonSheet5E from "../components/Game/CharacterSheet/5E/ImportJsonSheet5E.svelte";
 import ImportJsonSheetCairn from "../components/Game/CharacterSheet/Cairn/ImportJsonSheetCairn.svelte";
-import CharacterBadge5E from "../components/Game/GameOverview/5E/CharacterBadge5E.svelte";
-import CharacterBadgeCairn from "../components/Game/GameOverview/Cairn/CharacterBadgeCairn.svelte";
+import CharacterBadgeCairn from "../components/Game/CharacterSheet/Cairn/CharacterBadgeCairn.svelte";
 import InnerOverviewCairn from "../components/Game/GameOverview/Cairn/InnerOverviewCairn.svelte";
 import type GameTab from "../interfaces/GameTab";
+import CharacterSheetCoreShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetCoreShadowdark.svelte";
+import CharacterBadgeGeneric from "../components/Game/GameOverview/CharacterBadgeGeneric.svelte";
+import CharacterSheetNotesShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetNotesShadowdark.svelte";
 
 
 interface CharacterSheetTab {
@@ -36,10 +38,10 @@ export interface GameSystem {
     creationOptions: any[],
 
     // Svelte component, this is the bottom-right part of GM's game overview (anything other than PCs, and NPCs), system-specific
-    innerOverview: any,
+    innerOverview?: any,
 
     // Svelte component, middle part of character sheet settings (between the user tag and the delete button)
-    specificSettings: any,
+    specificSettings?: any,
 
     // Svelte component, system-specific, the CharacterBadge5E can be used as an placeholder
     characterBadge: any,
@@ -89,7 +91,7 @@ const GAME_SYSTEMS: Record<string, GameSystem> = {
         creationOptions: [ QuickCreateSheet, CopyExistingSheet, ImportJsonSheet5E ],
         innerOverview: InnerOverview5E,
         specificSettings: SpecificSettings5E,
-        characterBadge: CharacterBadge5E,
+        characterBadge: CharacterBadgeGeneric,
         gameTabs: [
             // {
             //     id: 'combat',
@@ -127,6 +129,28 @@ const GAME_SYSTEMS: Record<string, GameSystem> = {
         innerOverview: InnerOverviewCairn,
         specificSettings: SpecificSettingsCairn,
         characterBadge: CharacterBadgeCairn,
+        gameTabs: [
+            OWNER_STANDARD_OVERVIEW
+        ]
+    },
+    'Shadowdark': {
+        characterSheetTabs: [
+            {
+                color: '#A7C284',
+                icon: 'mdi:shield-account',
+                component:  CharacterSheetCoreShadowdark
+            },
+            {
+                color: '#DBD8B3',
+                icon: 'mdi:note-text',
+                component:  CharacterSheetNotesShadowdark
+            },
+            SETTINGS_TAB
+        ],
+        creationOptions: [ CopyExistingSheet ],
+        //innerOverview: InnerOverviewCairn,
+        //specificSettings: SpecificSettingsCairn,
+        characterBadge: CharacterBadgeGeneric,
         gameTabs: [
             OWNER_STANDARD_OVERVIEW
         ]

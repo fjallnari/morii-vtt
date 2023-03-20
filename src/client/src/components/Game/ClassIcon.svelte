@@ -1,14 +1,17 @@
 <script lang="ts">
+    import type CharacterAny from "../../interfaces/CharacterAny";
     import { getClassIcon } from "../../util/util";
 
-    export let characterClasses: string | undefined = undefined;
+    export let character: CharacterAny;
+
+    $: characterClass = character?.classes ?? character?.class;
 
 </script>
 
 <class-icon>
-    <img id="main-class" src="../static/class-icons/{getClassIcon(characterClasses)[0]}.svg" alt="class-icon">
-    {#if getClassIcon(characterClasses).length > 2}
-        <img id="multi-class" src="../static/class-icons/{getClassIcon(characterClasses)[2]}.svg" alt="class-icon">
+    <img id="main-class" src="../static/class-icons/{getClassIcon(characterClass, character?.system)[0]}.svg" alt="class-icon">
+    {#if character?.system === "D&D 5E" && getClassIcon(characterClass)?.length > 2}
+        <img id="multi-class" src="../static/class-icons/{getClassIcon(characterClass)[2]}.svg" alt="class-icon">
     {/if}
 </class-icon>
 

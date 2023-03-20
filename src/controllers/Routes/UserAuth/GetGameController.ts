@@ -58,7 +58,7 @@ export default class GetGameController extends RouteController {
             }
         };
     }
-
+    
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
         const invitesCollection = await getCollection('invites');
@@ -81,7 +81,7 @@ export default class GetGameController extends RouteController {
         // needs to have both _id and id (cause svelte-dnd-action does not support custom id properties unless applied globally)
         const cleanNpcs = npcsObj.map(npc => Object.assign(npc, {_id: npc._id.toString(), id: npc._id.toString(), playerID: npc.playerID.toString()}));
 
-        const specificSystemData = await this.SYSTEM_SPECIFIC_DATA[campaignInfo.system](campaignInfo);
+        const specificSystemData = this.SYSTEM_SPECIFIC_DATA[campaignInfo.system] ? await this.SYSTEM_SPECIFIC_DATA[campaignInfo.system](campaignInfo) : {};
 
         return {
             id: campaignInfo._id,

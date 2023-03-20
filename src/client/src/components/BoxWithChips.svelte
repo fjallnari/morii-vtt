@@ -10,6 +10,7 @@
     export let chipsType: 'crud' | 'select-n' | 'readonly' = 'crud';
     export let selectNFinalArray: any[] = [];
     export let selectNMaxChips: number = 0;
+    export let disableErrorPulse: boolean = false;
 
     const addChip = () => {
         // just so BoxWithChips works with either object, arrays of strings or simple strings
@@ -59,7 +60,7 @@
             <div>No {label.toLowerCase()}</div>
         {:else}
             {#each chipsArray as chip, index}
-                <box class="chip{isBlank(chip) ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" 
+                <box class="chip{isBlank(chip) && !disableErrorPulse ? ' error-pulse': ''}{occurences[chip] > 1 && !isBlank(chip) ? ' non-uniq' : ''}{chipsType === 'select-n' ? ' selectable' : ''}{selectNFinalArray.includes(chip) ? ' selected' : ''}" 
                     on:click={() => toggleChip(chip)} on:keyup={() => {}}
                 >
                     {#if chipsType === 'crud'}

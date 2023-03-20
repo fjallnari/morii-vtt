@@ -124,7 +124,7 @@
                     </SimpleButton>
                 </div>
                 <div class="socials">
-                    <sendable on:click={ () => window.open("https://github.com/Ashmogh/morii-vtt")} on:keyup={() => {}}>
+                    <sendable on:click={ () => window.open("https://github.com/fjallnari/morii-vtt")} on:keyup={() => {}}>
                         <Icon icon="mdi:github" /> 
                     </sendable>
                     <sendable on:click={ () => window.open("https://discord.gg/MhKxwkRpEU")} on:keyup={() => {}}>

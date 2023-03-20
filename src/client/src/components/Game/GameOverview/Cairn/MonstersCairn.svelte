@@ -10,11 +10,13 @@
     import type CairnData from "../../../../interfaces/Cairn/CairnData";
     import MonsterDetailCairn from "./MonsterDetailCairn.svelte";
     import MonstersDragAndDrop from "../MonstersDragAndDrop.svelte";
+    import CreateMonsterCairn from "./CreateMonsterCairn.svelte";
 
     export let cairn: CairnData;
 
     let monsterChosenSimple: { id: string, name: string } = undefined;
     let monsterChosenObj: MonsterDataCairn = undefined;
+    let createMenuEnabled: boolean = $user.gameData?.monsters?.length === 0 ? true : false;
 
     // returns either array of simple id/name pairs of all monsters, or an array with single detailed monster
     const getMonsterData = async (monsterID: string = '') => {
@@ -28,7 +30,7 @@
         return [];
     }
 
-    const addMonster = async (monsterTemplate = {}) => {
+    const addMonster: (monsterTemplate?: {}) => Promise<MonsterDataCairn> = async (monsterTemplate = {}) => {
 		try {
             const response = await axios.post('/api/add-monster', {
                 campaignID: $params.id,
@@ -43,9 +45,12 @@
                     })
                 })
             }));
-
-            monsterChosenObj = newMonster;
-            monsterChosenSimple = undefined;
+            
+            if (newMonster.source !== "srd") {
+                monsterChosenObj = newMonster;
+                monsterChosenSimple = undefined;
+            }
+            createMenuEnabled = false;
             return newMonster;
 		}
 		catch (err) {
@@ -98,55 +103,53 @@
 </script>
 
 
-<tab-container>
-    <monsters-content>
-        <div class="title">
-            <h3>Monsters</h3>
-        </div>
-        <div class="add-cairn-srd-monster">
-            <Svelecte 
-                options={cairn.monsters_SRD}
-                valueAsObject
-                clearable
-                placeholder='All SRD monsters'
-                bind:value={monsterChosenSimple}>
-            </Svelecte>
-        </div>
+<monsters-content>
+    <div class="monsters">
+        <h3 class="title">Monsters</h3>
+        {#if createMenuEnabled}
+            <CreateMonsterCairn bind:createMenuEnabled {addMonster} {viewRandomMonster}/>
+        {:else}
+            <box class="monster-list">
+                {#if $user && $user?.gameData?.cairn.monsters}
+                    <MonstersDragAndDrop 
+                        items={$user?.gameData?.cairn.monsters}
+                        on:viewmonster={viewFavoriteMonster}
+                        on:updatemonsters={updateMonsters}
+                        chosenMonsterID={monsterChosenObj?.id}
+                    />
+                {/if}
+                <sendable class="add-new-item" on:click={() => createMenuEnabled = true} on:keyup={() => {}}>
+                    <Icon class="big-icon" icon="mdi:add" />
+                </sendable>
+            </box>
+        {/if}
+    </div>
 
-        <div class="monster-menu">
-            <SimpleButton value='Add custom monster' icon="mdi:notebook-edit" onClickFn={() => addMonster()}></SimpleButton>
-        </div>
-
-        <div class="favorites">
-            <div class="favorites-header">
-                <Icon class="big-icon" icon="material-symbols:star-rounded" color="var(--clr-icon-owner)"/>
-                <h4>Favorites & Custom</h4>
-            </div>
-            {#if $user && $user?.gameData?.cairn.monsters}
-                <MonstersDragAndDrop 
-                    items={$user?.gameData?.cairn.monsters}
-                    on:viewmonster={viewFavoriteMonster}
-                    on:updatemonsters={updateMonsters}
-                    chosenMonsterID={monsterChosenObj?.id}
-                />
-            {/if}
-        </div>
-
+    <div class="detail-container">
+        <h3 class="title">Monster detail</h3>
         {#if monsterChosenObj}
-        <MonsterDetailCairn bind:monster={monsterChosenObj} bind:monsterChosenObj={monsterChosenObj} addMonster={addMonster} />
+            <MonsterDetailCairn bind:monster={monsterChosenObj} bind:monsterChosenSimple addMonster={addMonster} />
         {:else}
             <div class="placeholder-no-monster">
                 {#if monsterChosenSimple && !monsterChosenObj}
                     <SimpleProgressCircle></SimpleProgressCircle>
-                    <div>Loading {monsterChosenSimple.name}...</div>
+                    <div class="placeholder-text">Loading {monsterChosenSimple.name}...</div>
                 {:else}
-                    <div>Choose a monster to view or </div>
-                    <SimpleButton value='View random monster' icon='mdi:dice' type='primary' onClickFn={() => viewRandomMonster()}></SimpleButton>
+                    <div class="placeholder-text">Choose a SRD monster to view:</div>
+                    <div class="add-cairn-srd-monster">
+                        <Svelecte
+                            options={cairn.monsters_SRD}
+                            valueAsObject
+                            clearable
+                            placeholder='All SRD monsters'
+                            bind:value={monsterChosenSimple}>
+                        </Svelecte>
+                    </div>
                 {/if}
             </div>
         {/if}
-    </monsters-content>
-</tab-container>
+    </div>
+</monsters-content>
 
 <style>
     monsters-content {
@@ -156,22 +159,23 @@
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 1em;
+        font-family: Quicksand;
         overflow: hidden;
         grid-template-areas:
-            "title title title title title title title"
-            "add-srd-monster add-srd-monster add-srd-monster monster-detail monster-detail monster-detail monster-detail"
-            "monster-menu monster-menu monster-menu monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"
-            "favorites favorites favorites monster-detail monster-detail monster-detail monster-detail"; 
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"
+            "monsters monsters monsters detail-container detail-container detail-container detail-container"; 
     }
 
-    .title { grid-area: title;
+    .title {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 1.2em;
+        font-size: 1.5em;
     }
 
     h3 {
@@ -180,70 +184,58 @@
         text-transform: uppercase;
     }
 
+    .monsters { grid-area: monsters; 
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100%;
+    }
+
+    .monster-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        padding: 1em 0.2em 4px 0.2em;
+        margin-bottom: 1em;
+    }
+
     .add-cairn-srd-monster { grid-area: add-srd-monster; 
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin: 0em 2em;
         font-size: 1.2em;
+        width: 50%;
     }
 
     :global(.add-cairn-srd-monster .svelecte){
         max-height: 2em;
     }
 
-    .monster-menu { grid-area: monster-menu; 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.4em;
-        gap: 0.5em;
-    }
-    
-    :global(.monster-menu > simple-button) {
-        width: 90%;
-    }
-
-    .favorites { grid-area: favorites; 
+    .detail-container { grid-area: detail-container;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        width: 100%;
-        height: 95%;
-        margin-bottom: 4px;
-    }
-
-    .favorites-header {
-        display: flex; 
-        justify-content: center;
         align-items: center;
-        gap: 0.5em;
-        padding: 0.5em;
     }
 
-    .favorites-header h4 {
-        font-weight: var(--semi-bold);
-        font-size: 1.2em;
-        font-family: Athiti;
-        text-transform: uppercase;
-        margin: 0;        
-    }
-
-    .placeholder-no-monster { grid-area: monster-detail;
+    .placeholder-no-monster {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         gap: 1em;
-        font-family: Athiti;
-        font-size: 1.4em;
-        font-weight: 400;
+        height: 100%;
+        width: 100%;
     }
 
-    :global(.placeholder-no-monster simple-button) {
-        width: fit-content;
-        padding: 0.2em 1em;
+    .placeholder-text {
+        font-size: 1.2em;
     }
 
 </style>

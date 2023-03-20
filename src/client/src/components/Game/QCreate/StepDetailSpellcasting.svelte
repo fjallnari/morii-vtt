@@ -234,11 +234,11 @@
         <BoxWithList label='Spells by level' inlineStyle='grid-area: spells;' addNewListItem={() => addNewSpell(currentFilter)} isModifyDisabled>
             <div class="filter-menu" slot='filter-menu'>
                 {#each spellLevelsStr as spellLevel, index}
-                    <sendable class="filter-names {currentFilter === index ? 'filter-selected': ''}"
+                    <clickable class="filter-names {currentFilter === index ? 'filter-selected': ''}"
                         on:click={ () => switchFilter(index)} on:keyup={() => {}}
                     >
                         {spellLevel}
-                    </sendable>
+                    </clickable>
                 {/each}
             </div>   
             <div class="class-spell-list" slot='list'>
@@ -455,7 +455,7 @@
         padding-top: 0.5em;
     }
 
-    .filter-menu sendable {
+    .filter-menu clickable {
         cursor: pointer;
         transition-duration: 500ms;
         transition-property: border; 

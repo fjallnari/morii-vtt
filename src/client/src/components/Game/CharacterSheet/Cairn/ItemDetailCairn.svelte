@@ -102,7 +102,7 @@
                     <Icon class="medi-icon" icon={itemIcon} />
                 </div>
             {/if}
-            {#if item.type === 'relic'}
+            {#if !editingItemOrder && item.type === 'relic'}
                 <div class="item-charges">
                     {#if ~~item.charges_max > 6}
                         <InPlaceEdit bind:value={item.charges} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>/

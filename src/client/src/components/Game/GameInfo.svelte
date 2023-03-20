@@ -42,7 +42,7 @@
             </Tooltip>
         {/each}
         <Tooltip 
-            content="Leave" 
+            content="Campaigns"
             theme="blurred" 
             position='bottom'
         >

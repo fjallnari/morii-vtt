@@ -9,6 +9,7 @@
     export let content: string = '';
     export let source: string = '';
     export let icon: string = '';
+    export let iconClass: string = 'medi-icon';
     export let amount: string | number = undefined;
     export let selectable: boolean = false;
     export let isSelected: boolean = false;
@@ -17,6 +18,7 @@
     export let textareaHeight: string = '10em';
     export let editWidth: string = '18rem';
     export let editHeight: string = '1.5rem';
+    export let padding: string = '0.5em 0em';
     export let deleteItem: () => void = () => {};
     export let toggleItem: () => void = () => {};
     export let onSubmitFn: () => void = () => {};
@@ -30,10 +32,10 @@
 <box class="feature-main-container" 
     style='background-color: {isSelected ? 'var(--clr-accent-dark)' : 'var(--clr-box-bg-light)'};' 
 >
-    <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable || typeof amount != 'undefined' ? 'type' : 'name'} feature-name feature-menu";`}>
+    <div class="feature-summary" style={`grid-template-areas: "feature-${icon || selectable || typeof amount != 'undefined' ? 'type' : 'name'} feature-name feature-menu"; padding: ${padding};`}>
         {#if icon}
             <div class="feature-type">
-                <Icon class="medi-icon" icon={icon} />
+                <Icon class={iconClass} icon={icon} />
             </div>
         {/if}
         {#if typeof amount != 'undefined'}

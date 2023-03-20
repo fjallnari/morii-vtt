@@ -22,17 +22,17 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
         sp: '',
         cp: '',
     },
-    languages: [],
-    proficiencies: [],
-
-    attacks: [],
-    gear: [],
-    talents: [],
-    spells: [],
-    spell_ability: "",
     filled_slots: "",
     total_slots: "",
 
+    proficiencies: [],
+    attacks: [],
+    gear: [],
+    talents: [],
+
+    spells: [],
+    spell_ability: "",
+    spells_known: [ [], [], [], [], [], [], [], [], [], [] ],
     ability_scores: { 
         'STR': {
             value: '',
@@ -58,3 +58,18 @@ export const SKELETON_SD: Omit<CharacterShadowdark, '_id' | 'playerID' | 'system
     foes: '',
     allies: ''
 }
+
+/* PRIEST: 
+[ 
+    [ '2' ],
+    [ '3' ],
+    [ '3', '1' ],
+    [ '3', '2' ],
+    [ '3', '2', '1' ],
+    [ '3', '2', '2' ], 
+    [ '3', '3', '2', '1' ], 
+    [ '3', '3', '2', '2' ],
+    [ '3', '3', '2', '2', '1' ],
+    [ '3', '3', '3', '2', '2' ],
+], 
+*/

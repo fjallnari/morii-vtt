@@ -22,6 +22,7 @@
     import AttackDetailShadowdark from "./AttackDetailShadowdark.svelte";
     import ItemDetailShadowdark from "./ItemDetailShadowdark.svelte";
     import ProficienciesShadowdark from "./ProficienciesShadowdark.svelte";
+    import SpellcastingShadowdark from "./SpellcastingShadowdark.svelte";
     import TalentsShadowdark from "./TalentsShadowdark.svelte";
 
     export let character: CharacterShadowdark;
@@ -182,11 +183,10 @@
             </div>
         </BoxWithList>
     </div>
+    
+    <TalentsShadowdark bind:character={character} />
 
-    <box class="spells"></box>
-    
-    <TalentsShadowdark bind:character={character}/>
-    
+    <SpellcastingShadowdark bind:character={character} />
     
     <div class="license">This sheet is an independent product published under the Shadowdark RPG Third-Party License and is not affiliated with The Arcane Library, LLC. Shadowdark RPG © The Arcane Library, LLC.</div>
     <CharSheetMenu />
@@ -240,7 +240,6 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        flex-wrap: wrap;
         z-index: 10;
     }
 
@@ -248,7 +247,6 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        flex-wrap: wrap;
     }
 
     .coins { grid-area: coins;
@@ -278,9 +276,6 @@
     }
 
     .attacks { grid-area: attacks; }
-
-    .spells { grid-area: spells; 
-    }
 
     .license { grid-area: license;
         font-size: 0.8em;

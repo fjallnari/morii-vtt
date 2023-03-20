@@ -94,7 +94,7 @@
                     bind:value={itemTypeIndex}>
                 </Svelecte>
             </div>
-            <div class="line-title">Weight:</div>
+            <div class="line-title">Gear slots:</div>
             <InPlaceEdit bind:value={item.weight} editWidth='1.5em' editHeight='1.5em' on:submit={() => $modifyCharacter()}/>
         </div>
         {#if item.type === 'resource'}

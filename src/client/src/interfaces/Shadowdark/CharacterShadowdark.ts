@@ -3,6 +3,7 @@ import type CharacterGeneric from "../CharacterGeneric";
 import type { AttackShadowdark } from "./AttackShadowdark";
 import type ItemShadowdark from "./ItemShadowdark";
 import type ProfShadowdark from "./ProfShadowdark";
+import type { SpellShadowdark } from "./SpellShadowdark";
 import type TalentShadowdark from "./TalentShadowdark";
 
 
@@ -29,17 +30,17 @@ export interface CharacterShadowdark extends CharacterGeneric {
     luck: boolean,
     death_timer: string,
     coins: Record<string, string>,
-    languages: string[],
-    proficiencies: ProfShadowdark[],
+    filled_slots: string,
+    total_slots: string,
 
-    // TODO
+    proficiencies: ProfShadowdark[],
     attacks: AttackShadowdark[],
     gear: ItemShadowdark[],
     talents: TalentShadowdark[],
-    spells: any[],
+
+    spells: SpellShadowdark[],
     spell_ability: string,
-    filled_slots: string,
-    total_slots: string,
+    spells_known: any,
 
     ability_scores: Record<string, AbilityScoreShadowdark>,
 

@@ -48,7 +48,7 @@
 
 </script>
 
-<BoxWithList label='Talents' inlineStyle='grid-area: talents;' addNewListItem={() => addNewTalent()} isModifyDisabled>
+<BoxWithList label='Talents' inlineStyle='grid-area: talents;' addNewListItem={() => addNewTalent()}>
     <div class="filter-menu" slot='filter-menu'>
         {#each [{ name: 'FILTER_OFF', icon: 'mdi:filter-off' }, ...PROF_TYPES] as profType, index}
             <sendable class="talent-type-icon" 
@@ -66,8 +66,9 @@
                 bind:content={talent.content}
                 icon={PROF_TYPES[talent.type]?.icon}
                 editWidth='15rem'
-                deleteItem={() => deleteTalent(talent)}>
-            </SimpleAccordionDetail>
+                deleteItem={() => deleteTalent(talent)}
+                onSubmitFn={() => $modifyCharacter()}
+            />
         {/each}
     </div>
 </BoxWithList>

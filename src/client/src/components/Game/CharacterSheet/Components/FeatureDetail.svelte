@@ -16,7 +16,7 @@
         { name: 'CLASS', icon: 'mdi:arrow-projectile-multiple' },
         { name: 'FEAT', icon: 'mdi:arm-flex' },
         { name: 'BACKGROUND', icon: 'mdi:sprout' },
-        { name: 'OTHER', icon: 'mdi:atom' }
+        { name: 'OTHER', icon: 'mdi:scatter-plot' }
     ];
 
     const deleteFeature = () => {

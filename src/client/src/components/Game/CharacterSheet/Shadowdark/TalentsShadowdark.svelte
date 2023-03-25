@@ -48,7 +48,7 @@
 
 </script>
 
-<BoxWithList label='Talents' inlineStyle='grid-area: talents;' addNewListItem={() => addNewTalent()}>
+<BoxWithList label='Talents' gridClass='talents' addNewListItem={() => addNewTalent()}>
     <div class="filter-menu" slot='filter-menu'>
         {#each [{ name: 'FILTER_OFF', icon: 'mdi:filter-off' }, ...PROF_TYPES] as profType, index}
             <sendable class="talent-type-icon" 

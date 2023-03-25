@@ -61,6 +61,8 @@
         grid-template-columns: 1fr 1fr 1fr; 
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr; 
         gap: 0.75em;
+        box-sizing: border-box;
+        padding: 0.75em;
         grid-template-areas: 
             "rules rules-combat scars"
             "rules rules-combat scars"
@@ -77,7 +79,6 @@
     }
 
     .scars { grid-area: scars; 
-        margin: 0.75em 0.75em 0.75em 0em;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
@@ -87,11 +88,9 @@
     }
 
     .rules { grid-area: rules;
-        margin: 0.75em 0em 0.75em 0.75em;
     }
     
     .rules-combat { grid-area: rules-combat; 
-        margin-top: 0.75em;
     }
 
 

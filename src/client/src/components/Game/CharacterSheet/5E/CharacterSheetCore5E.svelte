@@ -106,8 +106,10 @@
 <style>
     tab-container {  display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 2fr 2fr 1fr; 
+        grid-template-rows: 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr 1fr 2fr 2fr 1fr; 
         gap: 0.5em;
+        box-sizing: border-box;
+        padding: 0.75em;
         grid-template-areas: 
             "character-name character-basic-info character-basic-info"
             "ability-scores-bonuses character-stats other-prof-languages"
@@ -129,12 +131,10 @@
         justify-content: center;
         text-align: center;
         font-size: 2em;
-        margin: 0.4em 0em 0em 0.4em;
         width: inherit;
     }
 
     .character-basic-info { grid-area: character-basic-info;
-        margin: 0.5em 0.5em 0em 0em;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -145,13 +145,12 @@
 
 
     .ability-scores-bonuses { grid-area: ability-scores-bonuses;
-        margin-left: 0.75em;
         display: grid; 
         grid-template-columns: 1fr; 
         grid-template-rows: 0.05fr 1fr; 
         grid-template-areas: 
-        "bonuses"
-        "ability-scores";
+            "bonuses"
+            "ability-scores";
     }
 
     .bonuses { grid-area: bonuses; 
@@ -218,16 +217,10 @@
         align-items: center; 
     }
 
-    .other-prof-languages { grid-area: other-prof-languages;
-        margin: 0em 0.75em 0em 0em;
-    }
+    .other-prof-languages { grid-area: other-prof-languages; }
 
-    .resources { grid-area: resources;
-        margin: 0em 0.75em 0em 0em;
-    }
+    .resources { grid-area: resources; }
 
-    .features-traits { grid-area: features-traits;
-        margin: 0em 0.75em 0.5em 0em;
-    }
+    .features-traits { grid-area: features-traits; }
 
 </style>

@@ -19,29 +19,27 @@
         <InPlaceEditBox bind:value={character.alignment} boxLabel="Alignment" editWidth="5em"></InPlaceEditBox>
     </div>
 
-    <BioTextareaBox bind:charAttribute={character.appearance} styleClass='appearance'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.backstory} styleClass='backstory'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.allies} styleClass='allies-orgs' label='Allies & Organisations'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.enemies} styleClass='enemies'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.treasure} styleClass='treasury'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.person_traits} styleClass='personality-traits' label='Personality Traits'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.ideals} styleClass='ideals'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.bonds} styleClass='bonds'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.flaws} styleClass='flaws'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.other_notes} styleClass='other-notes' label='Other Notes'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.appearance} gridClass='appearance'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.backstory} gridClass='backstory'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.allies} gridClass='allies-orgs' label='Allies & Organisations'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.enemies} gridClass='enemies'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.treasure} gridClass='treasury'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.person_traits} gridClass='personality-traits' label='Personality Traits'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.ideals} gridClass='ideals'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.bonds} gridClass='bonds'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.flaws} gridClass='flaws'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.other_notes} gridClass='other-notes' label='Other Notes'></BioTextareaBox>
     <CharacterSheetMenu></CharacterSheetMenu>
 </tab-container>
 
 <style>
-    :root {
-        --outer-edge-margin: 0.75em;
-    }
-
     tab-container {
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr; 
-        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+        grid-template-rows: 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
         gap: 0.5em 0.5em; 
+        box-sizing: border-box;
+        padding: 0.75em;
         grid-template-areas: 
             "character-additional-info character-additional-info character-additional-info"
             "appearance allies-orgs personality-traits"
@@ -62,7 +60,6 @@
     }
 
     .character-additional-info { grid-area: character-additional-info; 
-        margin: 0.5em 0.5em 0em 0.5em;
         display: flex;
         justify-content: space-between;
         align-items: center;

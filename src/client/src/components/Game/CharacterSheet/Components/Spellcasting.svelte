@@ -186,7 +186,8 @@
         font-size: 1.5em;
         background-color: var(--clr-box-bg-normal);
     }
-    .spellcasting-container {  display: grid;
+    .spellcasting-container { grid-area: spellcasting;
+        display: grid;
         grid-template-columns: 1fr 1fr 1fr 0.5fr;
         grid-template-rows: 1fr;
         gap: 0.5em;

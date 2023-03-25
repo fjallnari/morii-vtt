@@ -145,8 +145,8 @@
         {/each}
     </div>
 
-    <BioTextareaBox bind:charAttribute={character.appearance} inlineStyle="grid-area: traits; margin: 0.75em 0.75em 0em 0em;" label="Appearance" />
-    <BioTextareaBox bind:charAttribute={character.notes} inlineStyle="grid-area: notes; margin: 0em 0.75em 0.75em 0em;" label="Notes" />
+    <BioTextareaBox bind:charAttribute={character.appearance} gridClass="traits" label="Appearance" />
+    <BioTextareaBox bind:charAttribute={character.notes} gridClass="notes" />
 
     <div class="slots">
         <RowBoxWithLabel label='Total slots'>
@@ -190,7 +190,7 @@
         </RowBoxWithLabel>
     </div>
 
-    <BoxWithList label='Inventory' inlineStyle='grid-area: inventory;' addNewListItem={addItem}>
+    <BoxWithList label='Inventory' gridClass='inventory' addNewListItem={addItem}>
         <div class="item-list" slot='list'>
             {#each character.inventory as item, index}
                 <ItemDetailCairn 
@@ -245,6 +245,8 @@
         grid-template-columns: 1fr 1fr 1fr 1.5fr 1fr 0.5fr 1fr 1fr 1fr;
         grid-template-rows: 1fr 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
         gap: 0.75em;
+        box-sizing: border-box;
+        padding: 0.75em;
         grid-template-areas:
             "character-basic-info character-basic-info character-basic-info character-basic-info character-basic-info character-basic-info traits traits traits"
             "ability-scores ability-scores ability-scores hp deprived coins traits traits traits"
@@ -265,7 +267,6 @@
     }
 
     .character-basic-info { grid-area: character-basic-info;
-        margin: 0.75em 0em 0em 0.75em;
         display: flex;
         flex-direction: row;
         gap: 0.5em;

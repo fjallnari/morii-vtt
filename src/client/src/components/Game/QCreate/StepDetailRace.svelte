@@ -76,7 +76,7 @@
     <BoxWithInfo bind:mainObject={selectedRace} label="speed"></BoxWithInfo>
 
     {#if selectedRace && selectedRace.features}
-        <BoxWithList label='Racial Traits' inlineStyle='grid-area: features; max-height: 25.7em;' addNewListItem={addTrait} isModifyDisabled>
+        <BoxWithList label='Racial Traits' gridClass='features' inlineStyle='max-height: 25.7em;' addNewListItem={addTrait} isModifyDisabled>
             <div class="features-list" slot='list'>
                 {#each selectedRace.features as feature, index}
                     <SimpleAccordionDetail 

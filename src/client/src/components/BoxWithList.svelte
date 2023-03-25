@@ -4,14 +4,17 @@
 
     export let label: string;
     export let styleClass: string = '';
+    export let gridClass: string = '';
     export let inlineStyle: string = '';
     export let addNewListItem: () => void = () => {};
     export let isModifyDisabled: boolean = false;
     export let noCrud: boolean = false;
 
+    $: console.log(gridClass);
+
 </script>
 
-<box class="inside-box-content {styleClass}" style={inlineStyle}>
+<box class="inside-box-content {styleClass}" style={`grid-area: ${gridClass}; ${inlineStyle}`}>
     <slot name="filter-menu"></slot>
     <div class="inside-box-list">
         <slot name="list"></slot>

@@ -231,7 +231,7 @@
             {/if}
         </div>
 
-        <BoxWithList label='Spells by level' inlineStyle='grid-area: spells;' addNewListItem={() => addNewSpell(currentFilter)} isModifyDisabled>
+        <BoxWithList label='Spells by level' gridClass='spells' addNewListItem={() => addNewSpell(currentFilter)} isModifyDisabled>
             <div class="filter-menu" slot='filter-menu'>
                 {#each spellLevelsStr as spellLevel, index}
                     <clickable class="filter-names {currentFilter === index ? 'filter-selected': ''}"
@@ -286,8 +286,8 @@
                 </box>
             {:else}
                 <BoxWithList 
-                    label={selectedClass.spellcasting.unique_info.label} 
-                    inlineStyle='grid-area: uniq;'
+                    label={selectedClass.spellcasting.unique_info.label}
+                    gridClass='uniq'
                     noCrud
                     isModifyDisabled
                 >

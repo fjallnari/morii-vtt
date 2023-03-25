@@ -85,7 +85,7 @@
         {/each}
     </div>
 
-    <BoxWithList label='Equipment' inlineStyle='grid-area: bkg-equipment;' addNewListItem={addItem} isModifyDisabled>
+    <BoxWithList label='Equipment' gridClass='bkg-equipment' addNewListItem={addItem} isModifyDisabled>
         <div class="box-list" slot='list'>
             {#each characterParts.bio.equipment as item, index}
                 <SimpleAccordionDetail 
@@ -99,7 +99,7 @@
         </div>
     </BoxWithList>
 
-    <BoxWithList label='Features' inlineStyle='grid-area: bkg-features;' addNewListItem={addFeature} isModifyDisabled>
+    <BoxWithList label='Features' gridClass='bkg-features' addNewListItem={addFeature} isModifyDisabled>
         <div class="box-list" slot='list'>
             {#each characterParts.bio.features as feature, index}
                 <SimpleAccordionDetail 
@@ -115,28 +115,28 @@
 
     <BioTextareaBox 
         bind:charAttribute={characterParts.bio.personality} 
-        inlineStyle="grid-area: bkg-personality;"
+        gridClass="bkg-personality"
         label="Personality Traits" 
         socketModifyEnabled={false}>
     </BioTextareaBox>
 
     <BioTextareaBox 
         bind:charAttribute={characterParts.bio.ideals} 
-        inlineStyle="grid-area: bkg-ideals;"
+        gridClass="bkg-ideals"
         label="Ideals" 
         socketModifyEnabled={false}>
     </BioTextareaBox>
 
     <BioTextareaBox 
         bind:charAttribute={characterParts.bio.bonds} 
-        inlineStyle="grid-area: bkg-bonds;"
+        gridClass="bkg-bonds"
         label="Bonds" 
         socketModifyEnabled={false}>
     </BioTextareaBox>
 
     <BioTextareaBox 
         bind:charAttribute={characterParts.bio.flaws} 
-        inlineStyle="grid-area: bkg-flaws;"
+        gridClass="bkg-flaws"
         label="Flaws" 
         socketModifyEnabled={false}>
     </BioTextareaBox>

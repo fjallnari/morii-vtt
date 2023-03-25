@@ -139,15 +139,13 @@
 
     <BioTextareaBox 
         bind:charAttribute={characterParts.bio.backstory} 
-        inlineStyle="grid-area: backstory;"
-        label="Backstory" 
+        gridClass="backstory"
         socketModifyEnabled={false}>
     </BioTextareaBox>
 
     <BioTextareaBox 
         bind:charAttribute={characterParts.bio.appearance} 
-        inlineStyle="grid-area: appearance;"
-        label="Appearance" 
+        gridClass="appearance"
         socketModifyEnabled={false}>
     </BioTextareaBox>
 

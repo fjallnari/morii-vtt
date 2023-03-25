@@ -6,17 +6,12 @@
     import type ItemShadowdark from "../../../../interfaces/Shadowdark/ItemShadowdark";
     import { modifyCharacter, sendSkillCheck } from "../../../../stores";
     import { convertValueToASMod } from "../../../../util/util";
-    import BioTextareaBox from "../../../BioTextareaBox.svelte";
-    import BoxWithChips from "../../../BoxWithChips.svelte";
     import BoxWithList from "../../../BoxWithList.svelte";
-    import BoxWithMax from "../../../BoxWithMax.svelte";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import InPlaceEditBox from "../../../InPlaceEditBox.svelte";
     import RowBoxWithLabel from "../../../RowBoxWithLabel.svelte";
-    import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
     import Armor from "../Components/Armor.svelte";
     import CharSheetMenu from "../Components/CharSheetMenu.svelte";
-    import Coins from "../Components/Coins.svelte";
     import HpBox from "../Components/HpBox.svelte";
     import AbilityScoreWithModBasic from "./AbilityScoreWithModBasic.svelte";
     import AttackDetailShadowdark from "./AttackDetailShadowdark.svelte";

@@ -51,7 +51,7 @@
 </script>
 
 <div class="spells-container">
-    <BoxWithList label='Spells' inlineStyle='grid-area: spells;' addNewListItem={() => addSpell()}>
+    <BoxWithList label='Spells' gridClass='spells' addNewListItem={() => addSpell()}>
         <div class="filter-menu" slot='filter-menu'>
             {#each [{ name: 'FILTER_OFF', icon: 'mdi:filter-off' }, ...SPELL_TIERS] as profType, index}
                 <sendable class="spell-type-icon"

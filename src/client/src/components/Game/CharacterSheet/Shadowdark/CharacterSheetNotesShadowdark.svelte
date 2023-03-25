@@ -11,10 +11,10 @@
     <div class="rules">
 
     </div>
-    <BioTextareaBox bind:charAttribute={character.notes} label='Notes' inlineStyle='grid-area: notes;'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.foes} label='Foes' inlineStyle='grid-area: foes;'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.allies} label='Allies' inlineStyle='grid-area: allies;'></BioTextareaBox>
-    <BioTextareaBox bind:charAttribute={character.shinies} label='Shinies' inlineStyle='grid-area: shinies;'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.notes} gridClass='notes'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.foes} gridClass='foes'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.allies} gridClass='allies'></BioTextareaBox>
+    <BioTextareaBox bind:charAttribute={character.shinies} gridClass='shinies'></BioTextareaBox>
     <CharacterSheetMenu></CharacterSheetMenu>
 </tab-container>
 

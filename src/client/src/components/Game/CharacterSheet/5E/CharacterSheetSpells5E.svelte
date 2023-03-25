@@ -47,20 +47,28 @@
 <tab-container>
     <Spellcasting bind:character={character} addNewSpell={addNewSpell}></Spellcasting>
     {#each spellGridClasses as spellGridClass, spellLevel}
-        <div class= "main-spell-box {spellGridClass}">
+        <div class= "main-spell-box" style="grid-area: {spellGridClass};">
             {#if spellLevel !== 0}
                 <div class="spell-slots">
-                    <InPlaceEditBox bind:value={character.spells_by_level[spellLevel].slots_total} boxLabel={'Slots Total'} 
+                    <InPlaceEditBox bind:value={character.spells_by_level[spellLevel].slots_total}
+                        boxLabel="Slots Total"
                         inlineStyle="margin-top: 0.5em;"
-                        editWidth="2em" editHeight="2em">
-                    </InPlaceEditBox>
-                    <InPlaceEditBox bind:value={character.spells_by_level[spellLevel].slots_current} boxLabel={'Current'} 
+                        editWidth="2em"
+                        editHeight="2em"
+                    />
+                    <InPlaceEditBox bind:value={character.spells_by_level[spellLevel].slots_current}
+                        boxLabel="Current"
                         inlineStyle="margin-bottom: 0.5em;"
-                        editWidth="2em" editHeight="2em">
-                    </InPlaceEditBox>
+                        editWidth="2em"
+                        editHeight="2em"
+                    />
                 </div>
             {/if}
-            <BoxWithList label={spellGridClass.split('-').join(' ')} styleClass={spellLevel === 0 ? '' : 'spell-box-with-slots'} addNewListItem={() => addNewSpell(spellLevel)}>
+            <BoxWithList 
+                label={spellGridClass.split('-').join(' ')}
+                styleClass={spellLevel === 0 ? '' : 'spell-box-with-slots'} 
+                addNewListItem={() => addNewSpell(spellLevel)}
+            >
                 <div class="spell-list" slot='list'>
                     {#each character.spells_by_level[spellLevel].spells as spell}
                         <SpellDetail bind:spell={spell} bind:character={character} deleteSpellFce={() => deleteSpell(spell)}></SpellDetail>
@@ -69,15 +77,17 @@
             </BoxWithList>
         </div>
     {/each}
-    <CharacterSheetMenu></CharacterSheetMenu>
+    <CharacterSheetMenu />
 </tab-container>
 
 <style>
     tab-container {
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        grid-template-rows: 1.25fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-        gap: 0.5em 0.5em; 
+        grid-template-rows: 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+        gap: 0.5em 0.5em;
+        box-sizing: border-box;
+        padding: 0.75em;
         grid-template-areas: 
             "cantrips cantrips cantrips spellcasting spellcasting spellcasting level-6 level-6 level-6"
             "cantrips cantrips cantrips level-3 level-3 level-3 level-6 level-6 level-6"
@@ -91,10 +101,6 @@
             "level-2 level-2 level-2 level-5 level-5 level-5 level-9 level-9 level-9"
             "level-2 level-2 level-2 level-5 level-5 level-5 level-9 level-9 level-9"
             "level-2 level-2 level-2 char-sheet-menu char-sheet-menu char-sheet-menu level-9 level-9 level-9";
-    }
-
-    .box-with-label {
-        height: auto;
     }
 
     .main-spell-box {
@@ -124,7 +130,7 @@
         height: 85%;
     }
 
-    .spell-slots :global(box) {
+    :global(.spell-slots box) {
         width: 3.5em;
         height: 1em;
         margin-right: 2em;
@@ -132,50 +138,8 @@
         border-bottom-right-radius: 0;
     }
 
-    .spell-slots :global(.box-main-text) {
+    :global(.spell-slots .box-main-text) {
         font-size: 1.2em;
-    }
-
-    :global(.spellcasting-container) { grid-area: spellcasting; 
-        margin-top: var(--outer-edge-margin);
-    }
-
-    :global(.cantrips) { grid-area: cantrips; 
-        margin: var(--outer-edge-margin) 0em 0em var(--outer-edge-margin);
-    }
-
-    :global(.level-1) { grid-area: level-1; 
-        margin-left: var(--outer-edge-margin);
-    }
-
-    :global(.level-2) { grid-area: level-2; 
-        margin: 0em 0em 0.5em var(--outer-edge-margin);
-    }
-
-    :global(.level-3) { grid-area: level-3; }
-
-    :global(.level-4) { grid-area: level-4; }
-
-    :global(.level-5) { grid-area: level-5; }
-
-    :global(.level-6) { grid-area: level-6; 
-        margin: var(--outer-edge-margin) var(--outer-edge-margin) 0em 0em;
-    }
-
-    :global(.level-7) { grid-area: level-7; 
-        margin-right: var(--outer-edge-margin);
-    }
-
-    :global(.level-8) { grid-area: level-8; 
-        margin-right: var(--outer-edge-margin);
-    }
-
-    :global(.level-9) { grid-area: level-9; 
-        margin: 0em var(--outer-edge-margin) 0.5em 0em;
-    }
-
-    :global(.tab-switch-container) {
-        padding-top: 0.75em;
     }
 
     ::-webkit-scrollbar {

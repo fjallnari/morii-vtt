@@ -84,7 +84,7 @@
     </div>
 
     {#if selectedClass}
-        <BoxWithList label='Features' inlineStyle='grid-area: features;' addNewListItem={addFeature} isModifyDisabled>
+        <BoxWithList label='Features' gridClass='features' addNewListItem={addFeature} isModifyDisabled>
             <div class='level-slider' slot='filter-menu'>
                 <SimpleSlider bind:value={selectedClass.level}></SimpleSlider>
                 <div class="box-label level-slider-label">Level: {int2roman(selectedClass.level)}</div>          
@@ -109,7 +109,7 @@
         {#if selectedClass.name !== 'Custom'}
             <QCreateEquipment bind:selectedClass={selectedClass}></QCreateEquipment>
         {:else}
-            <BoxWithList label='Equipment' inlineStyle='grid-area: equipment;' addNewListItem={addItem} isModifyDisabled>
+            <BoxWithList label='Equipment' gridClass='equipment' addNewListItem={addItem} isModifyDisabled>
                 <div class="box-list" slot='list'>
                     {#each characterParts.class.equipment[0].final as item, index}
                         <SimpleAccordionDetail 

@@ -331,9 +331,9 @@
             </div>
         </box>
 
-        <BoxWithList label='Feats' inlineStyle='grid-area: feats;' addNewListItem={addFeat} isModifyDisabled>
+        <BoxWithList label='Feats' gridClass='feats' addNewListItem={addFeat} isModifyDisabled>
             <div class="feats-list" slot='list'>
-                {#each genInfo.feats as feat, index}
+                {#each genInfo.feats as feat}
                     <SimpleAccordionDetail 
                         bind:value={feat.name} 
                         bind:content={feat.content}

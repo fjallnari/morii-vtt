@@ -3,6 +3,7 @@ import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mongo";
 import { CAIRN_DATA } from "../../../enum/cairn/CAIRN_DATA";
 import { MONSTERS_CAIRN } from "../../../enum/cairn/MONSTERS_CAIRN";
+import SPELLS_SD from "../../../enum/shadowdark/SPELLS_SD";
 import { MONSTERS } from "../../../enum/srd/MONSTERS";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
@@ -15,7 +16,8 @@ export default class GetGameController extends RouteController {
 
     private SYSTEM_SPECIFIC_DATA: Record<string, (campaignInfo: Campaign) => Promise<object>> = {
         "D&D 5E": this.get5ESpecificData,
-        "Cairn": this.getCairnSpecificData
+        "Cairn": this.getCairnSpecificData,
+        "Shadowdark": this.getShadowdarkSpecificData
     }
 
 
@@ -58,6 +60,12 @@ export default class GetGameController extends RouteController {
             }
         };
     }
+
+    private async getShadowdarkSpecificData(campaignInfo: Campaign) {
+        return {
+            spells: SPELLS_SD
+        }
+    }
     
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {
         const campaignsCollection = <Collection<Document>> await getCollection('campaigns');
@@ -82,7 +90,7 @@ export default class GetGameController extends RouteController {
         const cleanNpcs = npcsObj.map(npc => Object.assign(npc, {_id: npc._id.toString(), id: npc._id.toString(), playerID: npc.playerID.toString()}));
 
         const specificSystemData = this.SYSTEM_SPECIFIC_DATA[campaignInfo.system] ? await this.SYSTEM_SPECIFIC_DATA[campaignInfo.system](campaignInfo) : {};
-
+        
         return {
             id: campaignInfo._id,
             owner: campaignInfo.owner.toString(),

@@ -12,6 +12,7 @@
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
     import AddShadowdarkSrdSpell from "./AddShadowdarkSRDSpell.svelte";
+    import SpellInnerShadowdark from "./SpellInnerShadowdark.svelte";
 
     export let character: CharacterShadowdark;
     let currentFilter = 0;
@@ -77,16 +78,19 @@
             <div class="spell-list" slot='list'>
                 {#each character.spells.filter( spell => isSelectedTier(currentFilter, spell.tier)) as spell}
                     <SimpleAccordionDetail
-                        bind:value={spell.name} 
-                        bind:content={spell.description}
+                        bind:value={spell.name}
                         icon={SPELL_TIERS[spell.tier]?.icon}
                         editWidth='10rem'
-                        textareaHeight='7.5rem'
                         padding='0.3em 0em'
                         iconClass='big-icon'
+                        useCustomComponent
                         deleteItem={() => deleteSpell(spell)}
                         onSubmitFn={() => $modifyCharacter()}
-                    />
+                    >
+                        <span slot="custom-component" class="spell-details">
+                            <SpellInnerShadowdark bind:spell={spell} deleteSpell={deleteSpell}></SpellInnerShadowdark>
+                        </span>
+                    </SimpleAccordionDetail>
                 {/each}
             </div>
         </BoxWithList>

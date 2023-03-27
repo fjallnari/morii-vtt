@@ -10,8 +10,6 @@
     export let isModifyDisabled: boolean = false;
     export let noCrud: boolean = false;
 
-    $: console.log(gridClass);
-
 </script>
 
 <box class="inside-box-content {styleClass}" style={`grid-area: ${gridClass}; ${inlineStyle}`}>

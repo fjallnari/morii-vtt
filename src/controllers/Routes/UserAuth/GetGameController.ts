@@ -3,6 +3,7 @@ import { Collection, Document, ObjectId } from "mongodb";
 import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mongo";
 import { CAIRN_DATA } from "../../../enum/cairn/CAIRN_DATA";
 import { MONSTERS_CAIRN } from "../../../enum/cairn/MONSTERS_CAIRN";
+import SPELLS_SD from "../../../enum/shadowdark/SPELLS_SD";
 import { MONSTERS } from "../../../enum/srd/MONSTERS";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
@@ -15,7 +16,8 @@ export default class GetGameController extends RouteController {
 
     private SYSTEM_SPECIFIC_DATA: Record<string, (campaignInfo: Campaign) => Promise<object>> = {
         "D&D 5E": this.get5ESpecificData,
-        "Cairn": this.getCairnSpecificData
+        "Cairn": this.getCairnSpecificData,
+        "Shadowdark": this.getShadowdarkSpecificData
     }
 
 
@@ -57,6 +59,14 @@ export default class GetGameController extends RouteController {
                 ... CAIRN_DATA
             }
         };
+    }
+
+    private async getShadowdarkSpecificData(campaignInfo: Campaign) {
+        return {
+            shadowdark: {
+                spells: SPELLS_SD
+            }
+        }
     }
     
     private async getGameData(campaignID: ObjectId, userID: ObjectId) {

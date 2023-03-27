@@ -235,7 +235,7 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        z-index: 10;
+        z-index: 5;
     }
 
     .slots { grid-area: slots;

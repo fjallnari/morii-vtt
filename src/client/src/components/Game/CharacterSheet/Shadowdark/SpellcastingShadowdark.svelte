@@ -10,9 +10,12 @@
     import { formatModifier, modifyCharacter, sendSkillCheck } from "../../../../stores";
     import ABILITY_TAGS from "../../../../enum/AbilityTags";
     import InPlaceEdit from "../../../InPlaceEdit.svelte";
+    import SimpleButton from "../../../SimpleButton.svelte";
+    import AddShadowdarkSrdSpell from "./AddShadowdarkSRDSpell.svelte";
 
     export let character: CharacterShadowdark;
     let currentFilter = 0;
+    let createMenuEnabled: boolean = character?.spells?.length === 0 ? true : false;
 
     const SPELL_TIERS = [
         { name: 'I', icon: 'mdi:roman-numeral-1' },
@@ -22,7 +25,7 @@
         { name: 'V', icon: 'mdi:roman-numeral-5' },
     ];
 
-    const addSpell = () => {
+    const addSpell = (spellTemplate: object = {}) => {
         const spellSkeleton: SpellShadowdark = {
             id: nanoid(12),
             name: '',
@@ -32,7 +35,9 @@
             duration: ''
         }
 
-        character.spells = character.spells.concat([spellSkeleton]);
+        character.spells = character.spells.concat([Object.assign(spellSkeleton, spellTemplate)]);
+        createMenuEnabled = false;
+        $modifyCharacter();
     }
 
     const deleteSpell = (spellToDelete: SpellShadowdark) => {
@@ -45,38 +50,47 @@
     }
 
     $: spellAttackBonus = convertValueToASMod(character?.ability_scores[character?.spell_ability]?.value);
-
     $: normalizedLevel = ~~character.level - 1 > 9 ? 9 : ~~character.level - 1 < 0 ? 0 : ~~character.level - 1;
+    $: displaySpellTier = currentFilter === 0 ? 1 : currentFilter;
 
 </script>
 
 <div class="spells-container">
-    <BoxWithList label='Spells' gridClass='spells' addNewListItem={() => addSpell()}>
-        <div class="filter-menu" slot='filter-menu'>
-            {#each [{ name: 'FILTER_OFF', icon: 'mdi:filter-off' }, ...SPELL_TIERS] as profType, index}
-                <sendable class="spell-type-icon"
-                    on:click={() => currentFilter = index } selected={currentFilter === index} on:keyup={() => {}}
-                >
-                    <Icon class={`${index === 0 ? 'medi': 'big'}-icon`} icon={profType.icon} />
-                </sendable>
-            {/each}
-        </div>   
-        <div class="spell-list" slot='list'>
-            {#each character.spells.filter( spell => isSelectedTier(currentFilter, spell.tier)) as spell}
-                <SimpleAccordionDetail
-                    bind:value={spell.name} 
-                    bind:content={spell.description}
-                    icon={SPELL_TIERS[spell.tier]?.icon}
-                    editWidth='10rem'
-                    textareaHeight='7.5rem'
-                    padding='0.3em 0em'
-                    iconClass='big-icon'
-                    deleteItem={() => deleteSpell(spell)}
-                    onSubmitFn={() => $modifyCharacter()}
-                />
-            {/each}
+    {#if createMenuEnabled}
+        <div class="add-sd-spell-container">
+            <h3>Spells</h3>
+            <SimpleButton value={`Create New (Tier ${displaySpellTier})`} type="green" icon="mdi:shape-plus" onClickFn={addSpell}></SimpleButton>
+            <AddShadowdarkSrdSpell addSpell={addSpell}></AddShadowdarkSrdSpell>
+            <SimpleButton value='' icon="mdi:close" onClickFn={() => createMenuEnabled = false}></SimpleButton>
         </div>
-    </BoxWithList>
+    {:else}
+        <BoxWithList label='Spells' gridClass='spells' addNewListItem={() => createMenuEnabled = true}>
+            <div class="filter-menu" slot='filter-menu'>
+                {#each [{ name: 'FILTER_OFF', icon: 'mdi:filter-off' }, ...SPELL_TIERS] as profType, index}
+                    <sendable class="spell-type-icon"
+                        on:click={() => currentFilter = index } selected={currentFilter === index} on:keyup={() => {}}
+                    >
+                        <Icon class={`${index === 0 ? 'medi': 'big'}-icon`} icon={profType.icon} />
+                    </sendable>
+                {/each}
+            </div>   
+            <div class="spell-list" slot='list'>
+                {#each character.spells.filter( spell => isSelectedTier(currentFilter, spell.tier)) as spell}
+                    <SimpleAccordionDetail
+                        bind:value={spell.name} 
+                        bind:content={spell.description}
+                        icon={SPELL_TIERS[spell.tier]?.icon}
+                        editWidth='10rem'
+                        textareaHeight='7.5rem'
+                        padding='0.3em 0em'
+                        iconClass='big-icon'
+                        deleteItem={() => deleteSpell(spell)}
+                        onSubmitFn={() => $modifyCharacter()}
+                    />
+                {/each}
+            </div>
+        </BoxWithList>
+    {/if}
 
     <box class="spell-ability">
         <select class="box-main-text bigger" bind:value={character.spell_ability} on:change={() => $modifyCharacter()}>
@@ -142,6 +156,28 @@
             "spells spell-ability"
             "spells spell-mod"
             "spells spells-known";
+    }
+
+    .add-sd-spell-container { grid-area: spells;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-self: center;
+        gap: 0.5em;
+        width: 95%;
+        height: 100%;
+    }
+
+    .add-sd-spell-container h3 {
+        font-size: 1.5em;
+        font-family: Quicksand;
+        font-weight: 100;
+        text-transform: uppercase;
+    }
+
+    :global(.add-sd-spell-container simple-button) {
+        padding: 0.4em 0em;
+        font-size: 1.2em;
     }
 
     .spell-ability { grid-area: spell-ability; }

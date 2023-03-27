@@ -63,7 +63,9 @@ export default class GetGameController extends RouteController {
 
     private async getShadowdarkSpecificData(campaignInfo: Campaign) {
         return {
-            spells: SPELLS_SD
+            shadowdark: {
+                spells: SPELLS_SD
+            }
         }
     }
     
@@ -90,7 +92,7 @@ export default class GetGameController extends RouteController {
         const cleanNpcs = npcsObj.map(npc => Object.assign(npc, {_id: npc._id.toString(), id: npc._id.toString(), playerID: npc.playerID.toString()}));
 
         const specificSystemData = this.SYSTEM_SPECIFIC_DATA[campaignInfo.system] ? await this.SYSTEM_SPECIFIC_DATA[campaignInfo.system](campaignInfo) : {};
-        
+
         return {
             id: campaignInfo._id,
             owner: campaignInfo.owner.toString(),

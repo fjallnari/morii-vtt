@@ -130,6 +130,8 @@
         <SimpleButton 
             value='' 
             customIcon='spell-add'
+            iconWidth='50%'
+            iconHeight='50%'
             type='primary' 
             onClickFn={() => { newSpellDialogOpen = true } }>
         </SimpleButton>

@@ -53,9 +53,9 @@
     {#if icon && !customIcon}
         <Icon class={iconClass} icon={icon} width={iconWidth} height={iconHeight} />
     {:else if customIcon}
-        <div class="custom-icon">
+        <custom-icon style="width: {iconWidth}; height: {iconHeight};">
             {@html `${CUSTOM_ICONS[customIcon ?? 'skull-scan']}`}
-        </div>
+        </custom-icon>
     {/if}
     {value}
 </simple-button>
@@ -99,9 +99,7 @@
         opacity: 0.4;
     }
 
-    .custom-icon {
-        height: 50%;
-        width: 50%;
+    custom-icon {
         fill: var(--clr-text);
     }
 

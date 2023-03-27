@@ -5,6 +5,7 @@ import type MonsterSimple from "./5E/MonsterSimple";
 import type CharacterAny from "./CharacterAny";
 import type CairnData from "./Cairn/CairnData";
 import type Invite from "./Invite";
+import type { SpellShadowdark } from "./Shadowdark/SpellShadowdark";
 
 export default interface GameData {
     _id: string;
@@ -18,5 +19,8 @@ export default interface GameData {
     monsters?: MonsterData[];
     monsters_SRD?: MonsterSimple[]; 
     initiative?: InitiativeData;
-    cairn?: CairnData
+    cairn?: CairnData,
+    shadowdark?: {
+        spells: SpellShadowdark[]
+    }
 }

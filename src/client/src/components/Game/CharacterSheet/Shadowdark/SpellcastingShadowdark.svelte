@@ -1,8 +1,7 @@
 <script lang="ts">
     import BoxWithList from "../../../BoxWithList.svelte";
-    import { tooltip } from "@svelte-plugins/tooltips";
     import type { CharacterShadowdark } from "../../../../interfaces/Shadowdark/CharacterShadowdark";
-    import { capitalize, convertValueToASMod } from "../../../../util/util";
+    import { convertValueToASMod } from "../../../../util/util";
     import Icon from "@iconify/svelte";
     import SimpleAccordionDetail from "../../SimpleAccordionDetail.svelte";
     import type { SpellShadowdark } from "../../../../interfaces/Shadowdark/SpellShadowdark";
@@ -16,7 +15,7 @@
 
     export let character: CharacterShadowdark;
     let currentFilter = 0;
-    let createMenuEnabled: boolean = character?.spells?.length === 0 ? true : false;
+    let createMenuEnabled: boolean = false;
 
     const SPELL_TIERS = [
         { name: 'I', icon: 'mdi:roman-numeral-1' },

@@ -26,7 +26,7 @@
         { name: 'V', icon: 'mdi:roman-numeral-5' },
     ];
 
-    const addSpell = (spellTemplate: object = {}) => {
+    const addSpell = (spellTemplate: object = {}, closeCreateMenu: boolean = true) => {
         const spellSkeleton: SpellShadowdark = {
             id: nanoid(12),
             name: '',
@@ -36,8 +36,10 @@
             duration: ''
         }
 
-        character.spells = character.spells.concat([Object.assign(spellSkeleton, spellTemplate)]);
-        createMenuEnabled = false;
+        character.spells = character.spells.concat([Object.assign(spellSkeleton, spellTemplate ?? {})]);
+        if (closeCreateMenu) {
+            createMenuEnabled = false;
+        }
         $modifyCharacter();
     }
 
@@ -61,7 +63,7 @@
         <div class="add-sd-spell-container">
             <h3>Spells</h3>
             <SimpleButton value={`Create New (Tier ${displaySpellTier})`} type="green" icon="mdi:shape-plus" onClickFn={addSpell}></SimpleButton>
-            <AddShadowdarkSrdSpell addSpell={addSpell}></AddShadowdarkSrdSpell>
+            <AddShadowdarkSrdSpell addSpell={addSpell} bind:createMenuEnabled></AddShadowdarkSrdSpell>
             <SimpleButton value='' icon="mdi:close" onClickFn={() => createMenuEnabled = false}></SimpleButton>
         </div>
     {:else}

@@ -4,13 +4,17 @@
     import type { SpellShadowdark } from "../../../../interfaces/Shadowdark/SpellShadowdark";
     import { user } from "../../../../stores";
     import SimpleButton from "../../../SimpleButton.svelte";
+    import SimpleSnackbar from "../../../SimpleSnackbar.svelte";
     import MarkdownBoxText from "../../MarkdownBoxText.svelte";
     import ClassFilterMenu from "./ClassFilterMenu.svelte";
 
-    export let addSpell: (spellTemplate?: object) => void;
+    export let addSpell: (spellTemplate?: Partial<SpellShadowdark>, closeCreateMenu?: boolean) => void;
+    export let createMenuEnabled: boolean;
 
     let newSpellDialogOpen: boolean = false;
     let newSRDSpell: SpellShadowdark = null;
+    let statusSnackbar: SimpleSnackbar;
+    let lastAddedSpellName = "";
 
     const getMarkdownSpell = (spell: SpellShadowdark) => {
         if (!spell) return '';
@@ -21,6 +25,19 @@
             \n**Duration:** ${spell.duration}
             \n**Range:** ${spell.range}
             \n${spell.description}`;
+    }
+
+    const addSRDSpell = (spell: SpellShadowdark) => {
+        if (!spell) return;
+
+        addSpell(spell, false);
+        lastAddedSpellName = spell.name;
+        statusSnackbar.open();
+    }
+
+    const closeSpellDialog = () => {
+        createMenuEnabled = false;
+        newSpellDialogOpen = false;
     }
 
     let classFilter = 0;
@@ -41,7 +58,7 @@
     <Dialog
         bind:open={newSpellDialogOpen}
         surface$style="padding: 1em 2em; height: 35em; width: 30em;"
-        >
+    >
         <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
         <div class="new-spell-dialog">
             <div class="sd-title">
@@ -75,7 +92,7 @@
                     icon='mdi:close' 
                     iconClass="big-icon" 
                     type='default' 
-                    onClickFn={() => newSpellDialogOpen = false}
+                    onClickFn={() => closeSpellDialog()}
                 />
                 <SimpleButton 
                     value='Add spell' 
@@ -83,12 +100,14 @@
                     iconWidth='1.5em'
                     iconHeight='1.5em'
                     type='primary'  
-                    onClickFn={() => addSpell(newSRDSpell ?? {})}
+                    onClickFn={() => addSRDSpell(newSRDSpell)}
                 />
             </div>
         </div>
     </Dialog>
 </div>
+
+<SimpleSnackbar bind:this={statusSnackbar} label="Succesfully added '{lastAddedSpellName}' to your spells."></SimpleSnackbar>
 
 <style>
     .new-spell-dialog {

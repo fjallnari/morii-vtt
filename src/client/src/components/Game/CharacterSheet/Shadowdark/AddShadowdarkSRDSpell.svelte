@@ -1,10 +1,8 @@
 <script lang="ts">
     import Dialog from "@smui/dialog/src/Dialog.svelte";
     import Svelecte from "svelecte/src/Svelecte.svelte";
-    import SvelteMarkdown from "svelte-markdown";
     import type { SpellShadowdark } from "../../../../interfaces/Shadowdark/SpellShadowdark";
     import { user } from "../../../../stores";
-    import HtmlRendererOverride from "../../../HTMLRendererOverride.svelte";
     import SimpleButton from "../../../SimpleButton.svelte";
     import MarkdownBoxText from "../../MarkdownBoxText.svelte";
     import ClassFilterMenu from "./ClassFilterMenu.svelte";

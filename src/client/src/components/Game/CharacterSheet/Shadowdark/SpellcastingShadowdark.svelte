@@ -30,7 +30,7 @@
         const spellSkeleton: SpellShadowdark = {
             id: nanoid(12),
             name: '',
-            tier: currentFilter === 0 ? 0 : currentFilter - 1,
+            tier: currentFilter === 0 ? 1 : currentFilter,
             description: '',
             range: '',
             duration: ''
@@ -46,8 +46,8 @@
         $modifyCharacter();
     }
 
-    const isSelectedTier = (filteredTier: number, profType: number) => {
-        return filteredTier === 0 ? true : profType === filteredTier - 1;
+    const isSelectedTier = (filteredTier: number, spellTier: number) => {
+        return filteredTier === 0 ? true : spellTier === filteredTier;
     }
 
     $: spellAttackBonus = convertValueToASMod(character?.ability_scores[character?.spell_ability]?.value);
@@ -67,19 +67,19 @@
     {:else}
         <BoxWithList label='Spells' gridClass='spells' addNewListItem={() => createMenuEnabled = true}>
             <div class="filter-menu" slot='filter-menu'>
-                {#each [{ name: 'FILTER_OFF', icon: 'mdi:filter-off' }, ...SPELL_TIERS] as profType, index}
+                {#each [{ name: 'FILTER_OFF', icon: 'mdi:filter-off' }, ...SPELL_TIERS] as tierFilter, index}
                     <sendable class="spell-type-icon"
                         on:click={() => currentFilter = index } selected={currentFilter === index} on:keyup={() => {}}
                     >
-                        <Icon class={`${index === 0 ? 'medi': 'big'}-icon`} icon={profType.icon} />
+                        <Icon class={`${index === 0 ? 'medi': 'big'}-icon`} icon={tierFilter.icon} />
                     </sendable>
                 {/each}
-            </div>   
+            </div>
             <div class="spell-list" slot='list'>
                 {#each character.spells.filter( spell => isSelectedTier(currentFilter, spell.tier)) as spell}
                     <SimpleAccordionDetail
                         bind:value={spell.name}
-                        icon={SPELL_TIERS[spell.tier]?.icon}
+                        icon={SPELL_TIERS[spell.tier - 1]?.icon}
                         editWidth='10rem'
                         padding='0.3em 0em'
                         iconClass='big-icon'

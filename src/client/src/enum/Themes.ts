@@ -15,6 +15,14 @@ export const BG_THEMES = {
 		"--clr-box-bg-lighter": "#3A4747",
 		"--clr-text": "#FAF6EF",
     },
+    "purple": {
+        "--clr-bg": "#271A3C",
+		"--clr-box-bg-dark": "#2B1D42",
+		"--clr-box-bg-normal": "#332244",
+		"--clr-box-bg-light": "#3B2645",
+		"--clr-box-bg-lighter": "#432B47",
+		"--clr-text": "#FCECCB",
+    },
     // "mocha": {
     //     "--clr-bg": "#725E51",
 	// 	"--clr-box-bg-dark": "#8E7A6E",
@@ -48,6 +56,7 @@ export const BG_WAVES = {
     "auburn": '../static/bg/waves-auburn.svg',
     "viridian": '../static/bg/waves-viridian.svg',
     "sea": '../static/bg/waves-sea.svg',
+    "purple": '../static/bg/waves-purple.svg',
     // "mocha": '../static/bg/waves-mocha.svg',
     // "silver": '../static/bg/waves-silver.svg'
 }
@@ -86,17 +95,17 @@ export const THEMES = [
         "--bg-waves": `url(${BG_WAVES["cyan"]})`,
         ... BG_THEMES["default"]
     },
-    {
-        "id": "salmon",
-        "name": "autumn leaves",
-        "--clr-accent-light": "#FCC8B2",
-        "--clr-accent-normal": "#EFA48B",
-        "--clr-accent-dark": "#E9805D",
-        "--clr-accent-darker": "#875343",
-        "--clr-accent-muted": "#E9805D29",
-        "--bg-waves": `url(${BG_WAVES["salmon"]})`,
-        ... BG_THEMES["default"]
-    },
+    // {
+    //     "id": "salmon",
+    //     "name": "autumn leaves",
+    //     "--clr-accent-light": "#FCC8B2",
+    //     "--clr-accent-normal": "#EFA48B",
+    //     "--clr-accent-dark": "#E9805D",
+    //     "--clr-accent-darker": "#875343",
+    //     "--clr-accent-muted": "#E9805D29",
+    //     "--bg-waves": `url(${BG_WAVES["salmon"]})`,
+    //     ... BG_THEMES["default"]
+    // },
     {
         "id": "auburn",
         "name": "sunset",
@@ -118,6 +127,17 @@ export const THEMES = [
         "--clr-accent-muted": "#417D7129",
         "--bg-waves": `url(${BG_WAVES["sea"]})`,
         ... BG_THEMES["sea"]
+    },
+    {
+        "id": "purple",
+        "name": "purple haze",
+        "--clr-accent-light": "#C17B6C",
+        "--clr-accent-normal": "#A85C5C",
+        "--clr-accent-dark": "#9C4D54",
+        "--clr-accent-darker": "#8F3D4B",
+        "--clr-accent-muted": "#9C4D5429",
+        "--bg-waves": `url(${BG_WAVES["purple"]})`,
+        ... BG_THEMES["purple"]
     },
 
     // {

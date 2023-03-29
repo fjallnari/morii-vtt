@@ -19,11 +19,8 @@
       "type": "object"
     },
     "CharacterCairn": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
-        "_id": {
-          "type": "string"
-        },
         "ability_scores": {
           "additionalProperties": {
             "$ref": "#/definitions/AbilityScoreCairn"
@@ -101,31 +98,7 @@
         "inventory",
         "name",
         "notes",
-        "slots",
-        "system"
-      ],
-      "type": "object"
-    },
-    "CharacterGeneric": {
-      "additionalProperties": false,
-      "properties": {
-        "_id": {
-          "type": "string"
-        },
-        "classes": {
-          "type": "string"
-        },
-        "playerID": {
-          "type": "string"
-        },
-        "system": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "_id",
-        "playerID",
-        "system"
+        "slots"
       ],
       "type": "object"
     },

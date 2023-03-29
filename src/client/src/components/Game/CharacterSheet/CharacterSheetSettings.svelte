@@ -46,7 +46,7 @@
     }
 
     const exportToJSON = () => {
-        const characterNoIDs = (({ _id, playerID, ...other }) => other)(character);
+        const characterNoIDs = (({ _id, id, __order, playerID, ...other }) => other)(character);
         downloadTextFile(JSON.stringify(characterNoIDs, null, 2), `${character.name ? toSnakeCase(character.name) : 'untitled'}_${toSnakeCase(character.system)}.morii.json`);
     }
     

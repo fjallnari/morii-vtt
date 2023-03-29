@@ -3,7 +3,9 @@ export interface CharacterGeneric {
     playerID: string,
     system: string,
     classes?: string,
-    class?: string
+    class?: string,
+    id?: string,
+    __order?: number
 }
 
 export default CharacterGeneric;

@@ -20,6 +20,7 @@ import CharacterSheetCoreShadowdark from "../components/Game/CharacterSheet/Shad
 import CharacterBadgeGeneric from "../components/Game/GameOverview/CharacterBadgeGeneric.svelte";
 import CharacterSheetNotesShadowdark from "../components/Game/CharacterSheet/Shadowdark/CharacterSheetNotesShadowdark.svelte";
 import CharacterBadgeCairn from "../components/Game/GameOverview/Cairn/CharacterBadgeCairn.svelte";
+import ImportJsonSheetShadowdark from "../components/Game/CharacterSheet/Shadowdark/ImportJsonSheetShadowdark.svelte";
 
 
 interface CharacterSheetTab {
@@ -147,7 +148,7 @@ const GAME_SYSTEMS: Record<string, GameSystem> = {
             },
             SETTINGS_TAB
         ],
-        creationOptions: [ CopyExistingSheet ],
+        creationOptions: [ CopyExistingSheet, ImportJsonSheetShadowdark ],
         //innerOverview: InnerOverviewCairn,
         //specificSettings: SpecificSettingsCairn,
         characterBadge: CharacterBadgeGeneric,

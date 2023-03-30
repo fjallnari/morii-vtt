@@ -1,0 +1,184 @@
+{
+  "$ref": "#/definitions/CharacterDarklings",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CharacterDarklings": {
+      "additionalProperties": false,
+      "properties": {
+        "alignment": {
+          "type": "string"
+        },
+        "ancestry": {
+          "type": "string"
+        },
+        "armorClass": {
+          "type": "number"
+        },
+        "background": {
+          "type": "string"
+        },
+        "bonuses": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "bonusAmount": {
+                "type": "number"
+              },
+              "bonusName": {
+                "type": "string"
+              },
+              "bonusTo": {
+                "type": "string"
+              },
+              "gainedAtLevel": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "sourceCategory": {
+                "type": "string"
+              },
+              "sourceName": {
+                "type": "string"
+              },
+              "sourceType": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sourceType",
+              "sourceName",
+              "sourceCategory",
+              "gainedAtLevel",
+              "name",
+              "bonusTo",
+              "bonusName"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "class": {
+          "type": "string"
+        },
+        "copper": {
+          "type": "number"
+        },
+        "deity": {
+          "type": "string"
+        },
+        "gear": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "cost": {
+                "type": "number"
+              },
+              "currency": {
+                "type": "string"
+              },
+              "gearId": {
+                "type": "string"
+              },
+              "instanceId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "slots": {
+                "type": "number"
+              },
+              "totalUnits": {
+                "type": "number"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "instanceId",
+              "gearId",
+              "name",
+              "type",
+              "quantity",
+              "totalUnits",
+              "slots",
+              "cost",
+              "currency"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "gearSlotsTotal": {
+          "type": "number"
+        },
+        "gearSlotsUsed": {
+          "type": "number"
+        },
+        "gold": {
+          "type": "number"
+        },
+        "goldRolled": {
+          "type": "number"
+        },
+        "languages": {
+          "type": "string"
+        },
+        "level": {
+          "type": "number"
+        },
+        "maxHitPoints": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "silver": {
+          "type": "number"
+        },
+        "spellsKnown": {
+          "type": "string"
+        },
+        "stats": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "type": "object"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "stats",
+        "ancestry",
+        "class",
+        "level",
+        "title",
+        "alignment",
+        "background",
+        "deity",
+        "maxHitPoints",
+        "armorClass",
+        "gearSlotsTotal",
+        "gearSlotsUsed",
+        "bonuses",
+        "goldRolled",
+        "gold",
+        "silver",
+        "copper",
+        "gear",
+        "spellsKnown",
+        "languages"
+      ],
+      "type": "object"
+    }
+  }
+}

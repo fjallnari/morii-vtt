@@ -6,6 +6,7 @@ import type CharacterAny from "./CharacterAny";
 import type CairnData from "./Cairn/CairnData";
 import type Invite from "./Invite";
 import type { SpellShadowdark } from "./Shadowdark/SpellShadowdark";
+import type { AttackShadowdark } from "./Shadowdark/AttackShadowdark";
 
 export default interface GameData {
     _id: string;
@@ -21,6 +22,7 @@ export default interface GameData {
     initiative?: InitiativeData;
     cairn?: CairnData,
     shadowdark?: {
-        spells: SpellShadowdark[]
+        spells: SpellShadowdark[],
+        weapons: Omit<AttackShadowdark, "id">[]
     }
 }

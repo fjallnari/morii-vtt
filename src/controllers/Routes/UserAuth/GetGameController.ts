@@ -4,6 +4,7 @@ import { getCollection, getIdsFromCollection, getUserObj } from "../../../db/Mon
 import { CAIRN_DATA } from "../../../enum/cairn/CAIRN_DATA";
 import { MONSTERS_CAIRN } from "../../../enum/cairn/MONSTERS_CAIRN";
 import SPELLS_SD from "../../../enum/shadowdark/SPELLS_SD";
+import WEAPONS_SD from "../../../enum/shadowdark/WEAPONS_SD";
 import { MONSTERS } from "../../../enum/srd/MONSTERS";
 import Campaign from "../../../interfaces/Campaign";
 import Character from "../../../interfaces/Character";
@@ -64,7 +65,8 @@ export default class GetGameController extends RouteController {
     private async getShadowdarkSpecificData(campaignInfo: Campaign) {
         return {
             shadowdark: {
-                spells: SPELLS_SD
+                spells: SPELLS_SD,
+                weapons: WEAPONS_SD
             }
         }
     }

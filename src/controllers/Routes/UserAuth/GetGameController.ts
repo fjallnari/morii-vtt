@@ -12,6 +12,7 @@ import UserDB from "../../../interfaces/UserDB";
 import logger from "../../../logger";
 import { getInviteInfo, simplifyPlayerInfo } from "../../../util/helpers";
 import RouteController from "../RouteController";
+import CLASSES_SD from "../../../enum/shadowdark/CLASSES_SD";
 
 export default class GetGameController extends RouteController {
 
@@ -66,7 +67,8 @@ export default class GetGameController extends RouteController {
         return {
             shadowdark: {
                 spells: SPELLS_SD,
-                weapons: WEAPONS_SD
+                weapons: WEAPONS_SD,
+                classInfo: CLASSES_SD
             }
         }
     }

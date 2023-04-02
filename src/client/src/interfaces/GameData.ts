@@ -7,6 +7,7 @@ import type CairnData from "./Cairn/CairnData";
 import type Invite from "./Invite";
 import type { SpellShadowdark } from "./Shadowdark/SpellShadowdark";
 import type { AttackShadowdark } from "./Shadowdark/AttackShadowdark";
+import type ClassInfoShadowdark from "./Shadowdark/ClassInfoShadowdark";
 
 export default interface GameData {
     _id: string;
@@ -23,6 +24,7 @@ export default interface GameData {
     cairn?: CairnData,
     shadowdark?: {
         spells: SpellShadowdark[],
-        weapons: Omit<AttackShadowdark, "id">[]
+        weapons: Omit<AttackShadowdark, "id">[],
+        classInfo: Record<string, ClassInfoShadowdark>,
     }
 }

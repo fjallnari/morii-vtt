@@ -1,4 +1,4 @@
-interface CharacterDarklingsBonus {
+export interface CharacterDarklingsBonus {
     sourceType: string,
     sourceName: string,
     sourceCategory: string,
@@ -9,7 +9,7 @@ interface CharacterDarklingsBonus {
     bonusAmount: number,
 }
 
-interface CharacterDarklingsItem {
+export interface CharacterDarklingsItem {
     instanceId: string,
     gearId: string,
     name: string,

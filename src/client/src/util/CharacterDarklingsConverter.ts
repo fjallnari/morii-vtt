@@ -93,7 +93,8 @@ export class CharacterDarklingsConverter {
         });
 
         const convertedSpells: SpellShadowdark[] = this.character.spellsKnown.split(',').map(spell => {
-            return this.gameData.shadowdark.spells.find(s => s.name === spell.trim());
+            const convertedSpell =  this.gameData.shadowdark.spells.find(s => s.name === spell.trim());
+            return convertedSpell ? { id: nanoid(16), ...convertedSpell } : null;
         }).filter(s => s);
 
         const convertedAttacks: AttackShadowdark[] = this.character.gear.filter(item => item.type === "weapon").map(item => {

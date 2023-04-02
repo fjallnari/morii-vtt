@@ -22,6 +22,7 @@ Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently su
 - **GM Overview** - Includes basic stats overview of all PCs and separate monsters view with all Cairn SRD monsters
 
 #### Shadowdark
+- **ShadowDarklings Import** - Import characters exported from the [ShadowDarklings creator](https://shadowdarklings.net/).
 - Character sheet is done and available, rest of the features are being worked on - see [issue](https://github.com/fjallnari/morii-vtt/issues/127).
 ---
 

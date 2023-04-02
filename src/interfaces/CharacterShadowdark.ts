@@ -81,7 +81,7 @@ export interface CharacterShadowdark extends CharacterGeneric {
     
     spells: SpellShadowdark[],
     spell_ability: string,
-    spells_known: any,
+    spells_known: string[][],
 
     filled_slots: string,
     total_slots: string,

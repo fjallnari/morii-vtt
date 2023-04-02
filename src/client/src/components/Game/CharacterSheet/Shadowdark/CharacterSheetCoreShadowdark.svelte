@@ -84,6 +84,7 @@
         <InPlaceEditBox bind:value={character.xp} boxLabel="XP" inlineStyle="flex-grow: 1;" editWidth="2em" valueFontSize="1.5em" />
         <InPlaceEditBox bind:value={character.background} boxLabel="Background" inlineStyle="flex-grow: 2;" editWidth="10em" valueFontSize="1.5em" />
         <InPlaceEditBox bind:value={character.title} boxLabel="Title" inlineStyle="flex-grow: 2;" editWidth="5em" valueFontSize="1.5em" />
+        <InPlaceEditBox bind:value={character.deity} boxLabel="Deity" inlineStyle="flex-grow: 2;" editWidth="5em" valueFontSize="1.5em" />
         <InPlaceEditBox bind:value={character.alignment} boxLabel="Alignment" inlineStyle="flex-grow: 1;" editWidth="2em" valueFontSize="1.5em" />
     </div>
 

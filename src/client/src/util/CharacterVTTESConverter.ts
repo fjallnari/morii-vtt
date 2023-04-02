@@ -1,6 +1,7 @@
 import type { Attack, Feature, Item, OtherProf, Spell, Tool } from "../interfaces/5E/Character5E";
 import type { AttributeVTTES, CharacterVTTES } from "../interfaces/5E/Character5EVTTES";
 import { nanoid } from 'nanoid/non-secure';
+import type GameData from "../interfaces/GameData";
 
 /**
  * I mean, it ain't pretty, but it kinda works.
@@ -11,7 +12,7 @@ export class CharacterVTTESConverter {
     characterName: string;
     attributes: AttributeVTTES[];
 
-    constructor(characterVTTES: CharacterVTTES) {
+    constructor(characterVTTES: CharacterVTTES, _: GameData) {
         this.characterName = characterVTTES.character.name;
         this.attributes = characterVTTES.character.attribs;
     }

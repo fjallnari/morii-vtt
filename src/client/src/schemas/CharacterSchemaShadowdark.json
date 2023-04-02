@@ -1,0 +1,340 @@
+{
+  "$ref": "#/definitions/CharacterShadowdark",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AbilityScoreShadowdark": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "AttackShadowdark": {
+      "additionalProperties": false,
+      "properties": {
+        "atk_bonus": {
+          "type": "string"
+        },
+        "damage": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "item_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "properties": {
+          "type": "string"
+        },
+        "range": {
+          "type": "string"
+        },
+        "stat": {
+          "type": "string"
+        },
+        "type": {
+          "type": "number"
+        },
+        "versatile_active": {
+          "type": "boolean"
+        },
+        "versatile_die": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "stat",
+        "atk_bonus",
+        "range",
+        "damage",
+        "properties"
+      ],
+      "type": "object"
+    },
+    "CharacterShadowdark": {
+      "additionalProperties": true,
+      "properties": {
+        "ability_scores": {
+          "additionalProperties": {
+            "$ref": "#/definitions/AbilityScoreShadowdark"
+          },
+          "type": "object"
+        },
+        "ac": {
+          "type": "string"
+        },
+        "alignment": {
+          "type": "string"
+        },
+        "allies": {
+          "type": "string"
+        },
+        "ancestry": {
+          "type": "string"
+        },
+        "attacks": {
+          "items": {
+            "$ref": "#/definitions/AttackShadowdark"
+          },
+          "type": "array"
+        },
+        "background": {
+          "type": "string"
+        },
+        "class": {
+          "type": "string"
+        },
+        "classes": {
+          "type": "string"
+        },
+        "coins": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "death_timer": {
+          "type": "string"
+        },
+        "deity": {
+          "type": "string"
+        },
+        "filled_slots": {
+          "type": "string"
+        },
+        "foes": {
+          "type": "string"
+        },
+        "gear": {
+          "items": {
+            "$ref": "#/definitions/ItemShadowdark"
+          },
+          "type": "array"
+        },
+        "hp": {
+          "type": "string"
+        },
+        "hp_max": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "luck": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "proficiencies": {
+          "items": {
+            "$ref": "#/definitions/ProfShadowdark"
+          },
+          "type": "array"
+        },
+        "shinies": {
+          "type": "string"
+        },
+        "spell_ability": {
+          "type": "string"
+        },
+        "spells": {
+          "items": {
+            "$ref": "#/definitions/SpellShadowdark"
+          },
+          "type": "array"
+        },
+        "spells_known": {},
+        "system": {
+          "type": "string"
+        },
+        "talents": {
+          "items": {
+            "$ref": "#/definitions/TalentShadowdark"
+          },
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        },
+        "total_slots": {
+          "type": "string"
+        },
+        "xp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ability_scores",
+        "ac",
+        "alignment",
+        "allies",
+        "ancestry",
+        "attacks",
+        "background",
+        "class",
+        "coins",
+        "death_timer",
+        "deity",
+        "filled_slots",
+        "foes",
+        "gear",
+        "hp",
+        "hp_max",
+        "level",
+        "luck",
+        "name",
+        "notes",
+        "proficiencies",
+        "shinies",
+        "spell_ability",
+        "spells",
+        "spells_known",
+        "system",
+        "talents",
+        "title",
+        "total_slots",
+        "xp"
+      ],
+      "type": "object"
+    },
+    "ItemShadowdark": {
+      "additionalProperties": false,
+      "properties": {
+        "armor": {
+          "type": "string"
+        },
+        "attack_id": {
+          "type": "string"
+        },
+        "charges": {
+          "type": "string"
+        },
+        "charges_max": {
+          "type": "string"
+        },
+        "damage": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ProfShadowdark": {
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "content"
+      ],
+      "type": "object"
+    },
+    "SpellShadowdark": {
+      "additionalProperties": false,
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "range": {
+          "type": "string"
+        },
+        "tier": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "tier",
+        "range",
+        "duration",
+        "description"
+      ],
+      "type": "object"
+    },
+    "TalentShadowdark": {
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "content"
+      ],
+      "type": "object"
+    }
+  }
+}

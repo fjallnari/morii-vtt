@@ -2,6 +2,7 @@
     import { fileReader } from "../../main";
     import SimpleButton from "../SimpleButton.svelte";
     import type { ValidateFunction } from "ajv";
+    import { user } from "../../stores";
 
     export let createCharacter: (characterTemplate?: {}) => Promise<void>;
     export let validateCharacter: ValidateFunction<unknown>;
@@ -19,7 +20,7 @@
             // TODO:  add UI popup or smth for this error
         }
 
-        return CharacterConverter ? new CharacterConverter(characterObj).constructCharacter() : characterObj;
+        return CharacterConverter ? new CharacterConverter(characterObj, $user.gameData).constructCharacter() : characterObj;
     }
 	
 	const importFromJSON = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {

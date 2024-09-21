@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
+import logger from "../logger";
 
 declare global {
   namespace Express {
@@ -26,6 +27,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 
     req.user = Object.assign(jwtObj?.user, { _id: new ObjectId(jwtObj?.user._id)});
   } catch (err) {
+    logger.error({ error: err }, `JWT token is invalid`);
     return res.status(401).send("Invalid token");
   }
   return next();

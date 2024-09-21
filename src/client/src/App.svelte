@@ -13,7 +13,7 @@
     import { cssVarTheme } from "./util/util";
     import { THEMES } from "./enum/Themes";
 
-	const maxAge = 10000; // for memoizing refresh token
+	const maxAge = 60; // for memoizing refresh token
 
 	$: memoizedRefreshToken();
 
@@ -60,8 +60,8 @@
 			accessToken.set(response.data.accessToken);
 
 			setTimeout(() => {
-				memoizedRefreshToken();				
-			}, 600000 - 500);
+				memoizedRefreshToken();	
+			}, 600000 - 30000); // 10 minutes - 30 seconds
 
 			if (response.status === 200 && $location === '/auth') {
 				replace('/');

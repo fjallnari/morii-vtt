@@ -3,7 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "CharacterDarklings": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "alignment": {
           "type": "string"

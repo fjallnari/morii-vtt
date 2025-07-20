@@ -11,7 +11,16 @@ export const getClassIcon = (characterClasses: string, system: string = 'non-spe
     }
 
     if (system === "Shadowdark") {
-        return [{"thief": "rogue", "fighter": "fighter", "wizard": "wizard", "priest": "cleric"}[characterClasses.toLowerCase()] ?? ["class-default"]];
+        return [{
+            "thief": "rogue", 
+            "fighter": "fighter", 
+            "wizard": "wizard", 
+            "priest": "cleric",
+            "ranger": "ranger",
+            "bard": "bard",
+            "warlock": "warlock",
+            "pit fighter": "barbarian",
+        }[characterClasses.toLowerCase()] ?? ["class-default"]];
     }
 
     const classesArray = characterClasses.split(' ').map(charClass => charClass.toLowerCase());

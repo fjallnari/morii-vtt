@@ -1,4 +1,4 @@
-# Morii VTT [![CI](https://github.com/fjallnari/morii-vtt/actions/workflows/main.yml/badge.svg)](https://github.com/fjallnari/morii-vtt/actions/workflows/main.yml)
+# Morii VTT
 Morii is a web-based half-vtt (i.e. no maps) for playing TTRPGs. It currently supports D&D 5E, Cairn and Shadowdark.
 
 ## Key Features

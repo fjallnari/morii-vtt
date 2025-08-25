@@ -14,7 +14,6 @@
     let password = "";
     let honeypot = "";
     let passwordCheck = "";
-    let inProgress = false;
     let loginActive = true;
 
     const snackbarMessages = {
@@ -26,14 +25,16 @@
     }
 
     let snackbarStatus: string = "default";
+    let registerInProgress = false;
+    let loginInProgress = false;
 
     const loginUser = async () => {
-        if (! password || ! username){
+        if (! password || ! username || loginInProgress){
             return;
         }
 
         try {
-            inProgress = true;
+            loginInProgress = true;
             const response = await axiosPublic.post('/auth/signin', {
                 username: username,
                 password: password,
@@ -49,21 +50,23 @@
             // if login fails -> popup with 'login failed' appears
             snackbarStatus = "login_fail";
             statusSnackbar.open('error');
-            inProgress = false;
         }
+        loginInProgress = false;
     }
 
     const registerNewUser = async () => {
-        inProgress = true;
+        if (registerInProgress) {
+            return;
+        }
 
         if (! password || password !== passwordCheck){
             snackbarStatus = "no_match";
             statusSnackbar.open('error');
-            inProgress = false;
             return;
         }
 
         try {
+            registerInProgress = true;
             await axiosPublic.post('/auth/signup', {
                 username: username,
                 password: password,
@@ -80,7 +83,7 @@
         }
 
         username = password = passwordCheck = "";
-        inProgress = false;
+        registerInProgress = false;
     }
 
     const switchAuthView = () => {
@@ -95,7 +98,7 @@
     <div class="auth-content">
         <div class="inner-auth-box">
             <h3>{loginActive ? "Login": "Sign up"}</h3>
-            {#if !inProgress}
+            {#if !registerInProgress && !loginInProgress}
                 {#if loginActive}
                     <SimpleTextfield bind:value={username} placeholder="Username" icon="mdi:account"></SimpleTextfield>
                     <SimpleTextfield type="password" bind:value={password} placeholder="Password" icon="mdi:lock"></SimpleTextfield>
